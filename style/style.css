@@ -1,0 +1,17 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+html{
+    font-size: 62.5%;
+}
+.header{
+	width: 100%;
+	position: fixed;
+    background: #378FD9;
+    height:10%;
+}
+.header h1{
+
+}
