@@ -1,0 +1,156 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border: 0px solid black;
+    border-collapse: collapse;
+    
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    vertical-align: top;
+}
+
+tr#r{
+    background-color: #dddddd;
+}
+
+ul {
+    list-style-type: none;
+}
+
+
+div.right {
+    position: absolute;
+    right: 0px;
+    top  : 0px;
+    width: 300px;
+    border: 0px solid #73AD21;
+    padding: 10px;
+}
+
+div.form {
+    position: absolute;
+    right : 0px;
+    top  : 0px;
+    width: 15%;
+    height: 100%;
+    border: 0px solid #73AD21;
+    padding: 0px;
+}
+div.frame {
+    position: absolute;
+    right : 15%;
+    top  : 11%;
+    width: 75%;
+    height: 89%;
+    border: 0px solid #73AD21;
+    padding: 0px;
+}
+div.tb {
+    position: absolute;
+    right : 90%;
+    top  : 11%;
+    width: 10%;
+    height: 89%;
+    border: 0px solid #73AD21;
+    padding: 0px;
+}
+header{
+	width: 100%;
+	position: fixed;
+        background: #378FD9;
+        height:11%;
+}
+p {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+p.tic {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:250%;
+    color:white;
+}
+
+div.but {
+    position: absolute;
+    left : 40px;
+    top  : 20px;
+    width: 80px;
+    border: 0px solid #73AD21;
+    padding: 0px;
+}
+
+input[type="submit"]{
+	padding: 7px;
+	padding-right: 20px;
+}
+
+div.left1 {
+    position: absolute;
+    left : 150px;
+    top  : 100px;
+    width: 120px;
+    border: 2px solid #73AD21;
+    padding: 0px;
+}
+
+div.left2 {
+    position: absolute;
+    left : 350px;
+    top  : 100px;
+    width: 120px;
+    border: 0px solid #73AD21;
+    padding: 0px;
+}
+div.left3 {
+    position: absolute;
+    left : 550px;
+    top  : 100px;
+    width: 120px;
+    border: 0px solid #73AD21;
+    padding: 0px;
+}
+div.left4 {
+    position: absolute;
+    left : 750px;
+    top  : 100px;
+    width: 120px;
+    border: 0px solid #73AD21;
+    padding: 0px;
+}
+
+div.buttom1 {
+    position: absolute;
+    left : 250px;
+    top  : 300px;
+    width: 120px;
+    border: 0px solid #73AD21;
+    padding: 0px;
+}
+
+div.buttom2 {
+    position: absolute;
+    left : 450px;
+    top  : 300px;
+    width: 120px;
+    border: 0px solid #73AD21;
+    padding: 0px;
+}
+
+div.buttom3 {
+    position: absolute;
+    left : 650px;
+    top  : 300px;
+    width: 120px;
+    border: 0px solid #73AD21;
+    padding: 0px;
+}
+

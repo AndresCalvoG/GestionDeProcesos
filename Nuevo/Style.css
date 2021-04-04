@@ -1,0 +1,185 @@
+body {
+      margin-top: 0px;
+      margin-bottom: 0px;
+      margin-right: 1%;
+      margin-left: 1%;
+    }
+
+    table {
+      width: 90%;
+      vertical-align: bottom;
+    }
+
+    td {
+      height: 25px;
+    }
+
+    th {
+      height: 25px;
+    }
+
+    table,
+    td,
+    th {
+      border-collapse: collapse;
+      border: 1px solid black;
+    }
+
+    div.cont {
+      position: absolute;
+      left: 1%;
+      top: 9%;
+      padding: 10px;
+      border: 2px solid black;
+      width: 95%;
+      height: 85%;
+      background-color: LightGray;
+    }
+
+    div.f {
+      position: absolute;
+      left: 0%;
+      top: 5%;
+      width: 200px;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.fi {
+      position: absolute;
+      left: 0%;
+      top: 43.5%;
+      width: 240px;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.ff {
+      position: absolute;
+      left: 50%;
+      top: 43.5%;
+      width: 220px;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.h {
+      position: absolute;
+      left: 30%;
+      top: 5%;
+      width: 170px;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.hi {
+      position: absolute;
+      left: 27%;
+      top: 43.5%;
+      width: 200px;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.hf {
+      position: absolute;
+      left: 75%;
+      top: 43.5%;
+      width: 200px;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.a {
+      position: absolute;
+      left: 55%;
+      top: 5%;
+      width: 150px;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.e {
+      position: absolute;
+      left: 0%;
+      top: 12%;
+      width: 170px;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.sp {
+      position: absolute;
+      left: 49%;
+      top: 12%;
+      width: 220px;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.tx {
+      position: absolute;
+      left: 0%;
+      top: 18%;
+      width: 80%;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.tx2 {
+      position: absolute;
+      left: 0%;
+      top: 50%;
+      width: 90%;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.radius {
+      position: absolute;
+      left: 74%;
+      top: 2%;
+      width: 100px;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.radius2 {
+      position: absolute;
+      left: 87%;
+      top: 2%;
+      width: 100px;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.cb {
+      position: absolute;
+      left: 0%;
+      top: 75%;
+      width: 490px;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.ap {
+      position: absolute;
+      left: 60%;
+      top: 75%;
+      width: 320px;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    div.g {
+      position: absolute;
+      left: 90%;
+      top: 90%;
+      width: 70px;
+      border: 0px solid #73AD21;
+      padding: 10px;
+    }
+
+    textarea {
+      resize: none;
+    }
