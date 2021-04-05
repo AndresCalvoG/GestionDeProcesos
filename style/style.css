@@ -6,12 +6,13 @@
 html{
     font-size: 62.5%;
 }
-.main-body{
-    display: flex;
-    flex-direction: column;
+img{
+    width: 100%;
+    height: 100%;
 }
-.header{
-    position:fixed;
+
+.main-header{
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,13 +20,36 @@ html{
     height: 10%;
     background: #378FD9;
 }
-.header h1{
+.main-header-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 15%;
+}
+.main-header-title h1{
     color: white;
     font-size: 3rem;
     text-align: center;
 }
 .main-container{
+    position:absolute;
+    width: 100vw;
+    top:15%;
+}
+.main-container--menu{
+    width: 100vw;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+.main-container--card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.main-container--card div{
+    width: 100px;
+    height: 100px;
 }
