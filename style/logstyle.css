@@ -42,22 +42,52 @@ img{
 .main-container{
     position:absolute;
     width: 100vw;
-    top:15%;
+    top:20%;
 }
-.main-container--menu{
+.main-container--log{
     width: 100vw;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    margin-top: 15%;
 }
-.main-container--card{
+.main-container--logcard{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
-.main-container--card div{
+.logcard-image{
     width: 90px;
     height: 90px;
     margin-bottom: 10px;
+}
+.logcard-input{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
+.logcard-input input{
+    width: 100%;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #a5a5a6;
+    color: #464646;
+    margin: 15px auto;
+    padding: 15px;
+    outline: none;
+}
+.logcard-button{
+    display: flex;
+    justify-content: space-evenly;
+    width: 80%;
+}
+.logcard-button button{
+    width: 120px;
+    height: 50px;
+    background-color: var(--blue);
+    margin-top: 15px;
+    border: none;
+    color: white;
 }
