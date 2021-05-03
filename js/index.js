@@ -1,3 +1,4 @@
+
 function bigImg(x) {
     x.style.height = "120px";
     x.style.width = "130px";

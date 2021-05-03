@@ -1,6 +1,7 @@
 :root{
     --blue:#3d7fbc;
     --gray:#999999;
+    --black:#000000;
 }
 *{
 	margin: 0;
@@ -12,8 +13,10 @@ html{
     font-size: 62.5%;
 }
 body{
+    display: flex;
+    flex-direction: column;
     background-color: #f6f5f5;
-    color: var(--gray);
+    color: var(--black);
 }
 img{
     width: 100%;
@@ -45,29 +48,53 @@ img{
     width: 100vw;
     top:20%;
 }
-.main-container--log{
+
+.main{
+    display: flex;
+    justify-content: center;
+    position: absolute;
     width: 100vw;
-    margin-top: 15%;
+    margin-top: 20%;
 }
-.main-container--logcard{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-.logcard-image{
-    width: 90px;
-    height: 90px;
-    margin-bottom: 10px;
-}
-.logcard-input{
+.form_register{
+    width: 80vw;
+    height: 37rem;
+    margin: 2rem auto;
+    /* border-color: var(--blue); */
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    width: 80%;
+    font-size: 1.6rem;
+    /* border-style:solid;
+    border-radius: 2rem; */
+    order: 1;
 }
-.logcard-input input{
+.send{
+    width: 50%;
+    background-color:var(--blue);
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    padding: 0.7rem;
+    text-decoration: none;
+    margin: 0.8rem;
+    font-size: 1.6rem;
+    cursor:pointer;
+}
+.form_register h1{
+    text-align: center;
+    width: 100%;
+    color:var(--black);
+}
+.form_register__elem{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.5rem;
+    font-size: 1.6rem;
+}
+.form_register__elem input{
     width: 100%;
     background: none;
     border-top: none;
@@ -75,21 +102,14 @@ img{
     border-right: none;
     border-bottom: 1px solid #a5a5a6;
     color: #464646;
-    margin: 15px auto;
+    margin: 10px auto;
     padding: 15px;
     outline: none;
 }
-.logcard-button{
-    display: flex;
-    justify-content: space-evenly;
-    width: 80%;
+.form_register__elem span{
+    margin: 0.5rem;
+    font-weight: bold;
 }
-.logcard-button button{
-    width: 120px;
-    height: 50px;
-    background-color: var(--blue);
-    margin-top: 15px;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
+.form_register__elem input:focus{
+    background-color: lightblue;
 }
