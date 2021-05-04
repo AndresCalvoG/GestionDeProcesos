@@ -6,7 +6,7 @@ class Autenticacion{
         .then(result => {
             if(result.user.emailVerified){
                 console.log('ok verificado')
-                window.location.replace("GestionDeProcesos/home.html")
+                window.location.replace("https://andrescalvog.github.io/GestionDeProcesos/home.html")
             }else{
                 firebase.auth().signOut()
                 alert('Por favor verifique su email')

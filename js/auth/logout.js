@@ -5,7 +5,7 @@ salir.onclick = ()=> {
     firebase.auth().signOut()
     .then(() => {
         console.log('salida correcta')
-        window.location.replace("GestionDeProcesos/index.html")
+        window.location.replace("https://andrescalvog.github.io/GestionDeProcesos/")
     })
     .catch(error =>{
         console.log('no ha salido')
