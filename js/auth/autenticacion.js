@@ -2,11 +2,26 @@
 class Autenticacion{
 
     autEmailPass(email, password){
-
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(result => {
+            if(result.user.emailVerified){
+                console.log('ok verificado')
+                window.location.replace("../../home.html")
+            }else{
+                firebase.auth().signOut()
+                alert('Por favor verifique su email')
+                //console.log('debe revisar email')
+            }
+        })
+        .catch(error =>{
+            // console.error(error)
+            // console.log(error.message)
+            alert(error.message)
+        })
     }
 
     crearCuentaEmailPass(email, password, nombres){
-        console.log(nombres,email, password)
+        //console.log(nombres,email, password)
         firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(result =>{
             result.user.updateProfile({
@@ -17,18 +32,18 @@ class Autenticacion{
                 url: 'https://andrescalvog.github.io/GestionDeProcesos/',
                 handleCodeInApp: true,
             }
-            //result.user.sendEmailVerification(configuracion)
-            // firebase.auth().sendSignInLinkToEmail(email, configuracion)
-            // .then(() =>{ 
-            //     console.log('mensaje enviado') 
-            // })
-            // .catch(error =>{
-            //     console.error(error)
-            //    // materialize.toast(error.message, 4000)
-            // })
+            result.user.sendEmailVerification(configuracion)
+            firebase.auth().sendSignInLinkToEmail(email, configuracion)
+            .then(() =>{ 
+                console.log('mensaje enviado') 
+            })
+            .catch(error =>{
+                console.error(error)
+              
+            })
 
             firebase.auth().signOut()
-           // materialize.toast(`Bienvenido ${nombres}, debe realizar el proceso de verificacion`, 4000)
+           
             let container = document.getElementById('contain');
             let body = document.getElementById('body');
             container.innerHTML="";
@@ -44,11 +59,12 @@ class Autenticacion{
              `;
 
            console.log(`Bienvenido ${nombres}, debe realizar el proceso de verificacion`)
-            //$('.modal').modal('close')
+            
         })
         .catch(error =>{
-            console.error(error)
-           // materialize.toast(error.message, 4000)
+            alert(error.message)
+            //console.error(error)
+           
         })
     }
 }
