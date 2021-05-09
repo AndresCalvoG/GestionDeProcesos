@@ -107,10 +107,3 @@ img{
     padding: 15px;
     outline: none;
 }
-.form_register__elem span{
-    margin: 0.5rem;
-    font-weight: bold;
-}
-.form_register__elem input:focus{
-    background-color: lightblue;
-}
