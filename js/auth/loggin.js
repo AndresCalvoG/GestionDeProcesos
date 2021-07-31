@@ -12,5 +12,5 @@ ingresar.onclick = ()=> {
         console.log(email, password)
     const auth = new Autenticacion()
     auth.autEmailPass(email, password)
-     }
+    }
 };

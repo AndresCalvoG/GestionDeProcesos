@@ -20,6 +20,7 @@ enviar.onclick = ()=> {
     }else{ 
     const auth = new Autenticacion()
     auth.crearCuentaEmailPass(email,password,nombres)
-     }
-};
+    }
+}
+
 
