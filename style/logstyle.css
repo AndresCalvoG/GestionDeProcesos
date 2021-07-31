@@ -1,6 +1,9 @@
 :root{
     --blue:#3d7fbc;
     --gray:#999999;
+    --blanco: #f6f5f5;
+    --lightgray: #ddd9d9;
+    --text: #464646;
 }
 *{
 	margin: 0;
@@ -12,38 +15,38 @@ html{
     font-size: 62.5%;
 }
 body{
-    background-color: #f6f5f5;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--blanco);
     color: var(--gray);
 }
 img{
     width: 100%;
     height: 100%;
 }
-.main-header{
-    position: fixed;
+.header{
     display: flex;
     justify-content: center;
     align-items: center;
-	width: 100%;
-    height: 10%;
+	width: 100vw;
+    height: 5rem;
     background-color: var(--blue);
 }
-.main-header-title{
+.header-title{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 15%;
 }
-.main-header-title h1{
+.header-title h1{
     color: white;
     font-size: 3rem;
     text-align: center;
 }
 .main-container{
-    position:absolute;
     width: 100vw;
-    top:20%;
+    margin-top: 20%;
 }
 .main-container--log{
     width: 100vw;
@@ -67,6 +70,25 @@ img{
     align-items: center;
     width: 80%;
 }
+.logcard-input-msg{
+    display: none;
+}
+.logcard-input-msg.show{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top:6rem;
+    width: 25rem;
+    height: 4rem;
+    border-radius: 2rem;
+    background-color: var(--blanco);
+    box-shadow: 5px 5px 5px grey;
+}
+.logcard-input-msg p{
+    color: var(--text);
+    font-size: 1.4rem;
+}
 .logcard-input input{
     width: 100%;
     background: none;
@@ -83,6 +105,7 @@ img{
     display: flex;
     justify-content: space-evenly;
     width: 80%;
+    margin-top: 1rem;
 }
 .logcard-button button{
     width: 120px;

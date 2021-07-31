@@ -8,13 +8,14 @@
   <link rel="stylesheet" href="./style/logstyle.css">
 </head>
 <body>
-  <header class="main-header">
-    <section class="main-header-title">
+  <header class="header">
+    <section class="header-title">
       <h1>Gestion de Procesos</h1>
     </section>
   </header>
 
   <main class="main-container">
+    <div class="logcard-input-msg" id='content'><p id="msj"></p></div>
     <section class="main-container--log">
       <article class="main-container--logcard">
        <div class="logcard-image">
@@ -45,6 +46,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-firestore.js"></script>
 
   <script src="./js/config/ConfigFirebase.js"></script>
+  
   <script src="./js/auth/autenticacion.js"></script>
   <script src="./js/auth/loggin.js"></script>
 </body>

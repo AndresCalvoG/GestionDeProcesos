@@ -14,9 +14,10 @@ class Autenticacion{
             }
         })
         .catch(error =>{
-            // console.error(error)
+             
+             error.code === "auth/wrong-password"?alert('Contraseña Incorrecta'):
             // console.log(error.message)
-            alert(error.message)
+            alert(error.message)  //error de autenticacion
         })
     }
 
