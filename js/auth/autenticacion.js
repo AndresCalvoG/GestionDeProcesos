@@ -11,20 +11,24 @@ class Autenticacion{
             }else{
                 firebase.auth().signOut()
                 alert('Por favor verifique su email')
-                //console.log('debe revisar email')
             }
         })
         .catch(error =>{
-            error.code === "auth/wrong-password"?alert('Contraseña Incorrecta'):
-            // console.log(error.message)
-            alert(error.message)  //error de autenticacion
+            console.log(error.code)
+            if(error.code === "auth/wrong-password"){ 
+                fault.innerText = "Contraseña Incorrecta"
+                fault.style.display = "block"
+            }else if(error.code === "auth/user-not-found"){ 
+                fault.innerText = "Usuario Incorrecto"
+                fault.style.display = "block"
+            }
         })
     }
 
     
 // metodo para crear un usuario nuevo en firebase
     crearCuentaEmailPass(email, password, nombres){
-        //console.log(nombres,email, password)
+        console.log(nombres,email, password)
         firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(result =>{
             result.user.updateProfile({
@@ -62,7 +66,6 @@ class Autenticacion{
             `;
 
             console.log(`Bienvenido ${nombres}, debe realizar el proceso de verificacion`)
-            
         })
         .catch(error =>{
             alert(error.message)
