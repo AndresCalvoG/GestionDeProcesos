@@ -1,6 +1,7 @@
-
 const enviar = document.getElementById('send')
 const fault = document.getElementById('fault')
+
+document.querySelector('form').addEventListener('submit', (e) => e.preventDefault())
 
 enviar.onclick = ()=> {
     let nombre = document.getElementById('nombre')
@@ -18,12 +19,11 @@ enviar.onclick = ()=> {
     let code = document.getElementById('code')
     code = code.value.trim().toUpperCase()
     
-    if(nombre === "" || apellido === "" || email === "" || password === "" || cargo === "" || code === ""){
+    if(nombre === "" || apellido === "" || email === "" || password === "" || cargo === "" || code === "" ){
         fault.innerText = "Por favor completa TODOS los campos"
         fault.style.display = "block"
     }else{ 
         fault.style.display = "none"
-        console.log('autenticando')
         const auth = new Autenticacion()
         auth.crearCuentaEmailPass(email,password,nombres)
     }

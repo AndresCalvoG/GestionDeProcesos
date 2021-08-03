@@ -28,13 +28,12 @@ class Autenticacion{
     
 // metodo para crear un usuario nuevo en firebase
     crearCuentaEmailPass(email, password, nombres){
-        console.log(nombres,email, password)
         firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(result =>{
             result.user.updateProfile({
                 displayName: nombres
-            })
-
+            });
+            
             const configuracion = {
                 url: 'https://andrescalvog.github.io/GestionDeProcesos/',
                 handleCodeInApp: true,
@@ -46,11 +45,9 @@ class Autenticacion{
             })
             .catch(error =>{
                 console.error(error)
-                
             })
-
             firebase.auth().signOut()
-            
+
             let container = document.getElementById('contain');
             let body = document.getElementById('body');
             container.innerHTML="";
@@ -64,13 +61,9 @@ class Autenticacion{
                 <p>${nombres}</p>
                 <p> Debes realizar el proceso de verificacion desde el correo enviado a tu email </p>
             `;
-
-            console.log(`Bienvenido ${nombres}, debe realizar el proceso de verificacion`)
         })
         .catch(error =>{
             alert(error.message)
-            //console.error(error)
-            
-        })
+        });
     }
 }
