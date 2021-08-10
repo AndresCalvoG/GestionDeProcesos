@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Link} from 'react-router-dom'
 
 import './styles/logstyle.css'
 import userLogo from '../images/user.svg'
@@ -48,7 +49,7 @@ const Login = () => {
                         <span>{fault}</span>
                         <div className="logcard-button">
                             <button onClick= {handleLogin}>Ingresar</button>
-                            <a href="./registro.html"><button>Registrarme</button></a>
+                            <Link to="/register"><button>Registrarme</button></Link>
                         </div>
                     </form>
                     
