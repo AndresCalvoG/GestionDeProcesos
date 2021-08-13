@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 
+import firebase from "firebase/app";
+import "firebase/firestore";
+
 import './styles/register.css'
 import Navbar from '../components/Navbar'
 import Auth from '../utils/autenticacion'
 
 const Register = () => {
+    var db = firebase.firestore();
+
     const [contain, setContain] = useState(false)
     const [nombre, setNombre] = useState("")
     const [apellido, setApellido] = useState("")
@@ -15,20 +20,49 @@ const Register = () => {
     const [fault, setFault] = useState("")
     const nombres =`${nombre} ${apellido}`
 
-    const handleRegister = ()=> {       
+    const dbUsers = async (props) =>{
+        try{ 
+            return(await db.collection("users").add(props))
+        }catch(error){
+            return(error.message)
+        }
+    }
+
+    const handleRegister = async ()=> {       
         if(nombre === "" || apellido === "" || email === "" || password === "" || cargo === "" || code === "" ){
-            console.log("click") 
             setFault("Por favor completa TODOS los campos")
         }else{ 
             setFault("")
-            Auth.crearCuentaEmailPass(email,password,nombres, () =>{
+            const response = await Auth.crearCuentaEmailPass(email,password,nombres)
+            
+            if(response.code === "auth/wrong-password"){ 
+                setFault("Contraseña Incorrecta")
+            }else if(response.code === "auth/user-not-found"){ 
+                setFault("Usuario Incorrecto")
+            }else if(response.code === "auth/invalid-email"){
+                setFault("Email invalido")
+            }else if(response.code === "auth/weak-password"){
+                setFault("Contraseña demasiado corta")
+            }else if(response.code === "auth/email-already-in-use"){
+                setFault("Email ya registrado")
+            }else if(response === true){ 
+                const result = await dbUsers({
+                    first: nombre,
+                    last: apellido,
+                    email: email,
+                    cargo: cargo,
+                    code: code
+                })
+                console.log(result.id)
                 setContain(true)
-            })
+            }else{
+                console.log(response.code)
+            }
         }
     }
 
     return( 
-        !contain ?
+        !contain? 
         <>
         <Navbar />
         <main className="main">

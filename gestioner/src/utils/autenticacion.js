@@ -10,28 +10,25 @@ class Autenticacion{
         firebase.initializeApp(firebaseConfig)
     }
 // Metodo para autenticacion con correo y contraseña
-    autEmailPass(email, password, onError){
-        firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(result => {
+    async autEmailPass(email, password){
+        try{ 
+            const result = await firebase.auth().signInWithEmailAndPassword(email, password)
             if(result.user.emailVerified){
-                //console.log('ok verificado')
-                //window.location.replace("./home.html")
-                //window.location.replace("https://andrescalvog.github.io/GestionDeProcesos/home.html")
+                console.log('ok verificado')
+                return('ok')
             }else{
-                firebase.auth().signOut()
-                alert('Por favor verifique su email')
+                await firebase.auth().signOut()
+                return('Por favor verifique email enviado')
             }
-        })
-        .catch(error =>{
-            onError(error)
-        })
+        }catch(error){
+            return(error)
+        }
     }
     
 // metodo para crear un usuario nuevo en firebase
-    crearCuentaEmailPass(email, password, nombres, check){
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(result =>{
-            console.log(result)
+    async crearCuentaEmailPass(email, password, nombres){
+        try{ 
+            const result = await firebase.auth().createUserWithEmailAndPassword(email, password)
             result.user.updateProfile({
                 displayName: nombres
             });
@@ -39,20 +36,41 @@ class Autenticacion{
                 url: 'https://andrescalvog.github.io/GestionDeProcesos/',
                 handleCodeInApp: true,
             }
-            result.user.sendEmailVerification(configuracion)
-            firebase.auth().sendSignInLinkToEmail(email, configuracion)
-            .then(() =>{ 
-                console.log('mensaje enviado') 
-            })
-            .catch(error =>{
-                console.error(error)
-            })
-            firebase.auth().signOut()
-            check()
-        })
-        .catch(error =>{
-            alert(error.message)
-        });
+            try{
+                result.user.sendEmailVerification(configuracion)
+                await firebase.auth().sendSignInLinkToEmail(email, configuracion)
+                console.log("Email de verificacion enviado")
+            }catch(error){
+                console.log(error)
+            }
+            await firebase.auth().signOut()
+            console.log("signOut Done")
+            return(true)
+        }catch(error){
+            return(error)
+        }
+        // .then(result =>{
+        //     result.user.updateProfile({
+        //         displayName: nombres
+        //     });
+        //     const configuracion = {
+        //         url: 'https://andrescalvog.github.io/GestionDeProcesos/',
+        //         handleCodeInApp: true,
+        //     }
+        //     result.user.sendEmailVerification(configuracion)
+        //     firebase.auth().sendSignInLinkToEmail(email, configuracion)
+        //     .then(() =>{ 
+        //         console.log('mensaje enviado') 
+        //     })
+        //     .catch(error =>{
+        //         console.error(error)
+        //     })
+        //     firebase.auth().signOut()
+        //     check(true)
+        // })
+        // .catch(error =>{
+        //     check(error)
+        // });
     }
 }
 

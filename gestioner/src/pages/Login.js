@@ -11,20 +11,22 @@ const Login = () => {
     const [password, setPassword] = useState("")
     const [fault, setFault] = useState("")
 
-    const handleLogin = ()=> {
+    const handleLogin = async ()=> {
         if( email === "" || password === "" ){
-            setFault("Por favor completa TODOS los campos")
+            setFault("Por favor completa todos los campos")
         }else{
             setFault("")
-            Auth.autEmailPass(email, password, (e)=>{
-                if(e.code === "auth/wrong-password"){ 
-                    setFault("Contraseña Incorrecta")
-                }else if(e.code === "auth/user-not-found"){ 
-                    setFault("Usuario Incorrecto")
-                }
-            })
+            const response = await Auth.autEmailPass(email, password)
+            
+            if(response.code === "auth/wrong-password"){ 
+                setFault("Contraseña Incorrecta")
+            }else if(response.code === "auth/user-not-found"){ 
+                setFault("Usuario Incorrecto")
+            }else{
+                setFault(response)
+            }
         }
-    };
+    }
 
     const imprimir = () =>{
         console.log('click')
