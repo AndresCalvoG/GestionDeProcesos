@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom'
 
 import './styles/logstyle.css'
 import userLogo from '../images/user.svg'
-import Navbar from '../components/Navbar'
 import Auth from '../utils/autenticacion'
 
 const Login = () => {
@@ -34,7 +33,6 @@ const Login = () => {
 
     return(
         <>
-        <Navbar />
         <main className="main-container">
                 <article className="main-container--logcard">
                     <figure className="logcard-image">

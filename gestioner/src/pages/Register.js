@@ -4,7 +4,6 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 
 import './styles/register.css'
-import Navbar from '../components/Navbar'
 import Auth from '../utils/autenticacion'
 
 const Register = () => {
@@ -64,7 +63,6 @@ const Register = () => {
     return( 
         !contain? 
         <>
-        <Navbar />
         <main className="main">
             <section className="form_register">
                 <h1>Registro</h1>
@@ -100,7 +98,6 @@ const Register = () => {
         </main> 
         </>: 
         <>
-        <Navbar />
         <main className="main-success">
             <h1> Bienvenido </h1>
             <br/>
