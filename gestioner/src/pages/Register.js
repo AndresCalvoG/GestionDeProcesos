@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import firebase from "firebase/app";
 import "firebase/firestore";
 
-import './styles/register.css'
+import './styles/regStyles.css'
 import Auth from '../utils/autenticacion'
 
 const Register = () => {

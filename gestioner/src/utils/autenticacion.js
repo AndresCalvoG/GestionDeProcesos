@@ -49,28 +49,6 @@ class Autenticacion{
         }catch(error){
             return(error)
         }
-        // .then(result =>{
-        //     result.user.updateProfile({
-        //         displayName: nombres
-        //     });
-        //     const configuracion = {
-        //         url: 'https://andrescalvog.github.io/GestionDeProcesos/',
-        //         handleCodeInApp: true,
-        //     }
-        //     result.user.sendEmailVerification(configuracion)
-        //     firebase.auth().sendSignInLinkToEmail(email, configuracion)
-        //     .then(() =>{ 
-        //         console.log('mensaje enviado') 
-        //     })
-        //     .catch(error =>{
-        //         console.error(error)
-        //     })
-        //     firebase.auth().signOut()
-        //     check(true)
-        // })
-        // .catch(error =>{
-        //     check(error)
-        // });
     }
 }
 
