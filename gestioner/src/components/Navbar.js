@@ -16,18 +16,18 @@ const Navbar = () =>{
         </header>
         </>:
         <>
-        <header class="main-header">
-            <section class="main-header-title">
-                <h1 class='title-mobile'>GP</h1>
-                <h1 class='title-desk'>Gestion de Procesos</h1>
+        <header className="main-header">
+            <section className="main-header-title">
+                <h1 className='title-mobile'>GP</h1>
+                <h1 className='title-desk'>Gestion de Procesos</h1>
             </section>
-            <section class="main-header-avatar">
-                <div class='avatar-info'>
+            <section className="main-header-avatar">
+                <div className='avatar-info'>
                     <p id="name">Andres felipe calvo gomez</p>
                     <p id="cargo">Tec. Electronico</p>
                     <p id="codigo">cod. 19939</p>
                 </div>
-                <figure class="avatar">
+                <figure className="avatar">
                     <img id="photo" src={userProfile} alt="avatar" />
                 </figure>
             </section>

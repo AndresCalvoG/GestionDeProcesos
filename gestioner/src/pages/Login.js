@@ -22,8 +22,8 @@ const Login = () => {
             }else if(response.code === "auth/user-not-found"){ 
                 setFault("Usuario Incorrecto")
             }else{
-                window.location.replace('https:')
-                setFault(response)
+                window.location.replace(response)
+                //setFault(response)
             }
         }
     }

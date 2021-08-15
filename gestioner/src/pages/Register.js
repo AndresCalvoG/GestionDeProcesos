@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 
-import firebase from "firebase/app";
-import "firebase/firestore";
-
 import './styles/regStyles.css'
 import Auth from '../utils/autenticacion'
 
 const Register = () => {
-    var db = firebase.firestore();
-
     const [contain, setContain] = useState(false)
     const [nombre, setNombre] = useState("")
     const [apellido, setApellido] = useState("")
@@ -18,14 +13,6 @@ const Register = () => {
     const [code, setCode] = useState("")
     const [fault, setFault] = useState("")
     const nombres =`${nombre} ${apellido}`
-
-    const dbUsers = async (props) =>{
-        try{ 
-            return(await db.collection("users").add(props))
-        }catch(error){
-            return(error.message)
-        }
-    }
 
     const handleRegister = async ()=> {       
         if(nombre === "" || apellido === "" || email === "" || password === "" || cargo === "" || code === "" ){
@@ -45,7 +32,7 @@ const Register = () => {
             }else if(response.code === "auth/email-already-in-use"){
                 setFault("Email ya registrado")
             }else if(response === true){ 
-                const result = await dbUsers({
+                const result = await Auth.crearUsersDb({
                     first: nombre,
                     last: apellido,
                     email: email,

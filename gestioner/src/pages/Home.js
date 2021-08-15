@@ -14,99 +14,118 @@ import passwords from '../images/password.svg'
 import Auth from '../utils/autenticacion'
 
 const Home = () => {
+    (async function () {
+        const response = await Auth.validUser()
+        console.log(response)
+    })();
+
+    const handleLogout = async () =>{
+        await Auth.logoutUsers()
+    }
+
+    const bigImg = (x) => {
+        // x.style.height = "110px";
+        // x.style.width = "120px";
+    }
+    
+    const normalImg = (x) => {
+        // x.style.height = "100px";
+        // x.style.width = "110px";
+    }
+
     return(
         <>
-        <main class="main-container">
-            <section class="main-container--menu">
+        <main className="main-container">
+            <section className="main-container--menu">
 
-                <article class="main-container--card" id="logout">
+                <article className="main-container--card" onClick={handleLogout}>
                 <h2>Logout</h2>
-                <div class="main-container--image">
-                    <img onmousemove="bigImg(this)" 
-                        onmouseout="normalImg(this)" 
+                <div className="main-container--image">
+                    <img onMouseMove={bigImg(this)}
+                        onMouseOut={normalImg(this)}
                         src={user} 
                         alt="Cerrar Sesion"/>
                 </div>
                 </article>
 
-                <article class="main-container--card">
+                <article className="main-container--card">
                     <h2>Manuales</h2>
                     <div>
                         <Link to="./assets/Manuales/manuales.html">
-                            <img onmousemove="bigImg(this)" 
-                                onmouseout="normalImg(this)" 
+                            <img onMouseMove={bigImg(this)}
+                                onMouseOut={normalImg(this)} 
                                 src={pdf} 
                                 alt="Manuales en pdf"/>
                         </Link>
                     </div>
                 </article>
 
-                <article class="main-container--card">
+                <article className="main-container--card">
                     <h2>Maquinas</h2>
                     <div>
                         <Link to="./assets/Maquinas/Maquinas.html">
-                            <img onmousemove="bigImg(this)" 
-                            onmouseout="normalImg(this)" 
+                            <img onMouseMove={bigImg(this)} 
+                            onMouseOut={normalImg(this)} 
                             src={machines}
                             alt="listado de maquinas"/>
                         </Link>
                     </div>
                 </article>
 
-                <article class="main-container--card">
+                <article className="main-container--card">
                     <h2>Calendario</h2>
                     <div>
                         <Link to="./assets/calendario/calendario.html">
-                            <img onmousemove="bigImg(this)" 
-                            onmouseout="normalImg(this)" 
+                            <img onMouseMove={bigImg(this) }
+                            onMouseOut={normalImg(this)} 
                             src={calendar} 
                             alt="calendario"/>
                         </Link>
                     </div>
                 </article>
 
-                <article class="main-container--card">
+                <article className="main-container--card">
                     <h2>Ayuda</h2>
                     <div>
                         <Link to="./assets/Help/Help.html">
-                            <img onmousemove="bigImg(this)" 
-                            onmouseout="normalImg(this)" 
+                            <img onMouseMove={bigImg(this)} 
+                            onMouseOut={normalImg(this)} 
                             src={help} 
                             alt="help"/>
                         </Link>
                     </div>
                 </article>
 
-                <article class="main-container--card">
+                <article className="main-container--card">
                     <h2>Turnos</h2>
                     <div>
                         <Link to="./assets/Turnos/Turnos.html">
-                            <img onmousemove="bigImg(this)" 
-                            onmouseout="normalImg(this)" 
+                            <img onMouseMove={bigImg(this)} 
+                            onMouseOut={normalImg(this)} 
                             src={schedule}
                             alt="turnos de trabajo"/>
                         </Link>
                     </div>
                 </article>
 
-                <article class="main-container--card">
+                <article className="main-container--card">
                     <h2>Bitacora</h2>
                     <div>
                         <Link to="./assets/Bitacora\Bitacora.html">
-                            <img onmousemove="bigImg(this)" 
-                            onmouseout="normalImg(this)" 
+                            <img onMouseMove={bigImg(this)} 
+                            onMouseOut={normalImg(this)} 
                             src={binnacle} 
                             alt="Bitacora de trabajo"/>
                         </Link>
                     </div>
                 </article>
 
-                <article class="main-container--card">
+                <article className="main-container--card">
                     <h2>Contraseñas</h2>
                     <div>
                         <Link to="./">
-                            <img onmousemove="bigImg(this)" 
-                            onmouseout="normalImg(this)" 
+                            <img onMouseMove={bigImg(this)} 
+                            onMouseOut={normalImg(this)} 
                             src={passwords} 
                             alt="Contraseñas"/>
                         </Link>
