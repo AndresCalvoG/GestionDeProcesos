@@ -6,7 +6,7 @@ import "firebase/firestore";
 import firebaseConfig from "./ConfigFirebase";
 
 class Autenticacion {
-  constructor(props) {
+  constructor() {
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
   }
@@ -17,7 +17,7 @@ class Autenticacion {
         .auth()
         .signInWithEmailAndPassword(email, password);
       if (result.user.emailVerified) {
-        console.log("ok verificado");
+        //console.log("ok verificado");
         return "/home";
       } else {
         await firebase.auth().signOut();
@@ -45,7 +45,7 @@ class Autenticacion {
       try {
         result.user.sendEmailVerification(configuracion);
         await firebase.auth().sendSignInLinkToEmail(email, configuracion);
-        console.log("Email de verificacion enviado");
+        //console.log("Email de verificacion enviado");
       } catch (error) {
         console.log(error);
       }
@@ -63,11 +63,19 @@ class Autenticacion {
     var db = firebase.firestore();
     try {
       await db.collection("users").doc(props.id).set(props);
-      await db.collection("users").doc(props.id).update({
-        id: firebase.firestore.FieldValue.delete(),
-      });
     } catch (error) {
       return error.message;
+    }
+  }
+
+  // Metodo para obtener datos de firestore
+  async getDataUser(props) {
+    var db = firebase.firestore();
+    try {
+      var docRef = await db.collection("users").doc(props).get();
+      return docRef;
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -75,11 +83,11 @@ class Autenticacion {
   async logoutUsers() {
     try {
       await firebase.auth().signOut();
-      console.log("salida correcta");
-      //window.location.replace("../GestionDeProcesos")
-      //window.location.replace("./")
+      //console.log("salida correcta");
+      return "/";
     } catch (error) {
       console.log("no ha salido");
+      return error;
     }
   }
 
@@ -88,11 +96,9 @@ class Autenticacion {
     return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged(async (user) => {
         if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
           resolve(user);
         } else {
-          alert("Usuario no Autenticado");
+          //alert("Usuario no Autenticado");
           try {
             await firebase.auth().signOut();
             console.log("salida correcta");

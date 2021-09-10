@@ -3,9 +3,10 @@ import { Link, useHistory } from "react-router-dom";
 
 import "./styles/logStyles.css";
 import userLogo from "../images/user.svg";
+import Navbar from "../components/Navbar";
 import Auth from "../utils/autenticacion";
 
-const Login = () => {
+const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fault, setFault] = useState("");
@@ -26,12 +27,14 @@ const Login = () => {
         setFault(response);
       } else {
         history.push(response);
+        props.setCheck(true);
       }
     }
   };
 
   return (
     <>
+      <Navbar />
       <main className="main-container_log">
         <article className="main-container--logcard">
           <figure className="logcard-image">

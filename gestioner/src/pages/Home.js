@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import "./styles/homeStyles.css";
-import user from "../images/user.svg";
+import userLog from "../images/user.svg";
 import pdf from "../images/pdf.png";
 import machines from "../images/maquina.png";
 import calendar from "../images/calendar.png";
@@ -11,29 +11,33 @@ import schedule from "../images/turnos.png";
 import binnacle from "../images/Bitacora.jpg";
 import passwords from "../images/password.svg";
 
+import Navbar from "../components/Navbar";
 import Auth from "../utils/autenticacion";
 
-const Home = () => {
-  const [auth, setAuth] = useState(false);
+const Home = (props) => {
   const history = useHistory();
-
-  useEffect(() => {
-    (async function () {
-      const response = await Auth.validUser();
-      if (response.uid) {
-        console.log(response.uid);
-        setAuth(true);
-      } else {
-        history.push(response);
-      }
-    })();
-    // return () => {
-    //     cleanup
-    // };
-  }, []);
+  //props.setUser("1");
+  // useEffect(() => {
+  //   (async function () {
+  //     const response = await Auth.validUser();
+  //     console.log(response.uid);
+  //     const data = await Auth.getDataUser(response.uid);
+  //     console.log(data);
+  //     if (data.exists) {
+  //       props.setAuth(true);
+  //       props.setUser(data);
+  //     } else {
+  //       history.push(response);
+  //     }
+  //   })();
+  //   // return () => {
+  //   //     cleanup
+  //   // };
+  // }, []);
 
   const handleLogout = async () => {
-    await Auth.logoutUsers();
+    const route = await Auth.logoutUsers();
+    history.push(route);
   };
 
   const bigImg = (x) => {
@@ -48,6 +52,7 @@ const Home = () => {
 
   return (
     <>
+      <Navbar logged={props.auth} userLogged={props.user} />
       <main className="main-container">
         <section className="main-container--menu">
           <article className="main-container--card" onClick={handleLogout}>
@@ -56,7 +61,7 @@ const Home = () => {
               <img
                 onMouseMove={bigImg(this)}
                 onMouseOut={normalImg(this)}
-                src={user}
+                src={userLog}
                 alt="Cerrar Sesion"
               />
             </div>

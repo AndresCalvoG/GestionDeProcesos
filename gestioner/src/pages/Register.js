@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import "./styles/regStyles.css";
+import Navbar from "../components/Navbar";
 import Auth from "../utils/autenticacion";
 
 const Register = () => {
@@ -62,6 +63,7 @@ const Register = () => {
 
   return !contain ? (
     <>
+      <Navbar />
       <main className="main">
         <section className="form_register">
           <h1>Registro</h1>
@@ -123,6 +125,7 @@ const Register = () => {
     </>
   ) : (
     <>
+      <Navbar />
       <main className="main-success">
         <h1> Bienvenido </h1>
         <br />

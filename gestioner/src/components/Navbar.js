@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-
+import React from "react";
 import "./styles/navStyle.css";
 import userProfile from "../images/profile.png";
 
-const Navbar = () => {
-  const [contain, setContain] = useState(false);
-
-  return !contain ? (
+const Navbar = (props) => {
+  //console.log(props.userLogged);
+  return !props.logged ? (
     <>
       <header className="header">
         <section className="header-title">
@@ -23,9 +21,12 @@ const Navbar = () => {
         </section>
         <section className="main-header-avatar">
           <div className="avatar-info">
-            <p id="name">Andres felipe calvo gomez</p>
-            <p id="cargo">Tec. Electronico</p>
-            <p id="codigo">cod. 19939</p>
+            <p>
+              {props.userLogged.fields.first.stringValue}{" "}
+              {props.userLogged.fields.last.stringValue}
+            </p>
+            <p>{props.userLogged.fields.cargo.stringValue}</p>
+            <p>{props.userLogged.fields.code.stringValue}</p>
           </div>
           <figure className="avatar">
             <img id="photo" src={userProfile} alt="avatar" />

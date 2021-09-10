@@ -1,7 +1,14 @@
-import React from 'react'
+import React from "react";
 
-function NotFound(){
-    return <h1>404: Not Found</h1>
+import Navbar from "../components/Navbar";
+
+function NotFound() {
+  return (
+    <>
+      <Navbar />
+      <h1>404: Not Found</h1>
+    </>
+  );
 }
 
-export default NotFound
+export default NotFound;
