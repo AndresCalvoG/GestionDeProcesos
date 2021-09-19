@@ -3,7 +3,6 @@ import { Link, useHistory } from "react-router-dom";
 
 import "./styles/logStyles.css";
 import userLogo from "../images/user.svg";
-import Navbar from "../components/Navbar";
 import Auth from "../utils/autenticacion";
 
 const Login = (props) => {
@@ -22,7 +21,9 @@ const Login = (props) => {
       if (response.code === "auth/wrong-password") {
         setFault("Contraseña Incorrecta");
       } else if (response.code === "auth/user-not-found") {
-        setFault("Usuario Incorrecto");
+        setFault("Usuario ó Email Incorrecto");
+      } else if (response.code === "auth/invalid-email") {
+        setFault("Email Invalido");
       } else if (response === "Por favor verifique email enviado") {
         setFault(response);
       } else {
@@ -34,9 +35,8 @@ const Login = (props) => {
 
   return (
     <>
-      <Navbar />
-      <main className="main-container_log">
-        <article className="main-container--logcard">
+      <main className="main-containerLog">
+        <article className="main-containerLog--card">
           <figure className="logcard-image">
             <img src={userLogo} alt="Logo Usuario" />
           </figure>
@@ -56,7 +56,12 @@ const Login = (props) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <span>{fault}</span>
+            <div className="logcard-form--inline">
+              <Link to="/password/reset" className="logcard-form--link">
+                ¿Olvidaste tu Contraseña?
+              </Link>
+              <span>{fault}</span>
+            </div>
             <div className="logcard-button">
               <button onClick={handleLogin}>Ingresar</button>
               <Link to="/register">

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
+import "../global.css";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import Home from "../pages/Home";
+import PasswordReset from "../pages/PasswordReset";
+import Layout from "./Layout";
 
 import Auth from "../utils/autenticacion";
 
@@ -22,38 +25,42 @@ function App() {
       const response = await Auth.validUser();
       if (response !== "/") {
         data = await Auth.getDataUser(response.uid);
-        //console.log(data._delegate._document.data.value.mapValue.fields);
       }
       if (data.exists) {
         setUser(data._delegate._document.data.value.mapValue);
         setAuth(true);
+        console.log("reder true en appp");
       } else {
-        //history.push(response);
+        setAuth(false);
+        setUser({ value: false });
+        console.log("render false en app");
       }
     })();
-    // return () => {
-    //     cleanup
-    // };
   }, [check]);
 
   return (
     <BrowserRouter>
-      <Switch>
-        <Route
-          exact
-          path="/"
-          render={(props) => <Login {...props} setCheck={setCheck} />}
-        />
-        <Route exact path="/Register" component={Register} />
-        <Route
-          exact
-          path="/Home"
-          render={(props) => (
-            <Home {...props} auth={auth} user={user} setUser={setUser} />
-          )}
-        />
-        <Route component={NotFound} />
-      </Switch>
+      <Layout auth={auth} user={user}>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={(props) => <Login {...props} setCheck={setCheck} />}
+          />
+          <Route exact path="/Register" component={Register} />
+          <Route
+            exact
+            path="/Home"
+            render={(props) => <Home {...props} setCheck={setCheck} />}
+          />
+          <Route
+            exact
+            path="/password/reset"
+            render={(props) => <PasswordReset {...props} />}
+          />
+          <Route component={NotFound} />
+        </Switch>
+      </Layout>
     </BrowserRouter>
   );
 }

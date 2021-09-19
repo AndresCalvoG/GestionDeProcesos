@@ -1,12 +1,10 @@
 import React from "react";
-
-import Navbar from "../components/Navbar";
+import "./styles/notFoundStyles.css";
 
 function NotFound() {
   return (
     <>
-      <Navbar />
-      <h1>404: Not Found</h1>
+      <h1 className="notFound">404 Not Found</h1>
     </>
   );
 }

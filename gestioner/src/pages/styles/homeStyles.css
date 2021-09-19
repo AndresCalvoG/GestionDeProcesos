@@ -1,24 +1,3 @@
-:root {
-  --blue: #3d7fbc;
-  --gray: #999999;
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-html {
-  font-size: 62.5%;
-}
-body {
-  background-color: #f6f5f5;
-  color: var(--gray);
-}
-img {
-  width: 100%;
-  height: 100%;
-}
-
 .main-container {
   position: absolute;
   width: 100vw;

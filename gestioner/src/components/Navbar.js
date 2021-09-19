@@ -3,7 +3,6 @@ import "./styles/navStyle.css";
 import userProfile from "../images/profile.png";
 
 const Navbar = (props) => {
-  //console.log(props.userLogged);
   return !props.logged ? (
     <>
       <header className="header">
