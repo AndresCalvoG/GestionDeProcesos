@@ -13,31 +13,23 @@ import Layout from "./Layout";
 
 function App() {
   return (
-    <AppProvider>
-        <BrowserRouter>
-          <Layout >
+    <BrowserRouter>
+      <AppProvider>
+        <Layout>
           <Switch>
-              <Route
-                exact
-                path="/"
-                render={(props) => <Login {...props} />}
-							/>
-							<Route exact path="/Register" component={Register} />
-							<Route
-								exact
-								path="/Home"
-								render={(props) => <Home {...props} />}
-							/>
-							<Route
-								exact
-								path="/password/reset"
-								render={(props) => <PasswordReset {...props} />}
-							/>
-							<Route component={NotFound} />
-						</Switch>
-					</Layout>
-        </BrowserRouter>
+            <Route exact path="/" render={(props) => <Login {...props} />} />
+            <Route exact path="/Register" component={Register} />
+            <Route exact path="/Home" render={(props) => <Home {...props} />} />
+            <Route
+              exact
+              path="/password/reset"
+              render={(props) => <PasswordReset {...props} />}
+            />
+            <Route component={NotFound} />
+          </Switch>
+        </Layout>
       </AppProvider>
+    </BrowserRouter>
   );
 }
 

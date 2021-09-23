@@ -1,18 +1,29 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Auth from "../utils/autenticacion";
 
-const AppContext = React.createContext()
+const AppContext = React.createContext();
 
-function AppProvider(props){
+function AppProvider(props) {
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState({});
   const [check, setCheck] = useState(false);
-	const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fault, setFault] = useState("");
-	const history = useHistory();
-	
+
+  const [contain, setContain] = useState(false);
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [emailReg, setEmailReg] = useState("");
+  const [passwordReg, setPasswordReg] = useState("");
+  const [cargo, setCargo] = useState("");
+  const [code, setCode] = useState("");
+  const [faultReg, setFaultReg] = useState("");
+  const nombres = `${nombre} ${apellido}`;
+
+  const history = useHistory();
+
   useEffect(() => {
     (async function () {
       let data = {
@@ -35,7 +46,7 @@ function AppProvider(props){
     })();
   }, [check]);
 
-	const handleLogin = async () => {
+  const handleLogin = async () => {
     if (email === "" || password === "") {
       setFault("Por favor completa todos los campos");
     } else {
@@ -52,30 +63,102 @@ function AppProvider(props){
         setFault(response);
       } else {
         history.push(response);
-        props.setCheck(true);
+        setCheck(true);
       }
     }
   };
 
-    return(
-        <AppContext.Provider value = {{
-					user,
-					auth,
-					check,
-					email,
-					password,
-					fault,
-					setUser,
-					setAuth,
-					setCheck,
-					setEmail,
-					setPassword,
-					setFault,
-					handleLogin
-        }}>
-            {props.children}
-        </AppContext.Provider>
-    )
+  const handleLogout = async () => {
+    const route = await Auth.logoutUsers();
+    history.push(route);
+    setCheck(false);
+  };
+
+  const handleRegister = async () => {
+    if (
+      nombre === "" ||
+      apellido === "" ||
+      emailReg === "" ||
+      passwordReg === "" ||
+      cargo === "" ||
+      code === ""
+    ) {
+      setFaultReg("Por favor completa TODOS los campos");
+    } else {
+      setFaultReg("");
+      const response = await Auth.crearCuentaEmailPass(
+        emailReg,
+        passwordReg,
+        nombres
+      );
+
+      if (response.code === "auth/wrong-password") {
+        setFaultReg("Contraseña Incorrecta");
+      } else if (response.code === "auth/user-not-found") {
+        setFaultReg("Usuario Incorrecto");
+      } else if (response.code === "auth/invalid-email") {
+        setFaultReg("Email invalido");
+      } else if (response.code === "auth/weak-password") {
+        setFaultReg("Contraseña demasiado corta");
+      } else if (response.code === "auth/email-already-in-use") {
+        setFaultReg("Email ya registrado");
+      } else if (response.uid) {
+        const result = await Auth.crearUsersDb({
+          first: nombre,
+          last: apellido,
+          email: emailReg,
+          key: passwordReg,
+          cargo: cargo,
+          code: code,
+          id: response.uid,
+        });
+        console.log(result);
+        setContain(true);
+      } else {
+        console.log(response.code);
+      }
+    }
+  };
+
+  return (
+    <AppContext.Provider
+      value={{
+        user,
+        auth,
+        check,
+        email,
+        password,
+        fault,
+        contain,
+        nombre,
+        apellido,
+        emailReg,
+        passwordReg,
+        cargo,
+        code,
+        faultReg,
+        setUser,
+        setAuth,
+        setCheck,
+        setEmail,
+        setPassword,
+        setFault,
+        setNombre,
+        setApellido,
+        setEmailReg,
+        setPasswordReg,
+        setCargo,
+        setCode,
+        setFaultReg,
+        handleLogin,
+        handleLogout,
+        handleRegister,
+        nombres,
+      }}
+    >
+      {props.children}
+    </AppContext.Provider>
+  );
 }
 
-export {AppContext, AppProvider}
+export { AppContext, AppProvider };

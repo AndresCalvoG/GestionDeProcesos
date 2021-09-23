@@ -1,11 +1,11 @@
 import React from "react";
-
+import { AppContext } from "../context";
 import Navbar from "./Navbar";
 
 function Layout(props) {
   return (
     <>
-      <Navbar logged={props.auth} userLogged={props.user} />
+      <Navbar />
       {props.children}
     </>
   );
