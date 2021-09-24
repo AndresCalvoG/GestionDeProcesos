@@ -10,13 +10,13 @@ const Login = () => {
     <>
       <AppContext.Consumer>
         {({ email, setEmail, password, setPassword, fault, handleLogin }) => (
-          <main className="main-containerLog">
-            <article className="main-containerLog--card">
-              <figure className="logcard-image">
+          <main className="mainLogin">
+            <article className="mainLogin-card">
+              <figure className="mainLogin-image">
                 <img src={userLogo} alt="Logo Usuario" />
               </figure>
               <form
-                className="logcard-form"
+                className="mainLogin-form"
                 onSubmit={(e) => e.preventDefault()}
               >
                 <input
@@ -34,13 +34,13 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <div className="logcard-form--inline">
-                  <Link to="/password/reset" className="logcard-form--link">
+                <div className="mainLogin-board">
+                  <Link to="/password/reset" className="mainLogin-link">
                     ¿Olvidaste tu Contraseña?
                   </Link>
                   <span>{fault}</span>
                 </div>
-                <div className="logcard-button">
+                <div className="mainLogin-keypad">
                   <button onClick={handleLogin}>Ingresar</button>
                   <Link to="/register">
                     <button>Registrarme</button>
