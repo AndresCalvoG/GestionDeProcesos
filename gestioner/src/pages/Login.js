@@ -1,15 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import "./styles/logStyles.css";
+import "./styles/login.css";
 import userLogo from "../images/user.svg";
 import { AppContext } from "../context";
+import InputForm from "../components/InputForm";
 
 const Login = () => {
   return (
     <>
       <AppContext.Consumer>
-        {({ email, setEmail, password, setPassword, fault, handleLogin }) => (
+        {({
+          email,
+          setEmail,
+          password,
+          setPassword,
+          fault,
+          setFaultReset,
+          handleLogin,
+        }) => (
           <main className="mainLogin">
             <article className="mainLogin-card">
               <figure className="mainLogin-image">
@@ -19,23 +28,24 @@ const Login = () => {
                 className="mainLogin-form"
                 onSubmit={(e) => e.preventDefault()}
               >
-                <input
+                <InputForm
                   type="email"
-                  placeholder="Email"
-                  autoComplete="email"
-                  required
+                  label="Email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  action={setEmail}
                 />
-                <input
+                <InputForm
                   type="password"
-                  placeholder="Password"
-                  required
+                  label="Password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  action={setPassword}
                 />
                 <div className="mainLogin-board">
-                  <Link to="/password/reset" className="mainLogin-link">
+                  <Link
+                    to="/password/reset"
+                    className="mainLogin-link"
+                    onClick={setFaultReset("")}
+                  >
                     ¿Olvidaste tu Contraseña?
                   </Link>
                   <span>{fault}</span>

@@ -5,13 +5,14 @@ import Auth from "../utils/autenticacion";
 const AppContext = React.createContext();
 
 function AppProvider(props) {
+  //estados de Home
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState({});
   const [check, setCheck] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fault, setFault] = useState("");
-
+  //estados de pagina de registro
   const [contain, setContain] = useState(false);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -21,6 +22,9 @@ function AppProvider(props) {
   const [code, setCode] = useState("");
   const [faultReg, setFaultReg] = useState("");
   const nombres = `${nombre} ${apellido}`;
+  // estados de password reset
+  const [emailReset, setEmailReset] = useState("");
+  const [faultReset, setFaultReset] = useState("");
 
   const history = useHistory();
 
@@ -72,6 +76,8 @@ function AppProvider(props) {
     const route = await Auth.logoutUsers();
     history.push(route);
     setCheck(false);
+    setEmail("");
+    setPassword("");
   };
 
   const handleRegister = async () => {
@@ -107,7 +113,6 @@ function AppProvider(props) {
           first: nombre,
           last: apellido,
           email: emailReg,
-          key: passwordReg,
           cargo: cargo,
           code: code,
           id: response.uid,
@@ -117,6 +122,18 @@ function AppProvider(props) {
       } else {
         console.log(response.code);
       }
+    }
+  };
+
+  const handleReset = async () => {
+    const response = await Auth.resetPassword(emailReset);
+    if (response === "auth/invalid-email") {
+      setFaultReset("Correo invalido");
+    } else if (response === "auth/user-not-found") {
+      setFaultReset("Usuario no Registrado");
+    } else {
+      setFaultReset(response);
+      setEmailReset("");
     }
   };
 
@@ -137,6 +154,8 @@ function AppProvider(props) {
         cargo,
         code,
         faultReg,
+        emailReset,
+        faultReset,
         setUser,
         setAuth,
         setCheck,
@@ -150,9 +169,12 @@ function AppProvider(props) {
         setCargo,
         setCode,
         setFaultReg,
+        setEmailReset,
+        setFaultReset,
         handleLogin,
         handleLogout,
         handleRegister,
+        handleReset,
         nombres,
       }}
     >

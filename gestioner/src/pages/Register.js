@@ -1,7 +1,8 @@
 import React from "react";
+import InputForm from "../components/InputForm";
 import { AppContext } from "../context";
 
-import "./styles/regStyles.css";
+import "./styles/register.css";
 
 const Register = () => {
   return (
@@ -30,52 +31,41 @@ const Register = () => {
               <section className="form_register">
                 <h1>Registro</h1>
                 <form onSubmit={(e) => e.preventDefault()}>
-                  <input
+                  <InputForm
                     type="text"
-                    placeholder="Tu nombre..."
-                    autoComplete="name"
-                    required
+                    label="Tu nombre..."
                     value={nombre}
-                    onChange={(e) => setNombre(e.target.value)}
+                    action={setNombre}
                   />
-                  <input
+                  <InputForm
                     type="text"
-                    placeholder="Tu apellido..."
-                    autoComplete="apellido"
-                    required
+                    label="Tu apellido..."
                     value={apellido}
-                    onChange={(e) => setApellido(e.target.value)}
+                    action={setApellido}
                   />
-                  <input
+                  <InputForm
                     type="email"
-                    placeholder="Tu correo..."
-                    autoComplete="email"
-                    required
+                    label="Tu correo..."
                     value={emailReg}
-                    onChange={(e) => setEmailReg(e.target.value)}
+                    action={setEmailReg}
                   />
-                  <input
+                  <InputForm
                     type="password"
-                    placeholder="Contraseña..."
-                    required
+                    label="Contraseña..."
                     value={passwordReg}
-                    onChange={(e) => setPasswordReg(e.target.value)}
+                    action={setPasswordReg}
                   />
-                  <input
+                  <InputForm
                     type="text"
-                    placeholder="Cargo..."
-                    autoComplete="cargo"
-                    required
+                    label="Tu cargo..."
                     value={cargo}
-                    onChange={(e) => setCargo(e.target.value)}
+                    action={setCargo}
                   />
-                  <input
+                  <InputForm
                     type="text"
-                    placeholder="Codigo de empleado..."
-                    autoComplete="code"
-                    required
+                    label="Tu codigo de empleado..."
                     value={code}
-                    onChange={(e) => setCode(e.target.value)}
+                    action={setCode}
                   />
                   <span>{faultReg}</span>
                   <button className="send" onClick={handleRegister}>

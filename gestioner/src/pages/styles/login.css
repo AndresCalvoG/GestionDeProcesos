@@ -21,19 +21,6 @@
   align-items: center;
   font-size: 1.6rem;
 }
-.mainLogin-form input {
-  width: 100%;
-  background: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 1px solid #a5a5a6;
-  color: #464646;
-  margin: 15px auto;
-  padding: 15px;
-  outline: none;
-  font-size: 1.6rem;
-}
 .mainLogin-board {
   width: 100%;
   display: flex;
@@ -45,13 +32,15 @@
   width: 100%;
 }
 .mainLogin-keypad button {
-  width: 120px;
-  height: 50px;
+  width: 15rem;
+  height: 5rem;
   background-color: var(--blue);
   margin-top: 15px;
   border: none;
-  color: white;
-  font-size: 1.6rem;
+  color: var(--blanco1);
+  padding: 0.7rem;
+  font-size: 2rem;
+  box-shadow: 0px 8px 10px 0px #575656;
 }
 .mainLogin-form span {
   width: 50%;
@@ -82,10 +71,7 @@
   .mainLogin-form {
     width: 35%;
   }
-  .mainLogin-form input {
-    font-size: 1.6rem;
-  }
   .mainLogin-keypad button {
-    font-size: 1.6rem;
+    font-size: 2rem;
   }
 }

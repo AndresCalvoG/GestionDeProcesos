@@ -92,13 +92,12 @@ class Autenticacion {
   }
 
   //Metodo que valida usuario registrado
-  validUser() {
+  async validUser() {
     return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged(async (user) => {
         if (user) {
           resolve(user);
         } else {
-          //alert("Usuario no Autenticado");
           try {
             await firebase.auth().signOut();
             console.log("salida correcta");
@@ -110,6 +109,17 @@ class Autenticacion {
         }
       });
     });
+  }
+
+  //Metodo para recetiar contraseña
+  async resetPassword(email) {
+    try {
+      await firebase.auth().sendPasswordResetEmail(email);
+      return "Mensaje enviado";
+    } catch (error) {
+      console.log(error.code);
+      return error.code;
+    }
   }
 }
 

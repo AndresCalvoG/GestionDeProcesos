@@ -1,7 +1,7 @@
 import React from "react";
 import { AppContext } from "../context";
 
-import "./styles/navStyle.css";
+import "./styles/navar.css";
 import userProfile from "../images/profile.png";
 
 const Navbar = () => {
