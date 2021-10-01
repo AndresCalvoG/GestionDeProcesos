@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { AppContext } from "../context";
 
 import "./styles/home.css";
@@ -13,31 +12,33 @@ import binnacle from "../images/Bitacora.jpg";
 import passwords from "../images/password.svg";
 
 import HomeCard from "../components/HomeCard";
+import Modal from "../components/Modal";
 
 const Home = () => {
+  const { handleLogout } = React.useContext(AppContext);
+
   return (
     <>
-      <AppContext.Consumer>
-        {({ handleLogout }) => (
-          <main className="main-container">
-            <section className="main-container--menu">
-              <HomeCard
-                name="Logout"
-                image={userLog}
-                action={handleLogout}
-                route=""
-              />
-              <HomeCard name="Manual" image={pdf} route="/Manuals" />
-              <HomeCard name="Maquinas" image={machines} route="" />
-              <HomeCard name="Calendario" image={calendar} route="" />
-              <HomeCard name="Ayuda" image={help} route="" />
-              <HomeCard name="Turnos" image={schedule} route="" />
-              <HomeCard name="Bitacora" image={binnacle} route="" />
-              <HomeCard name="Contraseña" image={passwords} route="" />
-            </section>
-          </main>
-        )}
-      </AppContext.Consumer>
+      <main className="main-container">
+        <section className="main-container--menu">
+          <HomeCard
+            name="Logout"
+            image={userLog}
+            action={handleLogout}
+            route=""
+          />
+          <HomeCard name="Manual" image={pdf} route="/Manuals" />
+          <HomeCard name="Maquinas" image={machines} route="" />
+          <HomeCard name="Calendario" image={calendar} route="" />
+          <HomeCard name="Ayuda" image={help} route="" />
+          <HomeCard name="Turnos" image={schedule} route="" />
+          <HomeCard name="Bitacora" image={binnacle} route="" />
+          <HomeCard name="Contraseña" image={passwords} route="" />
+          <Modal>
+            <h1>Soy un Modal</h1>
+          </Modal>
+        </section>
+      </main>
     </>
   );
 };

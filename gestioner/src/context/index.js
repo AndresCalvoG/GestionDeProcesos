@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Auth from "../utils/autenticacion";
 
@@ -8,7 +8,6 @@ function AppProvider(props) {
   //estados de Home
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState({});
-  const [check, setCheck] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fault, setFault] = useState("");
@@ -28,28 +27,27 @@ function AppProvider(props) {
 
   const history = useHistory();
 
-  useEffect(() => {
-    (async function () {
-      let data = {
-        value: "0",
-        exists: false,
-      };
-      const response = await Auth.validUser();
-      if (response !== "/") {
-        data = await Auth.getDataUser(response.uid);
-      }
-      if (data.exists) {
-        setUser(data._delegate._document.data.value.mapValue);
-        setAuth(true);
-        console.log("reder true en app");
-      } else {
-        setAuth(false);
-        setUser({ value: false });
-        console.log("render false en app");
-      }
-    })();
-  }, [check]);
+  const getDataUsers = async () => {
+    let data = {
+      value: "0",
+      exists: false,
+    };
+    const response = await Auth.validUser();
+    if (response !== "/") {
+      data = await Auth.getDataUser(response.uid);
+    }
+    if (data.exists) {
+      setUser(data._delegate._document.data.value.mapValue);
+      setAuth(true);
+      console.log("reder true en app");
+    } else {
+      setAuth(false);
+      setUser({ value: false });
+      console.log("render false en app");
+    }
+  };
 
+  //Funciones de la pagina Login
   const handleLogin = async () => {
     if (email === "" || password === "") {
       setFault("Por favor completa todos los campos");
@@ -66,20 +64,34 @@ function AppProvider(props) {
       } else if (response === "Por favor verifique email enviado") {
         setFault(response);
       } else {
+        await getDataUsers();
         history.push(response);
-        setCheck(true);
       }
     }
   };
 
+  const handleReg = async () => {
+    setContain(false);
+    setNombre("");
+    setApellido("");
+    setEmailReg("");
+    setPasswordReg("");
+    setCargo("");
+    setCode("");
+    setFaultReg("");
+    history.push("/register");
+  };
+
+  // funciones de home
   const handleLogout = async () => {
     const route = await Auth.logoutUsers();
     history.push(route);
-    setCheck(false);
+    getDataUsers();
     setEmail("");
     setPassword("");
   };
 
+  // funciones de pagina de registro
   const handleRegister = async () => {
     if (
       nombre === "" ||
@@ -125,6 +137,7 @@ function AppProvider(props) {
     }
   };
 
+  //funciones pagina de reset password
   const handleReset = async () => {
     const response = await Auth.resetPassword(emailReset);
     if (response === "auth/invalid-email") {
@@ -142,7 +155,6 @@ function AppProvider(props) {
       value={{
         user,
         auth,
-        check,
         email,
         password,
         fault,
@@ -158,7 +170,6 @@ function AppProvider(props) {
         faultReset,
         setUser,
         setAuth,
-        setCheck,
         setEmail,
         setPassword,
         setFault,
@@ -172,9 +183,11 @@ function AppProvider(props) {
         setEmailReset,
         setFaultReset,
         handleLogin,
+        handleReg,
         handleLogout,
         handleRegister,
         handleReset,
+        getDataUsers,
         nombres,
       }}
     >
