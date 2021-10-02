@@ -4,7 +4,9 @@ import "./styles/modal.css";
 
 function Modal({ children }) {
   return ReactDOM.createPortal(
-    <div className="modalBackground">{children}</div>,
+    <div className="hiden" id="menu">
+      {children}
+    </div>,
     document.getElementById("modal")
   );
 }

@@ -24,6 +24,8 @@ const Register = () => {
     handleRegister,
   } = React.useContext(AppContext);
 
+  console.log(contain, nombres);
+
   return (
     <>
       {!contain ? (

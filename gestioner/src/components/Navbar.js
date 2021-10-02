@@ -5,7 +5,7 @@ import "./styles/navar.css";
 import userProfile from "../images/profile.png";
 
 const Navbar = () => {
-  const { user, auth } = React.useContext(AppContext);
+  const { user, auth, showMenu } = React.useContext(AppContext);
 
   return (
     <>
@@ -29,7 +29,7 @@ const Navbar = () => {
               <p>{user.fields.cargo.stringValue}</p>
               <p>{user.fields.code.stringValue}</p>
             </div>
-            <figure className="avatar">
+            <figure className="avatar" onClick={showMenu}>
               <img id="photo" src={userProfile} alt="avatar" />
             </figure>
           </section>

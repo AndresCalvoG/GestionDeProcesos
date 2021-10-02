@@ -35,7 +35,9 @@ const Home = () => {
           <HomeCard name="Bitacora" image={binnacle} route="" />
           <HomeCard name="Contraseña" image={passwords} route="" />
           <Modal>
-            <h1>Soy un Modal</h1>
+            <p>Mi Perfil</p>
+            <p>Noticias</p>
+            <p onClick={handleLogout}>Logout</p>
           </Modal>
         </section>
       </main>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import Auth from "../utils/autenticacion";
 
@@ -12,7 +12,7 @@ function AppProvider(props) {
   const [password, setPassword] = useState("");
   const [fault, setFault] = useState("");
   //estados de pagina de registro
-  const [contain, setContain] = useState(false);
+  const [contain, setContain] = useState(true);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [emailReg, setEmailReg] = useState("");
@@ -20,7 +20,7 @@ function AppProvider(props) {
   const [cargo, setCargo] = useState("");
   const [code, setCode] = useState("");
   const [faultReg, setFaultReg] = useState("");
-  const nombres = `${nombre} ${apellido}`;
+  const nombres = useMemo(() => `${nombre} ${apellido}`, [nombre, apellido]);
   // estados de password reset
   const [emailReset, setEmailReset] = useState("");
   const [faultReset, setFaultReset] = useState("");
@@ -47,6 +47,16 @@ function AppProvider(props) {
     }
   };
 
+  // funciones navbar
+  const showMenu = () => {
+    var menu = document.getElementById("menu");
+    if (menu.classList.contains("hiden")) {
+      menu.classList.replace("hiden", "modalBackground");
+    } else {
+      menu.classList.replace("modalBackground", "hiden");
+    }
+  };
+
   //Funciones de la pagina Login
   const handleLogin = async () => {
     if (email === "" || password === "") {
@@ -70,7 +80,7 @@ function AppProvider(props) {
     }
   };
 
-  const handleReg = async () => {
+  const handleReg = () => {
     setContain(false);
     setNombre("");
     setApellido("");
@@ -188,6 +198,7 @@ function AppProvider(props) {
         handleRegister,
         handleReset,
         getDataUsers,
+        showMenu,
         nombres,
       }}
     >
