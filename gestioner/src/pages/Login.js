@@ -13,9 +13,7 @@ const Login = () => {
     password,
     setPassword,
     fault,
-    setFaultReset,
     handleLogin,
-    handleReg,
   } = React.useContext(AppContext);
 
   return (
@@ -42,7 +40,7 @@ const Login = () => {
               <Link
                 to="/password/reset"
                 className="mainLogin-link"
-                onClick={setFaultReset("")}
+                
               >
                 ¿Olvidaste tu Contraseña?
               </Link>
@@ -50,7 +48,9 @@ const Login = () => {
             </div>
             <div className="mainLogin-keypad">
               <button onClick={handleLogin}>Ingresar</button>
-              <button onClick={handleReg}>Registrarme</button>
+              <Link to="/Register">
+              <button>Registrarme</button>
+              </Link>
             </div>
           </form>
         </article>

@@ -1,13 +1,28 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 
 import "./styles/passwordReset.css";
 import InputForm from "../components/InputForm";
-import { AppContext } from "../context";
+import Auth from "../utils/autenticacion";
+
 
 function PasswordReset() {
-  const { emailReset, setEmailReset, faultReset, handleReset } =
-    React.useContext(AppContext);
+  // estados de password reset
+  const [emailReset, setEmailReset] = useState("");
+  const [faultReset, setFaultReset] = useState("");
+
+  //funciones pagina de reset password
+  const handleReset = async () => {
+    const response = await Auth.resetPassword(emailReset);
+    if (response === "auth/invalid-email") {
+      setFaultReset("Correo invalido");
+    } else if (response === "auth/user-not-found") {
+      setFaultReset("Usuario no Registrado");
+    } else {
+      setFaultReset(response);
+      setEmailReset("");
+    }
+  };
 
   return (
     <>

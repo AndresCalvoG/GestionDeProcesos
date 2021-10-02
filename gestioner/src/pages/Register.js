@@ -1,30 +1,68 @@
-import React from "react";
+import React, {useState} from "react";
 import InputForm from "../components/InputForm";
-import { AppContext } from "../context";
+import Auth from "../utils/autenticacion";
+
 
 import "./styles/register.css";
 
 const Register = () => {
-  const {
-    contain,
-    nombre,
-    apellido,
-    emailReg,
-    passwordReg,
-    cargo,
-    code,
-    faultReg,
-    nombres,
-    setNombre,
-    setApellido,
-    setEmailReg,
-    setPasswordReg,
-    setCargo,
-    setCode,
-    handleRegister,
-  } = React.useContext(AppContext);
+  //estados de pagina de registro
+  const [contain, setContain] = useState(false);
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [emailReg, setEmailReg] = useState("");
+  const [passwordReg, setPasswordReg] = useState("");
+  const [cargo, setCargo] = useState("");
+  const [code, setCode] = useState("");
+  const [faultReg, setFaultReg] = useState("");
+  const nombres = `${nombre} ${apellido}`
 
-  console.log(contain, nombres);
+  // funciones de pagina de registro
+  const handleRegister = async () => {
+    if (
+      nombre === "" ||
+      apellido === "" ||
+      emailReg === "" ||
+      passwordReg === "" ||
+      cargo === "" ||
+      code === ""
+    ) {
+      setFaultReg("Por favor completa TODOS los campos");
+    } else {
+      setFaultReg("");
+      const response = await Auth.crearCuentaEmailPass(
+        emailReg,
+        passwordReg,
+        nombres
+      );
+
+      if (response.code === "auth/wrong-password") {
+        setFaultReg("Contraseña Incorrecta");
+      } else if (response.code === "auth/user-not-found") {
+        setFaultReg("Usuario Incorrecto");
+      } else if (response.code === "auth/invalid-email") {
+        setFaultReg("Email invalido");
+      } else if (response.code === "auth/weak-password") {
+        setFaultReg("Contraseña demasiado corta");
+      } else if (response.code === "auth/email-already-in-use") {
+        setFaultReg("Email ya registrado");
+      } else if (response.uid) {
+        const result = await Auth.crearUsersDb({
+          first: nombre,
+          last: apellido,
+          email: emailReg,
+          cargo: cargo,
+          code: code,
+          id: response.uid,
+        });
+        console.log(result);
+        setContain(true);
+      } else {
+        console.log(response.code);
+      }
+    }
+  };
+  
 
   return (
     <>

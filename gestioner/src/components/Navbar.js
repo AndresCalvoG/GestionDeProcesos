@@ -1,11 +1,32 @@
 import React from "react";
 import { AppContext } from "../context";
-
+import Auth from "../utils/autenticacion";
+import { useHistory } from "react-router-dom";
 import "./styles/navar.css";
 import userProfile from "../images/profile.png";
+import Modal from "../components/Modal";
 
 const Navbar = () => {
-  const { user, auth, showMenu } = React.useContext(AppContext);
+  const { user, auth, getDataUsers, setEmail, setPassword} = React.useContext(AppContext);
+  const history = useHistory();
+  
+  // funciones navbar
+  const showMenu = () => {
+    var menu = document.getElementById("menu");
+    if (menu.classList.contains("hiden")) {
+      menu.classList.replace("hiden", "modalBackground");
+    } else {
+      menu.classList.replace("modalBackground", "hiden");
+    }
+  };
+  
+  const handleLogout = async () => {
+    const route = await Auth.logoutUsers();
+    history.push(route);
+    getDataUsers();
+    setEmail("");
+    setPassword("");
+  };
 
   return (
     <>
@@ -33,6 +54,11 @@ const Navbar = () => {
               <img id="photo" src={userProfile} alt="avatar" />
             </figure>
           </section>
+          <Modal>
+            <p>Mi Perfil</p>
+            <p>Noticias</p>
+            <p onClick={handleLogout}>Logout</p>
+          </Modal>
         </header>
       )}
     </>

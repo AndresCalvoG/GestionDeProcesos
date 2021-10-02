@@ -1,5 +1,4 @@
 import React from "react";
-import { AppContext } from "../context";
 
 import "./styles/home.css";
 import userLog from "../images/user.svg";
@@ -12,10 +11,9 @@ import binnacle from "../images/Bitacora.jpg";
 import passwords from "../images/password.svg";
 
 import HomeCard from "../components/HomeCard";
-import Modal from "../components/Modal";
+
 
 const Home = () => {
-  const { handleLogout } = React.useContext(AppContext);
 
   return (
     <>
@@ -24,7 +22,6 @@ const Home = () => {
           <HomeCard
             name="Logout"
             image={userLog}
-            action={handleLogout}
             route=""
           />
           <HomeCard name="Manual" image={pdf} route="/Manuals" />
@@ -34,11 +31,7 @@ const Home = () => {
           <HomeCard name="Turnos" image={schedule} route="" />
           <HomeCard name="Bitacora" image={binnacle} route="" />
           <HomeCard name="Contraseña" image={passwords} route="" />
-          <Modal>
-            <p>Mi Perfil</p>
-            <p>Noticias</p>
-            <p onClick={handleLogout}>Logout</p>
-          </Modal>
+          
         </section>
       </main>
     </>
