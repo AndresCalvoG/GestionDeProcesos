@@ -4,12 +4,12 @@ import Auth from "../utils/autenticacion";
 import { useHistory } from "react-router-dom";
 import "./styles/navar.css";
 import userProfile from "../images/profile.png";
-import Modal from "../components/Modal";
+import Modal from "./Modal";
 
 const Navbar = () => {
   const { user, auth, getDataUsers, setEmail, setPassword} = React.useContext(AppContext);
   const history = useHistory();
-  
+
   // funciones navbar
   const showMenu = () => {
     var menu = document.getElementById("menu");

@@ -5,6 +5,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "../global.css";
 
 import Login from "../pages/Login";
+import Loader from "./Loader"
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import Home from "../pages/Home";
@@ -21,7 +22,7 @@ function App() {
       <AppProvider>
         <Layout>
           <AppContext.Consumer>
-            {({ auth }) =>
+            {({ auth, loader }) =>
               auth ? (
                 <Switch>
                   <Route
@@ -55,11 +56,18 @@ function App() {
                     render={(props) => <Login {...props} />}
                   />
                   <Route exact path="/Register" component={Register} />
-                  <Route
-                    exact
-                    path="/Home"
-                    render={(props) => <NotRegisterUser {...props} />}
-                  />
+                  {!loader?( 
+                    <Route
+                      exact
+                      path="/Home"
+                      render={(props) => <NotRegisterUser {...props} />}
+                    />):(
+                      <Route
+                      exact
+                      path="/Home"
+                      render={(props) => <Loader {...props} />}
+                    />
+                  )}
                   <Route
                     exact
                     path="/password/reset"

@@ -11,10 +11,12 @@ function AppProvider(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fault, setFault] = useState("");
+  const [loader, setLoader] = useState(false)
 
   const history = useHistory();
 
   const getDataUsers = async () => {
+    setLoader(true)
     let data = {
       value: "0",
       exists: false,
@@ -26,6 +28,7 @@ function AppProvider(props) {
     if (data.exists) {
       setUser(data._delegate._document.data.value.mapValue);
       setAuth(true);
+      setLoader(false)
       console.log("reder true en app");
     } else {
       setAuth(false);
@@ -53,8 +56,9 @@ function AppProvider(props) {
       } else if (response === "Por favor verifique email enviado") {
         setFault(response);
       } else {
-        await getDataUsers();
         history.push(response);
+        await getDataUsers();
+        
       }
     }
   };
@@ -73,6 +77,7 @@ function AppProvider(props) {
         email,
         password,
         fault,
+        loader,
         setUser,
         setAuth,
         setEmail,
