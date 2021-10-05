@@ -84,7 +84,7 @@ class Autenticacion {
     try {
       await firebase.auth().signOut();
       //console.log("salida correcta");
-      return "/";
+      return "/GestionDeProcesos";
     } catch (error) {
       console.log("no ha salido");
       return error;
@@ -101,7 +101,7 @@ class Autenticacion {
           try {
             await firebase.auth().signOut();
             console.log("salida correcta");
-            resolve("/");
+            resolve("/GestionDeProcesos");
           } catch (error) {
             console.log("no ha salido " + error);
             reject(error);
