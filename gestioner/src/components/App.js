@@ -5,7 +5,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "../global.css";
 
 import Login from "../pages/Login";
-import Loader from "./Loader"
+import Loader from "./Loader";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import Home from "../pages/Home";
@@ -27,7 +27,7 @@ function App() {
                 <Switch>
                   <Route
                     exact
-                    path="/"
+                    path="/GestionDeProcesos"
                     render={(props) => <Login {...props} />}
                   />
                   <Route exact path="/Register" component={Register} />
@@ -52,17 +52,18 @@ function App() {
                 <Switch>
                   <Route
                     exact
-                    path="/"
+                    path="/GestionDeProcesos"
                     render={(props) => <Login {...props} />}
                   />
                   <Route exact path="/Register" component={Register} />
-                  {!loader?( 
+                  {!loader ? (
                     <Route
                       exact
                       path="/Home"
                       render={(props) => <NotRegisterUser {...props} />}
-                    />):(
-                      <Route
+                    />
+                  ) : (
+                    <Route
                       exact
                       path="/Home"
                       render={(props) => <Loader {...props} />}
