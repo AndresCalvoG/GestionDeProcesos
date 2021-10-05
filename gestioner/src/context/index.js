@@ -11,12 +11,12 @@ function AppProvider(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fault, setFault] = useState("");
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
 
   const history = useHistory();
 
   const getDataUsers = async () => {
-    setLoader(true)
+    setLoader(true);
     let data = {
       value: "0",
       exists: false,
@@ -28,7 +28,7 @@ function AppProvider(props) {
     if (data.exists) {
       setUser(data._delegate._document.data.value.mapValue);
       setAuth(true);
-      setLoader(false)
+      setLoader(false);
       console.log("reder true en app");
     } else {
       setAuth(false);
@@ -37,14 +37,13 @@ function AppProvider(props) {
     }
   };
 
-  
-
   //Funciones de la pagina Login
   const handleLogin = async () => {
     if (email === "" || password === "") {
       setFault("Por favor completa todos los campos");
     } else {
       setFault("");
+      history.push("/home");
       const response = await Auth.autEmailPass(email, password);
 
       if (response.code === "auth/wrong-password") {
@@ -58,16 +57,9 @@ function AppProvider(props) {
       } else {
         history.push(response);
         await getDataUsers();
-        
       }
     }
   };
-
-  
-
-  
-
-  
 
   return (
     <AppContext.Provider
@@ -84,7 +76,7 @@ function AppProvider(props) {
         setPassword,
         setFault,
         handleLogin,
-        getDataUsers
+        getDataUsers,
       }}
     >
       {props.children}
