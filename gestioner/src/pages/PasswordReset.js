@@ -1,10 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./styles/passwordReset.css";
 import InputForm from "../components/InputForm";
 import Auth from "../utils/autenticacion";
-
 
 function PasswordReset() {
   // estados de password reset
@@ -44,7 +43,7 @@ function PasswordReset() {
             />
             <div className="mainReset-keypad">
               <button onClick={handleReset}>Cambiar Contraseña</button>
-              <Link to="/" className="mainReset-link">
+              <Link to="/GestionDeProcesos" className="mainReset-link">
                 &#11013; Regresar a inicio de sesion
               </Link>
               <Link to="/register">
