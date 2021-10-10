@@ -13,6 +13,7 @@ import PasswordReset from "../pages/PasswordReset";
 import Layout from "./Layout";
 import NotRegisterUser from "../pages/NotRegisterUser";
 import HandBooks from "../pages/HandBooks";
+import WorkOrder from "../pages/WorkOrder";
 
 import { AppContext } from "../context";
 
@@ -45,6 +46,11 @@ function App() {
                     exact
                     path="/Manuals"
                     render={(props) => <HandBooks {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/WorkOrder"
+                    render={(props) => <WorkOrder {...props} />}
                   />
                   <Route component={NotFound} />
                 </Switch>

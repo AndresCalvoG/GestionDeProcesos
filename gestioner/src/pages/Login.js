@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./styles/login.css";
-import userLogo from "../images/home/user.svg";
+import userLogo from "../images/login/user.svg";
 import { AppContext } from "../context";
 import InputForm from "../components/InputForm";
 

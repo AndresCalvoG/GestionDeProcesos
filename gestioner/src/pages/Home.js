@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./styles/home.css";
-import userLog from "../images/home/user.svg";
+import orden from "../images/home/ordenDeTrabajo.png";
 import pdf from "../images/home/pdf.png";
 import machines from "../images/home/maquina.png";
 import calendar from "../images/home/calendar.png";
@@ -17,7 +17,7 @@ const Home = () => {
     <>
       <main className="main-container">
         <section className="main-container--menu">
-          <HomeCard name="Logout" image={userLog} route="" />
+          <HomeCard name="Orden de Trabajo" image={orden} route="/WorkOrder" />
           <HomeCard name="Manual" image={pdf} route="/Manuals" />
           <HomeCard name="Maquinas" image={machines} route="" />
           <HomeCard name="Calendario" image={calendar} route="" />
