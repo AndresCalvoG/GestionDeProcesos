@@ -20,7 +20,7 @@ const Home = () => {
           <HomeCard name="Orden de Trabajo" image={orden} route="/WorkOrder" />
           <HomeCard name="Manual" image={pdf} route="/Manuals" />
           <HomeCard name="Maquinas" image={machines} route="" />
-          <HomeCard name="Calendario" image={calendar} route="" />
+          <HomeCard name="Calendario" image={calendar} route="/Calendar" />
           <HomeCard name="Ayuda" image={help} route="" />
           <HomeCard name="Turnos" image={schedule} route="" />
           <HomeCard name="Bitacora" image={binnacle} route="" />
