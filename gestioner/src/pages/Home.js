@@ -21,9 +21,9 @@ const Home = () => {
           <HomeCard name="Manual" image={pdf} route="/Manuals" />
           <HomeCard name="Maquinas" image={machines} route="" />
           <HomeCard name="Calendario" image={calendar} route="/Calendar" />
-          <HomeCard name="Ayuda" image={help} route="" />
+          <HomeCard name="Ayuda" image={help} route="/Help" />
           <HomeCard name="Turnos" image={schedule} route="" />
-          <HomeCard name="Bitacora" image={binnacle} route="" />
+          <HomeCard name="Bitacora" image={binnacle} route="/Binnacle" />
           <HomeCard name="Contraseña" image={passwords} route="" />
         </section>
       </main>

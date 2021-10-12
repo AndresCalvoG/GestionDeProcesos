@@ -15,6 +15,8 @@ import NotRegisterUser from "../pages/NotRegisterUser";
 import HandBooks from "../pages/HandBooks";
 import WorkOrder from "../pages/WorkOrder";
 import Calendar from "../pages/Calendar";
+import Help from "../pages/Help";
+import Binnacle from "../pages/Binnacle";
 
 import { AppContext } from "../context";
 
@@ -57,6 +59,16 @@ function App() {
                     exact
                     path="/Calendar"
                     render={(props) => <Calendar {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/Help"
+                    render={(props) => <Help {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/Binnacle"
+                    render={(props) => <Binnacle {...props} />}
                   />
                   <Route component={NotFound} />
                 </Switch>
