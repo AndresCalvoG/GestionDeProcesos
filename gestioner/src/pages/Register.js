@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import InputForm from "../components/InputForm";
 import Auth from "../utils/autenticacion";
-
+import database from "../utils/fireStore";
 
 import "./styles/register.css";
 
@@ -15,7 +15,7 @@ const Register = () => {
   const [cargo, setCargo] = useState("");
   const [code, setCode] = useState("");
   const [faultReg, setFaultReg] = useState("");
-  const nombres = `${nombre} ${apellido}`
+  const nombres = `${nombre} ${apellido}`;
 
   // funciones de pagina de registro
   const handleRegister = async () => {
@@ -47,7 +47,7 @@ const Register = () => {
       } else if (response.code === "auth/email-already-in-use") {
         setFaultReg("Email ya registrado");
       } else if (response.uid) {
-        const result = await Auth.crearUsersDb({
+        const result = await database.crearUsersDb({
           first: nombre,
           last: apellido,
           email: emailReg,
@@ -62,7 +62,6 @@ const Register = () => {
       }
     }
   };
-  
 
   return (
     <>

@@ -58,27 +58,6 @@ class Autenticacion {
     }
   }
 
-  //Metodo para enviar datos obtenidos a firestore database
-  async crearUsersDb(props) {
-    var db = firebase.firestore();
-    try {
-      await db.collection("users").doc(props.id).set(props);
-    } catch (error) {
-      return error.message;
-    }
-  }
-
-  // Metodo para obtener datos de firestore
-  async getDataUser(props) {
-    var db = firebase.firestore();
-    try {
-      var docRef = await db.collection("users").doc(props).get();
-      return docRef;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   //Metodo para logout de usuario
   async logoutUsers() {
     try {

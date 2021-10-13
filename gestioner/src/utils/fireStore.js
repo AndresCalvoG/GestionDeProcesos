@@ -1,16 +1,15 @@
 import firebase from "firebase/app";
 // Add the Firebase products that you want to use
 import "firebase/firestore";
-import firebaseConfig from "./ConfigFirebase";
 
 class Database {
   constructor() {
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+    //firebase.initializeApp(firebaseConfig);
   }
 
   //Metodo para enviar datos obtenidos a firestore database
-  async crearUsersDb1(props) {
+  async crearUsersDb(props) {
     var db = firebase.firestore();
     try {
       await db.collection("users").doc(props.id).set(props);
@@ -20,7 +19,7 @@ class Database {
   }
 
   // Metodo para obtener datos de firestore
-  async getDataUser1(props) {
+  async getDataUser(props) {
     var db = firebase.firestore();
     try {
       var docRef = await db.collection("users").doc(props).get();
