@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Auth from "../utils/autenticacion";
+import database from "../utils/fireStore";
 
 const AppContext = React.createContext();
 
@@ -23,7 +24,7 @@ function AppProvider(props) {
     };
     const response = await Auth.validUser();
     if (response !== "/") {
-      data = await Auth.getDataUser(response.uid);
+      data = await database.getDataUser(response.uid);
     }
     if (data.exists) {
       setUser(data._delegate._document.data.value.mapValue);

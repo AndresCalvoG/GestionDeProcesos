@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "./styles/calendar.css";
 import CALENDAR from "./js/calendar1";
 
 function Calendar() {
+  useEffect(() => {
+    var cal = CALENDAR();
+    cal.init();
+  });
+
   return (
     <>
       <main>
