@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import "./styles/calendar.css";
-import CALENDAR from "./js/calendar1";
+import CALENDAR from "../utils/calendar1";
 
 function Calendar() {
   useEffect(() => {

@@ -1,13 +1,13 @@
 .mainCalendar {
-  width: 100vw;
-  border-style: solid;
-  border-color: black;
+  width: 90vw;
+  margin: 15rem 0 15rem 5vw;
 }
 #cal {
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
-  margin: 15rem auto;
+  margin: 0;
   font: 20px/1.5 "Helvetica Neue", Helvatica, Arial, san-serif;
-  display: table;
+  display: flex;
+  flex-direction: column;
 }
 
 #cal .headere {
@@ -22,8 +22,7 @@
   font-weight: bold;
   text-shadow: 0px -1px 0 #87260c;
   text-transform: uppercase;
-  width: 90vw;
-  margin-left: 5vw;
+  width: 90%;
 }
 
 #cal .headere span {
@@ -42,10 +41,10 @@
   box-shadow: 0px -1px 2px rgba(0, 0, 0, 0.65);
 }
 .right.hook {
-  right: 15%;
+  right: 18%;
 }
 .left.hook {
-  left: 15%;
+  left: 18%;
 }
 
 #cal .headere .button {
@@ -55,8 +54,6 @@
 }
 #cal .headere .left.button {
   left: 0;
-  -webkit-border-top-left-radius: 5px;
-  -moz-border-radius-topleft: 5px;
   border-top-left-radius: 5px;
   border-right: 1px solid #ae2a0c;
 }
@@ -64,8 +61,6 @@
   right: 0;
   top: 0;
   border-left: 1px solid #ae2a0c;
-  -webkit-border-top-right-radius: 5px;
-  -moz-border-radius-topright: 5px;
   border-top-right-radius: 5px;
 }
 #cal .headere .button:hover {
@@ -81,8 +76,12 @@
 #cal table {
   background: #fff;
   border-collapse: collapse;
-  margin-left: 5vw;
+  width: 100%;
 }
+#cal #days {
+  margin-top: 6rem;
+}
+
 #cal td {
   color: #2b2b2b;
   width: 65px;
@@ -135,4 +134,21 @@
 }
 
 @media screen and (min-width: 900px) {
+  #cal .headere {
+    cursor: default;
+    background: #cd310d;
+    background-image: linear-gradient(#b32b0c, #cd310d);
+    height: 60px;
+    position: relative;
+    color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-weight: bold;
+    text-shadow: 0px -1px 0 #87260c;
+    text-transform: uppercase;
+    width: 90vw;
+  }
+  #cal #days {
+    margin-top: 0rem;
+  }
 }
