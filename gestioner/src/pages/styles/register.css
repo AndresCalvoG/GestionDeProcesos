@@ -1,9 +1,9 @@
-.main {
+.mainRegister {
   display: flex;
   justify-content: center;
   position: absolute;
   width: 100vw;
-  margin-top: 20%;
+  margin-top: 10%;
 }
 .main-success {
   display: flex;
@@ -65,7 +65,7 @@
 }
 
 @media screen and (min-width: 900px) {
-  .main {
+  .mainRegister {
     margin-top: 2%;
   }
   .form_register form {

@@ -11,9 +11,9 @@ function Calendar() {
 
   return (
     <>
-      <main>
+      <main className="mainCalendar">
         <div id="cal">
-          <div className="header">
+          <div className="headere">
             <span className="left button" id="prev">
               {" "}
               &lang;{" "}
