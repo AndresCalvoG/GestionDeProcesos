@@ -1,25 +1,36 @@
 import React from "react";
+import { AppContext } from "../context";
 
 import "./styles/workOrder.css";
 
 function WorkOrder() {
+  const { getCurrentDate } = React.useContext(AppContext);
+
   return (
     <>
-      <main className="main-container">
-        <h3>
+      <main className="mainWorkOrder">
+        <h2>
           Departamento de Mantenimiento <br />
           Solicitud de Trabajo
-        </h3>
-        <div className="cont">
+        </h2>
+        <seccion className="mainWorkOrder-cont">
           <form>
-            <label>Solicitud de Trabajo Nº:</label>
-            <input type="text" size="1" />
-            <br />
-            <div className="f">
-              <label for="Date">Fecha:</label>
-              <input type="Date" size="10" required />
+            <div className="contHeder">
+              <div>
+                <label>Solicitud de Trabajo Nº: </label>
+                <input type="text" size="1" value="1" />
+              </div>
+              <div>
+                <label for="Date">Fecha: </label>
+                <input
+                  type="text"
+                  size="10"
+                  value={getCurrentDate()}
+                  required
+                />
+              </div>
             </div>
-
+            {/*
             <div className="h">
               <label for="hora">Hora:</label>
               <input type="time" size="5" required />
@@ -139,8 +150,9 @@ function WorkOrder() {
             <div className="g">
               <button id="btn">Guardar</button>
             </div>
+            */}
           </form>
-        </div>
+        </seccion>
       </main>
     </>
   );

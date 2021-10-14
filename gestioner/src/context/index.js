@@ -62,6 +62,15 @@ function AppProvider(props) {
     }
   };
 
+  function getCurrentDate() {
+    let date = new Date();
+    var dd = date.getDate();
+    var mm = date.getMonth() + 1; //January is 0!
+    var yyyy = date.getFullYear();
+    var fullDate = `${dd}/${mm}/${yyyy}`;
+    return fullDate;
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -78,6 +87,7 @@ function AppProvider(props) {
         setFault,
         handleLogin,
         getDataUsers,
+        getCurrentDate,
       }}
     >
       {props.children}
