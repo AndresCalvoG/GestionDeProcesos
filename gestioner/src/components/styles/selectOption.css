@@ -1,0 +1,15 @@
+.selectOption {
+  width: 50%;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid #a5a5a6;
+  color: #464646;
+  margin: 5px auto;
+  padding: 0px;
+  outline: none;
+  font-size: 1.6rem;
+  text-align: center;
+  text-transform: uppercase;
+}

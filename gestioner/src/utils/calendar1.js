@@ -82,7 +82,7 @@ var CALENDAR = function () {
       startDay = new Date(year, month, day).getDay(),
       daysInMonths = [
         31,
-        (year % 4 == 0 && year % 100 != 0) || year % 400 == 0 ? 29 : 28,
+        (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0 ? 29 : 28,
         31,
         30,
         31,
@@ -162,7 +162,7 @@ var CALENDAR = function () {
 
     return createCal.cache[year][month];
 
-    console.dir(calendar);
+    //console.dir(calendar);
   }
   createCal.cache = {};
   return {

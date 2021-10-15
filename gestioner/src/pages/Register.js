@@ -75,36 +75,42 @@ const Register = () => {
                 label="Tu nombre..."
                 value={nombre}
                 action={setNombre}
+                class="inputForm"
               />
               <InputForm
                 type="text"
                 label="Tu apellido..."
                 value={apellido}
                 action={setApellido}
+                class="inputForm"
               />
               <InputForm
                 type="email"
                 label="Tu correo..."
                 value={emailReg}
                 action={setEmailReg}
+                class="inputForm"
               />
               <InputForm
                 type="password"
                 label="Contraseña..."
                 value={passwordReg}
                 action={setPasswordReg}
+                class="inputForm"
               />
               <InputForm
                 type="text"
                 label="Tu cargo..."
                 value={cargo}
                 action={setCargo}
+                class="inputForm"
               />
               <InputForm
                 type="text"
                 label="Tu codigo de empleado..."
                 value={code}
                 action={setCode}
+                class="inputForm"
               />
               <span>{faultReg}</span>
               <button className="send" onClick={handleRegister}>

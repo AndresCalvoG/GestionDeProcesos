@@ -3,11 +3,6 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 
 class Database {
-  constructor() {
-    // Initialize Firebase
-    //firebase.initializeApp(firebaseConfig);
-  }
-
   //Metodo para enviar datos obtenidos a firestore database
   async crearUsersDb(props) {
     var db = firebase.firestore();

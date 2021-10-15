@@ -40,6 +40,7 @@ function PasswordReset() {
               label="Email"
               value={emailReset}
               action={setEmailReset}
+              class="inputForm"
             />
             <div className="mainReset-keypad">
               <button onClick={handleReset}>Cambiar Contraseña</button>

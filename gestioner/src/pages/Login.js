@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import "./styles/login.css";
@@ -7,8 +7,19 @@ import { AppContext } from "../context";
 import InputForm from "../components/InputForm";
 
 const Login = () => {
-  const { email, setEmail, password, setPassword, fault, handleLogin } =
-    React.useContext(AppContext);
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    fault,
+    setFault,
+    handleLogin,
+  } = React.useContext(AppContext);
+
+  useEffect(() => {
+    setFault("");
+  }, []);
 
   return (
     <>
@@ -23,12 +34,14 @@ const Login = () => {
               label="Email"
               value={email}
               action={setEmail}
+              class="inputForm"
             />
             <InputForm
               type="password"
               label="Password"
               value={password}
               action={setPassword}
+              class="inputForm"
             />
             <div className="mainLogin-board">
               <Link to="/password/reset" className="mainLogin-link">

@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { AppContext } from "../context";
 
 import "./styles/workOrder.css";
+import InputForm from "../components/InputForm";
+import SelectOption from "../components/SelectOption";
 
 function WorkOrder() {
+  const areas = [
+    "envase",
+    "empaque",
+    "recubrimiento",
+    "esteril",
+    "planta 4",
+    "planta 2",
+    "tableteria",
+    "granulacion",
+    "mezclas secas",
+  ];
+  const [equipo, setEquipo] = useState("");
   const { user, getCurrentDate } = React.useContext(AppContext);
 
   return (
@@ -13,45 +27,60 @@ function WorkOrder() {
           Departamento de Mantenimiento <br />
           Solicitud de Trabajo
         </h1>
-        <seccion className="mainWorkOrder-cont">
+        <section className="mainWorkOrder-cont">
           <form>
             <div className="contHeder">
               <div>
                 <label>Nº: </label>
-                <input type="text" size="1" value="1" readOnly />
+                <InputForm
+                  type="text"
+                  size="1"
+                  value="1"
+                  readOnly={true}
+                  class="inputFormOrder"
+                />
               </div>
               <div>
                 <label>Fecha: </label>
-                <input
+                <InputForm
                   type="text"
                   size="7"
                   value={getCurrentDate().fullDate}
-                  readOnly
+                  readOnly={true}
+                  class="inputFormOrder"
                 />
               </div>
               <div>
                 <label>Hora: </label>
-                <input
+                <InputForm
                   type="text"
                   size="5"
                   value={getCurrentDate().fullHour}
-                  readOnly
+                  readOnly={true}
+                  class="inputFormOrder"
                 />
               </div>
               <div>
                 <label>Area:</label>
-                <input type="text" size="6" readOnly />
-              </div>
-              <div>
-                <label>Equipo:</label>
-                <input type="text" size="6" required />
+                <SelectOption options={areas} />
               </div>
             </div>
 
             <div className="contBody">
+              <div>
+                <label>Equipo:</label>
+                <SelectOption options={areas} />
+              </div>
               <div className="contBody-user">
                 <label>Solicitado por: </label>
-                <input type="text" value="" required />
+                <InputForm
+                  type="text"
+                  size="12"
+                  value={equipo}
+                  action={setEquipo}
+                  readOnly={false}
+                  class="inputFormOrder"
+                />
               </div>
               <div className="contBody-text">
                 <label>Descripcion de la Anomalia</label>
@@ -69,24 +98,24 @@ function WorkOrder() {
                 />
               </div>
               <div className="contBody-select--radius">
-                <label for="correctivo">Correctivo</label>
-                <input type="radio" id="correctivo" />
+                <label htmlfor="correctivo">Correctivo</label>
+                <input type="checkbox" id="correctivo" />
                 <br />
                 <label for="preventivo">Preventivo</label>
-                <input type="radio" id="preventivo" />
+                <input type="checkbox" id="preventivo" />
                 <br />
                 <label for="mejora">Mejora</label>
-                <input type="radio" id="mejora" />
+                <input type="checkbox" id="mejora" />
               </div>
               <div className="contBody-select--radius">
                 <label for="cuadre">Cuadre</label>
-                <input type="radio" id="cuadre" />
+                <input type="checkbox" id="cuadre" />
                 <br />
                 <label for="nuevo">P.Nuevo</label>
-                <input type="radio" id="nuevo" />
+                <input type="checkbox" id="nuevo" />
                 <br />
                 <label for="locativo">Locativo</label>
-                <input type="radio" id="locativo" />
+                <input type="checkbox" id="locativo" />
               </div>
             </div>
 
@@ -145,26 +174,22 @@ function WorkOrder() {
                 <input type="checkbox" id="no3" name="no3" value="no" />
               </div>
             </div>
-
-            {/*
-
-            <div className="ap">
+            <div className="contFooter">
               <label>Atendido por:</label>
-              <input type="text" size="10" />
-              <br />
+              <input
+                type="text"
+                value={`${user.fields.first.stringValue} ${user.fields.last.stringValue}`}
+              />
               <label>Supervisor y/o jefe de MTTO:</label>
-              <input type="text" size="10" />
-              <br />
+              <input type="text" />
               <label>Supervisor y/o jefe de Area:</label>
-              <input type="text" size="10" />
+              <input type="text" />
+              <div className="contFooter-btn">
+                <button id="btn">Guardar</button>
+              </div>
             </div>
-
-            <div className="g">
-              <button id="btn">Guardar</button>
-            </div>
-            */}
           </form>
-        </seccion>
+        </section>
       </main>
     </>
   );
