@@ -4,137 +4,149 @@ import { AppContext } from "../context";
 import "./styles/workOrder.css";
 
 function WorkOrder() {
-  const { getCurrentDate } = React.useContext(AppContext);
+  const { user, getCurrentDate } = React.useContext(AppContext);
 
   return (
     <>
       <main className="mainWorkOrder">
-        <h2>
+        <h1>
           Departamento de Mantenimiento <br />
           Solicitud de Trabajo
-        </h2>
+        </h1>
         <seccion className="mainWorkOrder-cont">
           <form>
             <div className="contHeder">
               <div>
-                <label>Solicitud de Trabajo Nº: </label>
-                <input type="text" size="1" value="1" />
+                <label>Nº: </label>
+                <input type="text" size="1" value="1" readOnly />
               </div>
               <div>
-                <label for="Date">Fecha: </label>
+                <label>Fecha: </label>
                 <input
                   type="text"
-                  size="10"
-                  value={getCurrentDate()}
-                  required
+                  size="7"
+                  value={getCurrentDate().fullDate}
+                  readOnly
                 />
               </div>
+              <div>
+                <label>Hora: </label>
+                <input
+                  type="text"
+                  size="5"
+                  value={getCurrentDate().fullHour}
+                  readOnly
+                />
+              </div>
+              <div>
+                <label>Area:</label>
+                <input type="text" size="6" readOnly />
+              </div>
+              <div>
+                <label>Equipo:</label>
+                <input type="text" size="6" required />
+              </div>
             </div>
+
+            <div className="contBody">
+              <div className="contBody-user">
+                <label>Solicitado por: </label>
+                <input type="text" value="" required />
+              </div>
+              <div className="contBody-text">
+                <label>Descripcion de la Anomalia</label>
+                <textarea rows="13" cols="45"></textarea>
+              </div>
+            </div>
+
+            <div className="contBody-select">
+              <div className="contBody-user">
+                <label>Asignado A: </label>
+                <input
+                  type="text"
+                  value={`${user.fields.first.stringValue} ${user.fields.last.stringValue}`}
+                  readOnly
+                />
+              </div>
+              <div className="contBody-select--radius">
+                <label for="correctivo">Correctivo</label>
+                <input type="radio" id="correctivo" />
+                <br />
+                <label for="preventivo">Preventivo</label>
+                <input type="radio" id="preventivo" />
+                <br />
+                <label for="mejora">Mejora</label>
+                <input type="radio" id="mejora" />
+              </div>
+              <div className="contBody-select--radius">
+                <label for="cuadre">Cuadre</label>
+                <input type="radio" id="cuadre" />
+                <br />
+                <label for="nuevo">P.Nuevo</label>
+                <input type="radio" id="nuevo" />
+                <br />
+                <label for="locativo">Locativo</label>
+                <input type="radio" id="locativo" />
+              </div>
+            </div>
+
+            <div className="contBody-time">
+              <div className="time">
+                <label for="Datei">Fecha inicio:</label>
+                <input type="Date" id="Datei" size="10" required />
+                <br />
+                <label for="horai">Hora inicio:</label>
+                <input type="time" id="horai" size="5" required />
+              </div>
+              <div className="time">
+                <label for="Datef">Fecha fin:</label>
+                <input
+                  type="Date"
+                  id="Datef"
+                  size="10"
+                  name="fechaf"
+                  required
+                />
+                <br />
+                <label for="horaf">Hora fin:</label>
+                <input type="time" id="horaf" size="5" required />
+              </div>
+            </div>
+
+            <div className="contBody">
+              <div className="contBody-text">
+                <label>Descripción de la reparación</label>
+                <textarea rows="13" cols="45"></textarea>
+              </div>
+            </div>
+
+            <div className="contBody-select">
+              <div className="contBody-select--radius">
+                <label for="correctivo">
+                  ¿La reparacion afecto el estado calificado del equipo?
+                </label>
+                <label>Si</label>
+                <input type="checkbox" id="si3" name="si3" value="si" />
+                <label>No</label>
+                <input type="checkbox" id="no3" name="no3" value="no" />
+              </div>
+              <div className="contBody-select--radius">
+                <label for="cuadre">¿Equipo operativo conforme?</label>
+                <label>Si</label>
+                <input type="checkbox" id="si3" name="si3" value="si" />
+                <label>No</label>
+                <input type="checkbox" id="no3" name="no3" value="no" />
+              </div>
+              <div className="contBody-select--radius">
+                <label for="cuadre">¿Requerimientos pendientes?</label>
+                <label>Si</label>
+                <input type="checkbox" id="si3" name="si3" value="si" />
+                <label>No</label>
+                <input type="checkbox" id="no3" name="no3" value="no" />
+              </div>
+            </div>
+
             {/*
-            <div className="h">
-              <label for="hora">Hora:</label>
-              <input type="time" size="5" required />
-            </div>
-
-            <div className="a">
-              <label for="area">Area:</label>
-              <input type="text" size="10" required />
-            </div>
-
-            <div className="e">
-              <label for="area">Equipo:</label>
-              <input type="text" size="10" required />
-            </div>
-
-            <div className="sp">
-              <label for="area">Solicitado por:</label>
-              <input type="text" size="10" required />
-            </div>
-
-            <div className="tx">
-              <label>Descripcion de la Anomalia</label>
-              <textarea name="Descripcion" rows="6" cols="130"></textarea>
-            </div>
-
-            <div className="radius">
-              <input type="radio" id="male" name="gender" value="male" />
-              <label for="male">Correctivo</label>
-              <br />
-              <input type="radio" id="female" name="gender" value="female" />
-              <label for="female">Preventivo</label>
-              <br />
-              <input type="radio" id="other" name="gender" value="other" />
-              <label for="other">Mejora</label>
-            </div>
-
-            <div className="radius2">
-              <input type="radio" id="male" name="gender" value="male" />
-              <label for="male">Cuadre</label>
-              <br />
-              <input type="radio" id="female" name="gender" value="female" />
-              <label for="female">P.Nuevo</label>
-              <br />
-              <input type="radio" id="other" name="gender" value="other" />
-              <label for="other">Locativo</label>
-            </div>
-
-            <div className="fi">
-              <label for="Date">Fecha inicio:</label>
-              <input type="Date" size="10" required />
-            </div>
-
-            <div className="hi">
-              <label for="hora">Hora inicio:</label>
-              <input type="time" size="5" required />
-            </div>
-
-            <div className="ff">
-              <label for="fechaf">Fecha fin:</label>
-              <input type="Date" size="10" name="fechaf" required />
-            </div>
-
-            <div className="hf">
-              <label for="hora">Hora fin:</label>
-              <input type="time" size="5" required />
-            </div>
-
-            <div className="tx2">
-              <label>Descripción de la reparación / Modificación</label>
-              <textarea name="Descripcion" rows="6" cols="130"></textarea>
-            </div>
-            <div className="cb">
-              <table>
-                <tr>
-                  <td>
-                    ¿La reparacion afecto el estado calificado del equipo?
-                  </td>
-                  <td>
-                    <label for="si1">Si</label>
-                    <input type="checkbox" id="si1" name="si1" value="si" />
-                    <label for="no1">No</label>
-                    <input type="checkbox" id="no1" name="no1" value="no" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>¿Equipo operativo conforme?</td>
-                  <td>
-                    <label for="si1">Si</label>
-                    <input type="checkbox" id="si2" name="si2" value="si" />
-                    <label for="no1">No</label>
-                    <input type="checkbox" id="no2" name="no2" value="no" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>¿Requerimientos pendientes?</td>
-                  <td>
-                    <label for="si1">Si</label>
-                    <input type="checkbox" id="si3" name="si3" value="si" />
-                    <label for="no1">No</label>
-                    <input type="checkbox" id="no3" name="no3" value="no" />
-                  </td>
-                </tr>
-              </table>
-            </div>
 
             <div className="ap">
               <label>Atendido por:</label>

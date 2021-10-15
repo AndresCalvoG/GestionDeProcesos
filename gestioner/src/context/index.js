@@ -67,8 +67,14 @@ function AppProvider(props) {
     var dd = date.getDate();
     var mm = date.getMonth() + 1; //January is 0!
     var yyyy = date.getFullYear();
+    var hour = date.getHours();
+    var min = date.getMinutes();
+    var sec = date.getSeconds();
+
+    var fullHour = `${hour}:${min}:${sec}`;
     var fullDate = `${dd}/${mm}/${yyyy}`;
-    return fullDate;
+
+    return { fullDate, fullHour };
   }
 
   return (
