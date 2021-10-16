@@ -6,6 +6,11 @@ import InputForm from "../components/InputForm";
 import SelectOption from "../components/SelectOption";
 
 function WorkOrder() {
+  const [area, setArea] = useState("");
+  const [equipo, setEquipo] = useState("");
+  const [solicitante, setSolicitante] = useState("");
+  const { user, getCurrentDate } = React.useContext(AppContext);
+
   const areas = [
     "envase",
     "empaque",
@@ -16,9 +21,16 @@ function WorkOrder() {
     "tableteria",
     "granulacion",
     "mezclas secas",
+    "capsulas blandas",
+    "recubrimiento",
   ];
-  const [equipo, setEquipo] = useState("");
-  const { user, getCurrentDate } = React.useContext(AppContext);
+  let equipos = ["otro", "uno"];
+
+  if (area === "envase") {
+    equipos = ["siebler 3", "siebles 4"];
+  } else {
+    equipos = ["otro", "dos"];
+  }
 
   return (
     <>
@@ -30,8 +42,8 @@ function WorkOrder() {
         <section className="mainWorkOrder-cont">
           <form>
             <div className="contHeder">
-              <div>
-                <label>Nº: </label>
+              <label>
+                Nº:
                 <InputForm
                   type="text"
                   size="1"
@@ -39,9 +51,9 @@ function WorkOrder() {
                   readOnly={true}
                   class="inputFormOrder"
                 />
-              </div>
-              <div>
-                <label>Fecha: </label>
+              </label>
+              <label>
+                Fecha:
                 <InputForm
                   type="text"
                   size="7"
@@ -49,9 +61,9 @@ function WorkOrder() {
                   readOnly={true}
                   class="inputFormOrder"
                 />
-              </div>
-              <div>
-                <label>Hora: </label>
+              </label>
+              <label>
+                Hora:
                 <InputForm
                   type="text"
                   size="5"
@@ -59,25 +71,29 @@ function WorkOrder() {
                   readOnly={true}
                   class="inputFormOrder"
                 />
-              </div>
-              <div>
-                <label>Area:</label>
-                <SelectOption options={areas} />
-              </div>
+              </label>
             </div>
 
             <div className="contBody">
-              <div>
-                <label>Equipo:</label>
-                <SelectOption options={areas} />
-              </div>
+              <label>
+                Area:
+                <SelectOption options={areas} value={area} action={setArea} />
+              </label>
+              <label>
+                Equipo:
+                <SelectOption
+                  options={equipos}
+                  value={equipo}
+                  action={setEquipo}
+                />
+              </label>
               <div className="contBody-user">
                 <label>Solicitado por: </label>
                 <InputForm
                   type="text"
-                  size="12"
-                  value={equipo}
-                  action={setEquipo}
+                  size="20"
+                  value={solicitante}
+                  action={setSolicitante}
                   readOnly={false}
                   class="inputFormOrder"
                 />
@@ -91,10 +107,12 @@ function WorkOrder() {
             <div className="contBody-select">
               <div className="contBody-user">
                 <label>Asignado A: </label>
-                <input
+                <InputForm
                   type="text"
+                  size="24"
                   value={`${user.fields.first.stringValue} ${user.fields.last.stringValue}`}
-                  readOnly
+                  readOnly={true}
+                  class="inputFormOrder"
                 />
               </div>
               <div className="contBody-select--radius">
@@ -180,8 +198,10 @@ function WorkOrder() {
                 type="text"
                 value={`${user.fields.first.stringValue} ${user.fields.last.stringValue}`}
               />
+              <br />
               <label>Supervisor y/o jefe de MTTO:</label>
               <input type="text" />
+              <br />
               <label>Supervisor y/o jefe de Area:</label>
               <input type="text" />
               <div className="contFooter-btn">

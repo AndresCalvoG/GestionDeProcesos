@@ -80,25 +80,20 @@ function App() {
                     render={(props) => <Login {...props} />}
                   />
                   <Route exact path="/Register" component={Register} />
-                  {!loader ? (
-                    <Route
-                      exact
-                      path="/Home"
-                      render={(props) => <NotRegisterUser {...props} />}
-                    />
-                  ) : (
-                    <Route
-                      exact
-                      path="/Home"
-                      render={(props) => <Loader {...props} />}
-                    />
-                  )}
                   <Route
                     exact
                     path="/password/reset"
                     render={(props) => <PasswordReset {...props} />}
                   />
-                  <Route component={NotFound} />
+                  {loader ? (
+                    <Route
+                      exact
+                      path="/loader"
+                      render={(props) => <Loader {...props} />}
+                    />
+                  ) : (
+                    <Route render={(props) => <NotRegisterUser {...props} />} />
+                  )}
                 </Switch>
               )
             }

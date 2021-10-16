@@ -30,13 +30,13 @@ function Calendar() {
             </span>
           </div>
           <table id="days">
+            <td>Dom</td>
             <td>lun</td>
             <td>Mar</td>
             <td>Mie</td>
             <td>Jue</td>
             <td>Vie</td>
             <td>Sab</td>
-            <td>Dom</td>
           </table>
           <div id="cal-frame">
             <table className="curr">

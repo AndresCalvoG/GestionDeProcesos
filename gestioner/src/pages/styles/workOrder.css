@@ -17,7 +17,7 @@
 }
 .contHeder {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: 39rem;
   padding: 10px;
   font-size: 1.8rem;
@@ -48,6 +48,9 @@
   width: 39rem;
   font-size: 1.8rem;
   padding: 10px;
+}
+.contBody-select div {
+  padding-top: 10px;
 }
 .contBody-select--radius {
   display: flex;

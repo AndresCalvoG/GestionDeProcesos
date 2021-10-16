@@ -3,7 +3,12 @@ import "./styles/selectOption.css";
 
 const SelectOption = (props) => {
   return (
-    <select id="select" className="selectOption">
+    <select
+      id="select"
+      className="selectOption"
+      onChange={(e) => props.action(e.target.value)}
+      value={props.value}
+    >
       {props.options.map((element) => {
         return <option>{element}</option>;
       })}

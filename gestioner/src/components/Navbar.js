@@ -1,14 +1,11 @@
 import React from "react";
 import { AppContext } from "../context";
-import Auth from "../utils/autenticacion";
-import { useHistory } from "react-router-dom";
 import "./styles/navar.css";
 import userProfile from "../images/profile.png";
 import Modal from "./Modal";
 
 const Navbar = () => {
-  const { user, auth, getDataUsers, setEmail, setPassword} = React.useContext(AppContext);
-  const history = useHistory();
+  const { user, auth, handleLogout } = React.useContext(AppContext);
 
   // funciones navbar
   const showMenu = () => {
@@ -18,14 +15,6 @@ const Navbar = () => {
     } else {
       menu.classList.replace("modalBackground", "hiden");
     }
-  };
-  
-  const handleLogout = async () => {
-    const route = await Auth.logoutUsers();
-    history.push(route);
-    getDataUsers();
-    setEmail("");
-    setPassword("");
   };
 
   return (

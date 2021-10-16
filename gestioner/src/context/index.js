@@ -6,30 +6,26 @@ import database from "../utils/fireStore";
 const AppContext = React.createContext();
 
 function AppProvider(props) {
-  //estados de Home
   const [auth, setAuth] = useState(false);
   const [user, setUser] = useState({});
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [fault, setFault] = useState("");
   const [loader, setLoader] = useState(false);
 
   const history = useHistory();
 
   const getDataUsers = async () => {
-    setLoader(true);
     let data = {
       value: "0",
       exists: false,
     };
     const response = await Auth.validUser();
-    if (response !== "/") {
+    if (response !== "/GestionDeProcesos") {
       data = await database.getDataUser(response.uid);
     }
     if (data.exists) {
       setUser(data._delegate._document.data.value.mapValue);
       setAuth(true);
       setLoader(false);
+      history.push("/home");
       console.log("reder true en app");
     } else {
       setAuth(false);
@@ -38,28 +34,10 @@ function AppProvider(props) {
     }
   };
 
-  //Funciones de la pagina Login
-  const handleLogin = async () => {
-    if (email === "" || password === "") {
-      setFault("Por favor completa todos los campos");
-    } else {
-      setFault("");
-      history.push("/home");
-      const response = await Auth.autEmailPass(email, password);
-
-      if (response.code === "auth/wrong-password") {
-        setFault("Contraseña Incorrecta");
-      } else if (response.code === "auth/user-not-found") {
-        setFault("Usuario ó Email Incorrecto");
-      } else if (response.code === "auth/invalid-email") {
-        setFault("Email Invalido");
-      } else if (response === "Por favor verifique email enviado") {
-        setFault(response);
-      } else {
-        history.push(response);
-        await getDataUsers();
-      }
-    }
+  const handleLogout = async () => {
+    const route = await Auth.logoutUsers();
+    history.push(route);
+    getDataUsers();
   };
 
   function getCurrentDate() {
@@ -82,16 +60,11 @@ function AppProvider(props) {
       value={{
         user,
         auth,
-        email,
-        password,
-        fault,
         loader,
         setUser,
         setAuth,
-        setEmail,
-        setPassword,
-        setFault,
-        handleLogin,
+        setLoader,
+        handleLogout,
         getDataUsers,
         getCurrentDate,
       }}

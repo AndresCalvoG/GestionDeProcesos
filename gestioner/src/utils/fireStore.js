@@ -21,6 +21,10 @@ class Database {
       return docRef;
     } catch (error) {
       console.log(error);
+      return {
+        value: "0",
+        exists: false,
+      };
     }
   }
 }

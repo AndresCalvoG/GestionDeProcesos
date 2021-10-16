@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import Auth from "../utils/autenticacion";
 
 import "./styles/login.css";
 import userLogo from "../images/login/user.svg";
@@ -7,19 +9,38 @@ import { AppContext } from "../context";
 import InputForm from "../components/InputForm";
 
 const Login = () => {
-  const {
-    email,
-    setEmail,
-    password,
-    setPassword,
-    fault,
-    setFault,
-    handleLogin,
-  } = React.useContext(AppContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fault, setFault] = useState("");
+  const history = useHistory();
 
-  useEffect(() => {
-    setFault("");
-  }, []);
+  const { setLoader, getDataUsers } = React.useContext(AppContext);
+
+  //Funciones de la pagina Login
+  const handleLogin = async () => {
+    if (email === "" || password === "") {
+      setFault("Por favor completa todos los campos");
+    } else {
+      setFault("");
+      const response = await Auth.authEmailPass(email, password);
+
+      if (response.code === "auth/wrong-password") {
+        setFault("Contraseña Incorrecta");
+      } else if (response.code === "auth/user-not-found") {
+        setFault("Usuario ó Email Incorrecto");
+      } else if (response.code === "auth/invalid-email") {
+        setFault("Email Invalido");
+      } else if (response.code === "auth/network-request-failed") {
+        setFault("Sin conexion a Internet");
+      } else if (response === "Por favor verifique email enviado") {
+        setFault(response);
+      } else {
+        setLoader(true);
+        history.push(response);
+        await getDataUsers();
+      }
+    }
+  };
 
   return (
     <>

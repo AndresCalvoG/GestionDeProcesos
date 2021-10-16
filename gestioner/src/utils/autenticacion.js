@@ -11,14 +11,14 @@ class Autenticacion {
     firebase.initializeApp(firebaseConfig);
   }
   // Metodo para autenticacion con correo y contraseña
-  async autEmailPass(email, password) {
+  async authEmailPass(email, password) {
     try {
       const result = await firebase
         .auth()
         .signInWithEmailAndPassword(email, password);
       if (result.user.emailVerified) {
         //console.log("ok verificado");
-        return "/home";
+        return "/loader";
       } else {
         await firebase.auth().signOut();
         return "Por favor verifique email enviado";
