@@ -9,6 +9,12 @@ function WorkOrder() {
   const [area, setArea] = useState("");
   const [equipo, setEquipo] = useState("");
   const [solicitante, setSolicitante] = useState("");
+  const [fechaInit, setFechaInit] = useState("");
+  const [horaInit, setHoraInit] = useState("");
+  const [fechaFin, setFechaFin] = useState("");
+  const [horaFin, setHoraFin] = useState("");
+  const [supervisorMtto, setSupervisorMtto] = useState("");
+  const [supervisorArea, setSupervisorArea] = useState("");
   const { user, getCurrentDate } = React.useContext(AppContext);
 
   const areas = [
@@ -116,47 +122,69 @@ function WorkOrder() {
                 />
               </div>
               <div className="contBody-select--radius">
-                <label htmlfor="correctivo">Correctivo</label>
+                <label>Correctivo</label>
                 <input type="checkbox" id="correctivo" />
                 <br />
-                <label for="preventivo">Preventivo</label>
+                <label>Preventivo</label>
                 <input type="checkbox" id="preventivo" />
                 <br />
-                <label for="mejora">Mejora</label>
+                <label>Mejora</label>
                 <input type="checkbox" id="mejora" />
               </div>
               <div className="contBody-select--radius">
-                <label for="cuadre">Cuadre</label>
+                <label>Cuadre</label>
                 <input type="checkbox" id="cuadre" />
                 <br />
-                <label for="nuevo">P.Nuevo</label>
+                <label>P.Nuevo</label>
                 <input type="checkbox" id="nuevo" />
                 <br />
-                <label for="locativo">Locativo</label>
+                <label>Locativo</label>
                 <input type="checkbox" id="locativo" />
               </div>
             </div>
 
             <div className="contBody-time">
               <div className="time">
-                <label for="Datei">Fecha inicio:</label>
-                <input type="Date" id="Datei" size="10" required />
-                <br />
-                <label for="horai">Hora inicio:</label>
-                <input type="time" id="horai" size="5" required />
-              </div>
-              <div className="time">
-                <label for="Datef">Fecha fin:</label>
-                <input
+                <label>Fecha inicio:</label>
+                <InputForm
                   type="Date"
-                  id="Datef"
-                  size="10"
-                  name="fechaf"
-                  required
+                  size="5"
+                  value={fechaInit}
+                  action={setFechaInit}
+                  readOnly={false}
+                  class="inputFormOrder"
                 />
                 <br />
-                <label for="horaf">Hora fin:</label>
-                <input type="time" id="horaf" size="5" required />
+                <label>Hora inicio:</label>
+                <InputForm
+                  type="time"
+                  size="5"
+                  value={horaInit}
+                  action={setHoraInit}
+                  readOnly={false}
+                  class="inputFormOrder"
+                />
+              </div>
+              <div className="time">
+                <label>Fecha fin:</label>
+                <InputForm
+                  type="Date"
+                  size="5"
+                  value={fechaFin}
+                  action={setFechaFin}
+                  readOnly={false}
+                  class="inputFormOrder"
+                />
+                <br />
+                <label>Hora fin:</label>
+                <InputForm
+                  type="time"
+                  size="5"
+                  value={horaFin}
+                  action={setHoraFin}
+                  readOnly={false}
+                  class="inputFormOrder"
+                />
               </div>
             </div>
 
@@ -169,7 +197,7 @@ function WorkOrder() {
 
             <div className="contBody-select">
               <div className="contBody-select--radius">
-                <label for="correctivo">
+                <label>
                   ¿La reparacion afecto el estado calificado del equipo?
                 </label>
                 <label>Si</label>
@@ -178,14 +206,14 @@ function WorkOrder() {
                 <input type="checkbox" id="no3" name="no3" value="no" />
               </div>
               <div className="contBody-select--radius">
-                <label for="cuadre">¿Equipo operativo conforme?</label>
+                <label>¿Equipo operativo conforme?</label>
                 <label>Si</label>
                 <input type="checkbox" id="si3" name="si3" value="si" />
                 <label>No</label>
                 <input type="checkbox" id="no3" name="no3" value="no" />
               </div>
               <div className="contBody-select--radius">
-                <label for="cuadre">¿Requerimientos pendientes?</label>
+                <label>¿Requerimientos pendientes?</label>
                 <label>Si</label>
                 <input type="checkbox" id="si3" name="si3" value="si" />
                 <label>No</label>
@@ -193,17 +221,40 @@ function WorkOrder() {
               </div>
             </div>
             <div className="contFooter">
-              <label>Atendido por:</label>
-              <input
-                type="text"
-                value={`${user.fields.first.stringValue} ${user.fields.last.stringValue}`}
-              />
+              <label>
+                Atendido por:
+                <InputForm
+                  type="text"
+                  size="24"
+                  value={`${user.fields.first.stringValue} ${user.fields.last.stringValue}`}
+                  readOnly={true}
+                  class="inputFormOrder"
+                />
+              </label>
               <br />
-              <label>Supervisor y/o jefe de MTTO:</label>
-              <input type="text" />
+              <label>
+                Supervisor y/o jefe de MTTO:
+                <InputForm
+                  type="text"
+                  size="24"
+                  value={supervisorMtto}
+                  action={setSupervisorMtto}
+                  readOnly={false}
+                  class="inputFormOrder"
+                />
+              </label>
               <br />
-              <label>Supervisor y/o jefe de Area:</label>
-              <input type="text" />
+              <label>
+                Supervisor y/o jefe de Area:
+                <InputForm
+                  type="text"
+                  size="24"
+                  value={supervisorArea}
+                  action={setSupervisorArea}
+                  readOnly={false}
+                  class="inputFormOrder"
+                />
+              </label>
               <div className="contFooter-btn">
                 <button id="btn">Guardar</button>
               </div>

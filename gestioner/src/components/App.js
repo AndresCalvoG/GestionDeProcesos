@@ -70,7 +70,15 @@ function App() {
                     path="/Binnacle"
                     render={(props) => <Binnacle {...props} />}
                   />
-                  <Route component={NotFound} />
+                  {loader ? (
+                    <Route
+                      exact
+                      path="/loader"
+                      render={(props) => <Loader {...props} />}
+                    />
+                  ) : (
+                    <Route component={NotFound} />
+                  )}
                 </Switch>
               ) : (
                 <Switch>
