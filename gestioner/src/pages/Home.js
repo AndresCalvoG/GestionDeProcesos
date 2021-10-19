@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./styles/home.css";
-import orden from "../images/home/ordenDeTrabajo.png";
+import Documents from "../images/home/Documents.png";
 import pdf from "../images/home/pdf.png";
 import machines from "../images/home/maquina.png";
 import calendar from "../images/home/calendar.png";
@@ -17,14 +17,14 @@ const Home = () => {
     <>
       <main className="main-container">
         <section className="main-container--menu">
-          <HomeCard name="Orden de Trabajo" image={orden} route="/WorkOrder" />
-          <HomeCard name="Manual" image={pdf} route="/Manuals" />
+          <HomeCard name="Documentacion" image={Documents} route="/Documents" />
+          <HomeCard name="Manuales" image={pdf} route="/Manuals" />
           <HomeCard name="Maquinas" image={machines} route="" />
           <HomeCard name="Calendario" image={calendar} route="/Calendar" />
           <HomeCard name="Ayuda" image={help} route="/Help" />
           <HomeCard name="Turnos" image={schedule} route="" />
           <HomeCard name="Bitacora" image={binnacle} route="/Binnacle" />
-          <HomeCard name="Contraseña" image={passwords} route="" />
+          <HomeCard name="Contraseñas" image={passwords} route="" />
         </section>
       </main>
     </>

@@ -1,11 +1,11 @@
 import React from "react";
-
+import TQ from "../images/tq.png";
 //import "./styles/binnacle.css";
 
 function Binnacle() {
   return (
     <>
-      <main>
+      <main className="main-container">
         <div class="title">
           <h2>
             Area de Manufactura
@@ -15,7 +15,7 @@ function Binnacle() {
         </div>
 
         <div class="img">
-          <img src="tq.png" alt="tq" width="90%" height="100%" />
+          <img src={TQ} alt="tq" width="90%" height="100%" />
         </div>
 
         <div>

@@ -5,15 +5,14 @@ import React from "react";
 function Help() {
   return (
     <>
-      <main>
-        <div className="til">
-          <h1>Reporte de Tiempo Extra</h1>
-        </div>
+      <main className="main-container">
+        <h1>Reporte de Tiempo Extra</h1>
         <div className="forme">
           <form>
-            <label for="datei">Fecha Inicial:</label>
-            <input type="date" name="FI" id="FI" />
-
+            <label>
+              Fecha Inicial:
+              <input type="date" name="FI" id="FI" />
+            </label>
             <label for="datei">Fecha Final:</label>
             <input type="date" name="FF" id="FF" />
 

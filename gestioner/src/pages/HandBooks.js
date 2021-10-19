@@ -10,7 +10,6 @@ function HandBooks() {
   return (
     <>
       <main className="main-container">
-        <h1>Manuales</h1>
         <section className="main-container--menu">
           <HandCard
             name="Manual_BG44x25-SI"

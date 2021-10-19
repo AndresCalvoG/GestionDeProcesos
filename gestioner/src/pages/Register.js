@@ -113,9 +113,7 @@ const Register = () => {
                 class="inputForm"
               />
               <span>{faultReg}</span>
-              <button className="send" onClick={handleRegister}>
-                Registrarme
-              </button>
+              <button onClick={handleRegister}>Registrarme</button>
             </form>
           </section>
         </main>

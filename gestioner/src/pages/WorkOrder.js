@@ -18,6 +18,7 @@ function WorkOrder() {
   const { user, getCurrentDate } = React.useContext(AppContext);
 
   const areas = [
+    "",
     "envase",
     "empaque",
     "recubrimiento",
@@ -28,14 +29,43 @@ function WorkOrder() {
     "granulacion",
     "mezclas secas",
     "capsulas blandas",
-    "recubrimiento",
   ];
-  let equipos = ["otro", "uno"];
+  let equipos = [""];
 
   if (area === "envase") {
-    equipos = ["siebler 3", "siebles 4"];
-  } else {
-    equipos = ["otro", "dos"];
+    equipos = [
+      "",
+      "blister 6",
+      "blister 2",
+      "blister 5",
+      "blister 3",
+      "blister 9",
+      "mF",
+      "siebler 3",
+      "siebles 4",
+      "blister 8",
+      "all fill",
+      "volpack",
+      "blister 10",
+      "hassia",
+    ];
+  } else if (area === "empaque") {
+    equipos = [
+      "",
+      "ramsey 1",
+      "ramsey 2",
+      "ramsey 3",
+      "ramsey 4",
+      "ramsey 5",
+      "flowpack",
+      "c100",
+      "c80",
+      "garvens 1",
+      "garvens 2",
+      "garvens 3",
+      "garvens 4",
+      "garvens 5",
+    ];
   }
 
   return (
@@ -255,9 +285,7 @@ function WorkOrder() {
                   class="inputFormOrder"
                 />
               </label>
-              <div className="contFooter-btn">
-                <button id="btn">Guardar</button>
-              </div>
+              <button>Guardar</button>
             </div>
           </form>
         </section>

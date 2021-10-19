@@ -17,6 +17,7 @@ import WorkOrder from "../pages/WorkOrder";
 import Calendar from "../pages/Calendar";
 import Help from "../pages/Help";
 import Binnacle from "../pages/Binnacle";
+import Documents from "../pages/Documents";
 
 import { AppContext } from "../context";
 
@@ -69,6 +70,11 @@ function App() {
                     exact
                     path="/Binnacle"
                     render={(props) => <Binnacle {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/Documents"
+                    render={(props) => <Documents {...props} />}
                   />
                   {loader ? (
                     <Route
