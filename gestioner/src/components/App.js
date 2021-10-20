@@ -35,51 +35,55 @@ function App() {
                     path="/GestionDeProcesos"
                     render={(props) => <Login {...props} />}
                   />
-                  <Route exact path="/Register" component={Register} />
                   <Route
                     exact
-                    path="/Home"
+                    path="/GestionDeProcesos/Register"
+                    component={Register}
+                  />
+                  <Route
+                    exact
+                    path="/GestionDeProcesos/Home"
                     render={(props) => <Home {...props} />}
                   />
                   <Route
                     exact
-                    path="/password/reset"
+                    path="/GestionDeProcesos/password/reset"
                     render={(props) => <PasswordReset {...props} />}
                   />
                   <Route
                     exact
-                    path="/Manuals"
+                    path="/GestionDeProcesos/Manuals"
                     render={(props) => <HandBooks {...props} />}
                   />
                   <Route
                     exact
-                    path="/WorkOrder"
+                    path="/GestionDeProcesos/WorkOrder"
                     render={(props) => <WorkOrder {...props} />}
                   />
                   <Route
                     exact
-                    path="/Calendar"
+                    path="/GestionDeProcesos/Calendar"
                     render={(props) => <Calendar {...props} />}
                   />
                   <Route
                     exact
-                    path="/Help"
+                    path="/GestionDeProcesos/Help"
                     render={(props) => <Help {...props} />}
                   />
                   <Route
                     exact
-                    path="/Binnacle"
+                    path="/GestionDeProcesos/Binnacle"
                     render={(props) => <Binnacle {...props} />}
                   />
                   <Route
                     exact
-                    path="/Documents"
+                    path="/GestionDeProcesos/Documents"
                     render={(props) => <Documents {...props} />}
                   />
                   {loader ? (
                     <Route
                       exact
-                      path="/loader"
+                      path="/GestionDeProcesos/loader"
                       render={(props) => <Loader {...props} />}
                     />
                   ) : (
@@ -93,16 +97,20 @@ function App() {
                     path="/GestionDeProcesos"
                     render={(props) => <Login {...props} />}
                   />
-                  <Route exact path="/Register" component={Register} />
                   <Route
                     exact
-                    path="/password/reset"
+                    path="/GestionDeProcesos/Register"
+                    component={Register}
+                  />
+                  <Route
+                    exact
+                    path="/GestionDeProcesos/password/reset"
                     render={(props) => <PasswordReset {...props} />}
                   />
                   {loader ? (
                     <Route
                       exact
-                      path="/loader"
+                      path="/GestionDeProcesos/loader"
                       render={(props) => <Loader {...props} />}
                     />
                   ) : (

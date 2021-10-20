@@ -18,7 +18,7 @@ class Autenticacion {
         .signInWithEmailAndPassword(email, password);
       if (result.user.emailVerified) {
         //console.log("ok verificado");
-        return "/loader";
+        return "/GestionDeProcesos/loader";
       } else {
         await firebase.auth().signOut();
         return "Por favor verifique email enviado";

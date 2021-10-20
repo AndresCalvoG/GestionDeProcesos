@@ -42,7 +42,7 @@ function AppProvider(props) {
     if (data.exists) {
       handleValid(true, data._delegate._document.data.value.mapValue, true);
       setLoader(false);
-      history.push("/home");
+      history.push("/GestionDeProcesos/home");
       console.log("reder true en app");
     } else {
       handleValid(false, { value: false }, false);
@@ -64,7 +64,7 @@ function AppProvider(props) {
   const handleLogout = async () => {
     const route = await Auth.logoutUsers();
     setLoader(true);
-    history.push("/Loader");
+    history.push("/GestionDeProcesos/Loader");
     getDataUsers();
     history.push(route);
   };

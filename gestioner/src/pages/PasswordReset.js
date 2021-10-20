@@ -47,7 +47,7 @@ function PasswordReset() {
               <Link to="/GestionDeProcesos" className="mainReset-link">
                 &#11013; Regresar a inicio de sesion
               </Link>
-              <Link to="/register">
+              <Link to="/GestionDeProcesos/register">
                 <button>Registrarme</button>
               </Link>
               <br />
