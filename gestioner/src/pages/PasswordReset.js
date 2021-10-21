@@ -44,10 +44,10 @@ function PasswordReset() {
             />
             <div className="mainReset-keypad">
               <button onClick={handleReset}>Cambiar Contraseña</button>
-              <Link to="/GestionDeProcesos" className="mainReset-link">
+              <Link to="/" className="mainReset-link">
                 &#11013; Regresar a inicio de sesion
               </Link>
-              <Link to="/GestionDeProcesos/register">
+              <Link to="/register">
                 <button>Registrarme</button>
               </Link>
               <br />

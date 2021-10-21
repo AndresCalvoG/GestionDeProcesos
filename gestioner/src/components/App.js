@@ -1,6 +1,6 @@
 import React from "react";
 import { AppProvider } from "../context/index";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { HashRouter, Switch, Route } from "react-router-dom";
 
 import "../global.css";
 
@@ -23,7 +23,7 @@ import { AppContext } from "../context";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AppProvider>
         <Layout>
           <AppContext.Consumer>
@@ -32,58 +32,54 @@ function App() {
                 <Switch>
                   <Route
                     exact
-                    path="/GestionDeProcesos"
+                    path="/"
                     render={(props) => <Login {...props} />}
                   />
+                  <Route exact path="/Register" component={Register} />
                   <Route
                     exact
-                    path="/GestionDeProcesos/Register"
-                    component={Register}
-                  />
-                  <Route
-                    exact
-                    path="/GestionDeProcesos/Home"
+                    path="/Home"
                     render={(props) => <Home {...props} />}
                   />
                   <Route
                     exact
-                    path="/GestionDeProcesos/password/reset"
+                    path="/password/reset"
                     render={(props) => <PasswordReset {...props} />}
                   />
                   <Route
                     exact
-                    path="/GestionDeProcesos/Manuals"
+                    path="/Manuals"
                     render={(props) => <HandBooks {...props} />}
                   />
                   <Route
                     exact
-                    path="/GestionDeProcesos/WorkOrder"
+                    path="/WorkOrder"
                     render={(props) => <WorkOrder {...props} />}
                   />
                   <Route
                     exact
-                    path="/GestionDeProcesos/Calendar"
+                    path="/Calendar"
                     render={(props) => <Calendar {...props} />}
                   />
                   <Route
                     exact
-                    path="/GestionDeProcesos/Help"
+                    path="/Help"
                     render={(props) => <Help {...props} />}
                   />
                   <Route
                     exact
-                    path="/GestionDeProcesos/Binnacle"
+                    path="/Binnacle"
                     render={(props) => <Binnacle {...props} />}
                   />
                   <Route
                     exact
-                    path="/GestionDeProcesos/Documents"
+                    path="/Documents"
                     render={(props) => <Documents {...props} />}
                   />
                   {loader ? (
                     <Route
                       exact
-                      path="/GestionDeProcesos/loader"
+                      path="/loader"
                       render={(props) => <Loader {...props} />}
                     />
                   ) : (
@@ -94,23 +90,19 @@ function App() {
                 <Switch>
                   <Route
                     exact
-                    path="/GestionDeProcesos"
+                    path="/"
                     render={(props) => <Login {...props} />}
                   />
+                  <Route exact path="/Register" component={Register} />
                   <Route
                     exact
-                    path="/GestionDeProcesos/Register"
-                    component={Register}
-                  />
-                  <Route
-                    exact
-                    path="/GestionDeProcesos/password/reset"
+                    path="/password/reset"
                     render={(props) => <PasswordReset {...props} />}
                   />
                   {loader ? (
                     <Route
                       exact
-                      path="/GestionDeProcesos/loader"
+                      path="/loader"
                       render={(props) => <Loader {...props} />}
                     />
                   ) : (
@@ -122,7 +114,7 @@ function App() {
           </AppContext.Consumer>
         </Layout>
       </AppProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

@@ -72,7 +72,7 @@ const Login = () => {
             </div>
             <div className="mainLogin-keypad">
               <button onClick={handleLogin}>Ingresar</button>
-              <Link to="/GestionDeProcesos/Register">
+              <Link to="/Register">
                 <button>Registrarme</button>
               </Link>
             </div>

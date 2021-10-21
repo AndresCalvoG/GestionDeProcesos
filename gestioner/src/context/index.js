@@ -36,13 +36,13 @@ function AppProvider(props) {
       exists: false,
     };
     const response = await Auth.validUser();
-    if (response !== "/GestionDeProcesos") {
+    if (response !== "/") {
       data = await database.getDataUser(response.uid);
     }
     if (data.exists) {
       handleValid(true, data._delegate._document.data.value.mapValue, true);
       setLoader(false);
-      history.push("/GestionDeProcesos/home");
+      history.push("/home");
       console.log("reder true en app");
     } else {
       handleValid(false, { value: false }, false);
@@ -50,6 +50,7 @@ function AppProvider(props) {
       console.log("render false en app");
     }
   };
+
   const handleValid = (token, user, mode) => {
     localStorage.setItem("valid", JSON.stringify(token));
     localStorage.setItem("user", JSON.stringify(user));
@@ -61,10 +62,11 @@ function AppProvider(props) {
       setUser(user);
     }
   };
+
   const handleLogout = async () => {
     const route = await Auth.logoutUsers();
     setLoader(true);
-    history.push("/GestionDeProcesos/Loader");
+    history.push("/Loader");
     getDataUsers();
     history.push(route);
   };

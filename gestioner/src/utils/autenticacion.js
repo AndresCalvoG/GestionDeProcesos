@@ -18,7 +18,7 @@ class Autenticacion {
         .signInWithEmailAndPassword(email, password);
       if (result.user.emailVerified) {
         //console.log("ok verificado");
-        return "/GestionDeProcesos/loader";
+        return "/loader";
       } else {
         await firebase.auth().signOut();
         return "Por favor verifique email enviado";
@@ -63,7 +63,7 @@ class Autenticacion {
     try {
       await firebase.auth().signOut();
       //console.log("salida correcta");
-      return "/GestionDeProcesos";
+      return "/";
     } catch (error) {
       console.log("no ha salido");
       return error;
@@ -80,7 +80,7 @@ class Autenticacion {
           try {
             await firebase.auth().signOut();
             console.log("salida correcta");
-            resolve("/GestionDeProcesos");
+            resolve("/");
           } catch (error) {
             console.log("no ha salido " + error);
             reject(error);

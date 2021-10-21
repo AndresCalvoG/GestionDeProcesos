@@ -17,29 +17,13 @@ const Home = () => {
     <>
       <main className="main-container">
         <section className="main-container--menu">
-          <HomeCard
-            name="Documentacion"
-            image={Documents}
-            route="/GestionDeProcesos/Documents"
-          />
-          <HomeCard
-            name="Manuales"
-            image={pdf}
-            route="/GestionDeProcesos/Manuals"
-          />
+          <HomeCard name="Documentacion" image={Documents} route="/Documents" />
+          <HomeCard name="Manuales" image={pdf} route="/Manuals" />
           <HomeCard name="Maquinas" image={machines} route="" />
-          <HomeCard
-            name="Calendario"
-            image={calendar}
-            route="/GestionDeProcesos/Calendar"
-          />
-          <HomeCard name="Ayuda" image={help} route="/GestionDeProcesos/Help" />
+          <HomeCard name="Calendario" image={calendar} route="/Calendar" />
+          <HomeCard name="Ayuda" image={help} route="/Help" />
           <HomeCard name="Turnos" image={schedule} route="" />
-          <HomeCard
-            name="Bitacora"
-            image={binnacle}
-            route="/GestionDeProcesos/Binnacle"
-          />
+          <HomeCard name="Bitacora" image={binnacle} route="/Binnacle" />
           <HomeCard name="Contraseñas" image={passwords} route="" />
         </section>
       </main>
