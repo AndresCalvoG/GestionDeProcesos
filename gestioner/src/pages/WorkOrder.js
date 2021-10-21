@@ -18,7 +18,6 @@ function WorkOrder() {
   const { user, getCurrentDate } = React.useContext(AppContext);
 
   const areas = [
-    "",
     "envase",
     "empaque",
     "recubrimiento",
@@ -34,7 +33,6 @@ function WorkOrder() {
 
   if (area === "envase") {
     equipos = [
-      "",
       "blister 6",
       "blister 2",
       "blister 5",
@@ -51,7 +49,6 @@ function WorkOrder() {
     ];
   } else if (area === "empaque") {
     equipos = [
-      "",
       "ramsey 1",
       "ramsey 2",
       "ramsey 3",

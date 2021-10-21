@@ -43,43 +43,41 @@ const Login = () => {
   };
 
   return (
-    <>
-      <main className="mainLogin">
-        <article className="mainLogin-card">
-          <figure className="mainLogin-image">
-            <img src={userLogo} alt="Logo Usuario" />
-          </figure>
-          <form className="mainLogin-form" onSubmit={(e) => e.preventDefault()}>
-            <InputForm
-              type="email"
-              label="Email"
-              value={email}
-              action={setEmail}
-              class="inputForm"
-            />
-            <InputForm
-              type="password"
-              label="Password"
-              value={password}
-              action={setPassword}
-              class="inputForm"
-            />
-            <div className="mainLogin-board">
-              <Link to="/password/reset" className="mainLogin-link">
-                ¿Olvidaste tu Contraseña?
-              </Link>
-              <span>{fault}</span>
-            </div>
-            <div className="mainLogin-keypad">
-              <button onClick={handleLogin}>Ingresar</button>
-              <Link to="/Register">
-                <button>Registrarme</button>
-              </Link>
-            </div>
-          </form>
-        </article>
-      </main>
-    </>
+    <main className="mainLogin">
+      <article className="mainLogin-card">
+        <figure className="mainLogin-image">
+          <img src={userLogo} alt="Logo Usuario" />
+        </figure>
+        <form className="mainLogin-form" onSubmit={(e) => e.preventDefault()}>
+          <InputForm
+            type="email"
+            label="Email"
+            value={email}
+            action={setEmail}
+            class="inputForm"
+          />
+          <InputForm
+            type="password"
+            label="Password"
+            value={password}
+            action={setPassword}
+            class="inputForm"
+          />
+          <div className="mainLogin-board">
+            <Link to="/password/reset" className="mainLogin-link">
+              ¿Olvidaste tu Contraseña?
+            </Link>
+            <span>{fault}</span>
+          </div>
+          <div className="mainLogin-keypad">
+            <button onClick={handleLogin}>Ingresar</button>
+            <Link to="/Register">
+              <button>Registrarme</button>
+            </Link>
+          </div>
+        </form>
+      </article>
+    </main>
   );
 };
 

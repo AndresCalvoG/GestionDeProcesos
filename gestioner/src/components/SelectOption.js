@@ -9,8 +9,8 @@ const SelectOption = (props) => {
       onChange={(e) => props.action(e.target.value)}
       value={props.value}
     >
-      {props.options.map((element) => {
-        return <option>{element}</option>;
+      {["", ...props.options].map((element) => {
+        return <option key={element}>{element}</option>;
       })}
     </select>
   );
