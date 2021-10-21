@@ -1,4 +1,5 @@
 import React from "react";
+import { Prompt } from "react-router-dom";
 
 import "./styles/home.css";
 import Documents from "../images/home/Documents.png";
@@ -27,6 +28,7 @@ const Home = () => {
           <HomeCard name="Contraseñas" image={passwords} route="" />
         </section>
       </main>
+      <Prompt when={false} message="Esta seguro que quieres salir?" />
     </>
   );
 };

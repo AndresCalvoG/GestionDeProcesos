@@ -86,6 +86,10 @@ function AppProvider(props) {
     return { fullDate, fullHour };
   }
 
+  // window.addEventListener("popstate", (e) => {
+  //   console.log(e);
+  // });
+
   return (
     <AppContext.Provider
       value={{
