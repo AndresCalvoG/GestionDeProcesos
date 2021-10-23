@@ -27,12 +27,12 @@ class Database {
       };
     }
   }
-  //MEtodo para obtener Areas de base de datos
-  async getDataAreas() {
+  //Metodo para obtener data de base de datos
+  async getData(props) {
     var db = firebase.firestore();
     try {
-      var docAreas = await db.collection("areas").doc(props).get();
-      return docAreas;
+      var docData = await db.collection("plantaJamundi").doc(props).get();
+      return docData;
     } catch (error) {
       console.log(error);
       return {

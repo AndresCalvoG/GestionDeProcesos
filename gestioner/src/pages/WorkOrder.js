@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AppContext } from "../context";
 
 import "./styles/workOrder.css";
@@ -17,20 +17,16 @@ function WorkOrder() {
   const [horaFin, setHoraFin] = useState("");
   const [supervisorMtto, setSupervisorMtto] = useState("");
   const [supervisorArea, setSupervisorArea] = useState("");
-  const { user, getCurrentDate } = React.useContext(AppContext);
+  const { user, getCurrentDate, getFireStoreData } =
+    React.useContext(AppContext);
 
-  const areas = [
-    "envase",
-    "empaque",
-    "recubrimiento",
-    "esteril",
-    "planta 4",
-    "planta 2",
-    "tableteria",
-    "granulacion",
-    "mezclas secas",
-    "capsulas blandas",
-  ];
+  useEffect(() => {
+    (async function () {
+      let result = await getFireStoreData(area);
+      setAreas(result.areas);
+      setEquipos(result.equipos);
+    })();
+  }, [area]);
 
   return (
     <main className="mainWorkOrder">

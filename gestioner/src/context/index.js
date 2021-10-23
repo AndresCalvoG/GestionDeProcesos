@@ -86,6 +86,27 @@ function AppProvider(props) {
     return { fullDate, fullHour };
   }
 
+  async function getFireStoreData(area) {
+    let docPlantaRef = "fCD5Pe1enki9eJkwuRQH";
+    let Data = await database.getData(docPlantaRef);
+    const path = Data._delegate._document.data.value.mapValue.fields;
+    let arrayAreas = path.areas.arrayValue.values;
+
+    let arrayEquipos = [];
+    if (area && area === "envase") {
+      arrayEquipos = path.envase.arrayValue.values;
+    }
+
+    let equipos = arrayEquipos.map((element) => {
+      return element.stringValue;
+    });
+    let areas = arrayAreas.map((element) => {
+      return element.stringValue;
+    });
+    //console.log(arrayEquipos);
+    return { areas, equipos };
+  }
+
   // window.addEventListener("popstate", (e) => {
   //   console.log(e);
   // });
@@ -102,6 +123,7 @@ function AppProvider(props) {
         handleLogout,
         getDataUsers,
         getCurrentDate,
+        getFireStoreData,
       }}
     >
       {props.children}
