@@ -27,6 +27,20 @@ class Database {
       };
     }
   }
+  //MEtodo para obtener Areas de base de datos
+  async getDataAreas() {
+    var db = firebase.firestore();
+    try {
+      var docAreas = await db.collection("areas").doc(props).get();
+      return docAreas;
+    } catch (error) {
+      console.log(error);
+      return {
+        value: "0",
+        exists: false,
+      };
+    }
+  }
 }
 
 const database = new Database();
