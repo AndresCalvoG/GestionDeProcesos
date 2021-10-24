@@ -53,8 +53,15 @@
   padding-top: 10px;
 }
 .contBody-select--radius {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 100%;
+}
+.contBody-select--radius2 {
+  display: grid;
+  grid-template-columns: auto 12% 12%;
+  grid-template-rows: 1fr 1fr 1fr;
   width: 100%;
 }
 .contBody-time {

@@ -6,6 +6,7 @@ import database from "../utils/fireStore";
 const AppContext = React.createContext();
 
 function AppProvider(props) {
+  //algoritmo para local storege
   const authenticated = localStorage.getItem("valid");
   const userActive = localStorage.getItem("user");
   let parseAuth = JSON.parse(authenticated);
@@ -23,10 +24,12 @@ function AppProvider(props) {
   } else {
     parseUser = JSON.parse(userActive);
   }
-
+  //estados compartidos de context
   const [auth, setAuth] = useState(parseAuth);
   const [user, setUser] = useState(parseUser);
   const [loader, setLoader] = useState(false);
+  const [areas, setAreas] = useState([]);
+  const [equipos, setEquipos] = useState([]);
 
   const history = useHistory();
 
@@ -95,6 +98,24 @@ function AppProvider(props) {
     let arrayEquipos = [];
     if (area && area === "envase") {
       arrayEquipos = path.envase.arrayValue.values;
+    } else if (area === "empaque") {
+      arrayEquipos = path.empaque.arrayValue.values;
+    } else if (area === "planta 4") {
+      arrayEquipos = path.planta4.arrayValue.values;
+    } else if (area === "planta 2") {
+      arrayEquipos = path.planta2.arrayValue.values;
+    } else if (area === "recubrimiento") {
+      arrayEquipos = path.recubrimiento.arrayValue.values;
+    } else if (area === "capsulas blandas") {
+      arrayEquipos = path.capsulasBlandas.arrayValue.values;
+    } else if (area === "tableteria") {
+      arrayEquipos = path.tableteria.arrayValue.values;
+    } else if (area === "mezclas secas") {
+      arrayEquipos = path.mezclasSecas.arrayValue.values;
+    } else if (area === "granulacion") {
+      arrayEquipos = path.granulacion.arrayValue.values;
+    } else if (area === "esteriles") {
+      arrayEquipos = path.esteriles.arrayValue.values;
     }
 
     let equipos = arrayEquipos.map((element) => {
@@ -103,8 +124,9 @@ function AppProvider(props) {
     let areas = arrayAreas.map((element) => {
       return element.stringValue;
     });
-    //console.log(arrayEquipos);
-    return { areas, equipos };
+    //console.log(path);
+    setAreas(areas);
+    setEquipos(equipos);
   }
 
   // window.addEventListener("popstate", (e) => {
@@ -117,6 +139,8 @@ function AppProvider(props) {
         user,
         auth,
         loader,
+        areas,
+        equipos,
         setUser,
         setAuth,
         setLoader,

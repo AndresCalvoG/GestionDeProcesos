@@ -6,9 +6,7 @@ import InputForm from "../components/InputForm";
 import SelectOption from "../components/SelectOption";
 
 function WorkOrder() {
-  const [areas, setAreas] = useState([]);
   const [area, setArea] = useState("");
-  const [equipos, setEquipos] = useState([]);
   const [equipo, setEquipo] = useState("");
   const [solicitante, setSolicitante] = useState("");
   const [fechaInit, setFechaInit] = useState("");
@@ -17,14 +15,20 @@ function WorkOrder() {
   const [horaFin, setHoraFin] = useState("");
   const [supervisorMtto, setSupervisorMtto] = useState("");
   const [supervisorArea, setSupervisorArea] = useState("");
-  const { user, getCurrentDate, getFireStoreData } =
+  const [descripcion, setDescripcion] = useState("");
+  const [correctivo, setCorrectivo] = useState(false);
+  const [preventivo, setPreventivo] = useState(false);
+  const [mejora, setMejora] = useState(false);
+  const [cuadre, setCuadre] = useState(false);
+  const [pnuevo, setPnuevo] = useState(false);
+  const [locativo, setLocativo] = useState(false);
+
+  const { user, getCurrentDate, getFireStoreData, areas, equipos } =
     React.useContext(AppContext);
 
   useEffect(() => {
     (async function () {
-      let result = await getFireStoreData(area);
-      setAreas(result.areas);
-      setEquipos(result.equipos);
+      await getFireStoreData(area);
     })();
   }, [area]);
 
@@ -95,7 +99,12 @@ function WorkOrder() {
             </div>
             <div className="contBody-text">
               <label>Descripcion de la Anomalia</label>
-              <textarea rows="13" cols="45"></textarea>
+              <textarea
+                rows="13"
+                cols="45"
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
+              ></textarea>
             </div>
           </div>
 
@@ -111,24 +120,66 @@ function WorkOrder() {
               />
             </div>
             <div className="contBody-select--radius">
-              <label>Correctivo</label>
-              <input type="checkbox" id="correctivo" />
-              <br />
-              <label>Preventivo</label>
-              <input type="checkbox" id="preventivo" />
-              <br />
-              <label>Mejora</label>
-              <input type="checkbox" id="mejora" />
-            </div>
-            <div className="contBody-select--radius">
-              <label>Cuadre</label>
-              <input type="checkbox" id="cuadre" />
-              <br />
-              <label>P.Nuevo</label>
-              <input type="checkbox" id="nuevo" />
-              <br />
-              <label>Locativo</label>
-              <input type="checkbox" id="locativo" />
+              <label>
+                <InputForm
+                  type="checkbox"
+                  value={correctivo}
+                  action={setCorrectivo}
+                  readOnly={false}
+                  class=""
+                />
+                Correctivo
+              </label>
+              <label>
+                <InputForm
+                  type="checkbox"
+                  value={preventivo}
+                  action={setPreventivo}
+                  readOnly={false}
+                  class=""
+                />
+                Preventivo
+              </label>
+              <label>
+                <InputForm
+                  type="checkbox"
+                  value={mejora}
+                  action={setMejora}
+                  readOnly={false}
+                  class=""
+                />
+                Mejora
+              </label>
+              <label>
+                <InputForm
+                  type="checkbox"
+                  value={cuadre}
+                  action={setCuadre}
+                  readOnly={false}
+                  class=""
+                />
+                Cuadre
+              </label>
+              <label>
+                <InputForm
+                  type="checkbox"
+                  value={pnuevo}
+                  action={setPnuevo}
+                  readOnly={false}
+                  class=""
+                />
+                P.Nuevo
+              </label>
+              <label>
+                <InputForm
+                  type="checkbox"
+                  value={locativo}
+                  action={setLocativo}
+                  readOnly={false}
+                  class=""
+                />
+                Locativo
+              </label>
             </div>
           </div>
 
@@ -185,28 +236,37 @@ function WorkOrder() {
           </div>
 
           <div className="contBody-select">
-            <div className="contBody-select--radius">
+            <div className="contBody-select--radius2">
               <label>
                 ¿La reparacion afecto el estado calificado del equipo?
               </label>
-              <label>Si</label>
-              <input type="checkbox" id="si3" name="si3" value="si" />
-              <label>No</label>
-              <input type="checkbox" id="no3" name="no3" value="no" />
-            </div>
-            <div className="contBody-select--radius">
+              <label>
+                Si
+                <input type="checkbox" id="si3" />
+              </label>
+              <label>
+                No
+                <input type="checkbox" id="no3" />
+              </label>
+
               <label>¿Equipo operativo conforme?</label>
-              <label>Si</label>
-              <input type="checkbox" id="si3" name="si3" value="si" />
-              <label>No</label>
-              <input type="checkbox" id="no3" name="no3" value="no" />
-            </div>
-            <div className="contBody-select--radius">
+              <label>
+                Si
+                <input type="checkbox" id="si3" />
+              </label>
+              <label>
+                No
+                <input type="checkbox" id="no3" />
+              </label>
               <label>¿Requerimientos pendientes?</label>
-              <label>Si</label>
-              <input type="checkbox" id="si3" name="si3" value="si" />
-              <label>No</label>
-              <input type="checkbox" id="no3" name="no3" value="no" />
+              <label>
+                Si
+                <input type="checkbox" id="si3" />
+              </label>
+              <label>
+                No
+                <input type="checkbox" id="no3" />
+              </label>
             </div>
           </div>
           <div className="contFooter">

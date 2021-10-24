@@ -11,21 +11,21 @@ import schedule from "../images/home/turnos.png";
 import binnacle from "../images/home/Bitacora.jpg";
 import passwords from "../images/home/password.svg";
 
-import HomeCard from "../components/HomeCard";
+import Card from "../components/Card";
 
 const Home = () => {
   return (
     <>
       <main className="main-container">
         <section className="main-container--menu">
-          <HomeCard name="Documentacion" image={Documents} route="/Documents" />
-          <HomeCard name="Manuales" image={pdf} route="/Manuals" />
-          <HomeCard name="Maquinas" image={machines} route="" />
-          <HomeCard name="Calendario" image={calendar} route="/Calendar" />
-          <HomeCard name="Ayuda" image={help} route="/Help" />
-          <HomeCard name="Turnos" image={schedule} route="" />
-          <HomeCard name="Bitacora" image={binnacle} route="/Binnacle" />
-          <HomeCard name="Contraseñas" image={passwords} route="" />
+          <Card name="Documentacion" image={Documents} route="/Documents" />
+          <Card name="Manuales" image={pdf} route="/Manuals" />
+          <Card name="Maquinas" image={machines} route="" />
+          <Card name="Calendario" image={calendar} route="/Calendar" />
+          <Card name="Ayuda" image={help} route="/Help" />
+          <Card name="Turnos" image={schedule} route="" />
+          <Card name="Bitacora" image={binnacle} route="/Binnacle" />
+          <Card name="Contraseñas" image={passwords} route="" />
         </section>
       </main>
       <Prompt when={false} message="Esta seguro que quieres salir?" />
