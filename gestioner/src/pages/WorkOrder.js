@@ -16,12 +16,14 @@ function WorkOrder() {
   const [supervisorMtto, setSupervisorMtto] = useState("");
   const [supervisorArea, setSupervisorArea] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const [correctivo, setCorrectivo] = useState(false);
-  const [preventivo, setPreventivo] = useState(false);
-  const [mejora, setMejora] = useState(false);
-  const [cuadre, setCuadre] = useState(false);
-  const [pnuevo, setPnuevo] = useState(false);
-  const [locativo, setLocativo] = useState(false);
+  const [labor, setLabor] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
 
   const { user, getCurrentDate, getFireStoreData, areas, equipos } =
     React.useContext(AppContext);
@@ -123,8 +125,8 @@ function WorkOrder() {
               <label>
                 <InputForm
                   type="checkbox"
-                  value={correctivo}
-                  action={setCorrectivo}
+                  value={labor[0]}
+                  action={setLabor}
                   readOnly={false}
                   class=""
                 />
@@ -133,8 +135,8 @@ function WorkOrder() {
               <label>
                 <InputForm
                   type="checkbox"
-                  value={preventivo}
-                  action={setPreventivo}
+                  value={labor[1]}
+                  action={setLabor}
                   readOnly={false}
                   class=""
                 />
@@ -143,8 +145,8 @@ function WorkOrder() {
               <label>
                 <InputForm
                   type="checkbox"
-                  value={mejora}
-                  action={setMejora}
+                  value={labor[2]}
+                  action={setLabor}
                   readOnly={false}
                   class=""
                 />
@@ -153,8 +155,8 @@ function WorkOrder() {
               <label>
                 <InputForm
                   type="checkbox"
-                  value={cuadre}
-                  action={setCuadre}
+                  value={labor[3]}
+                  action={setLabor}
                   readOnly={false}
                   class=""
                 />
@@ -163,8 +165,8 @@ function WorkOrder() {
               <label>
                 <InputForm
                   type="checkbox"
-                  value={pnuevo}
-                  action={setPnuevo}
+                  value={labor[4]}
+                  action={setLabor}
                   readOnly={false}
                   class=""
                 />
@@ -173,8 +175,8 @@ function WorkOrder() {
               <label>
                 <InputForm
                   type="checkbox"
-                  value={locativo}
-                  action={setLocativo}
+                  value={labor[5]}
+                  action={setLabor}
                   readOnly={false}
                   class=""
                 />
