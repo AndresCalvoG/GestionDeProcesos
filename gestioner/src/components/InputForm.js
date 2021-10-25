@@ -7,7 +7,14 @@ const InputForm = (props) => {
       type={props.type}
       checked={props.value}
       size={props.size}
-      onChange={(e) => props.action(e.target.checked)}
+      onChange={(e) => {
+        let array = [];
+        for (let i = 0; i < props.array; i++) {
+          array.push(false);
+        }
+        array[props.index] = e.target.checked;
+        props.action(array);
+      }}
       className={props.class}
       readOnly={props.readOnly}
     />

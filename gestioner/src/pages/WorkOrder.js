@@ -127,8 +127,8 @@ function WorkOrder() {
                   type="checkbox"
                   value={labor[0]}
                   action={setLabor}
-                  readOnly={false}
-                  class=""
+                  index={0}
+                  array={labor.length}
                 />
                 Correctivo
               </label>
@@ -137,8 +137,8 @@ function WorkOrder() {
                   type="checkbox"
                   value={labor[1]}
                   action={setLabor}
-                  readOnly={false}
-                  class=""
+                  index={1}
+                  array={labor.length}
                 />
                 Preventivo
               </label>
@@ -147,8 +147,8 @@ function WorkOrder() {
                   type="checkbox"
                   value={labor[2]}
                   action={setLabor}
-                  readOnly={false}
-                  class=""
+                  index={2}
+                  array={labor.length}
                 />
                 Mejora
               </label>
@@ -157,8 +157,8 @@ function WorkOrder() {
                   type="checkbox"
                   value={labor[3]}
                   action={setLabor}
-                  readOnly={false}
-                  class=""
+                  index={3}
+                  array={labor.length}
                 />
                 Cuadre
               </label>
@@ -167,8 +167,8 @@ function WorkOrder() {
                   type="checkbox"
                   value={labor[4]}
                   action={setLabor}
-                  readOnly={false}
-                  class=""
+                  index={4}
+                  array={labor.length}
                 />
                 P.Nuevo
               </label>
@@ -177,8 +177,8 @@ function WorkOrder() {
                   type="checkbox"
                   value={labor[5]}
                   action={setLabor}
-                  readOnly={false}
-                  class=""
+                  index={5}
+                  array={labor.length}
                 />
                 Locativo
               </label>
