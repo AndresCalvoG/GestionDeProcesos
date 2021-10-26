@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import "./styles/passwordReset.css";
 import InputForm from "../components/InputForm";
+import Button from "../components/Button";
 import Auth from "../utils/autenticacion";
 
 function PasswordReset() {
@@ -42,12 +43,16 @@ function PasswordReset() {
             class="inputForm"
           />
           <div className="mainReset-keypad">
-            <button onClick={handleReset}>Cambiar Contraseña</button>
+            <Button
+              name="Cambiar Contraseña"
+              class="resetPage"
+              action={handleReset}
+            />
             <Link to="/" className="mainReset-link">
               &#11013; Regresar a inicio de sesion
             </Link>
             <Link to="/register">
-              <button>Registrarme</button>
+              <Button name="Registrarme" class="resetPage" />
             </Link>
             <br />
             <span>{faultReset}</span>

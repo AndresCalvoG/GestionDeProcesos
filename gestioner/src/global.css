@@ -1,7 +1,7 @@
 :root {
   --blue: #3d7fbc;
   --gray: #999999;
-  --blanco: #f6f5f5;
+  --baseWhite: #f6f5f5;
   --blanco1: #ffffff;
   --lightgray: #ddd9d9;
   --red: #ff0000;
@@ -24,23 +24,6 @@ img {
 body {
   display: flex;
   flex-direction: column;
-  background-color: var(--blanco);
+  background-color: var(--baseWhite);
   color: var(--gray);
-}
-button {
-  width: 15rem;
-  height: 5rem;
-  background-color: var(--blue);
-  margin-top: 15px;
-  border: none;
-  color: var(--blanco1);
-  padding: 0.7rem;
-  font-size: 2rem;
-  box-shadow: 0px 8px 10px 0px #575656;
-}
-
-@media screen and (min-width: 900px) {
-  button {
-    font-size: 2rem;
-  }
 }

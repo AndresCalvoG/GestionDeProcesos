@@ -4,6 +4,7 @@ import { AppContext } from "../context";
 import "./styles/workOrder.css";
 import InputForm from "../components/InputForm";
 import SelectOption from "../components/SelectOption";
+import Button from "../components/Button";
 
 function WorkOrder() {
   const [area, setArea] = useState("");
@@ -15,7 +16,11 @@ function WorkOrder() {
   const [horaFin, setHoraFin] = useState("");
   const [supervisorMtto, setSupervisorMtto] = useState("");
   const [supervisorArea, setSupervisorArea] = useState("");
-  const [descripcion, setDescripcion] = useState("");
+  const [anomalia, setAnomalia] = useState("");
+  const [reparacion, setReparacion] = useState("");
+  const [qualified, setQualified] = useState([false, false]);
+  const [operative, setOperative] = useState([false, false]);
+  const [pending, setPending] = useState([false, false]);
   const [labor, setLabor] = useState([
     false,
     false,
@@ -41,7 +46,7 @@ function WorkOrder() {
         Solicitud de Trabajo
       </h1>
       <section className="mainWorkOrder-cont">
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <div className="contHeder">
             <label>
               Nº:
@@ -104,8 +109,8 @@ function WorkOrder() {
               <textarea
                 rows="13"
                 cols="45"
-                value={descripcion}
-                onChange={(e) => setDescripcion(e.target.value)}
+                value={anomalia}
+                onChange={(e) => setAnomalia(e.target.value)}
               ></textarea>
             </div>
           </div>
@@ -187,87 +192,132 @@ function WorkOrder() {
 
           <div className="contBody-time">
             <div className="time">
-              <label>Fecha inicio:</label>
-              <InputForm
-                type="Date"
-                size="5"
-                value={fechaInit}
-                action={setFechaInit}
-                readOnly={false}
-                class="inputFormOrder"
-              />
-              <br />
-              <label>Hora inicio:</label>
-              <InputForm
-                type="time"
-                size="5"
-                value={horaInit}
-                action={setHoraInit}
-                readOnly={false}
-                class="inputFormOrder"
-              />
+              <label>
+                Fecha inicio:
+                <InputForm
+                  type="Date"
+                  size="5"
+                  value={fechaInit}
+                  action={setFechaInit}
+                  readOnly={false}
+                  class="inputFormOrder"
+                />
+              </label>
+              <label>
+                Hora inicio:
+                <InputForm
+                  type="time"
+                  size="5"
+                  value={horaInit}
+                  action={setHoraInit}
+                  readOnly={false}
+                  class="inputFormOrder"
+                />
+              </label>
             </div>
             <div className="time">
-              <label>Fecha fin:</label>
-              <InputForm
-                type="Date"
-                size="5"
-                value={fechaFin}
-                action={setFechaFin}
-                readOnly={false}
-                class="inputFormOrder"
-              />
-              <br />
-              <label>Hora fin:</label>
-              <InputForm
-                type="time"
-                size="5"
-                value={horaFin}
-                action={setHoraFin}
-                readOnly={false}
-                class="inputFormOrder"
-              />
+              <label>
+                Fecha fin:
+                <InputForm
+                  type="Date"
+                  size="5"
+                  value={fechaFin}
+                  action={setFechaFin}
+                  readOnly={false}
+                  class="inputFormOrder"
+                />
+              </label>
+              <label>
+                Hora fin:
+                <InputForm
+                  type="time"
+                  size="5"
+                  value={horaFin}
+                  action={setHoraFin}
+                  readOnly={false}
+                  class="inputFormOrder"
+                />
+              </label>
             </div>
           </div>
 
           <div className="contBody">
             <div className="contBody-text">
               <label>Descripción de la reparación</label>
-              <textarea rows="13" cols="45"></textarea>
+              <textarea
+                rows="13"
+                cols="45"
+                value={reparacion}
+                onChange={(e) => setReparacion(e.target.value)}
+              ></textarea>
             </div>
           </div>
 
           <div className="contBody-select">
-            <div className="contBody-select--radius2">
-              <label>
-                ¿La reparacion afecto el estado calificado del equipo?
-              </label>
+            <div className="contBody-select--bool">
+              <p>¿La reparacion afecto el estado calificado del equipo?</p>
               <label>
                 Si
-                <input type="checkbox" id="si3" />
+                <InputForm
+                  type="checkbox"
+                  value={qualified[0]}
+                  action={setQualified}
+                  index={0}
+                  array={qualified.length}
+                />
               </label>
               <label>
                 No
-                <input type="checkbox" id="no3" />
+                <InputForm
+                  type="checkbox"
+                  value={qualified[1]}
+                  action={setQualified}
+                  index={1}
+                  array={qualified.length}
+                />
               </label>
 
-              <label>¿Equipo operativo conforme?</label>
+              <p>¿Equipo operativo conforme?</p>
               <label>
                 Si
-                <input type="checkbox" id="si3" />
+                <InputForm
+                  type="checkbox"
+                  value={operative[0]}
+                  action={setOperative}
+                  index={0}
+                  array={operative.length}
+                />
               </label>
               <label>
                 No
-                <input type="checkbox" id="no3" />
+                <InputForm
+                  type="checkbox"
+                  value={operative[1]}
+                  action={setOperative}
+                  index={1}
+                  array={operative.length}
+                />
               </label>
-              <label>¿Requerimientos pendientes?</label>
+              <p>¿Requerimientos pendientes?</p>
               <label>
                 Si
-                <input type="checkbox" id="si3" />
+                <InputForm
+                  type="checkbox"
+                  value={pending[0]}
+                  action={setPending}
+                  index={0}
+                  array={pending.length}
+                />
               </label>
               <label>
                 No
-                <input type="checkbox" id="no3" />
+                <InputForm
+                  type="checkbox"
+                  value={pending[1]}
+                  action={setPending}
+                  index={1}
+                  array={pending.length}
+                />
               </label>
             </div>
           </div>
@@ -306,7 +356,7 @@ function WorkOrder() {
                 class="inputFormOrder"
               />
             </label>
-            <button>Guardar</button>
+            <Button name="Guardar" class="submit" />
           </div>
         </form>
       </section>

@@ -7,6 +7,7 @@ import "./styles/login.css";
 import userLogo from "../images/login/user.svg";
 import { AppContext } from "../context";
 import InputForm from "../components/InputForm";
+import Button from "../components/Button";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -70,9 +71,9 @@ const Login = () => {
             <span>{fault}</span>
           </div>
           <div className="mainLogin-keypad">
-            <button onClick={handleLogin}>Ingresar</button>
+            <Button name="Ingresar" class="submit" action={handleLogin} />
             <Link to="/Register">
-              <button>Registrarme</button>
+              <Button name="Registrarme" class="submit" />
             </Link>
           </div>
         </form>

@@ -21,7 +21,6 @@
   width: 39rem;
   padding: 10px;
   font-size: 1.8rem;
-  border: 0px solid #73ad21;
 }
 .contBody {
   display: flex;
@@ -58,7 +57,7 @@
   grid-template-rows: 1fr 1fr;
   width: 100%;
 }
-.contBody-select--radius2 {
+.contBody-select--bool {
   display: grid;
   grid-template-columns: auto 12% 12%;
   grid-template-rows: 1fr 1fr 1fr;
@@ -74,7 +73,7 @@
 .time {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: 50%;
   border: 0px solid #73ad21;
 }

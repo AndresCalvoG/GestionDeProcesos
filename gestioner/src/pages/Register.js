@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import InputForm from "../components/InputForm";
+import Button from "../components/Button";
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
 
@@ -113,7 +114,11 @@ const Register = () => {
                 class="inputForm"
               />
               <span>{faultReg}</span>
-              <button onClick={handleRegister}>Registrarme</button>
+              <Button
+                name="Registrarme"
+                class="submit"
+                action={handleRegister}
+              />
             </form>
           </section>
         </main>
