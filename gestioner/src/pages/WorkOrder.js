@@ -6,25 +6,24 @@ import InputForm from "../components/InputForm";
 import SelectOption from "../components/SelectOption";
 import Button from "../components/Button";
 import Reloj from "../components/Reloj";
+import Span from "../components/Span";
 
 function WorkOrder() {
   const [number, setNumber] = useState("1");
-  const [fecha, setFecha] = useState("");
-  const [hora, setHora] = useState("");
   const [area, setArea] = useState("");
   const [equipo, setEquipo] = useState("");
   const [solicitante, setSolicitante] = useState("");
+  const [anomalia, setAnomalia] = useState("");
   const [fechaInit, setFechaInit] = useState("");
   const [horaInit, setHoraInit] = useState("");
   const [fechaFin, setFechaFin] = useState("");
   const [horaFin, setHoraFin] = useState("");
-  const [supervisorMtto, setSupervisorMtto] = useState("");
-  const [supervisorArea, setSupervisorArea] = useState("");
-  const [anomalia, setAnomalia] = useState("");
   const [reparacion, setReparacion] = useState("");
   const [qualified, setQualified] = useState([false, false]);
   const [operative, setOperative] = useState([false, false]);
   const [pending, setPending] = useState([false, false]);
+  const [supervisorMtto, setSupervisorMtto] = useState("");
+  const [supervisorArea, setSupervisorArea] = useState("");
   const [labor, setLabor] = useState([
     false,
     false,
@@ -33,8 +32,9 @@ function WorkOrder() {
     false,
     false,
   ]);
+  const [fault, setFault] = useState("");
 
-  const { user, getCurrentDate, getFireStoreData, areas, equipos } =
+  const { user, getFireStoreData, areas, equipos, fecha, hora } =
     React.useContext(AppContext);
 
   useEffect(() => {
@@ -44,10 +44,48 @@ function WorkOrder() {
   }, [area]);
 
   function pushData() {
+    if (area === "" || equipo === "" || solicitante === "") {
+      setFault("Por favor complete los campos Area, Equipo y solicitante");
+      return;
+    } else if (anomalia === "") {
+      setFault("Descripcion de anomalia no puede estar vacio");
+      return;
+    } else if (
+      labor[0] === false &&
+      labor[1] === false &&
+      labor[2] === false &&
+      labor[3] === false &&
+      labor[4] === false &&
+      labor[5] === false
+    ) {
+      setFault("seleccione el tipo de Mantenimiento");
+      return;
+    } else {
+      setFault("");
+    }
     let dataOrder = {
       number: number,
+      fecha: fecha,
+      hora: hora,
       area: area,
+      equipo: equipo,
+      solicitante: solicitante,
+      anomalia: anomalia,
+      asignado: `${user.fields.first.stringValue} ${user.fields.last.stringValue}`,
+      labor: labor,
+      fechaInit: fechaInit,
+      horaInit: horaInit,
+      fechaFin: fechaFin,
+      horaFin: horaFin,
+      reparacion: reparacion,
+      qualified: qualified,
+      operative: operative,
+      pending: pending,
+      atendido: `${user.fields.first.stringValue} ${user.fields.last.stringValue}`,
+      superMtto: supervisorMtto,
+      superArea: supervisorArea,
     };
+    console.log(dataOrder);
   }
 
   return (
@@ -69,26 +107,7 @@ function WorkOrder() {
                 class="inputFormOrder"
               />
             </label>
-            <label>
-              Fecha:
-              <InputForm
-                type="text"
-                size="7"
-                value={getCurrentDate().fullDate}
-                readOnly={true}
-                class="inputFormOrder"
-              />
-            </label>
-            <label>
-              Hora:
-              <InputForm
-                type="text"
-                size="5"
-                value={getCurrentDate().fullHour}
-                readOnly={true}
-                class="inputFormOrder"
-              />
-            </label>
+            <Reloj />
           </div>
 
           <div className="contBody">
@@ -367,8 +386,8 @@ function WorkOrder() {
                 class="inputFormOrder"
               />
             </label>
-            <Button name="Guardar" class="submit" />
-            <Reloj />
+            <Button name="Guardar" class="submit" action={pushData} />
+            <Span text={fault} class="faller" />
           </div>
         </form>
       </section>

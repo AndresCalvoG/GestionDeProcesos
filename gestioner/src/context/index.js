@@ -30,6 +30,8 @@ function AppProvider(props) {
   const [loader, setLoader] = useState(false);
   const [areas, setAreas] = useState([]);
   const [equipos, setEquipos] = useState([]);
+  const [fecha, setFecha] = useState("");
+  const [hora, setHora] = useState("");
 
   const history = useHistory();
 
@@ -85,8 +87,8 @@ function AppProvider(props) {
 
     var fullHour = `${hour}:${min}:${sec}`;
     var fullDate = `${dd}/${mm}/${yyyy}`;
-
-    return { fullDate, fullHour };
+    setFecha(fullDate);
+    setHora(fullHour);
   }
 
   async function getFireStoreData(area) {
@@ -141,6 +143,8 @@ function AppProvider(props) {
         loader,
         areas,
         equipos,
+        fecha,
+        hora,
         setUser,
         setAuth,
         setLoader,

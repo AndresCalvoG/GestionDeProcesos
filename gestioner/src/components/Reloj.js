@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import InputForm from "./InputForm";
+import { AppContext } from "../context";
 
 function Reloj() {
   let timerID;
-  const [fecha, setFecha] = useState("");
-  const [hora, setHora] = useState("");
+  const { getCurrentDate, fecha, hora } = React.useContext(AppContext);
 
   useEffect(() => {
     timerID = setInterval(() => getCurrentDate(), 1000);
@@ -14,37 +14,28 @@ function Reloj() {
     clearInterval(timerID);
   }, []);
 
-  function getCurrentDate() {
-    let date = new Date();
-    var dd = date.getDate();
-    var mm = date.getMonth() + 1; //January is 0!
-    var yyyy = date.getFullYear();
-    var hour = date.getHours();
-    var min = date.getMinutes();
-    var sec = date.getSeconds();
-
-    var fullHour = `${hour}:${min}:${sec}`;
-    var fullDate = `${dd}/${mm}/${yyyy}`;
-    setFecha(fullDate);
-    setHora(fullHour);
-  }
-
   return (
     <>
-      <InputForm
-        type="text"
-        size="7"
-        value={fecha}
-        readOnly={true}
-        class="inputFormOrder"
-      />
-      <InputForm
-        type="text"
-        size="5"
-        value={hora}
-        readOnly={true}
-        class="inputFormOrder"
-      />
+      <label>
+        Fecha:
+        <InputForm
+          type="text"
+          size="7"
+          value={fecha}
+          readOnly={true}
+          class="inputFormOrder"
+        />
+      </label>
+      <label>
+        Hora:
+        <InputForm
+          type="text"
+          size="5"
+          value={hora}
+          readOnly={true}
+          class="inputFormOrder"
+        />
+      </label>
     </>
   );
 }
