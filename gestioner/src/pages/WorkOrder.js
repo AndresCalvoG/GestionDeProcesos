@@ -5,8 +5,12 @@ import "./styles/workOrder.css";
 import InputForm from "../components/InputForm";
 import SelectOption from "../components/SelectOption";
 import Button from "../components/Button";
+import Reloj from "../components/Reloj";
 
 function WorkOrder() {
+  const [number, setNumber] = useState("1");
+  const [fecha, setFecha] = useState("");
+  const [hora, setHora] = useState("");
   const [area, setArea] = useState("");
   const [equipo, setEquipo] = useState("");
   const [solicitante, setSolicitante] = useState("");
@@ -39,6 +43,13 @@ function WorkOrder() {
     })();
   }, [area]);
 
+  function pushData() {
+    let dataOrder = {
+      number: number,
+      area: area,
+    };
+  }
+
   return (
     <main className="mainWorkOrder">
       <h1>
@@ -53,7 +64,7 @@ function WorkOrder() {
               <InputForm
                 type="text"
                 size="1"
-                value="1"
+                value={number}
                 readOnly={true}
                 class="inputFormOrder"
               />
@@ -357,6 +368,7 @@ function WorkOrder() {
               />
             </label>
             <Button name="Guardar" class="submit" />
+            <Reloj />
           </div>
         </form>
       </section>
