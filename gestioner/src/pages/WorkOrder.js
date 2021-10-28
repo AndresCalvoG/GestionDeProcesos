@@ -60,6 +60,32 @@ function WorkOrder() {
     ) {
       setFault("seleccione el tipo de Mantenimiento");
       return;
+    } else if (
+      fechaInit === "" ||
+      horaInit === "" ||
+      fechaFin === "" ||
+      horaFin === ""
+    ) {
+      setFault("seleccione fecha y hora de inicio y fin");
+      return;
+    } else if (reparacion === "") {
+      setFault("Descripcion de reparacion no puede estar vacio");
+      return;
+    } else if (qualified[0] === false && qualified[1] === false) {
+      setFault("determine estado calificado");
+      return;
+    } else if (operative[0] === false && operative[1] === false) {
+      setFault("determine estado operativo");
+      return;
+    } else if (pending[0] === false && pending[1] === false) {
+      setFault("determine estado pendiente");
+      return;
+    } else if (supervisorMtto === "") {
+      setFault("asigne un supervisor de MTTO");
+      return;
+    } else if (supervisorArea === "") {
+      setFault("asigne un supervisor de Area");
+      return;
     } else {
       setFault("");
     }
@@ -123,8 +149,9 @@ function WorkOrder() {
                 action={setEquipo}
               />
             </label>
-            <div className="contBody-user">
-              <label>Solicitado por: </label>
+            <br />
+            <label>
+              Solicitado por:
               <InputForm
                 type="text"
                 size="20"
@@ -133,21 +160,21 @@ function WorkOrder() {
                 readOnly={false}
                 class="inputFormOrder"
               />
-            </div>
-            <div className="contBody-text">
-              <label>Descripcion de la Anomalia</label>
+            </label>
+            <label>
+              Descripcion de la Anomalia
               <textarea
-                rows="13"
+                rows="11"
                 cols="45"
                 value={anomalia}
                 onChange={(e) => setAnomalia(e.target.value)}
               ></textarea>
-            </div>
+            </label>
           </div>
 
           <div className="contBody-select">
-            <div className="contBody-user">
-              <label>Asignado A: </label>
+            <label>
+              Asignado A:
               <InputForm
                 type="text"
                 size="24"
@@ -155,7 +182,7 @@ function WorkOrder() {
                 readOnly={true}
                 class="inputFormOrder"
               />
-            </div>
+            </label>
             <div className="contBody-select--radius">
               <label>
                 <InputForm
@@ -272,15 +299,15 @@ function WorkOrder() {
           </div>
 
           <div className="contBody">
-            <div className="contBody-text">
-              <label>Descripción de la reparación</label>
+            <label>
+              Descripción de la reparación
               <textarea
-                rows="13"
+                rows="11"
                 cols="45"
                 value={reparacion}
                 onChange={(e) => setReparacion(e.target.value)}
               ></textarea>
-            </div>
+            </label>
           </div>
 
           <div className="contBody-select">

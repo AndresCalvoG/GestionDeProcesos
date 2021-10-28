@@ -33,13 +33,6 @@
 .contBody div {
   padding-top: 10px;
 }
-.contBody-user {
-  width: 100%;
-}
-.contBody-text {
-  width: 100%;
-  height: 25rem;
-}
 .contBody-select {
   display: flex;
   flex-direction: column;
@@ -87,5 +80,9 @@
   border: 0px solid #73ad21;
 }
 textarea {
+  width: 37rem;
   resize: none;
+  padding: 10px;
+  font-size: 1.6rem;
+  border: none;
 }
