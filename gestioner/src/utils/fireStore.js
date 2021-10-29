@@ -41,6 +41,37 @@ class Database {
       };
     }
   }
+  //Metodo para enviar datos obtenidos a firestore database
+  async createNewOrder(props) {
+    var db = firebase.firestore();
+    try {
+      await db
+        .collection("users")
+        .doc(props.id)
+        .collection("orders")
+        .add(props);
+    } catch (error) {
+      return error.message;
+    }
+  }
+  //Metodo para obtener ordenes
+  async getOrder(props) {
+    var db = firebase.firestore();
+    try {
+      var docData = await db
+        .collection("users")
+        .doc(props)
+        .collection("orders")
+        .get();
+      return docData;
+    } catch (error) {
+      console.log(error);
+      return {
+        value: "0",
+        exists: false,
+      };
+    }
+  }
 }
 
 const database = new Database();

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AppContext } from "../context";
+import database from "../utils/fireStore";
 
 import "./styles/workOrder.css";
 import InputForm from "../components/InputForm";
@@ -40,10 +41,12 @@ function WorkOrder() {
   useEffect(() => {
     (async function () {
       await getFireStoreData(area);
+      let orders = await database.getOrder(user.fields.id.stringValue);
+      setNumber(orders.size + 1);
     })();
   }, [area]);
 
-  function pushData() {
+  async function pushData() {
     if (area === "" || equipo === "" || solicitante === "") {
       setFault("Por favor complete los campos Area, Equipo y solicitante");
       return;
@@ -90,6 +93,7 @@ function WorkOrder() {
       setFault("");
     }
     let dataOrder = {
+      id: user.fields.id.stringValue,
       number: number,
       fecha: fecha,
       hora: hora,
@@ -111,7 +115,8 @@ function WorkOrder() {
       superMtto: supervisorMtto,
       superArea: supervisorArea,
     };
-    console.log(dataOrder);
+    await database.createNewOrder(dataOrder);
+    console.log("enviado");
   }
 
   return (
