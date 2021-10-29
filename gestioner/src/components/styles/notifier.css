@@ -1,0 +1,13 @@
+.notify {
+  display: flex;
+  justify-content: flex-start;
+  width: 39rem;
+  height: 20rem;
+  padding: 10px;
+  border: solid 2px #000000;
+  font-size: 1.6rem;
+  color: var(--black);
+}
+.notify ul {
+  padding-left: 20px;
+}

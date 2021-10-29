@@ -1,0 +1,16 @@
+.main-documents {
+  position: absolute;
+  width: 100vw;
+  top: 15%;
+}
+.main-documents--menu {
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.main-notify {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}

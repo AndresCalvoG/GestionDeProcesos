@@ -10,7 +10,8 @@ import Reloj from "../components/Reloj";
 import Span from "../components/Span";
 
 function WorkOrder() {
-  const [number, setNumber] = useState("1");
+  let numOrders = { size: 1 };
+  const [number, setNumber] = useState(numOrders);
   const [area, setArea] = useState("");
   const [equipo, setEquipo] = useState("");
   const [solicitante, setSolicitante] = useState("");
@@ -41,8 +42,8 @@ function WorkOrder() {
   useEffect(() => {
     (async function () {
       await getFireStoreData(area);
-      let orders = await database.getOrder(user.fields.id.stringValue);
-      setNumber(orders.size + 1);
+      numOrders = await database.getOrder(user.fields.id.stringValue);
+      setNumber(numOrders.size + 1);
     })();
   }, [area]);
 
