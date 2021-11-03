@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { AppContext } from "../context";
 import database from "../utils/fireStore";
 
@@ -10,8 +11,10 @@ import Reloj from "../components/Reloj";
 import Span from "../components/Span";
 
 function WorkOrder() {
+  const history = useHistory();
+
   let numOrders = { size: 1 };
-  const [number, setNumber] = useState(numOrders);
+  const [number, setNumber] = useState(numOrders.size);
   const [area, setArea] = useState("");
   const [equipo, setEquipo] = useState("");
   const [solicitante, setSolicitante] = useState("");
@@ -117,7 +120,8 @@ function WorkOrder() {
       superArea: supervisorArea,
     };
     await database.createNewOrder(dataOrder);
-    console.log("enviado");
+    //console.log("enviado");
+    history.push("/Documents");
   }
 
   return (

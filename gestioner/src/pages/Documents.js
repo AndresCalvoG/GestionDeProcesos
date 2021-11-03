@@ -10,7 +10,7 @@ function Documents() {
     <main className="main-documents">
       <section className="main-documents--menu">
         <Card name="Nueva Orden" image={newOrder} route="/WorkOrder" />
-        <Card name="Buscar" image={search} route="/Search" />
+        <Card name="Borrar" image={search} route="" />
       </section>
       <section className="main-notify">
         <Notifier />

@@ -6,6 +6,27 @@ import database from "../utils/fireStore";
 const AppContext = React.createContext();
 
 function AppProvider(props) {
+  //notificador
+  const [newNotify, setNewNotify] = useState([
+    {
+      _delegate: {
+        _document: {
+          data: {
+            value: {
+              mapValue: {
+                fields: {
+                  fecha: { stringValue: "" },
+                  anomalia: { stringValue: "" },
+                  equipo: { stringValue: "" },
+                },
+              },
+            },
+          },
+        },
+      },
+      id: "",
+    },
+  ]);
   //algoritmo para local storege
   const authenticated = localStorage.getItem("valid");
   const userActive = localStorage.getItem("user");
@@ -145,6 +166,8 @@ function AppProvider(props) {
         equipos,
         fecha,
         hora,
+        newNotify,
+        setNewNotify,
         setUser,
         setAuth,
         setLoader,

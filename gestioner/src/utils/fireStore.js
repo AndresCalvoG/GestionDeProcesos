@@ -72,6 +72,19 @@ class Database {
       };
     }
   }
+  //Metodo para borrar ordenes
+  async deleteOrder(props) {
+    var db = firebase.firestore();
+    try {
+      db.collection("users")
+        .doc(props.userID)
+        .collection("orders")
+        .doc(props.orderID)
+        .delete();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 const database = new Database();
