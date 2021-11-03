@@ -62,6 +62,7 @@ function AppProvider(props) {
       exists: false,
     };
     const response = await Auth.validUser();
+    console.log(response); // informacion de usuario
     if (response !== "/") {
       data = await database.getDataUser(response.uid);
     }

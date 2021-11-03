@@ -9,11 +9,11 @@ const Navbar = () => {
 
   // funciones navbar
   const showMenu = () => {
-    var menu = document.getElementById("menu");
-    if (menu.classList.contains("hiden")) {
-      menu.classList.replace("hiden", "modalBackground");
+    var menu = document.getElementById("modalMenu");
+    if (menu.classList.contains("hidenModal")) {
+      menu.classList.replace("hidenModal", "modalBackground");
     } else {
-      menu.classList.replace("modalBackground", "hiden");
+      menu.classList.replace("modalBackground", "hidenModal");
     }
   };
 
@@ -43,7 +43,7 @@ const Navbar = () => {
               <img id="photo" src={userProfile} alt="avatar" />
             </figure>
           </section>
-          <Modal>
+          <Modal id="modalMenu">
             <p>Mi Perfil</p>
             <p>Noticias</p>
             <p onClick={handleLogout}>Logout</p>
