@@ -9,24 +9,15 @@ function AppProvider(props) {
   //notificador
   const [newNotify, setNewNotify] = useState([
     {
-      _delegate: {
-        _document: {
-          data: {
-            value: {
-              mapValue: {
-                fields: {
-                  fecha: { stringValue: "" },
-                  anomalia: { stringValue: "" },
-                  equipo: { stringValue: "" },
-                },
-              },
-            },
-          },
-        },
+      values: {
+        fecha: { stringValue: "" },
+        anomalia: { stringValue: "" },
+        equipo: { stringValue: "" },
       },
       id: "",
     },
   ]);
+  const [update, setUpdate] = useState(false);
   //algoritmo para local storege
   const authenticated = localStorage.getItem("valid");
   const userActive = localStorage.getItem("user");
@@ -62,7 +53,7 @@ function AppProvider(props) {
       exists: false,
     };
     const response = await Auth.validUser();
-    console.log(response); // informacion de usuario
+    //console.log(response); // informacion de usuario
     if (response !== "/") {
       data = await database.getDataUser(response.uid);
     }
@@ -168,10 +159,12 @@ function AppProvider(props) {
         fecha,
         hora,
         newNotify,
+        update,
         setNewNotify,
         setUser,
         setAuth,
         setLoader,
+        setUpdate,
         handleLogout,
         getDataUsers,
         getCurrentDate,

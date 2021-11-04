@@ -20,10 +20,9 @@
   position: fixed;
   margin: 0;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: var(--white);
+  color: var(--black);
   padding: 10px;
   font-size: 2rem;
 }

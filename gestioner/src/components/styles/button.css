@@ -4,7 +4,7 @@
   background-color: var(--blue);
   margin-top: 15px;
   border: none;
-  color: var(--blanco1);
+  color: var(--white);
   padding: 0.7rem;
   font-size: 2rem;
   box-shadow: 0px 8px 10px 0px #575656;
@@ -15,7 +15,18 @@
   background-color: var(--blue);
   margin-top: 15px;
   border: none;
-  color: var(--blanco1);
+  color: var(--white);
+  padding: 0.7rem;
+  font-size: 2rem;
+  box-shadow: 0px 8px 10px 0px #575656;
+}
+.modalMenu {
+  width: 15rem;
+  height: 5rem;
+  background-color: var(--blue);
+  margin-top: 15px;
+  border: none;
+  color: var(--white);
   padding: 0.7rem;
   font-size: 2rem;
   box-shadow: 0px 8px 10px 0px #575656;

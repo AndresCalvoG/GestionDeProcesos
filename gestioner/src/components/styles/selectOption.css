@@ -13,3 +13,19 @@
   text-align: center;
   text-transform: capitalize;
 }
+
+.selectOptionObj {
+  width: 85%;
+  background-color: var(--white);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid #a5a5a6;
+  color: var(--black);
+  margin: 30px auto;
+  padding: 10px;
+  outline: none;
+  font-size: 1.6rem;
+  text-align: center;
+  text-transform: capitalize;
+}

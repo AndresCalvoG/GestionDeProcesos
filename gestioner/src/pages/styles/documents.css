@@ -14,3 +14,17 @@
   display: flex;
   justify-content: center;
 }
+.modalKeypad {
+  width: 100vw;
+  display: flex;
+  justify-content: space-evenly;
+}
+.main-modal {
+  width: 90vw;
+  height: 40rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--white);
+}
