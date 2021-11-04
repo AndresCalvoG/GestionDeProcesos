@@ -1,0 +1,12 @@
+.main-container .avatar {
+  width: 200px;
+  height: 200px;
+}
+.profileCard {
+  display: flex;
+  justify-content: center;
+}
+.main-modal .avatar {
+  width: 180px;
+  height: 180px;
+}

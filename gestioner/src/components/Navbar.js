@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../context";
 import "./styles/navar.css";
-import userProfile from "../images/profile.png";
 import Modal from "./Modal";
+import ImageUser from "./ImageUser";
 
 const Navbar = () => {
   const { user, auth, handleLogout } = React.useContext(AppContext);
@@ -40,9 +40,7 @@ const Navbar = () => {
               <p>{user.fields.cargo.stringValue}</p>
               <p>{user.fields.code.stringValue}</p>
             </div>
-            <figure className="avatar" onClick={showMenu}>
-              <img id="photo" src={userProfile} alt="avatar" />
-            </figure>
+            <ImageUser action={showMenu} />
           </section>
           <Modal id="modalMenu">
             <Link to="/Profile">Mi Perfil</Link>

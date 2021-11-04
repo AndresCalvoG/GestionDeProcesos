@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
+import userProfile from "../images/profile.png";
 
 const AppContext = React.createContext();
 
@@ -18,6 +19,7 @@ function AppProvider(props) {
     },
   ]);
   const [update, setUpdate] = useState(false);
+
   //algoritmo para local storege
   const authenticated = localStorage.getItem("valid");
   const userActive = localStorage.getItem("user");
@@ -44,6 +46,7 @@ function AppProvider(props) {
   const [equipos, setEquipos] = useState([]);
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
+  const [photoUrl, setPhotoUrl] = useState(userProfile);
 
   const history = useHistory();
 
@@ -53,7 +56,10 @@ function AppProvider(props) {
       exists: false,
     };
     const response = await Auth.validUser();
-    //console.log(response); // informacion de usuario
+    response.photoURL
+      ? setPhotoUrl(response.photoURL)
+      : setPhotoUrl(userProfile);
+    //console.log(response); // informacion de usuario de autenticacion
     if (response !== "/") {
       data = await database.getDataUser(response.uid);
     }
@@ -160,11 +166,13 @@ function AppProvider(props) {
         hora,
         newNotify,
         update,
+        photoUrl,
         setNewNotify,
         setUser,
         setAuth,
         setLoader,
         setUpdate,
+        setPhotoUrl,
         handleLogout,
         getDataUsers,
         getCurrentDate,
