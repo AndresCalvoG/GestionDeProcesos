@@ -33,6 +33,7 @@ function Documents() {
       orderID: orderDeletedId,
     });
     setUpdate(!update);
+    showDelete();
   }
 
   return (

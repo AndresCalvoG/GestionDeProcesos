@@ -18,6 +18,7 @@ import Calendar from "../pages/Calendar";
 import Help from "../pages/Help";
 import Binnacle from "../pages/Binnacle";
 import Documents from "../pages/Documents";
+import Profile from "../pages/Profile";
 
 import { AppContext } from "../context";
 
@@ -75,6 +76,11 @@ function App() {
                     exact
                     path="/Documents"
                     render={(props) => <Documents {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/Profile"
+                    render={(props) => <Profile {...props} />}
                   />
                   {loader ? (
                     <Route

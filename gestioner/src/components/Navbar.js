@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { AppContext } from "../context";
 import "./styles/navar.css";
 import userProfile from "../images/profile.png";
@@ -44,7 +45,7 @@ const Navbar = () => {
             </figure>
           </section>
           <Modal id="modalMenu">
-            <p>Mi Perfil</p>
+            <Link to="/Profile">Mi Perfil</Link>
             <p>Noticias</p>
             <p onClick={handleLogout}>Logout</p>
           </Modal>
