@@ -1,12 +1,33 @@
 .main-container .avatar {
   width: 200px;
   height: 200px;
+  margin-bottom: 3rem;
 }
 .profileCard {
+  width: 100vw;
+  height: 50rem;
+  border: 0px solid black;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 .main-modal .avatar {
   width: 180px;
   height: 180px;
+}
+.profile-info {
+  width: 80vw;
+  height: 50rem;
+  background-color: var(--lightgray);
+  border-radius: 50px;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+.profile-info p {
+  color: var(--black);
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
 }
