@@ -25,7 +25,7 @@ const Home = () => {
           <Card name="Ayuda" image={help} route="/Help" />
           <Card name="Turnos" image={schedule} route="" />
           <Card name="Bitacora" image={binnacle} route="/Binnacle" />
-          <Card name="Contraseñas" image={passwords} route="" />
+          <Card name="Contraseñas" image={passwords} route="/Passwords" />
         </section>
       </main>
       <Prompt when={false} message="Esta seguro que quieres salir?" />

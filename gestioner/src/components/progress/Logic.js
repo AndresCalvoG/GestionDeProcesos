@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 class Logic {
   constructor() {
     this.state = { load: 0, valor: 0 };

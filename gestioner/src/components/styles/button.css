@@ -41,3 +41,11 @@
     font-size: 2rem;
   }
 }
+
+@media screen and (max-width: 390px) {
+  .submit {
+    font-size: 2rem;
+    width: 12rem;
+    height: 5rem;
+  }
+}

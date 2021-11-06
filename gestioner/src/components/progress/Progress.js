@@ -9,7 +9,7 @@ function Progress(props) {
   useEffect(() => {
     timerID = setInterval(() => {
       setLoading(logic.suma());
-      console.log(loading);
+      //console.log(loading);
     }, 1000);
     return () => {
       clearInterval(timerID);

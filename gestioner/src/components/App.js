@@ -19,6 +19,7 @@ import Help from "../pages/Help";
 import Binnacle from "../pages/Binnacle";
 import Documents from "../pages/Documents";
 import Profile from "../pages/Profile";
+import Passwords from "../pages/Passwords";
 
 import { AppContext } from "../context";
 
@@ -76,6 +77,11 @@ function App() {
                     exact
                     path="/Documents"
                     render={(props) => <Documents {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/Passwords"
+                    render={(props) => <Passwords {...props} />}
                   />
                   <Route
                     exact
