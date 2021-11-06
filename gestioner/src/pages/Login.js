@@ -8,11 +8,13 @@ import userLogo from "../images/login/user.svg";
 import { AppContext } from "../context";
 import InputForm from "../components/InputForm";
 import Button from "../components/Button";
+import Progress from "../components/progress/Progress";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fault, setFault] = useState("");
+  const [clase, setClase] = useState("hidenProgress");
   const history = useHistory();
 
   const { setLoader, getDataUsers } = React.useContext(AppContext);
@@ -23,18 +25,24 @@ const Login = () => {
       setFault("Por favor completa todos los campos");
     } else {
       setFault("");
+      setClase("showProgress");
       const response = await Auth.authEmailPass(email, password);
 
       if (response.code === "auth/wrong-password") {
         setFault("Contraseña Incorrecta");
+        setClase("hidenProgress");
       } else if (response.code === "auth/user-not-found") {
         setFault("Usuario ó Email Incorrecto");
+        setClase("hidenProgress");
       } else if (response.code === "auth/invalid-email") {
         setFault("Email Invalido");
+        setClase("hidenProgress");
       } else if (response.code === "auth/network-request-failed") {
         setFault("Sin conexion a Internet");
+        setClase("hidenProgress");
       } else if (response === "Por favor verifique email enviado") {
         setFault(response);
+        setClase("hidenProgress");
       } else {
         setLoader(true);
         history.push(response);
@@ -77,6 +85,7 @@ const Login = () => {
             </Link>
           </div>
         </form>
+        <Progress class={clase} />
       </article>
     </main>
   );

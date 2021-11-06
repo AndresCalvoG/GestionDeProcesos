@@ -24,7 +24,7 @@ class Autenticacion {
         return "Por favor verifique email enviado";
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       return error;
     }
   }

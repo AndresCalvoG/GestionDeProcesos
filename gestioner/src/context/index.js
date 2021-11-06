@@ -47,7 +47,6 @@ function AppProvider(props) {
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [photoUrl, setPhotoUrl] = useState(userProfile);
-
   const history = useHistory();
 
   const getDataUsers = async () => {
