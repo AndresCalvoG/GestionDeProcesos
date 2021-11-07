@@ -7,7 +7,8 @@
   width: 100vw;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr;
+  margin-bottom: 5rem;
 }
 .main-notify {
   width: 100vw;
@@ -18,13 +19,4 @@
   width: 100vw;
   display: flex;
   justify-content: space-evenly;
-}
-.main-modal {
-  width: 90vw;
-  height: 40rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--white);
 }

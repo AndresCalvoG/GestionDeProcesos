@@ -65,7 +65,7 @@ function AppProvider(props) {
     if (data.exists) {
       handleValid(true, data._delegate._document.data.value.mapValue, true);
       setLoader(false);
-      history.push("/home");
+      history.replace("/home");
       console.log("reder true en app");
     } else {
       handleValid(false, { value: false }, false);

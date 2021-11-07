@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../context";
 import "./styles/navar.css";
@@ -6,15 +6,15 @@ import Modal from "./Modal";
 import ImageUser from "./ImageUser";
 
 const Navbar = () => {
+  const [clase, setClase] = useState("hidenModal");
   const { user, auth, handleLogout } = React.useContext(AppContext);
 
-  // funciones navbar
-  const showMenu = () => {
-    var menu = document.getElementById("modalMenu");
-    if (menu.classList.contains("hidenModal")) {
-      menu.classList.replace("hidenModal", "modalBackground");
+  // funciones showModal
+  const showModal = () => {
+    if (clase === "hidenModal") {
+      setClase("showModal-menu");
     } else {
-      menu.classList.replace("modalBackground", "hidenModal");
+      setClase("hidenModal");
     }
   };
 
@@ -40,9 +40,9 @@ const Navbar = () => {
               <p>{user.fields.cargo.stringValue}</p>
               <p>{user.fields.code.stringValue}</p>
             </div>
-            <ImageUser action={showMenu} />
+            <ImageUser action={showModal} />
           </section>
-          <Modal id="modalMenu">
+          <Modal classe={clase}>
             <Link to="/Profile">Mi Perfil</Link>
             <p>Noticias</p>
             <p onClick={handleLogout}>Logout</p>

@@ -45,7 +45,7 @@ const Login = () => {
         setClase("hidenProgress");
       } else {
         setLoader(true);
-        history.push(response);
+        history.replace(response);
         await getDataUsers();
       }
     }

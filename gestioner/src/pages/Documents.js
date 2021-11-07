@@ -14,16 +14,15 @@ import Button from "../components/Button";
 function Documents() {
   const [orderDeleted, setOrderDeleted] = useState("");
   const [orderDeletedId, setOrderDeletedId] = useState("");
-  const { user, newNotify, setNewNotify, setUpdate, update } =
-    React.useContext(AppContext);
+  const [clase, setClase] = useState("hidenModal");
+  const { user, newNotify, setUpdate, update } = React.useContext(AppContext);
 
-  const showDelete = () => {
+  const showModal = () => {
     setOrderDeleted("");
-    var menu = document.getElementById("modalDelete");
-    if (menu.classList.contains("hidenModal")) {
-      menu.classList.replace("hidenModal", "modalBackground-delete");
+    if (clase === "hidenModal") {
+      setClase("showModal-full");
     } else {
-      menu.classList.replace("modalBackground-delete", "hidenModal");
+      setClase("hidenModal");
     }
   };
 
@@ -33,7 +32,7 @@ function Documents() {
       orderID: orderDeletedId,
     });
     setUpdate(!update);
-    showDelete();
+    showModal();
   }
 
   return (
@@ -44,13 +43,13 @@ function Documents() {
           name="Eliminar orden"
           image={deleteFile}
           route=""
-          action={showDelete}
+          action={showModal}
         />
       </section>
       <section className="main-notify">
         <Notifier />
       </section>
-      <Modal id="modalDelete">
+      <Modal classe={clase}>
         <div className="main-modal">
           <h2>Buscar Orden </h2>
           <SelectOption
@@ -62,7 +61,7 @@ function Documents() {
           />
           <div className="modalKeypad">
             <Button name="Eliminar" class="modalMenu" action={DeleteOrder} />
-            <Button name="cancelar" class="modalMenu" action={showDelete} />
+            <Button name="cancelar" class="modalMenu" action={showModal} />
           </div>
         </div>
       </Modal>

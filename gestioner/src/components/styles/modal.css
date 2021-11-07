@@ -1,4 +1,4 @@
-.modalBackground {
+.showModal-menu {
   width: 15rem;
   height: 10rem;
   background: rgba(32, 35, 41, 0.95);
@@ -12,8 +12,9 @@
   align-items: flex-start;
   color: var(--white);
   padding: 10px;
+  font-size: 2rem;
 }
-.modalBackground-delete {
+.showModal-full {
   width: 100vw;
   height: 100vh;
   background: rgba(32, 35, 41, 0.8);
@@ -29,11 +30,20 @@
 .hidenModal {
   display: none;
 }
-.modalBackground p {
-  font-size: 2rem;
-}
-.modalBackground a {
+.showModal-menu a {
   font-size: 2rem;
   text-decoration: none;
   color: var(--white);
+}
+.main-modal {
+  width: 90vw;
+  height: 40rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--white);
+}
+.main-modal h2 {
+  margin-bottom: 2rem;
 }

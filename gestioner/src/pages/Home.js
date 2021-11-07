@@ -1,5 +1,5 @@
-import React from "react";
-import { Prompt } from "react-router-dom";
+import React, { useState } from "react";
+import { Prompt, useHistory } from "react-router-dom";
 
 import "./styles/home.css";
 import Documents from "../images/home/Documents.png";
@@ -14,6 +14,14 @@ import passwords from "../images/home/password.svg";
 import Card from "../components/Card";
 
 const Home = () => {
+  const [change, setChange] = useState(false);
+  const history = useHistory();
+  history.listen((location, action) => {
+    if (action === "POP" && location.pathname === "/Loader") {
+      console.log(action, location.pathname, location.state);
+    }
+  });
+
   return (
     <>
       <main className="main-container">
@@ -28,7 +36,7 @@ const Home = () => {
           <Card name="Contraseñas" image={passwords} route="/Passwords" />
         </section>
       </main>
-      <Prompt when={false} message="Esta seguro que quieres salir?" />
+      <Prompt when={change} message="Esta seguro que quieres salir?" />
     </>
   );
 };

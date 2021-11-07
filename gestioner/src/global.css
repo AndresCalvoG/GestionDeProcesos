@@ -27,3 +27,6 @@ body {
   background-color: var(--baseWhite);
   color: var(--gray);
 }
+span {
+  color: var(--red);
+}
