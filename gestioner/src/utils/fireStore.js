@@ -85,6 +85,22 @@ class Database {
       console.log(error);
     }
   }
+
+  //metodo para crear nuevas contraseñas
+  async createNewPassword(area, props) {
+    var db = firebase.firestore();
+    try {
+      await db
+        .collection("passwords")
+        .doc("JQPZdidvuOJaMaCzSK9H")
+        .collection(area)
+        .add(props);
+      console.log("creado");
+    } catch (error) {
+      console.log(error);
+      return error.message;
+    }
+  }
 }
 
 const database = new Database();

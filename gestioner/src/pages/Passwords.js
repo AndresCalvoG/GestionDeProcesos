@@ -8,6 +8,8 @@ import InputForm from "../components/InputForm";
 import plus from "../images/plus.png";
 import less from "../images/less.png";
 
+import database from "../utils/fireStore";
+
 function Passwords() {
   const { areas, equipos, getFireStoreData } = React.useContext(AppContext);
   const [clase, setClase] = useState("hidenModal");
@@ -15,7 +17,7 @@ function Passwords() {
   const [equipo, setEquipo] = useState("");
   const [area, setArea] = useState("");
   const [user, setUser] = useState("");
-  const [Password, setPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [parte, setParte] = useState("");
   const [fault, setFault] = useState("");
 
@@ -45,6 +47,11 @@ function Passwords() {
       }
     }
   };
+
+  async function createPassword() {
+    await database.createNewPassword(area, { user, password, equipo, parte });
+    showModalAdd();
+  }
 
   return (
     <main className="main-documents">
@@ -96,7 +103,7 @@ function Passwords() {
             <InputForm
               type="text"
               size="20"
-              value={Password}
+              value={password}
               action={setPassword}
               readOnly={false}
               class="inputFormOrder"
@@ -114,7 +121,7 @@ function Passwords() {
             />
           </label>
           <div className="modalKeypad">
-            <Button name="Crear" class="modalMenu" />
+            <Button name="Crear" class="modalMenu" action={createPassword} />
             <Button name="cancelar" class="modalMenu" action={showModalAdd} />
           </div>
         </div>
