@@ -49,7 +49,7 @@ function Passwords() {
   };
 
   async function createPassword() {
-    await database.createNewPassword(area, { user, password, equipo, parte });
+    await database.createNewPassword(area, equipo, parte, { user, password });
     showModalAdd();
   }
 
