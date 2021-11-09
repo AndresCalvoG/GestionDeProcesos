@@ -1,0 +1,139 @@
+:root{
+    --blue:#3d7fbc;
+    --gray:#999999;
+    --black:#000000;
+    --red:#ff0000;
+}
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+}
+html{
+    font-size: 62.5%;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    background-color: #f6f5f5;
+    color: var(--black);
+}
+img{
+    width: 100%;
+    height: 100%;
+}
+.main-header{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	width: 100%;
+    height: 5rem;
+    background-color: var(--blue);
+}
+.main-header-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 15%;
+}
+.main-header-title h1{
+    color: white;
+    font-size: 3rem;
+    text-align: center;
+}
+.main-container{
+    position:absolute;
+    width: 100vw;
+    top:20%;
+}
+
+.main{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 100vw;
+    margin-top: 30%;
+}
+.form_register{
+    width: 80vw;
+    height: 37rem;
+    margin: 2rem auto;
+    /* border-color: var(--blue); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.6rem;
+    /* justify-content: center; */
+    /* border-style:solid;
+    border-radius: 2rem; */
+    order: 1;
+}
+.form_register form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+}
+.form_register span{
+    display: none;
+    width: 100%;
+    background: none;
+    border: 0;
+    color: var(--red);
+    margin: 0 auto;
+    padding: 0;
+    outline: none;
+    font-size: 1.4rem;
+}
+.send{
+    width: 50%;
+    background-color:var(--blue);
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    padding: 0.7rem;
+    text-decoration: none;
+    margin: 0.8rem;
+    font-size: 1.6rem;
+    cursor:pointer;
+}
+.form_register h1{
+    text-align: center;
+    width: 100%;
+    color:var(--black);
+}
+.form_register__elem{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.5rem;
+    font-size: 1.6rem;
+}
+.form_register__elem input{
+    width: 100%;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #a5a5a6;
+    color: #464646;
+    margin: 10px auto;
+    padding: 15px;
+    outline: none;
+}
+
+@media screen and (min-width: 900px) {
+    .main {
+        margin-top: 6%;
+    }
+    .form_register form{
+        width: 30%;
+    }
+    .send{
+        width: 30%;
+    }
+}
