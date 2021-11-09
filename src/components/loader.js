@@ -5,7 +5,7 @@ function Loader() {
   return (
     <>
       <div className="content-loader">
-        <div className="loader"></div>
+        <div className="loader"> </div>
       </div>
     </>
   );
