@@ -87,18 +87,17 @@ class Database {
   }
 
   //metodo para crear nuevas contraseñas
-  async createNewPassword(area, equipo, parte, props) {
+  async createNewPassword(area, equipo, user, parte, props) {
     var db = firebase.firestore();
     try {
       await db
-        .collection("machines")
-        .doc("JQPZdidvuOJaMeCzSK9H")
-        .collection(area)
-        .doc()
+        .collection("areas")
+        .doc(area)
         .collection(equipo)
-        .doc()
-        .collection(parte)
-        .add(props);
+        .doc(parte)
+        .collection("usuarios")
+        .doc(user)
+        .set(props);
       console.log("creado");
     } catch (error) {
       console.log(error);

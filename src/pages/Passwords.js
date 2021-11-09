@@ -11,14 +11,17 @@ import less from "../images/less.png";
 import database from "../utils/fireStore";
 
 function Passwords() {
+  const types = ["administrador", "supervisor", "Tecnico", "operador"];
   const { areas, equipos, getFireStoreData } = React.useContext(AppContext);
   const [clase, setClase] = useState("hidenModal");
   const [classe, setClasse] = useState("hidenModal");
   const [equipo, setEquipo] = useState("");
   const [area, setArea] = useState("");
   const [user, setUser] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [parte, setParte] = useState("");
+  const [type, setType] = useState("");
   const [fault, setFault] = useState("");
 
   useEffect(() => {
@@ -49,7 +52,18 @@ function Passwords() {
   };
 
   async function createPassword() {
-    await database.createNewPassword(area, equipo, parte, { user, password });
+    await database.createNewPassword(area, equipo, user, parte, {
+      password,
+      type,
+      name,
+    });
+    setArea("");
+    setEquipo("");
+    setParte("");
+    setUser("");
+    setName("");
+    setPassword("");
+    setType("");
     showModalAdd();
   }
 
@@ -88,6 +102,28 @@ function Passwords() {
         <div className="main-modal">
           <h2>Nuevo Password </h2>
           <label>
+            Dispositivo:
+            <InputForm
+              type="text"
+              size="20"
+              value={parte}
+              action={setParte}
+              readOnly={false}
+              class="inputFormOrder"
+            />
+          </label>
+          <label>
+            Nombre:
+            <InputForm
+              type="text"
+              size="20"
+              value={name}
+              action={setName}
+              readOnly={false}
+              class="inputFormOrder"
+            />
+          </label>
+          <label>
             Usuario:
             <InputForm
               type="text"
@@ -110,15 +146,8 @@ function Passwords() {
             />
           </label>
           <label>
-            Dispositivo:
-            <InputForm
-              type="text"
-              size="20"
-              value={parte}
-              action={setParte}
-              readOnly={false}
-              class="inputFormOrder"
-            />
+            tipo:
+            <SelectOption options={types} value={type} action={setType} />
           </label>
           <div className="modalKeypad">
             <Button name="Crear" class="modalMenu" action={createPassword} />
