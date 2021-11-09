@@ -1,0 +1,33 @@
+.main-container {
+  position: absolute;
+  width: 100vw;
+  top: 15%;
+}
+.main-container--menu {
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+.main-container--card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.main-container--card div {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 10px;
+}
+
+@media screen and (min-width: 900px) {
+  .main-container {
+    display: flex;
+    justify-content: center;
+    top: 20%;
+  }
+  .main-container--menu {
+    width: 50vw;
+  }
+}

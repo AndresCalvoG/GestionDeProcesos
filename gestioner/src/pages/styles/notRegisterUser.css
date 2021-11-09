@@ -1,0 +1,15 @@
+.notUser {
+  margin-top: 35vh;
+  font-size: 5rem;
+  text-align: center;
+  color: var(--blue);
+}
+
+@media screen and (min-width: 900px) {
+  .notUser {
+    margin-top: 35vh;
+    font-size: 9rem;
+    text-align: center;
+    color: var(--blue);
+  }
+}

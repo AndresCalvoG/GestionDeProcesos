@@ -1,0 +1,70 @@
+.mainLogin {
+  width: 100vw;
+  margin-top: 20%;
+}
+.mainLogin-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.mainLogin-image {
+  width: 9rem;
+  height: 9rem;
+  margin-bottom: 10px;
+}
+.mainLogin-form {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+}
+.mainLogin-board {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.mainLogin-keypad {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.mainLogin-form span {
+  width: 50%;
+  background: none;
+  border: 0;
+  color: var(--red);
+  padding: 0;
+  margin-right: 0;
+  outline: none;
+  font-size: 1.4rem;
+  text-align: right;
+}
+.mainLogin-form .mainLogin-link {
+  width: 50%;
+  background: none;
+  border: 0;
+  color: var(--blue);
+  padding: 0;
+  outline: none;
+  font-size: 1.4rem;
+  text-decoration: none;
+}
+.hidenProgress {
+  display: none;
+}
+.showProgress {
+  display: block;
+  position: absolute;
+  bottom: 20px;
+}
+@media screen and (min-width: 900px) {
+  .mainLogin {
+    margin-top: 10%;
+  }
+  .mainLogin-form {
+    width: 35%;
+  }
+}

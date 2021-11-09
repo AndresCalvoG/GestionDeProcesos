@@ -1,0 +1,10 @@
+.faller {
+  width: 100%;
+  background: none;
+  border: 0;
+  color: var(--red);
+  margin: 0 auto;
+  padding-top: 20px;
+  outline: none;
+  font-size: 1.6rem;
+}
