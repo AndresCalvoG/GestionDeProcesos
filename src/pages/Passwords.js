@@ -5,6 +5,7 @@ import Modal from "../components/Modal";
 import Button from "../components/Button";
 import SelectOption from "../components/SelectOption";
 import InputForm from "../components/InputForm";
+import Viwer from "../components/Viwer";
 import plus from "../images/plus.png";
 import less from "../images/less.png";
 
@@ -86,9 +87,7 @@ function Passwords() {
           <span>{fault}</span>
         </div>
       </section>
-      {/* <section className="main-notify">
-        <Notifier />
-      </section> */}
+      <Viwer />
       <Modal classe={clase}>
         <div className="main-modal">
           <h2>Eliminar Password </h2>

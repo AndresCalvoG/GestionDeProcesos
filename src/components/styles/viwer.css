@@ -1,0 +1,32 @@
+.viwer-container {
+  width: 100vw;
+  height: 40rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--black);
+  border: solid 0px black;
+  margin-top: 1rem;
+}
+.viwer-title {
+  font-size: 2.5rem;
+  margin-top: 0.5rem;
+}
+.viwer-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 39rem;
+  height: 12rem;
+  border: solid 0px black;
+  margin-top: 1rem;
+}
+.info-title {
+  font-size: 2.2rem;
+}
+.info-card {
+  width: 39rem;
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  border: solid 2px black;
+}
