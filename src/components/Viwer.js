@@ -8,15 +8,15 @@ function Viwer() {
       <article className="viwer-info">
         <h3 className="info-title">Envase</h3>
         <div className="info-card">
-          <p>Blister 5</p>
-          <table>
-            <tr>
+          <h3>Blister 5</h3>
+          <table className="info-table">
+            <tr className="table-row">
               <td>nombre</td>
               <td>usuario</td>
               <td>contraseña</td>
               <td>tipo</td>
             </tr>
-            <tr>
+            <tr className="table-row">
               <td>Andres Calvo</td>
               <td>19939</td>
               <td>12345</td>
