@@ -5,7 +5,6 @@
   flex-direction: column;
   align-items: center;
   color: var(--black);
-  border: solid 0px black;
   margin-top: 1rem;
 }
 .viwer-title {
@@ -17,18 +16,27 @@
   flex-direction: column;
   align-items: center;
   width: 39rem;
-  height: 16rem;
-  border: solid 0px var(--black);
-  margin-top: 1rem;
-  padding-top: 1rem;
+  height: 40rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
 }
 .info-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
   font-size: 2.2rem;
+}
+.info-title--area {
+  margin-right: 15rem;
+}
+.info-title--machine {
+  font-weight: lighter;
+  font-size: 2rem;
 }
 .info-card {
   width: 39rem;
   height: 8rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   padding: 1rem;
   font-size: 1.6rem;
   border-top: solid 2px var(--black);
@@ -36,9 +44,11 @@
 .info-table {
   width: 100%;
   height: 7rem;
-  border: solid 0px black;
-  text-align: center;
 }
-.table-row {
-  width: 2rem;
+.row-celd--title {
+  font-weight: bold;
+  width: 25%;
+}
+.row-celd--item {
+  text-align: center;
 }
