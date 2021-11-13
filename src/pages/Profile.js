@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ImageUser from "../components/ImageUser";
 import Modal from "../components/Modal";
 import Button from "../components/Button";
@@ -9,26 +9,20 @@ import "./styles/profile.css";
 function Profile() {
   const { photoUrl, setPhotoUrl, user } = React.useContext(AppContext);
   const [photo, setPhoto] = useState("");
+  const [clase, setClase] = useState("hidenModal");
 
-  useEffect(() => {
-    var menu = document.getElementById("modalMenu");
-    menu.classList.replace("modalBackground", "hidenModal");
-  }, []);
-
-  function changeImageUser() {
-    setPhoto("");
-    var menu = document.getElementById("modalProfile");
-    if (menu.classList.contains("hidenModal")) {
-      menu.classList.replace("hidenModal", "modalBackground-delete");
+  const showModalAdd = () => {
+    if (clase === "hidenModal") {
+      setClase("showModal-full");
     } else {
-      menu.classList.replace("modalBackground-delete", "hidenModal");
+      setClase("hidenModal");
     }
-  }
+  };
 
   return (
     <main className="main-container">
       <section className="profileCard">
-        <ImageUser action={changeImageUser} />
+        <ImageUser action={showModalAdd} />
         <div className="profile-info">
           <p>Nombre:</p>
           <p>
@@ -42,7 +36,7 @@ function Profile() {
           <p>{user.fields.code.stringValue}</p>
         </div>
       </section>
-      <Modal id="modalProfile">
+      <Modal classe={clase}>
         <div className="main-modal">
           <h2>Nueva Foto</h2>
           <ImageUser />
@@ -55,11 +49,7 @@ function Profile() {
           />
           <div className="modalKeypad">
             <Button name="Subir" class="modalMenu" />
-            <Button
-              name="cancelar"
-              class="modalMenu"
-              action={changeImageUser}
-            />
+            <Button name="cancelar" class="modalMenu" action={showModalAdd} />
           </div>
         </div>
       </Modal>

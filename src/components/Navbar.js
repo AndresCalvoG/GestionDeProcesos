@@ -43,7 +43,9 @@ const Navbar = () => {
             <ImageUser action={showModal} />
           </section>
           <Modal classe={clase}>
-            <Link to="/Profile">Mi Perfil</Link>
+            <Link to="/Profile" onClick={showModal}>
+              Mi Perfil
+            </Link>
             <p>Noticias</p>
             <p onClick={handleLogout}>Logout</p>
           </Modal>
