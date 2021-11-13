@@ -68,9 +68,9 @@ const Register = () => {
     <>
       {!contain ? (
         <main className="mainRegister">
-          <section className="form_register">
-            <h1>Registro</h1>
-            <form onSubmit={(e) => e.preventDefault()}>
+          <section className="mainRegister-form">
+            <h1 className="form-title">Registro</h1>
+            <form onSubmit={(e) => e.preventDefault()} className="form-body">
               <InputForm
                 type="text"
                 label="Tu nombre..."
@@ -127,7 +127,7 @@ const Register = () => {
           <h1> Bienvenido </h1>
           <br />
           <br />
-          <p className="names">
+          <p className="success-names">
             {nombres
               .toLowerCase()
               .trim()

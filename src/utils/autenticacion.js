@@ -79,7 +79,7 @@ class Autenticacion {
         } else {
           try {
             await firebase.auth().signOut();
-            console.log("salida correcta");
+            //console.log("salida correcta");
             resolve("/");
           } catch (error) {
             console.log("no ha salido " + error);
