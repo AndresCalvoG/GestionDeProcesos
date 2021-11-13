@@ -44,6 +44,7 @@ function AppProvider(props) {
   const [loader, setLoader] = useState(false);
   const [areas, setAreas] = useState([]);
   const [equipos, setEquipos] = useState([]);
+  const [partes, setPartes] = useState([]);
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [photoUrl, setPhotoUrl] = useState(userProfile);
@@ -109,13 +110,14 @@ function AppProvider(props) {
     setHora(fullHour);
   }
 
-  async function getFireStoreData(area) {
+  async function getFireStoreData(area, equipo) {
     let docPlantaRef = "fCD5Pe1enki9eJkwuRQH";
     let Data = await database.getData(docPlantaRef);
     const path = Data._delegate._document.data.value.mapValue.fields;
     let arrayAreas = path.areas.arrayValue.values;
-
     let arrayEquipos = [];
+    let arrayPartes = [];
+
     if (area && area === "envase") {
       arrayEquipos = path.envase.arrayValue.values;
     } else if (area === "empaque") {
@@ -138,15 +140,25 @@ function AppProvider(props) {
       arrayEquipos = path.esteriles.arrayValue.values;
     }
 
+    if (area && equipo === "blister 3") {
+      arrayPartes = path.blister3.arrayValue.values;
+    } else {
+      arrayPartes = [];
+    }
+
     let equipos = arrayEquipos.map((element) => {
       return element.stringValue;
     });
     let areas = arrayAreas.map((element) => {
       return element.stringValue;
     });
+    let partes = arrayPartes.map((element) => {
+      return element.stringValue;
+    });
     //console.log(path);
     setAreas(areas);
     setEquipos(equipos);
+    setPartes(partes);
   }
 
   // window.addEventListener("popstate", (e) => {
@@ -161,6 +173,7 @@ function AppProvider(props) {
         loader,
         areas,
         equipos,
+        partes,
         fecha,
         hora,
         newNotify,

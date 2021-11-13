@@ -87,7 +87,7 @@ class Database {
   }
 
   //metodo para crear nuevas contraseñas
-  async createNewPassword(area, equipo, user, parte, props) {
+  async createNewPassword(area, equipo, parte, user, props) {
     var db = firebase.firestore();
     try {
       await db
@@ -102,6 +102,27 @@ class Database {
     } catch (error) {
       console.log(error);
       return error.message;
+    }
+  }
+
+  //metodo para traer contraseñas
+  async getPasswords(area, machine, parte) {
+    var db = firebase.firestore();
+    try {
+      var docData = await db
+        .collection("areas")
+        .doc(area)
+        .collection(machine)
+        .doc(parte)
+        .collection("usuarios")
+        .get();
+      return docData;
+    } catch (error) {
+      console.log(error);
+      return {
+        value: "0",
+        exists: false,
+      };
     }
   }
 }

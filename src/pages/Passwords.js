@@ -12,8 +12,9 @@ import less from "../images/less.png";
 import database from "../utils/fireStore";
 
 function Passwords() {
-  const types = ["administrador", "supervisor", "Tecnico", "operador"];
-  const { areas, equipos, getFireStoreData } = React.useContext(AppContext);
+  const types = ["admin", "superv", "Tech", "oper"];
+  const { areas, equipos, partes, getFireStoreData } =
+    React.useContext(AppContext);
   const [clase, setClase] = useState("hidenModal");
   const [classe, setClasse] = useState("hidenModal");
   const [equipo, setEquipo] = useState("");
@@ -27,9 +28,9 @@ function Passwords() {
 
   useEffect(() => {
     (async function () {
-      await getFireStoreData(area);
+      await getFireStoreData(area, equipo);
     })();
-  }, [area]);
+  }, [area, equipo]);
 
   const showModalDel = () => {
     if (clase === "hidenModal") {
@@ -40,7 +41,7 @@ function Passwords() {
   };
 
   const showModalAdd = () => {
-    if (area === "" || equipo === "") {
+    if (area === "" || equipo === "" || parte === "") {
       setFault("*Debes seleccionar un area y un equipo");
     } else {
       setFault("");
@@ -53,7 +54,8 @@ function Passwords() {
   };
 
   async function createPassword() {
-    await database.createNewPassword(area, equipo, user, parte, {
+    await database.createNewPassword(area, equipo, parte, user, {
+      user,
       password,
       type,
       name,
@@ -84,10 +86,14 @@ function Passwords() {
             Equipo:
             <SelectOption options={equipos} value={equipo} action={setEquipo} />
           </label>
+          <label>
+            Dispositivo:
+            <SelectOption options={partes} value={parte} action={setParte} />
+          </label>
           <span>{fault}</span>
         </div>
       </section>
-      <Viwer />
+      <Viwer area={area} machine={equipo} parte={parte} />
       <Modal classe={clase}>
         <div className="main-modal">
           <h2>Eliminar Password </h2>
@@ -100,17 +106,6 @@ function Passwords() {
       <Modal classe={classe}>
         <div className="main-modal">
           <h2>Nuevo Password </h2>
-          <label>
-            Dispositivo:
-            <InputForm
-              type="text"
-              size="20"
-              value={parte}
-              action={setParte}
-              readOnly={false}
-              class="inputFormOrder"
-            />
-          </label>
           <label>
             Nombre:
             <InputForm
