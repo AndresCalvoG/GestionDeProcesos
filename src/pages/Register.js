@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import InputForm from "../components/InputForm";
 import Button from "../components/Button";
 import Auth from "../utils/autenticacion";
@@ -10,8 +11,8 @@ const Register = () => {
   const adminEmail = "andrescalvo9407@gmail.com";
   const adminPass = "987654321";
   //estados de pagina de registro
-  const [contain, setContain] = useState(true);
-  const [nombre, setNombre] = useState("andres calvo");
+  const [contain, setContain] = useState(false);
+  const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [emailReg, setEmailReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
@@ -128,21 +129,23 @@ const Register = () => {
       ) : (
         <main className="main-success">
           <h1> Bienvenido </h1>
-          <br />
-          <br />
-          <p className="success-names">
-            {nombres
-              .toLowerCase()
-              .trim()
-              .split(" ")
-              .map((v) => v[0].toUpperCase() + v.substr(1))
-              .join(" ")}
-          </p>
-          <p>
-            {" "}
-            Debes realizar el proceso de verificacion desde el correo enviado a
-            tu email{" "}
-          </p>
+          <section className="success-content">
+            <p>
+              <b>
+                {nombres
+                  .toLowerCase()
+                  .trim()
+                  .split(" ")
+                  .map((v) => v[0].toUpperCase() + v.substr(1))
+                  .join(" ")}
+              </b>{" "}
+              debes realizar el proceso de verificacion desde el correo enviado
+              a tu <b>email</b> para ingresar correctamente a la plataforma
+            </p>
+          </section>
+          <Link to="/" className="mainReset-link">
+            &#11013; Regresar a inicio de sesion
+          </Link>
         </main>
       )}
     </>
