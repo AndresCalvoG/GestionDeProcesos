@@ -19,6 +19,7 @@ import Help from "../pages/Help";
 import Binnacle from "../pages/Binnacle";
 import Documents from "../pages/Documents";
 import Profile from "../pages/Profile";
+import Machines from "../pages/Machines";
 import Passwords from "../pages/Passwords";
 
 import { AppContext } from "../context";
@@ -87,6 +88,11 @@ function App() {
                     exact
                     path="/Profile"
                     render={(props) => <Profile {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/Machines"
+                    render={(props) => <Machines {...props} />}
                   />
                   {loader ? (
                     <Route

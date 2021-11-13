@@ -28,7 +28,7 @@ const Home = () => {
         <section className="main-container--menu">
           <Card name="Documentacion" image={Documents} route="/Documents" />
           <Card name="Manuales" image={pdf} route="/Manuals" />
-          <Card name="Maquinas" image={machines} route="" />
+          <Card name="Maquinas" image={machines} route="/Machines" />
           <Card name="Calendario" image={calendar} route="/Calendar" />
           <Card name="Ayuda" image={help} route="/Help" />
           <Card name="Turnos" image={schedule} route="" />
