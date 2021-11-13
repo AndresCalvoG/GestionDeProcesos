@@ -17,7 +17,6 @@ class Autenticacion {
         .auth()
         .signInWithEmailAndPassword(email, password);
       if (result.user.emailVerified) {
-        //console.log("ok verificado");
         return "/loader";
       } else {
         await firebase.auth().signOut();
@@ -50,7 +49,7 @@ class Autenticacion {
         console.log(error);
       }
       await firebase.auth().signOut();
-      console.log("signOut Done");
+      //console.log("signOut Done");
       //console.log(result.user.uid);
       return result.user;
     } catch (error) {

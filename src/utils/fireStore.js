@@ -9,7 +9,7 @@ class Database {
     try {
       await db.collection("users").doc(props.id).set(props);
     } catch (error) {
-      return error.message;
+      console.log(error.message);
     }
   }
 

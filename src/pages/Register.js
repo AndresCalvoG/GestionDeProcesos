@@ -7,9 +7,11 @@ import database from "../utils/fireStore";
 import "./styles/register.css";
 
 const Register = () => {
+  const adminEmail = "andrescalvo9407@gmail.com";
+  const adminPass = "987654321";
   //estados de pagina de registro
-  const [contain, setContain] = useState(false);
-  const [nombre, setNombre] = useState("");
+  const [contain, setContain] = useState(true);
+  const [nombre, setNombre] = useState("andres calvo");
   const [apellido, setApellido] = useState("");
   const [emailReg, setEmailReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
@@ -48,7 +50,8 @@ const Register = () => {
       } else if (response.code === "auth/email-already-in-use") {
         setFaultReg("Email ya registrado");
       } else if (response.uid) {
-        const result = await database.crearUsersDb({
+        await Auth.authEmailPass(adminEmail, adminPass);
+        await database.crearUsersDb({
           first: nombre,
           last: apellido,
           email: emailReg,
@@ -56,8 +59,8 @@ const Register = () => {
           code: code,
           id: response.uid,
         });
-        console.log(result);
         setContain(true);
+        Auth.logoutUsers();
       } else {
         console.log(response.code);
       }
