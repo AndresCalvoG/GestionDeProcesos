@@ -57,6 +57,19 @@ class Autenticacion {
     }
   }
 
+  //Metodo para actualizar foto
+  async updatePhoto(user, photo) {
+    //console.log(user);
+    try {
+      user.updateProfile({
+        photoURL: photo,
+      });
+      console.log("foto enviada");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   //Metodo para logout de usuario
   async logoutUsers() {
     try {
@@ -101,5 +114,5 @@ class Autenticacion {
   }
 }
 
-const auth = new Autenticacion();
-export default auth;
+const Auth = new Autenticacion();
+export default Auth;

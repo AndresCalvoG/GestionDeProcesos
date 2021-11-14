@@ -41,6 +41,7 @@ function AppProvider(props) {
   //estados compartidos de context
   const [auth, setAuth] = useState(parseAuth);
   const [user, setUser] = useState(parseUser);
+  const [superUser, setSuperUser] = useState(null);
   const [loader, setLoader] = useState(false);
   const [areas, setAreas] = useState([]);
   const [equipos, setEquipos] = useState([]);
@@ -56,6 +57,7 @@ function AppProvider(props) {
       exists: false,
     };
     const response = await Auth.validUser();
+    setSuperUser(response);
     response.photoURL
       ? setPhotoUrl(response.photoURL)
       : setPhotoUrl(userProfile);
@@ -179,6 +181,7 @@ function AppProvider(props) {
         newNotify,
         update,
         photoUrl,
+        superUser,
         setNewNotify,
         setUser,
         setAuth,

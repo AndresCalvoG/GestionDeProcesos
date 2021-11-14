@@ -5,9 +5,11 @@ import Button from "../components/Button";
 import InputForm from "../components/InputForm";
 import { AppContext } from "../context";
 import "./styles/profile.css";
+import Auth from "../utils/autenticacion";
+import storage from "../utils/storege";
 
 function Profile() {
-  const { photoUrl, setPhotoUrl, user } = React.useContext(AppContext);
+  const { user, superUser, getDataUser } = React.useContext(AppContext);
   const [photo, setPhoto] = useState("");
   const [clase, setClase] = useState("hidenModal");
 
@@ -16,8 +18,20 @@ function Profile() {
       setClase("showModal-full");
     } else {
       setClase("hidenModal");
+      setPhoto("");
     }
   };
+
+  async function updatePhoto() {
+    storage.uploadProfilePhoto(photo);
+    if (!photo) {
+      await Auth.updatePhoto(superUser, photo);
+      await getDataUser();
+    } else {
+      console.log("sin foto");
+    }
+    showModalAdd();
+  }
 
   return (
     <main className="main-container">
@@ -48,7 +62,7 @@ function Profile() {
             class="inputForm"
           />
           <div className="modalKeypad">
-            <Button name="Subir" class="modalMenu" />
+            <Button name="Subir" class="modalMenu" action={updatePhoto} />
             <Button name="cancelar" class="modalMenu" action={showModalAdd} />
           </div>
         </div>
