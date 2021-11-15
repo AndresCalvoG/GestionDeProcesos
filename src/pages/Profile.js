@@ -9,8 +9,9 @@ import Auth from "../utils/autenticacion";
 import storage from "../utils/storege";
 
 function Profile() {
-  const { user, superUser, getDataUser } = React.useContext(AppContext);
+  const { user, getDataUsers, setPhotoUrl } = React.useContext(AppContext);
   const [photo, setPhoto] = useState("");
+  const [file, setFile] = useState("");
   const [clase, setClase] = useState("hidenModal");
 
   const showModalAdd = () => {
@@ -19,18 +20,25 @@ function Profile() {
     } else {
       setClase("hidenModal");
       setPhoto("");
+      const URLphoto = localStorage.getItem("PhotoUrl");
+      let parsePhoto = JSON.parse(URLphoto);
+      setPhotoUrl(parsePhoto);
     }
   };
 
   async function updatePhoto() {
-    storage.uploadProfilePhoto(photo);
-    if (!photo) {
-      await Auth.updatePhoto(superUser, photo);
-      await getDataUser();
+    if (file) {
+      let imageURL = await storage.uploadProfilePhoto(
+        file,
+        user.fields.id.stringValue
+      );
+      const response = await Auth.validUser();
+      await Auth.updatePhoto(response, imageURL);
+      await getDataUsers();
     } else {
       console.log("sin foto");
     }
-    showModalAdd();
+    //showModalAdd();
   }
 
   return (
@@ -58,6 +66,8 @@ function Profile() {
             type="file"
             value={photo}
             action={setPhoto}
+            File={setFile}
+            currentPhoto={setPhotoUrl}
             readOnly={false}
             class="inputForm"
           />

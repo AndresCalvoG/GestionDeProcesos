@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
+import storage from "../utils/storege";
 import userProfile from "../images/profile.png";
 
 const AppContext = React.createContext();
@@ -23,8 +24,10 @@ function AppProvider(props) {
   //algoritmo para local storege
   const authenticated = localStorage.getItem("valid");
   const userActive = localStorage.getItem("user");
+  const URLphoto = localStorage.getItem("PhotoUrl");
   let parseAuth = JSON.parse(authenticated);
   let parseUser = JSON.parse(userActive);
+  let parsePhoto = JSON.parse(URLphoto);
 
   if (!authenticated) {
     localStorage.setItem("valid", JSON.stringify(false));
@@ -38,17 +41,22 @@ function AppProvider(props) {
   } else {
     parseUser = JSON.parse(userActive);
   }
+  if (!URLphoto) {
+    localStorage.setItem("PhotoUrl", JSON.stringify(userProfile));
+    parsePhoto = userProfile;
+  } else {
+    parsePhoto = JSON.parse(URLphoto);
+  }
   //estados compartidos de context
   const [auth, setAuth] = useState(parseAuth);
   const [user, setUser] = useState(parseUser);
-  const [superUser, setSuperUser] = useState(null);
   const [loader, setLoader] = useState(false);
   const [areas, setAreas] = useState([]);
   const [equipos, setEquipos] = useState([]);
   const [partes, setPartes] = useState([]);
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
-  const [photoUrl, setPhotoUrl] = useState(userProfile);
+  const [photoUrl, setPhotoUrl] = useState(parsePhoto);
   const history = useHistory();
 
   const getDataUsers = async () => {
@@ -57,35 +65,39 @@ function AppProvider(props) {
       exists: false,
     };
     const response = await Auth.validUser();
-    setSuperUser(response);
-    response.photoURL
-      ? setPhotoUrl(response.photoURL)
-      : setPhotoUrl(userProfile);
     //console.log(response); // informacion de usuario de autenticacion
     if (response !== "/") {
       data = await database.getDataUser(response.uid);
     }
     if (data.exists) {
-      handleValid(true, data._delegate._document.data.value.mapValue, true);
+      handleValid(
+        true,
+        data._delegate._document.data.value.mapValue,
+        true,
+        response.photoURL
+      );
       setLoader(false);
       history.replace("/home");
       console.log("reder true en app");
     } else {
-      handleValid(false, { value: false }, false);
+      handleValid(false, { value: false }, false, userProfile);
       setLoader(false);
       console.log("render false en app");
     }
   };
 
-  const handleValid = (token, user, mode) => {
+  const handleValid = (token, user, mode, photo) => {
     localStorage.setItem("valid", JSON.stringify(token));
     localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("PhotoUrl", JSON.stringify(photo));
     if (mode) {
       setUser(user);
       setAuth(token);
+      setPhotoUrl(photo);
     } else {
       setAuth(token);
       setUser(user);
+      setPhotoUrl(photo);
     }
   };
 
@@ -181,7 +193,6 @@ function AppProvider(props) {
         newNotify,
         update,
         photoUrl,
-        superUser,
         setNewNotify,
         setUser,
         setAuth,
