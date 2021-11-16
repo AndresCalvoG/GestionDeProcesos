@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
-import storage from "../utils/storege";
 import userProfile from "../images/profile.png";
 
 const AppContext = React.createContext();
@@ -174,10 +173,6 @@ function AppProvider(props) {
     setEquipos(equipos);
     setPartes(partes);
   }
-
-  // window.addEventListener("popstate", (e) => {
-  //   console.log(e);
-  // });
 
   return (
     <AppContext.Provider

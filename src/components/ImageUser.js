@@ -1,5 +1,6 @@
 import React from "react";
 import { AppContext } from "../context";
+import "./styles/imageUser.css";
 
 function ImageUser(props) {
   const { photoUrl } = React.useContext(AppContext);

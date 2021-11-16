@@ -10,10 +10,6 @@ class Storage {
     var file = photo;
     try {
       var result = await storageRef.put(file);
-      // result.On(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
-      //   var progress = (snapshot.bytesTrasnferred / snapshot.totalBytes) * 100;
-      //   console.log(progress);
-      // });
       let URL = await this.downloadProfilePhoto(
         "gs://gestion-de-procesoso-tq.appspot.com/" + result.task._ref.fullPath
       );

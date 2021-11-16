@@ -34,10 +34,6 @@
   width: 80%;
   padding: 1.5rem;
 }
-.main-header .avatar {
-  width: 60px;
-  height: 60px;
-}
 .main-header-avatar .avatar-info {
   display: flex;
   flex-direction: column;
