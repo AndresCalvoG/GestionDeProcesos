@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Prompt, useHistory } from "react-router-dom";
+import React from "react";
+import { useHistory } from "react-router-dom";
 
 import "./styles/home.css";
 import Documents from "../images/home/Documents.png";
@@ -14,7 +14,6 @@ import passwords from "../images/home/password.svg";
 import Card from "../components/Card";
 
 const Home = () => {
-  const [change, setChange] = useState(false);
   const history = useHistory();
   history.listen((location, action) => {
     if (action === "POP" && location.pathname === "/Loader") {
@@ -23,21 +22,18 @@ const Home = () => {
   });
 
   return (
-    <>
-      <main className="main-container">
-        <section className="main-container--menu">
-          <Card name="Documentacion" image={Documents} route="/Documents" />
-          <Card name="Manuales" image={pdf} route="/Manuals" />
-          <Card name="Maquinas" image={machines} route="/Machines" />
-          <Card name="Calendario" image={calendar} route="/Calendar" />
-          <Card name="Ayuda" image={help} route="/Help" />
-          <Card name="Turnos" image={schedule} route="" />
-          <Card name="Bitacora" image={binnacle} route="/Binnacle" />
-          <Card name="Contraseñas" image={passwords} route="/Passwords" />
-        </section>
-      </main>
-      <Prompt when={change} message="Esta seguro que quieres salir?" />
-    </>
+    <main className="main-container">
+      <section className="main-container--menu">
+        <Card name="Documentacion" image={Documents} route="/Documents" />
+        <Card name="Manuales" image={pdf} route="/Manuals" />
+        <Card name="Maquinas" image={machines} route="/Machines" />
+        <Card name="Calendario" image={calendar} route="/Calendar" />
+        <Card name="Ayuda" image={help} route="/Help" />
+        <Card name="Turnos" image={schedule} route="" />
+        <Card name="Bitacora" image={binnacle} route="/Binnacle" />
+        <Card name="Contraseñas" image={passwords} route="/Passwords" />
+      </section>
+    </main>
   );
 };
 

@@ -9,7 +9,6 @@ import less from "../images/less.png";
 function Machines() {
   const [clase, setClase] = useState("hidenModal");
   const [classe, setClasse] = useState("hidenModal");
-  const [fault, setFault] = useState("");
 
   const showModalDel = () => {
     if (clase === "hidenModal") {
@@ -20,7 +19,6 @@ function Machines() {
   };
 
   const showModalAdd = () => {
-    setFault("");
     if (classe === "hidenModal") {
       setClasse("showModal-full");
     } else {
