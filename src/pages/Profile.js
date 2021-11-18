@@ -14,10 +14,12 @@ function Profile() {
   const [file, setFile] = useState("");
   const [clase, setClase] = useState("hidenModal");
   const [menu, setMenu] = useState("hiden");
+  const [items, setItems] = useState("hiden");
 
   const showModalAdd = () => {
     if (clase === "hidenModal") {
       setClase("showModal-full");
+      showMenu();
     } else {
       setClase("hidenModal");
       setPhoto("");
@@ -31,6 +33,11 @@ function Profile() {
       setMenu("photo-menu--list");
     } else {
       setMenu("hiden");
+    }
+    if (items === "hiden") {
+      setItems("photo-menu--items");
+    } else {
+      setItems("hiden");
     }
   }
 
@@ -54,7 +61,8 @@ function Profile() {
         <div className="card-photo">
           <ImageUser action={showMenu} />
           <div className="photo-menu"></div>
-          <article className={menu}>
+          <article className={menu}></article>
+          <article className={items}>
             <p className="list-item" onClick={showModalAdd}>
               * Subir Foto
             </p>

@@ -28,23 +28,33 @@
   background-color: var(--blue);
   border-radius: 50%;
 }
-.photo-menu--list {
+.photo-menu--items {
   position: absolute;
   top: 27%;
   left: 57%;
-  z-index: -1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: flex-end;
   width: 16.5rem;
   height: 7rem;
   padding-right: 15px;
   border-radius: 20px;
-  border: solid 2px var(--blue);
+  border: 0;
   color: black;
   font-size: 1.5rem;
   font-weight: bold;
+}
+.photo-menu--list {
+  position: absolute;
+  top: 27%;
+  left: 57%;
+  z-index: -1;
+  width: 16.5rem;
+  height: 7rem;
+  padding-right: 15px;
+  border-radius: 20px;
+  border: solid 2px var(--blue);
 }
 .list-item {
   color: var(--text);
