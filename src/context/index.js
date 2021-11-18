@@ -77,11 +77,11 @@ function AppProvider(props) {
       );
       setLoader(false);
       history.replace("/home");
-      console.log("reder true en app");
+      //console.log("reder true en app");
     } else {
       handleValid(false, { value: false }, false, userProfile);
       setLoader(false);
-      console.log("render false en app");
+      //console.log("render false en app");
     }
   };
 

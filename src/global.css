@@ -30,3 +30,6 @@ body {
 span {
   color: var(--red);
 }
+.hiden {
+  display: none;
+}
