@@ -54,6 +54,15 @@ function Profile() {
       console.log("sin foto");
     }
   }
+  async function deletePhoto() {
+    let defaultImage = await storage.deleteProfilePhoto(
+      user.fields.id.stringValue
+    );
+    const response = await Auth.validUser();
+    await Auth.updatePhoto(response, defaultImage);
+    await getDataUsers();
+    console.log("eliminado");
+  }
 
   return (
     <main className="mainProfile">
@@ -66,7 +75,9 @@ function Profile() {
             <p className="list-item" onClick={showModalAdd}>
               * Subir Foto
             </p>
-            <p className="list-item">* Quitar foto</p>
+            <p className="list-item" onClick={deletePhoto}>
+              * Quitar foto
+            </p>
           </article>
         </div>
         <div className="card-info">
