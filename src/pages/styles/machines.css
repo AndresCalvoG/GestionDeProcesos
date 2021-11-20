@@ -16,3 +16,8 @@
 .modal-image img {
   object-fit: scale-down;
 }
+.modal-select {
+  width: 32rem;
+  display: flex;
+  justify-content: space-evenly;
+}
