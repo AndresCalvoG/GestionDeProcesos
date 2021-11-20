@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import InputForm from "../components/InputForm";
 import Button from "../components/Button";
+import Progress from "../components/progress/Progress";
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
 
@@ -19,6 +20,7 @@ const Register = () => {
   const [cargo, setCargo] = useState("");
   const [code, setCode] = useState("");
   const [faultReg, setFaultReg] = useState("");
+  const [clase, setClase] = useState("hidenProgress");
   const nombres = `${nombre} ${apellido}`;
 
   // funciones de pagina de registro
@@ -34,6 +36,7 @@ const Register = () => {
       setFaultReg("Por favor completa TODOS los campos");
     } else {
       setFaultReg("");
+      setClase("showProgress");
       const response = await Auth.crearCuentaEmailPass(
         emailReg,
         passwordReg,
@@ -123,6 +126,7 @@ const Register = () => {
                 class="submit"
                 action={handleRegister}
               />
+              <Progress class={clase} />
             </form>
           </section>
         </main>
