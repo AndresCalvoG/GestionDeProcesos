@@ -76,7 +76,7 @@ const Login = () => {
             <Link to="/password/reset" className="mainLogin-link">
               ¿Olvidaste tu Contraseña?
             </Link>
-            <span>{fault}</span>
+            <span className="fault">{fault}</span>
           </div>
           <div className="mainLogin-keypad">
             <Button name="Ingresar" class="submit" action={handleLogin} />

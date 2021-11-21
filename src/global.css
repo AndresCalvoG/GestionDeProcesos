@@ -27,8 +27,9 @@ body {
   background-color: var(--baseWhite);
   color: var(--gray);
 }
-span {
+.fault {
   color: var(--red);
+  font-size: 1.4rem;
 }
 .hiden {
   display: none;

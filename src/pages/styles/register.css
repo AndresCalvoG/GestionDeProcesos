@@ -28,16 +28,6 @@
   align-items: center;
   width: 80%;
 }
-.form-body span {
-  width: 100%;
-  background: none;
-  border: 0;
-  color: var(--red);
-  margin: 0 auto;
-  padding: 0;
-  outline: none;
-  font-size: 1.4rem;
-}
 .main-success {
   display: flex;
   flex-direction: column;

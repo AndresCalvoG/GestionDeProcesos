@@ -32,22 +32,47 @@ function Machines() {
       setClase("hidenModal");
     }
   };
-
   const showModalAdd = () => {
     setFault("");
     if (classe === "hidenModal") {
       setClasse("showModal-full");
     } else {
       setClasse("hidenModal");
+      setPhotoName("");
+      setPhoto("");
+      setFile("");
     }
   };
   function showModalData() {
-    setClasse("hidenModal");
-    setClaseData("showModal-full");
+    if (photoName === "" || file === "") {
+      setClasse("showModal-full");
+      setClaseData("hidenModal");
+      setFault("Selecciona una foto primero");
+    } else {
+      setFault("");
+      setClasse("hidenModal");
+      setClaseData("showModal-full");
+    }
   }
   function showModalSelect() {
-    setClaseData("hidenModal");
-    setClaseSelect("showModal-full");
+    if (type === "" || refer === "" || area === "" || cubiculo == "") {
+      setClaseData("showModal-full");
+      setClaseSelect("hidenModal");
+      setFault("Completa todos los campos");
+    } else {
+      setClaseData("hidenModal");
+      setClaseSelect("showModal-full");
+      setFault("");
+    }
+  }
+  function createMachine() {
+    if (
+      display[0] === false ||
+      display[1] === false ||
+      camera[0] === false ||
+      camera[1] === false
+    )
+      console.log("creado");
   }
 
   return (
@@ -80,8 +105,9 @@ function Machines() {
             readOnly={false}
             class="inputForm"
           />
+          <span className="fault">{fault}</span>
           <div className="modalKeypad">
-            <Button name="siguiente" class="modalMenu" action={showModalData} />
+            <Button name="Siguiente" class="modalMenu" action={showModalData} />
             <Button name="cancelar" class="modalMenu" action={showModalAdd} />
           </div>
         </div>
@@ -136,6 +162,7 @@ function Machines() {
             />
           </label>
           <br />
+          <span className="fault">{fault}</span>
           <div className="modalKeypad">
             <Button
               name="Siguiente"
@@ -148,6 +175,7 @@ function Machines() {
               action={() => {
                 setClasse("showModal-full");
                 setClaseData("hidenModal");
+                setFault("");
               }}
             />
           </div>
@@ -237,7 +265,7 @@ function Machines() {
             <p></p>
           )}
           <div className="modalKeypad">
-            <Button name="siguiente" class="modalMenu" action={showModalData} />
+            <Button name="Finalizar" class="modalMenu" action={createMachine} />
             <Button
               name="atras"
               class="modalMenu"
