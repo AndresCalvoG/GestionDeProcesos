@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import storage from "../utils/storege";
 import Card from "../components/Card";
 import Modal from "../components/Modal";
 import Button from "../components/Button";
@@ -67,12 +68,17 @@ function Machines() {
   }
   function createMachine() {
     if (
-      display[0] === false ||
-      display[1] === false ||
-      camera[0] === false ||
-      camera[1] === false
-    )
-      console.log("creado");
+      (display[0] === false && display[1] === false) ||
+      (camera[0] === false && camera[1] === false)
+    ) {
+      setFault("Selecciona una opcion");
+    } else if (marca === "" || marcam === "") {
+      setFault("completa la marca del equipo");
+    } else {
+      setFault("");
+      let imageURL = storage.uploadMachinePhoto(file, refer);
+      setFault(imageURL);
+    }
   }
 
   return (
@@ -264,12 +270,14 @@ function Machines() {
           ) : (
             <p></p>
           )}
+          <span className="fault">{fault}</span>
           <div className="modalKeypad">
             <Button name="Finalizar" class="modalMenu" action={createMachine} />
             <Button
               name="atras"
               class="modalMenu"
               action={() => {
+                setFault("");
                 setClaseData("showModal-full");
                 setClaseSelect("hidenModal");
               }}

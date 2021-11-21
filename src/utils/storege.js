@@ -48,6 +48,23 @@ class Storage {
       console.log(error);
     }
   }
+  //metodo para subir foto de maquina
+  async uploadMachinePhoto(photo, name) {
+    var storageRef = firebase
+      .storage()
+      .ref()
+      .child("machines/" + name + ".jpeg");
+    var file = photo;
+    try {
+      var result = await storageRef.put(file);
+      let URL = await this.downloadDocument(
+        "gs://gestion-de-procesoso-tq.appspot.com/" + result.task._ref.fullPath
+      );
+      return URL;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 const storage = new Storage();
