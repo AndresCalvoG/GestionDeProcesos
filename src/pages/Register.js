@@ -13,24 +13,26 @@ const Register = () => {
   const adminPass = "987654321";
   //estados de pagina de registro
   const [contain, setContain] = useState(false);
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [emailReg, setEmailReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
+  const [area, setArea] = useState("");
   const [cargo, setCargo] = useState("");
   const [code, setCode] = useState("");
   const [faultReg, setFaultReg] = useState("");
   const [clase, setClase] = useState("hidenProgress");
-  const nombres = `${nombre} ${apellido}`;
+  const nombres = `${firstName} ${lastName}`;
 
   // funciones de pagina de registro
   const handleRegister = async () => {
     if (
-      nombre === "" ||
-      apellido === "" ||
+      firstName === "" ||
+      lastName === "" ||
       emailReg === "" ||
       passwordReg === "" ||
       cargo === "" ||
+      area === "" ||
       code === ""
     ) {
       setFaultReg("Por favor completa TODOS los campos");
@@ -56,10 +58,11 @@ const Register = () => {
       } else if (response.uid) {
         await Auth.authEmailPass(adminEmail, adminPass);
         await database.crearUsersDb({
-          first: nombre,
-          last: apellido,
+          first: firstName,
+          last: lastName,
           email: emailReg,
           cargo: cargo,
+          area: area,
           code: code,
           id: response.uid,
         });
@@ -80,16 +83,16 @@ const Register = () => {
             <form onSubmit={(e) => e.preventDefault()} className="form-body">
               <InputForm
                 type="text"
-                label="Tu nombre..."
-                value={nombre}
-                action={setNombre}
+                label="Tu Nombre..."
+                value={firstName}
+                action={setFirstName}
                 class="inputForm"
               />
               <InputForm
                 type="text"
                 label="Tu apellido..."
-                value={apellido}
-                action={setApellido}
+                value={lastName}
+                action={setLastName}
                 class="inputForm"
               />
               <InputForm
@@ -104,6 +107,13 @@ const Register = () => {
                 label="Contraseña..."
                 value={passwordReg}
                 action={setPasswordReg}
+                class="inputForm"
+              />
+              <InputForm
+                type="text"
+                label="Area..."
+                value={area}
+                action={setArea}
                 class="inputForm"
               />
               <InputForm
