@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import storage from "../utils/storege";
+import database from "../utils/fireStore";
+
 import Card from "../components/Card";
 import Modal from "../components/Modal";
 import Button from "../components/Button";
@@ -56,7 +58,7 @@ function Machines() {
     }
   }
   function showModalSelect() {
-    if (type === "" || refer === "" || area === "" || cubiculo == "") {
+    if (type === "" || refer === "" || area === "" || cubiculo === "") {
       setClaseData("showModal-full");
       setClaseSelect("hidenModal");
       setFault("Completa todos los campos");
@@ -66,18 +68,27 @@ function Machines() {
       setFault("");
     }
   }
-  function createMachine() {
+  async function createMachine() {
     if (
       (display[0] === false && display[1] === false) ||
       (camera[0] === false && camera[1] === false)
     ) {
-      setFault("Selecciona una opcion");
-    } else if (marca === "" || marcam === "") {
-      setFault("completa la marca del equipo");
+      setFault("Completa los campos de Si o No");
+    } else if (display[0] === true && marca === "") {
+      setFault("completa la marca del HMI");
+    } else if (camera[0] === true && marcam === "") {
+      setFault("completa la marca de la camara");
     } else {
       setFault("");
-      let imageURL = storage.uploadMachinePhoto(file, refer);
-      setFault(imageURL);
+      setClaseSelect("hidenModal");
+      let imageURL = await storage.uploadMachinePhoto(file, refer);
+      await database.createNewMachine(
+        area,
+        refer,
+        { marca },
+        { marcam },
+        { imageURL, type, cubiculo }
+      );
     }
   }
 
