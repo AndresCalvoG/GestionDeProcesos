@@ -130,18 +130,22 @@ class Database {
   async createNewMachine(area, equipo, hmi, camara, data) {
     var db = firebase.firestore();
     try {
-      await db
-        .collection("areas")
-        .doc(area)
-        .collection(equipo)
-        .doc("Hmi")
-        .set(hmi);
-      await db
-        .collection("areas")
-        .doc(area)
-        .collection(equipo)
-        .doc("Camara")
-        .set(camara);
+      if (hmi !== "") {
+        await db
+          .collection("areas")
+          .doc(area)
+          .collection(equipo)
+          .doc("Hmi")
+          .set(hmi);
+      }
+      if (camara !== "") {
+        await db
+          .collection("areas")
+          .doc(area)
+          .collection(equipo)
+          .doc("Camara")
+          .set(camara);
+      }
       await db
         .collection("areas")
         .doc(area)
