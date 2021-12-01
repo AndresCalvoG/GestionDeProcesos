@@ -13,10 +13,13 @@ function Profile() {
   const [photo, setPhoto] = useState("");
   const [file, setFile] = useState("");
   const [clase, setClase] = useState("hidenModal");
+  const [menu, setMenu] = useState("hiden");
+  const [items, setItems] = useState("hiden");
 
   const showModalAdd = () => {
     if (clase === "hidenModal") {
       setClase("showModal-full");
+      showMenu();
     } else {
       setClase("hidenModal");
       setPhoto("");
@@ -25,6 +28,18 @@ function Profile() {
       setPhotoUrl(parsePhoto);
     }
   };
+  function showMenu() {
+    if (menu === "hiden") {
+      setMenu("photo-menu--list");
+    } else {
+      setMenu("hiden");
+    }
+    if (items === "hiden") {
+      setItems("photo-menu--items");
+    } else {
+      setItems("hiden");
+    }
+  }
 
   async function updatePhoto() {
     if (file) {
@@ -38,30 +53,51 @@ function Profile() {
     } else {
       console.log("sin foto");
     }
-    //showModalAdd();
+  }
+  async function deletePhoto() {
+    let defaultImage = await storage.deleteProfilePhoto(
+      user.fields.id.stringValue
+    );
+    const response = await Auth.validUser();
+    await Auth.updatePhoto(response, defaultImage);
+    await getDataUsers();
+    console.log("eliminado");
   }
 
   return (
-    <main className="main-container">
-      <section className="profileCard">
-        <ImageUser action={showModalAdd} />
-        <div className="profile-info">
-          <p>Nombre:</p>
+    <main className="mainProfile">
+      <section className="mainProfile-card">
+        <div className="card-photo">
+          <ImageUser action={showMenu} />
+          <div className="photo-menu"></div>
+          <article className={menu}></article>
+          <article className={items}>
+            <p className="list-item" onClick={showModalAdd}>
+              * Subir Foto
+            </p>
+            <p className="list-item" onClick={deletePhoto}>
+              * Quitar foto
+            </p>
+          </article>
+        </div>
+        <div className="card-info">
+          <p className="info-item">Nombre:</p>
           <p>
             {user.fields.first.stringValue} {user.fields.last.stringValue}
           </p>
-          <p>Email:</p>
+          <p className="info-item">Email:</p>
           <p>{user.fields.email.stringValue}</p>
-          <p>Cargo:</p>
+          <p className="info-item">Cargo:</p>
           <p>{user.fields.cargo.stringValue}</p>
-          <p>Codigo:</p>
+          <p className="info-item">Codigo:</p>
           <p>{user.fields.code.stringValue}</p>
         </div>
       </section>
       <Modal classe={clase}>
         <div className="main-modal">
-          <h2>Nueva Foto</h2>
-          <ImageUser />
+          <div className="card-photo">
+            <ImageUser />
+          </div>
           <InputForm
             type="file"
             value={photo}

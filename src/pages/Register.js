@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import InputForm from "../components/InputForm";
 import Button from "../components/Button";
+import Progress from "../components/progress/Progress";
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
 
@@ -12,28 +13,32 @@ const Register = () => {
   const adminPass = "987654321";
   //estados de pagina de registro
   const [contain, setContain] = useState(false);
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [emailReg, setEmailReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
+  const [area, setArea] = useState("");
   const [cargo, setCargo] = useState("");
   const [code, setCode] = useState("");
-  const [faultReg, setFaultReg] = useState("");
-  const nombres = `${nombre} ${apellido}`;
+  const [fault, setFault] = useState("");
+  const [clase, setClase] = useState("hidenProgress");
+  const nombres = `${firstName} ${lastName}`;
 
   // funciones de pagina de registro
   const handleRegister = async () => {
     if (
-      nombre === "" ||
-      apellido === "" ||
+      firstName === "" ||
+      lastName === "" ||
       emailReg === "" ||
       passwordReg === "" ||
       cargo === "" ||
+      area === "" ||
       code === ""
     ) {
-      setFaultReg("Por favor completa TODOS los campos");
+      setFault("Por favor completa TODOS los campos");
     } else {
-      setFaultReg("");
+      setFault("");
+      setClase("showProgress");
       const response = await Auth.crearCuentaEmailPass(
         emailReg,
         passwordReg,
@@ -41,22 +46,23 @@ const Register = () => {
       );
 
       if (response.code === "auth/wrong-password") {
-        setFaultReg("Contraseña Incorrecta");
+        setFault("Contraseña Incorrecta");
       } else if (response.code === "auth/user-not-found") {
-        setFaultReg("Usuario Incorrecto");
+        setFault("Usuario Incorrecto");
       } else if (response.code === "auth/invalid-email") {
-        setFaultReg("Email invalido");
+        setFault("Email invalido");
       } else if (response.code === "auth/weak-password") {
-        setFaultReg("Contraseña demasiado corta");
+        setFault("Contraseña demasiado corta");
       } else if (response.code === "auth/email-already-in-use") {
-        setFaultReg("Email ya registrado");
+        setFault("Email ya registrado");
       } else if (response.uid) {
         await Auth.authEmailPass(adminEmail, adminPass);
         await database.crearUsersDb({
-          first: nombre,
-          last: apellido,
+          first: firstName,
+          last: lastName,
           email: emailReg,
           cargo: cargo,
+          area: area,
           code: code,
           id: response.uid,
         });
@@ -77,16 +83,16 @@ const Register = () => {
             <form onSubmit={(e) => e.preventDefault()} className="form-body">
               <InputForm
                 type="text"
-                label="Tu nombre..."
-                value={nombre}
-                action={setNombre}
+                label="Tu Nombre..."
+                value={firstName}
+                action={setFirstName}
                 class="inputForm"
               />
               <InputForm
                 type="text"
                 label="Tu apellido..."
-                value={apellido}
-                action={setApellido}
+                value={lastName}
+                action={setLastName}
                 class="inputForm"
               />
               <InputForm
@@ -105,6 +111,13 @@ const Register = () => {
               />
               <InputForm
                 type="text"
+                label="Area..."
+                value={area}
+                action={setArea}
+                class="inputForm"
+              />
+              <InputForm
+                type="text"
                 label="Tu cargo..."
                 value={cargo}
                 action={setCargo}
@@ -117,12 +130,13 @@ const Register = () => {
                 action={setCode}
                 class="inputForm"
               />
-              <span>{faultReg}</span>
+              <span className="fault">{fault}</span>
               <Button
                 name="Registrarme"
                 class="submit"
                 action={handleRegister}
               />
+              <Progress class={clase} />
             </form>
           </section>
         </main>

@@ -1,9 +1,9 @@
-.main-container .avatar {
-  width: 200px;
-  height: 200px;
-  margin-bottom: 3rem;
+.mainProfile {
+  position: absolute;
+  width: 100vw;
+  top: 15%;
 }
-.profileCard {
+.mainProfile-card {
   width: 100vw;
   height: 50rem;
   border: 0px solid black;
@@ -11,23 +11,77 @@
   flex-direction: column;
   align-items: center;
 }
-.main-modal .avatar {
-  width: 180px;
-  height: 180px;
+.card-photo .avatar {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 3rem;
+  border-radius: 50%;
+  border: dashed 4px var(--blue);
 }
-.profile-info {
+.photo-menu {
+  position: absolute;
+  z-index: -1;
+  top: 33%;
+  left: 57%;
+  width: 4rem;
+  height: 4rem;
+  background-color: var(--blue);
+  border-radius: 50%;
+}
+.photo-menu--items {
+  position: absolute;
+  top: 27%;
+  left: 57%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  width: 16.5rem;
+  height: 7rem;
+  padding-right: 15px;
+  border-radius: 20px;
+  border: 0;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.photo-menu--list {
+  position: absolute;
+  top: 27%;
+  left: 57%;
+  z-index: -1;
+  width: 16.5rem;
+  height: 7rem;
+  padding-right: 15px;
+  border-radius: 20px;
+  border: solid 2px var(--blue);
+}
+.list-item {
+  color: var(--text);
+}
+.list-item--click {
+  color: var(--black);
+}
+.card-info {
   width: 80vw;
   height: 50rem;
-  background-color: var(--lightgray);
+  background-color: var(--white);
   border-radius: 50px;
-  border: 2px solid black;
+  border: 2px solid var(--blue);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1rem;
 }
-.profile-info p {
+.card-info p {
   color: var(--black);
   font-size: 1.6rem;
   margin-bottom: 1rem;
+}
+.info-item {
+  font-weight: bold;
+}
+.main-modal .avatar {
+  width: 180px;
+  height: 180px;
 }

@@ -8,7 +8,6 @@ import InputForm from "../components/InputForm";
 import SelectOption from "../components/SelectOption";
 import Button from "../components/Button";
 import Reloj from "../components/Reloj";
-import Span from "../components/Span";
 
 function WorkOrder() {
   const history = useHistory();
@@ -424,7 +423,8 @@ function WorkOrder() {
               />
             </label>
             <Button name="Guardar" class="submit" action={pushData} />
-            <Span text={fault} class="faller" />
+            <br />
+            <span className="fault">{fault}</span>
           </div>
         </form>
       </section>

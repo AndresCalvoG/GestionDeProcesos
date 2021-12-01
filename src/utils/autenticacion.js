@@ -4,6 +4,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import firebaseConfig from "./ConfigFirebase";
+import storage from "../utils/storege";
 
 class Autenticacion {
   constructor() {
@@ -34,8 +35,12 @@ class Autenticacion {
       const result = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password);
+      const imgDefault = await storage.downloadDocument(
+        "gs://gestion-de-procesoso-tq.appspot.com/profilePhotos/profile.png"
+      );
       result.user.updateProfile({
         displayName: nombres,
+        photoURL: imgDefault,
       });
       const configuracion = {
         url: "https://andrescalvog.github.io/GestionDeProcesos/",

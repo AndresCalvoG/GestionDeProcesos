@@ -4,13 +4,14 @@ import { useHistory } from "react-router-dom";
 import Auth from "../utils/autenticacion";
 
 import "./styles/login.css";
-import userLogo from "../images/login/user.svg";
 import { AppContext } from "../context";
 import InputForm from "../components/InputForm";
 import Button from "../components/Button";
 import Progress from "../components/progress/Progress";
 
 const Login = () => {
+  const userLogo =
+    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Fuser.svg?alt=media&token=3182cc4e-caa2-498a-9929-454ce7564c10";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fault, setFault] = useState("");
@@ -76,7 +77,7 @@ const Login = () => {
             <Link to="/password/reset" className="mainLogin-link">
               ¿Olvidaste tu Contraseña?
             </Link>
-            <span>{fault}</span>
+            <span className="fault">{fault}</span>
           </div>
           <div className="mainLogin-keypad">
             <Button name="Ingresar" class="submit" action={handleLogin} />

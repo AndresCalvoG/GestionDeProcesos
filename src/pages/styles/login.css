@@ -33,13 +33,6 @@
 }
 .mainLogin-form span {
   width: 50%;
-  background: none;
-  border: 0;
-  color: var(--red);
-  padding: 0;
-  margin-right: 0;
-  outline: none;
-  font-size: 1.4rem;
   text-align: right;
 }
 .mainLogin-form .mainLogin-link {
