@@ -124,8 +124,8 @@ function Machines() {
           />
           <span className="fault">{fault}</span>
           <div className="modalKeypad">
-            <Button name="Siguiente" class="modalMenu" action={showModalData} />
             <Button name="cancelar" class="modalMenu" action={showModalAdd} />
+            <Button name="Siguiente" class="modalMenu" action={showModalData} />
           </div>
         </div>
       </Modal>
@@ -182,11 +182,6 @@ function Machines() {
           <span className="fault">{fault}</span>
           <div className="modalKeypad">
             <Button
-              name="Siguiente"
-              class="modalMenu"
-              action={showModalSelect}
-            />
-            <Button
               name="Atras"
               class="modalMenu"
               action={() => {
@@ -194,6 +189,11 @@ function Machines() {
                 setClaseData("hidenModal");
                 setFault("");
               }}
+            />
+            <Button
+              name="Siguiente"
+              class="modalMenu"
+              action={showModalSelect}
             />
           </div>
         </div>
@@ -283,7 +283,6 @@ function Machines() {
           )}
           <span className="fault">{fault}</span>
           <div className="modalKeypad">
-            <Button name="Finalizar" class="modalMenu" action={createMachine} />
             <Button
               name="atras"
               class="modalMenu"
@@ -293,6 +292,7 @@ function Machines() {
                 setClaseSelect("hidenModal");
               }}
             />
+            <Button name="Finalizar" class="modalMenu" action={createMachine} />
           </div>
         </div>
       </Modal>
