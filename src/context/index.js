@@ -78,11 +78,9 @@ function AppProvider(props) {
       );
       setLoader(false);
       history.replace("/home");
-      //console.log("reder true en app");
     } else {
       handleValid(false, { value: false }, false, UserProfile);
       setLoader(false);
-      //console.log("render false en app");
     }
   };
 
