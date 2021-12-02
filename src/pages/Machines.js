@@ -7,10 +7,13 @@ import Modal from "../components/Modal";
 import Button from "../components/Button";
 import InputForm from "../components/InputForm";
 import "./styles/machines.css";
-import plus from "../images/plus.png";
-import less from "../images/less.png";
 
 function Machines() {
+  const Plus =
+    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Futils%2Fplus.png?alt=media&token=61e48bf0-a78f-4dc3-b2fd-7f36f6493598";
+  const Less =
+    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Futils%2Fless.png?alt=media&token=7b9abfca-6c64-4884-94ea-37e57d2aef24";
+
   const [clase, setClase] = useState("hidenModal");
   const [classe, setClasse] = useState("hidenModal");
   const [claseData, setClaseData] = useState("hidenModal");
@@ -95,8 +98,8 @@ function Machines() {
   return (
     <main className="main-machines">
       <section className="machines-content">
-        <Card name="Nueva" image={plus} action={showModalAdd} />
-        <Card name="Eliminar" image={less} action={showModalDel} />
+        <Card name="Nueva" image={Plus} action={showModalAdd} />
+        <Card name="Eliminar" image={Less} action={showModalDel} />
       </section>
       <Modal classe={clase}>
         <div className="main-modal">

@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
-import userProfile from "../images/profile.png";
 
 const AppContext = React.createContext();
 
 function AppProvider(props) {
+  const UserProfile =
+    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/profilePhotos%2Fprofile.png?alt=media&token=b4bd3414-7c8f-4b08-bff9-9e46b113e884";
   //notificador
   const [newNotify, setNewNotify] = useState([
     {
@@ -41,8 +42,8 @@ function AppProvider(props) {
     parseUser = JSON.parse(userActive);
   }
   if (!URLphoto) {
-    localStorage.setItem("PhotoUrl", JSON.stringify(userProfile));
-    parsePhoto = userProfile;
+    localStorage.setItem("PhotoUrl", JSON.stringify(UserProfile));
+    parsePhoto = UserProfile;
   } else {
     parsePhoto = JSON.parse(URLphoto);
   }
@@ -79,7 +80,7 @@ function AppProvider(props) {
       history.replace("/home");
       //console.log("reder true en app");
     } else {
-      handleValid(false, { value: false }, false, userProfile);
+      handleValid(false, { value: false }, false, UserProfile);
       setLoader(false);
       //console.log("render false en app");
     }
