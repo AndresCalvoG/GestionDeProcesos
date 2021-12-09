@@ -45,14 +45,14 @@ function PasswordReset() {
           <div className="mainReset-keypad">
             <Button
               name="Cambiar Contraseña"
-              class="resetPage"
+              class="button--long"
               action={handleReset}
             />
             <Link to="/" className="mainReset-link">
               &#11013; Regresar a inicio de sesion
             </Link>
             <Link to="/register">
-              <Button name="Registrarme" class="resetPage" />
+              <Button name="Registrarme" class="button--long" />
             </Link>
             <br />
             <span>{faultReset}</span>

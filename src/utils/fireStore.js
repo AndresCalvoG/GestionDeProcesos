@@ -126,9 +126,10 @@ class Database {
     }
   }
 
-  //metodo para crear nuevas contraseñas
+  //metodo para crear nuevas maquinas
   async createNewMachine(area, equipo, hmi, camara, data) {
     var db = firebase.firestore();
+    console.log(hmi);
     try {
       if (hmi !== "") {
         await db

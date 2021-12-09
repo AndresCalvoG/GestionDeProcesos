@@ -4,6 +4,7 @@ import { HashRouter, Switch, Route } from "react-router-dom";
 
 import "../global.css";
 
+import HomePage from "../pages/HomePage";
 import Login from "../pages/Login";
 import Loader from "./Loader";
 import Register from "../pages/Register";
@@ -35,7 +36,7 @@ function App() {
                 <Switch>
                   <Route
                     exact
-                    path="/"
+                    path="/Login"
                     render={(props) => <Login {...props} />}
                   />
                   <Route exact path="/Register" component={Register} />
@@ -109,6 +110,11 @@ function App() {
                   <Route
                     exact
                     path="/"
+                    render={(props) => <HomePage {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/Login"
                     render={(props) => <Login {...props} />}
                   />
                   <Route exact path="/Register" component={Register} />

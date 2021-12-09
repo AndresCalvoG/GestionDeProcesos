@@ -15,9 +15,8 @@ function Passwords() {
   const Less =
     "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Futils%2Fless.png?alt=media&token=7b9abfca-6c64-4884-94ea-37e57d2aef24";
   const types = ["admin", "superv", "Tech", "oper"];
-
-  const { areas, equipos, partes, getFireStoreData } =
-    React.useContext(AppContext);
+  const partes = ["Hmi", "Camara"];
+  const { areas, equipos, getFireStoreData } = React.useContext(AppContext);
 
   const [clase, setClase] = useState("hidenModal");
   const [classe, setClasse] = useState("hidenModal");
