@@ -3,6 +3,16 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 
 class Database {
+  //Metodo crear una compañia en firestore database
+  async createCompany(props) {
+    var db = firebase.firestore();
+    try {
+      let docRef = await db.collection("Companies").add({ company: props });
+      return docRef.id;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
   //Metodo para enviar datos obtenidos a firestore database
   async crearUsersDb(props) {
     var db = firebase.firestore();
