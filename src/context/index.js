@@ -48,6 +48,7 @@ function AppProvider(props) {
     parsePhoto = JSON.parse(URLphoto);
   }
   //estados compartidos de context
+  const [companyID, setCompanyID] = useState("");
   const [auth, setAuth] = useState(parseAuth);
   const [user, setUser] = useState(parseUser);
   const [loader, setLoader] = useState(false);
@@ -151,6 +152,7 @@ function AppProvider(props) {
   return (
     <AppContext.Provider
       value={{
+        companyID,
         user,
         auth,
         loader,
@@ -162,6 +164,7 @@ function AppProvider(props) {
         newNotify,
         update,
         photoUrl,
+        setCompanyID,
         setNewNotify,
         setUser,
         setAuth,

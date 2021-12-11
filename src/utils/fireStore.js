@@ -13,6 +13,20 @@ class Database {
       console.log(error.message);
     }
   }
+  // Metodo para obtener empresas
+  async getCompanies() {
+    var db = firebase.firestore();
+    try {
+      var docRef = await db.collection("Companies").get();
+      console.log(docRef);
+    } catch (error) {
+      console.log(error);
+      return {
+        value: "0",
+        exists: false,
+      };
+    }
+  }
   //Metodo para enviar datos obtenidos a firestore database
   async crearUsersDb(props) {
     var db = firebase.firestore();

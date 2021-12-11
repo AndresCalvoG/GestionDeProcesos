@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { AppContext } from "../context";
 import InputForm from "../components/InputForm";
 import Button from "../components/Button";
 import Progress from "../components/progress/Progress";
@@ -24,6 +25,8 @@ const Register = () => {
   const [clase, setClase] = useState("hidenProgress");
   const nombres = `${firstName} ${lastName}`;
 
+  const { companyID, setCompanyID } = React.useContext(AppContext);
+
   // funciones de pagina de registro
   const handleRegister = async () => {
     if (
@@ -32,6 +35,7 @@ const Register = () => {
       emailReg === "" ||
       passwordReg === "" ||
       cargo === "" ||
+      companyID === "" ||
       area === "" ||
       code === ""
     ) {
@@ -39,38 +43,42 @@ const Register = () => {
     } else {
       setFault("");
       setClase("showProgress");
-      const response = await Auth.crearCuentaEmailPass(
-        emailReg,
-        passwordReg,
-        nombres
-      );
+      await Auth.authEmailPass(adminEmail, adminPass);
+      await database.getCompanies();
+      Auth.logoutUsers();
+      // const response = await Auth.crearCuentaEmailPass(
+      //   emailReg,
+      //   passwordReg,
+      //   nombres
+      // );
 
-      if (response.code === "auth/wrong-password") {
-        setFault("Contraseña Incorrecta");
-      } else if (response.code === "auth/user-not-found") {
-        setFault("Usuario Incorrecto");
-      } else if (response.code === "auth/invalid-email") {
-        setFault("Email invalido");
-      } else if (response.code === "auth/weak-password") {
-        setFault("Contraseña demasiado corta");
-      } else if (response.code === "auth/email-already-in-use") {
-        setFault("Email ya registrado");
-      } else if (response.uid) {
-        await Auth.authEmailPass(adminEmail, adminPass);
-        await database.crearUsersDb({
-          first: firstName,
-          last: lastName,
-          email: emailReg,
-          cargo: cargo,
-          area: area,
-          code: code,
-          id: response.uid,
-        });
-        setContain(true);
-        Auth.logoutUsers();
-      } else {
-        console.log(response.code);
-      }
+      // if (response.code === "auth/wrong-password") {
+      //   setFault("Contraseña Incorrecta");
+      // } else if (response.code === "auth/user-not-found") {
+      //   setFault("Usuario Incorrecto");
+      // } else if (response.code === "auth/invalid-email") {
+      //   setFault("Email invalido");
+      // } else if (response.code === "auth/weak-password") {
+      //   setFault("Contraseña demasiado corta");
+      // } else if (response.code === "auth/email-already-in-use") {
+      //   setFault("Email ya registrado");
+      // } else if (response.uid) {
+      //   await Auth.authEmailPass(adminEmail, adminPass);
+      //   await database.crearUsersDb({
+      //     first: firstName,
+      //     last: lastName,
+      //     email: emailReg,
+      //     charge: cargo,
+      //     company: companyID,
+      //     area: area,
+      //     code: code,
+      //     id: response.uid,
+      //   });
+      //   setContain(true);
+      //   Auth.logoutUsers();
+      // } else {
+      //   console.log(response.code);
+      // }
     }
   };
 
@@ -107,6 +115,13 @@ const Register = () => {
                 label="Contraseña..."
                 value={passwordReg}
                 action={setPasswordReg}
+                class="inputForm"
+              />
+              <InputForm
+                type="text"
+                label="Tu Codigo Empresarial..."
+                value={companyID}
+                action={setCompanyID}
                 class="inputForm"
               />
               <InputForm
