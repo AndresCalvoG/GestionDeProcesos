@@ -44,41 +44,45 @@ const Register = () => {
       setFault("");
       setClase("showProgress");
       await Auth.authEmailPass(adminEmail, adminPass);
-      await database.getCompanies();
+      let existID = await database.companyExist(companyID);
       Auth.logoutUsers();
-      // const response = await Auth.crearCuentaEmailPass(
-      //   emailReg,
-      //   passwordReg,
-      //   nombres
-      // );
+      if (existID === false) {
+        setFault("Empresa no Existe o Codigo Empresarial Equivocado");
+        return;
+      }
+      const response = await Auth.crearCuentaEmailPass(
+        emailReg,
+        passwordReg,
+        nombres
+      );
 
-      // if (response.code === "auth/wrong-password") {
-      //   setFault("Contraseña Incorrecta");
-      // } else if (response.code === "auth/user-not-found") {
-      //   setFault("Usuario Incorrecto");
-      // } else if (response.code === "auth/invalid-email") {
-      //   setFault("Email invalido");
-      // } else if (response.code === "auth/weak-password") {
-      //   setFault("Contraseña demasiado corta");
-      // } else if (response.code === "auth/email-already-in-use") {
-      //   setFault("Email ya registrado");
-      // } else if (response.uid) {
-      //   await Auth.authEmailPass(adminEmail, adminPass);
-      //   await database.crearUsersDb({
-      //     first: firstName,
-      //     last: lastName,
-      //     email: emailReg,
-      //     charge: cargo,
-      //     company: companyID,
-      //     area: area,
-      //     code: code,
-      //     id: response.uid,
-      //   });
-      //   setContain(true);
-      //   Auth.logoutUsers();
-      // } else {
-      //   console.log(response.code);
-      // }
+      if (response.code === "auth/wrong-password") {
+        setFault("Contraseña Incorrecta");
+      } else if (response.code === "auth/user-not-found") {
+        setFault("Usuario Incorrecto");
+      } else if (response.code === "auth/invalid-email") {
+        setFault("Email invalido");
+      } else if (response.code === "auth/weak-password") {
+        setFault("Contraseña demasiado corta");
+      } else if (response.code === "auth/email-already-in-use") {
+        setFault("Email ya registrado");
+      } else if (response.uid) {
+        await Auth.authEmailPass(adminEmail, adminPass);
+        await database.crearUsersDb({
+          first: firstName,
+          last: lastName,
+          email: emailReg,
+          charge: cargo,
+          company: companyID,
+          area: area,
+          code: code,
+          id: response.uid,
+        });
+        setContain(true);
+        Auth.logoutUsers();
+      } else {
+        console.log(response.code);
+      }
     }
   };
 

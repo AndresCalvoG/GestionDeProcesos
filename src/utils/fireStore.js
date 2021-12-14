@@ -13,18 +13,23 @@ class Database {
       console.log(error.message);
     }
   }
-  // Metodo para obtener empresas
-  async getCompanies() {
+  // Metodo para verificar compañia
+  async companyExist(id) {
     var db = firebase.firestore();
     try {
       var docRef = await db.collection("Companies").get();
-      console.log(docRef);
+      let companies = docRef.docs.map((element) => {
+        return element.id;
+      });
+      for (let i of companies) {
+        if (i === id) {
+          return true;
+        }
+      }
+      return false;
     } catch (error) {
       console.log(error);
-      return {
-        value: "0",
-        exists: false,
-      };
+      return error;
     }
   }
   //Metodo para enviar datos obtenidos a firestore database
