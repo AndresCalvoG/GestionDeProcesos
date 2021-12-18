@@ -7,7 +7,7 @@ class Database {
   async createCompany(props) {
     var db = firebase.firestore();
     try {
-      let docRef = await db.collection("Companies").add({ company: props });
+      let docRef = await db.collection("Companies").add({ name: props });
       return docRef.id;
     } catch (error) {
       console.log(error.message);
@@ -32,11 +32,29 @@ class Database {
       return error;
     }
   }
+  //metodo para obtener nombre de compañia
+  async getNameCompany(id) {
+    var db = firebase.firestore();
+    try {
+      var docRef = await db.collection("Companies").doc(id).get();
+      return docRef._delegate._document.data.value.mapValue.fields.name
+        .stringValue;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
   //Metodo para enviar datos obtenidos a firestore database
   async crearUsersDb(props) {
     var db = firebase.firestore();
     try {
-      await db.collection("users").doc(props.id).set(props);
+      await db
+        .collection("Companies")
+        .doc(props.company)
+        .collection("Users")
+        .doc(props.id)
+        .set(props);
+      await db.collection("Users").doc(props.id).set(props);
     } catch (error) {
       console.log(error.message);
     }
@@ -46,7 +64,7 @@ class Database {
   async getDataUser(props) {
     var db = firebase.firestore();
     try {
-      var docRef = await db.collection("users").doc(props).get();
+      var docRef = await db.collection("Users").doc(props).get();
       return docRef;
     } catch (error) {
       console.log(error);

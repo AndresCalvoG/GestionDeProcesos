@@ -88,7 +88,7 @@ function Profile() {
           <p className="info-item">Email:</p>
           <p>{user.fields.email.stringValue}</p>
           <p className="info-item">Cargo:</p>
-          <p>{user.fields.cargo.stringValue}</p>
+          <p>{user.fields.charge.stringValue}</p>
           <p className="info-item">Codigo:</p>
           <p>{user.fields.code.stringValue}</p>
         </div>

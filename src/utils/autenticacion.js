@@ -8,9 +8,9 @@ import storage from "../utils/storege";
 
 class Autenticacion {
   constructor() {
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
   }
+
   // Metodo para autenticacion con correo y contraseña
   async authEmailPass(email, password) {
     try {
@@ -49,13 +49,10 @@ class Autenticacion {
       try {
         result.user.sendEmailVerification(configuracion);
         await firebase.auth().sendSignInLinkToEmail(email, configuracion);
-        //console.log("Email de verificacion enviado");
       } catch (error) {
         console.log(error);
       }
       await firebase.auth().signOut();
-      //console.log("signOut Done");
-      //console.log(result.user.uid);
       return result.user;
     } catch (error) {
       return error;

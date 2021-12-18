@@ -48,7 +48,7 @@ function PasswordReset() {
               class="button--long"
               action={handleReset}
             />
-            <Link to="/" className="mainReset-link">
+            <Link to="/Login" className="mainReset-link">
               &#11013; Regresar a inicio de sesion
             </Link>
             <Link to="/register">

@@ -6,6 +6,8 @@ import database from "../utils/fireStore";
 const AppContext = React.createContext();
 
 function AppProvider(props) {
+  const adminEmail = "elprogramador94@gmail.com";
+  const adminPass = "123456";
   const UserProfile =
     "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/profilePhotos%2Fprofile.png?alt=media&token=b4bd3414-7c8f-4b08-bff9-9e46b113e884";
   //notificador
@@ -25,9 +27,11 @@ function AppProvider(props) {
   const authenticated = localStorage.getItem("valid");
   const userActive = localStorage.getItem("user");
   const URLphoto = localStorage.getItem("PhotoUrl");
+  const lnameCompany = localStorage.getItem("nameCompany");
   let parseAuth = JSON.parse(authenticated);
   let parseUser = JSON.parse(userActive);
   let parsePhoto = JSON.parse(URLphoto);
+  let parseNameCompany = JSON.parse(lnameCompany);
 
   if (!authenticated) {
     localStorage.setItem("valid", JSON.stringify(false));
@@ -47,8 +51,15 @@ function AppProvider(props) {
   } else {
     parsePhoto = JSON.parse(URLphoto);
   }
+  if (!lnameCompany) {
+    localStorage.setItem("nameCompany", JSON.stringify(" "));
+    parseNameCompany = " ";
+  } else {
+    parseNameCompany = JSON.parse(lnameCompany);
+  }
   //estados compartidos de context
   const [companyID, setCompanyID] = useState("");
+  const [nameCompany, setNameCompany] = useState(parseNameCompany);
   const [auth, setAuth] = useState(parseAuth);
   const [user, setUser] = useState(parseUser);
   const [loader, setLoader] = useState(false);
@@ -60,7 +71,7 @@ function AppProvider(props) {
   const [photoUrl, setPhotoUrl] = useState(parsePhoto);
   const history = useHistory();
 
-  const getDataUsers = async () => {
+  async function getDataUsers() {
     let data = {
       value: "0",
       exists: false,
@@ -69,34 +80,41 @@ function AppProvider(props) {
     //console.log(response); // informacion de usuario de autenticacion
     if (response !== "/") {
       data = await database.getDataUser(response.uid);
+      var nameC = await database.getNameCompany(
+        data._delegate._document.data.value.mapValue.fields.company.stringValue
+      );
     }
     if (data.exists) {
       handleValid(
         true,
         data._delegate._document.data.value.mapValue,
         true,
-        response.photoURL
+        response.photoURL,
+        nameC
       );
       setLoader(false);
       history.replace("/home");
     } else {
-      handleValid(false, { value: false }, false, UserProfile);
+      handleValid(false, { value: false }, false, UserProfile, " ");
       setLoader(false);
     }
-  };
+  }
 
-  const handleValid = (token, user, mode, photo) => {
+  const handleValid = (token, user, mode, photo, name) => {
     localStorage.setItem("valid", JSON.stringify(token));
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("PhotoUrl", JSON.stringify(photo));
+    localStorage.setItem("nameCompany", JSON.stringify(name));
     if (mode) {
       setUser(user);
       setAuth(token);
       setPhotoUrl(photo);
+      setNameCompany(name);
     } else {
       setAuth(token);
       setUser(user);
       setPhotoUrl(photo);
+      setNameCompany(name);
     }
   };
 
@@ -152,7 +170,10 @@ function AppProvider(props) {
   return (
     <AppContext.Provider
       value={{
+        adminEmail,
+        adminPass,
         companyID,
+        nameCompany,
         user,
         auth,
         loader,

@@ -1,4 +1,6 @@
 import React from "react";
+import { AppContext } from "../context";
+
 import { useHistory } from "react-router-dom";
 import "./styles/home.css";
 
@@ -27,9 +29,11 @@ const Home = () => {
       console.log(action, location.pathname, location.state);
     }
   });
+  const { nameCompany } = React.useContext(AppContext);
 
   return (
     <main className="main-container">
+      <h1>{nameCompany}</h1>
       <section className="main-container--menu">
         <Card name="Documentacion" image={Documents} route="/Documents" />
         <Card name="Manuales" image={Manuals} route="/Manuals" />

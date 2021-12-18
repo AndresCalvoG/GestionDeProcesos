@@ -37,7 +37,7 @@ const Navbar = () => {
               <p>
                 {user.fields.first.stringValue} {user.fields.last.stringValue}
               </p>
-              <p>{user.fields.cargo.stringValue}</p>
+              <p>{user.fields.charge.stringValue}</p>
               <p>{user.fields.code.stringValue}</p>
             </div>
             <ImageUser action={showModal} />

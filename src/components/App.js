@@ -4,7 +4,7 @@ import { HashRouter, Switch, Route } from "react-router-dom";
 
 import "../global.css";
 
-import HomePage from "../pages/HomePage";
+import Landing from "../pages/Landing";
 import Login from "../pages/Login";
 import Loader from "./Loader";
 import Register from "../pages/Register";
@@ -110,7 +110,7 @@ function App() {
                   <Route
                     exact
                     path="/"
-                    render={(props) => <HomePage {...props} />}
+                    render={(props) => <Landing {...props} />}
                   />
                   <Route
                     exact

@@ -10,14 +10,11 @@ import database from "../utils/fireStore";
 import "./styles/register.css";
 
 const Register = () => {
-  const adminEmail = "andrescalvo9407@gmail.com";
-  const adminPass = "987654321";
-  //estados de pagina de registro
   const [contain, setContain] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [emailReg, setEmailReg] = useState("");
-  const [passwordReg, setPasswordReg] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [area, setArea] = useState("");
   const [cargo, setCargo] = useState("");
   const [code, setCode] = useState("");
@@ -25,15 +22,16 @@ const Register = () => {
   const [clase, setClase] = useState("hidenProgress");
   const nombres = `${firstName} ${lastName}`;
 
-  const { companyID, setCompanyID } = React.useContext(AppContext);
+  const { companyID, setCompanyID, adminEmail, adminPass } =
+    React.useContext(AppContext);
 
   // funciones de pagina de registro
   const handleRegister = async () => {
     if (
       firstName === "" ||
       lastName === "" ||
-      emailReg === "" ||
-      passwordReg === "" ||
+      email === "" ||
+      password === "" ||
       cargo === "" ||
       companyID === "" ||
       area === "" ||
@@ -51,8 +49,8 @@ const Register = () => {
         return;
       }
       const response = await Auth.crearCuentaEmailPass(
-        emailReg,
-        passwordReg,
+        email,
+        password,
         nombres
       );
 
@@ -71,7 +69,7 @@ const Register = () => {
         await database.crearUsersDb({
           first: firstName,
           last: lastName,
-          email: emailReg,
+          email: email,
           charge: cargo,
           company: companyID,
           area: area,
@@ -79,6 +77,7 @@ const Register = () => {
           id: response.uid,
         });
         setContain(true);
+        setCompanyID("");
         Auth.logoutUsers();
       } else {
         console.log(response.code);
@@ -110,15 +109,15 @@ const Register = () => {
               <InputForm
                 type="email"
                 label="Tu correo..."
-                value={emailReg}
-                action={setEmailReg}
+                value={email}
+                action={setEmail}
                 class="inputForm"
               />
               <InputForm
                 type="password"
                 label="Contraseña..."
-                value={passwordReg}
-                action={setPasswordReg}
+                value={password}
+                action={setPassword}
                 class="inputForm"
               />
               <InputForm
@@ -176,7 +175,7 @@ const Register = () => {
               a tu <b>email</b> para ingresar correctamente a la plataforma
             </p>
           </section>
-          <Link to="/" className="mainReset-link">
+          <Link to="/Login" className="mainReset-link">
             &#11013; Regresar a inicio de sesion
           </Link>
         </main>
