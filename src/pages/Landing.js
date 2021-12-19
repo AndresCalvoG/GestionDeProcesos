@@ -3,7 +3,7 @@ import database from "../utils/fireStore";
 import Auth from "../utils/autenticacion";
 import { AppContext } from "../context";
 import { Link } from "react-router-dom";
-import "./styles/homePage.css";
+import "./styles/landing.css";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import InputForm from "../components/InputForm";
@@ -40,18 +40,16 @@ function Landing() {
 
   return (
     <>
-      <main className="main-HomePage">
+      <main className="main-landing">
         {!next ? (
           <>
-            <section>
-              <figure className="homePage-Banner">
-                <img
-                  src={information}
-                  alt="Imagen de escritorio con elementos sobre el"
-                />
-              </figure>
-            </section>
-            <section className="homePage-slogan">
+            <figure className="landing-Banner">
+              <img
+                src={information}
+                alt="Imagen de escritorio con elementos sobre el"
+              />
+            </figure>
+            <section className="landing-slogan">
               <p className="slogan-title">Gestioner App</p>
               <p className="slogan-message">
                 Ayuda empresas a controlar y organizar su informacion
@@ -60,22 +58,22 @@ function Landing() {
                 mejorando la rentabilidad y los tiempos de produccion
               </p>
             </section>
-            <section className="homePage-keyPad">
+            <section className="landing-keyPad">
+              <Link to="/Login">
+                <Button name="Iniciar Sesion" class="button--long submit" />
+              </Link>
+              <Link to="/Register">
+                <Button name="Unirme A Empresa" class="button--long submitb" />
+              </Link>
               <Button
                 name="Crear Empresa"
-                class="button--long"
+                class="button--long submit"
                 action={showModal}
               />
-              <Link to="/Register">
-                <Button name="Unirme A Empresa" class="button--long" />
-              </Link>
-              <Link to="/Login">
-                <Button name="Iniciar sesion" class="button--long" />
-              </Link>
             </section>
           </>
         ) : (
-          <section className="homePage-card">
+          <section className="landing-card">
             <figure>
               <img src={companyImg} alt="imagen de un edificio o empresa" />
             </figure>

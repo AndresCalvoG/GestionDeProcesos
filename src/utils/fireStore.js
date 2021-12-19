@@ -174,12 +174,14 @@ class Database {
   }
 
   //metodo para crear nuevas maquinas
-  async createNewMachine(area, equipo, hmi, camara, data) {
+  async createNewMachine(company, area, equipo, hmi, camara, data) {
     var db = firebase.firestore();
     console.log(hmi);
     try {
       if (hmi !== "") {
         await db
+          .collection("Companies")
+          .doc(company)
           .collection("areas")
           .doc(area)
           .collection(equipo)
@@ -188,6 +190,8 @@ class Database {
       }
       if (camara !== "") {
         await db
+          .collection("Companies")
+          .doc(company)
           .collection("areas")
           .doc(area)
           .collection(equipo)
@@ -195,6 +199,8 @@ class Database {
           .set(camara);
       }
       await db
+        .collection("Companies")
+        .doc(company)
         .collection("areas")
         .doc(area)
         .collection(equipo)

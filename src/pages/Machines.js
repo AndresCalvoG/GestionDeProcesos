@@ -14,16 +14,17 @@ function Machines() {
     "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Futils%2Fplus.png?alt=media&token=61e48bf0-a78f-4dc3-b2fd-7f36f6493598";
   const Less =
     "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Futils%2Fless.png?alt=media&token=7b9abfca-6c64-4884-94ea-37e57d2aef24";
+  const Machines =
+    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Fhome%2Fmaquina.png?alt=media&token=dbcd014d-0aca-42f4-ae26-d6656d569af2";
 
-  const { areas, equipos, partes, getFireStoreData } =
-    React.useContext(AppContext);
+  const { user } = React.useContext(AppContext);
 
-  const [clase, setClase] = useState("hidenModal");
+  const [dell, setDell] = useState("hidenModal");
   const [classe, setClasse] = useState("hidenModal");
   const [claseData, setClaseData] = useState("hidenModal");
   const [claseSelect, setClaseSelect] = useState("hidenModal");
   const [photoName, setPhotoName] = useState("");
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState(Machines);
   const [file, setFile] = useState("");
   const [fault, setFault] = useState("");
   const [type, setType] = useState("");
@@ -36,10 +37,10 @@ function Machines() {
   const [marcam, setMarcam] = useState("");
 
   const showModalDel = () => {
-    if (clase === "hidenModal") {
-      setClase("showModal-full");
+    if (dell === "hidenModal") {
+      setDell("showModal-full");
     } else {
-      setClase("hidenModal");
+      setDell("hidenModal");
     }
   };
   const showModalAdd = () => {
@@ -88,8 +89,10 @@ function Machines() {
     } else {
       setFault("");
       setClaseSelect("hidenModal");
-      let imageURL = await storage.uploadMachinePhoto(file, refer);
+      const company = user.fields.company.stringValue;
+      let imageURL = await storage.uploadMachinePhoto(company, file, refer);
       await database.createNewMachine(
+        company,
         area,
         refer,
         { marca },
@@ -105,12 +108,16 @@ function Machines() {
         <Card name="Nueva" image={Plus} action={showModalAdd} />
         <Card name="Eliminar" image={Less} action={showModalDel} />
       </section>
-      <Modal classe={clase}>
+      <Modal classe={dell}>
         <div className="main-modal">
           <h2>Eliminar Maquina </h2>
           <div className="modalKeypad">
-            <Button name="Eliminar" class="modalMenu" />
-            <Button name="cancelar" class="modalMenu" action={showModalDel} />
+            <Button name="Eliminar" class="button submitb" />
+            <Button
+              name="Cancelar"
+              class="button submit"
+              action={showModalDel}
+            />
           </div>
         </div>
       </Modal>
@@ -131,8 +138,16 @@ function Machines() {
           />
           <span className="fault">{fault}</span>
           <div className="modalKeypad">
-            <Button name="cancelar" class="modalMenu" action={showModalAdd} />
-            <Button name="Siguiente" class="modalMenu" action={showModalData} />
+            <Button
+              name="Cancelar"
+              class="button submitb"
+              action={showModalAdd}
+            />
+            <Button
+              name="Siguiente"
+              class="button submit"
+              action={showModalData}
+            />
           </div>
         </div>
       </Modal>
@@ -190,7 +205,7 @@ function Machines() {
           <div className="modalKeypad">
             <Button
               name="Atras"
-              class="modalMenu"
+              class="button submitb"
               action={() => {
                 setClasse("showModal-full");
                 setClaseData("hidenModal");
@@ -199,7 +214,7 @@ function Machines() {
             />
             <Button
               name="Siguiente"
-              class="modalMenu"
+              class="button submit"
               action={showModalSelect}
             />
           </div>
@@ -291,15 +306,19 @@ function Machines() {
           <span className="fault">{fault}</span>
           <div className="modalKeypad">
             <Button
-              name="atras"
-              class="modalMenu"
+              name="Atras"
+              class="button submitb"
               action={() => {
                 setFault("");
                 setClaseData("showModal-full");
                 setClaseSelect("hidenModal");
               }}
             />
-            <Button name="Finalizar" class="modalMenu" action={createMachine} />
+            <Button
+              name="Finalizar"
+              class="button submit"
+              action={createMachine}
+            />
           </div>
         </div>
       </Modal>

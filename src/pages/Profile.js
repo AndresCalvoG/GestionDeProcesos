@@ -43,7 +43,9 @@ function Profile() {
 
   async function updatePhoto() {
     if (file) {
+      const company = user.fields.company.stringValue;
       let imageURL = await storage.uploadProfilePhoto(
+        company,
         file,
         user.fields.id.stringValue
       );
@@ -55,7 +57,9 @@ function Profile() {
     }
   }
   async function deletePhoto() {
+    const company = user.fields.company.stringValue;
     let defaultImage = await storage.deleteProfilePhoto(
+      company,
       user.fields.id.stringValue
     );
     const response = await Auth.validUser();
@@ -108,8 +112,12 @@ function Profile() {
             class="inputForm"
           />
           <div className="modalKeypad">
-            <Button name="Subir" class="modalMenu" action={updatePhoto} />
-            <Button name="cancelar" class="modalMenu" action={showModalAdd} />
+            <Button
+              name="cancelar"
+              class="button submitb"
+              action={showModalAdd}
+            />
+            <Button name="Subir" class="button submit" action={updatePhoto} />
           </div>
         </div>
       </Modal>

@@ -32,17 +32,17 @@ const Home = () => {
   const { nameCompany } = React.useContext(AppContext);
 
   return (
-    <main className="main-container">
-      <h1>{nameCompany}</h1>
-      <section className="main-container--menu">
-        <Card name="Documentacion" image={Documents} route="/Documents" />
-        <Card name="Manuales" image={Manuals} route="/Manuals" />
+    <main className="main-home">
+      <h1 className="home-title">{nameCompany}</h1>
+      <section className="home-menu">
         <Card name="Maquinas" image={Machines} route="/Machines" />
+        <Card name="Manuales" image={Manuals} route="/Manuals" />
+        <Card name="Documentos" image={Documents} route="/Documents" />
+        <Card name="Contraseñas" image={Passwords} route="/Passwords" />
         <Card name="Calendario" image={Calendar} route="/Calendar" />
         <Card name="Ayuda" image={Help} route="/Help" />
         <Card name="Turnos" image={Schedule} route="" />
         <Card name="Bitacora" image={Binnacle} route="/Binnacle" />
-        <Card name="Contraseñas" image={Passwords} route="/Passwords" />
       </section>
     </main>
   );

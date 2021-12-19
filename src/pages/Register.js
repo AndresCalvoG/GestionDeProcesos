@@ -151,7 +151,7 @@ const Register = () => {
               <span className="fault">{fault}</span>
               <Button
                 name="Registrarme"
-                class="submit"
+                class="button submit"
                 action={handleRegister}
               />
               <Progress class={clase} />

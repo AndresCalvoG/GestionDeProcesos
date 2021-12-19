@@ -80,10 +80,14 @@ const Login = () => {
             <span className="fault">{fault}</span>
           </div>
           <div className="mainLogin-keypad">
-            <Button name="Ingresar" class="submit" action={handleLogin} />
             <Link to="/Register">
-              <Button name="Registrarme" class="submit" />
+              <Button name="Registrarme" class="button submitb" />
             </Link>
+            <Button
+              name="Ingresar"
+              class="button submit"
+              action={handleLogin}
+            />
           </div>
         </form>
         <Progress class={clase} />
