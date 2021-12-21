@@ -2,21 +2,17 @@ import React, { useState } from "react";
 import { AppContext } from "../context";
 import storage from "../utils/storege";
 import database from "../utils/fireStore";
+import "./styles/machines.css";
 
+import Plus from "../images/utils/plus.png";
+import Less from "../images/utils/less.png";
+import Machine from "../images/home/maquina.png";
 import Card from "../components/Card";
 import Modal from "../components/Modal";
 import Button from "../components/Button";
 import InputForm from "../components/InputForm";
-import "./styles/machines.css";
 
 function Machines() {
-  const Plus =
-    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Futils%2Fplus.png?alt=media&token=61e48bf0-a78f-4dc3-b2fd-7f36f6493598";
-  const Less =
-    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Futils%2Fless.png?alt=media&token=7b9abfca-6c64-4884-94ea-37e57d2aef24";
-  const Machines =
-    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Fhome%2Fmaquina.png?alt=media&token=dbcd014d-0aca-42f4-ae26-d6656d569af2";
-
   const { user } = React.useContext(AppContext);
 
   const [dell, setDell] = useState("hidenModal");
@@ -24,7 +20,7 @@ function Machines() {
   const [claseData, setClaseData] = useState("hidenModal");
   const [claseSelect, setClaseSelect] = useState("hidenModal");
   const [photoName, setPhotoName] = useState("");
-  const [photo, setPhoto] = useState(Machines);
+  const [photo, setPhoto] = useState(Machine);
   const [file, setFile] = useState("");
   const [fault, setFault] = useState("");
   const [type, setType] = useState("");

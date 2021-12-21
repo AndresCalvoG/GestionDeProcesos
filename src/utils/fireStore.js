@@ -178,7 +178,7 @@ class Database {
     var db = firebase.firestore();
     console.log(hmi);
     try {
-      if (hmi !== "") {
+      if (hmi.marca !== "") {
         await db
           .collection("Companies")
           .doc(company)
@@ -188,7 +188,7 @@ class Database {
           .doc("Hmi")
           .set(hmi);
       }
-      if (camara !== "") {
+      if (camara.marcam !== "") {
         await db
           .collection("Companies")
           .doc(company)

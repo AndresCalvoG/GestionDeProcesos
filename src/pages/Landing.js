@@ -4,15 +4,14 @@ import Auth from "../utils/autenticacion";
 import { AppContext } from "../context";
 import { Link } from "react-router-dom";
 import "./styles/landing.css";
+
+import information from "../images/landing/information.jpg";
+import companyImg from "../images/landing/company.png";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import InputForm from "../components/InputForm";
 
 function Landing() {
-  const companyImg =
-    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Fcompany.png?alt=media&token=f9b30515-ab9a-4c11-bb68-5f2268d31188";
-  const information =
-    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2FlandingPage%2Finformation.jpg?alt=media&token=c29955df-48ad-4988-aa6d-a14a7d85a1d9";
   const [clase, setClase] = useState("hidenModal");
   const [company, setCompany] = useState("");
   const [next, setNext] = useState(false);

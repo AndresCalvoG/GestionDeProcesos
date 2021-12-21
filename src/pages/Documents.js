@@ -3,6 +3,8 @@ import { AppContext } from "../context";
 import database from "../utils/fireStore";
 
 import "./styles/documents.css";
+import NewOrder from "../images/utils/newPage.png";
+import DeleteFile from "../images/utils/delete.png";
 import Card from "../components/Card";
 import Notifier from "../components/Notifier";
 import Modal from "../components/Modal";
@@ -10,10 +12,6 @@ import SelectOption from "../components/SelectOption";
 import Button from "../components/Button";
 
 function Documents() {
-  const DeleteFile =
-    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Futils%2Fdelete.png?alt=media&token=f2d0c145-17e4-49ea-9e13-8e02b48a27dc";
-  const NewOrder =
-    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Futils%2FnewPage.png?alt=media&token=ea48a429-4bb5-47c0-9565-abd26e7fb58d";
   const [orderDeleted, setOrderDeleted] = useState("");
   const [orderDeletedId, setOrderDeletedId] = useState("");
   const [clase, setClase] = useState("hidenModal");
