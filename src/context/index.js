@@ -141,30 +141,9 @@ function AppProvider(props) {
     setHora(fullHour);
   }
 
-  async function getFireStoreData(area, equipo) {
-    let docPlantaRef = "fCD5Pe1enki9eJkwuRQH";
-    let Data = await database.getData(docPlantaRef);
-    const path = Data._delegate._document.data.value.mapValue.fields;
-    let arrayAreas = path.areas.arrayValue.values;
-    let arrayEquipos = [];
-    let arrayPartes = [];
-
-    if (area) {
-      arrayEquipos = path[area].arrayValue.values;
-    }
-
-    let equipos = arrayEquipos.map((element) => {
-      return element.stringValue;
-    });
-    let areas = arrayAreas.map((element) => {
-      return element.stringValue;
-    });
-    let partes = arrayPartes.map((element) => {
-      return element.stringValue;
-    });
-    setAreas(areas);
-    setEquipos(equipos);
-    setPartes(partes);
+  async function updateFireStoreData(id) {
+    let Data = await database.getData(id);
+    console.log(Data);
   }
 
   return (
@@ -195,7 +174,7 @@ function AppProvider(props) {
         handleLogout,
         getDataUsers,
         getCurrentDate,
-        getFireStoreData,
+        updateFireStoreData,
       }}
     >
       {props.children}

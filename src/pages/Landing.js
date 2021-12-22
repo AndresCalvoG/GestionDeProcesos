@@ -96,8 +96,16 @@ function Landing() {
               class="inputFormOrder"
             />
             <div className="modalKeypad">
-              <Button name="Crear" class="modalMenu" action={createCompany} />
-              <Button name="Cancelar" class="modalMenu" action={showModal} />
+              <Button
+                name="Cancelar"
+                class="button submitb"
+                action={showModal}
+              />
+              <Button
+                name="Crear"
+                class="button submit"
+                action={createCompany}
+              />
             </div>
           </div>
         </Modal>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AppContext } from "../context";
 import storage from "../utils/storege";
 import database from "../utils/fireStore";
@@ -13,7 +13,7 @@ import Button from "../components/Button";
 import InputForm from "../components/InputForm";
 
 function Machines() {
-  const { user } = React.useContext(AppContext);
+  const { user, updateFireStoreData } = React.useContext(AppContext);
 
   const [dell, setDell] = useState("hidenModal");
   const [classe, setClasse] = useState("hidenModal");
@@ -31,6 +31,19 @@ function Machines() {
   const [marca, setMarca] = useState("");
   const [camera, setCamera] = useState([false, false]);
   const [marcam, setMarcam] = useState("");
+
+  useEffect(() => {
+    (async function () {
+      let order = await updateFireStoreData(user.fields.company.stringValue);
+      // for (let i = 0; i < order.docs.length; i++) {
+      //   arrayOrders.push({
+      //     values: order.docs[i]._delegate._document.data.value.mapValue.fields,
+      //     id: order.docs[i].id,
+      //   });
+      // }
+      //console.log(arrayOrders);
+    })();
+  }, []);
 
   const showModalDel = () => {
     if (dell === "hidenModal") {

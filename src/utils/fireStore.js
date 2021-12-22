@@ -78,7 +78,11 @@ class Database {
   async getData(props) {
     var db = firebase.firestore();
     try {
-      var docData = await db.collection("plantaJamundi").doc(props).get();
+      var docData = await db
+        .collection("Companies")
+        .doc(props)
+        .collection("Areas")
+        .get();
       return docData;
     } catch (error) {
       console.log(error);
@@ -176,37 +180,49 @@ class Database {
   //metodo para crear nuevas maquinas
   async createNewMachine(company, area, equipo, hmi, camara, data) {
     var db = firebase.firestore();
-    console.log(hmi);
     try {
+      let areaRef = await db
+        .collection("Companies")
+        .doc(company)
+        .collection("Areas")
+        .add({ name: area });
+
+      let equipoRef = await db
+        .collection("Companies")
+        .doc(company)
+        .collection("Areas")
+        .doc(areaRef)
+        .collection("Equipos")
+        .add({ name: equipo });
+
       if (hmi.marca !== "") {
         await db
           .collection("Companies")
           .doc(company)
-          .collection("areas")
-          .doc(area)
+          .collection("Areas")
+          .doc(areaRef)
           .collection(equipo)
-          .doc("Hmi")
+          .doc(equipoRef)
           .set(hmi);
       }
-      if (camara.marcam !== "") {
-        await db
-          .collection("Companies")
-          .doc(company)
-          .collection("areas")
-          .doc(area)
-          .collection(equipo)
-          .doc("Camara")
-          .set(camara);
-      }
-      await db
-        .collection("Companies")
-        .doc(company)
-        .collection("areas")
-        .doc(area)
-        .collection(equipo)
-        .doc("Data")
-        .set(data);
-      console.log("creado");
+      // if (camara.marcam !== "") {
+      //   await db
+      //     .collection("Companies")
+      //     .doc(company)
+      //     .collection("Areas")
+      //     .doc(area)
+      //     .collection(equipo)
+      //     .doc("Camara")
+      //     .set(camara);
+      // }
+      // await db
+      //   .collection("Companies")
+      //   .doc(company)
+      //   .collection("Areas")
+      //   .doc(area)
+      //   .collection(equipo)
+      //   .doc("Data")
+      //   .set(data);
     } catch (error) {
       console.log(error);
       return error.message;
