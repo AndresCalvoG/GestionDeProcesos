@@ -26,11 +26,11 @@ function Machines() {
   const [type, setType] = useState("");
   const [refer, setRefer] = useState("");
   const [area, setArea] = useState("");
-  const [cubiculo, setCubiculo] = useState("");
+  const [cubicle, setCubicle] = useState("");
   const [display, setDisplay] = useState([false, false]);
-  const [marca, setMarca] = useState("");
+  const [hmi, setHmi] = useState("");
   const [camera, setCamera] = useState([false, false]);
-  const [marcam, setMarcam] = useState("");
+  const [camara, setCamara] = useState("");
 
   useEffect(() => {
     (async function () {
@@ -75,7 +75,7 @@ function Machines() {
     }
   }
   function showModalSelect() {
-    if (type === "" || refer === "" || area === "" || cubiculo === "") {
+    if (type === "" || refer === "" || area === "" || cubicle === "") {
       setClaseData("showModal-full");
       setClaseSelect("hidenModal");
       setFault("Completa todos los campos");
@@ -91,22 +91,29 @@ function Machines() {
       (camera[0] === false && camera[1] === false)
     ) {
       setFault("Completa los campos de Si o No");
-    } else if (display[0] === true && marca === "") {
+    } else if (display[0] === true && hmi === "") {
       setFault("completa la marca del HMI");
-    } else if (camera[0] === true && marcam === "") {
+    } else if (camera[0] === true && camara === "") {
       setFault("completa la marca de la camara");
     } else {
       setFault("");
       setClaseSelect("hidenModal");
       const company = user.fields.company.stringValue;
       let imageURL = await storage.uploadMachinePhoto(company, file, refer);
-      await database.createNewMachine(
+
+      let areaRef = await database.createNewArea(company, area);
+      let equipoRef = await database.createNewMachine(
         company,
-        area,
-        refer,
-        { marca },
-        { marcam },
-        { imageURL, type, cubiculo }
+        areaRef.id,
+        refer
+      );
+      await database.addDataMachine(
+        company,
+        areaRef.id,
+        equipoRef.id,
+        { hmi },
+        { camara },
+        { imageURL, type, cubicle }
       );
     }
   }
@@ -203,8 +210,8 @@ function Machines() {
             <InputForm
               type="text"
               size="20"
-              value={cubiculo}
-              action={setCubiculo}
+              value={cubicle}
+              action={setCubicle}
               readOnly={false}
               class="inputFormOrder"
             />
@@ -263,8 +270,8 @@ function Machines() {
               <InputForm
                 type="text"
                 size="20"
-                value={marca}
-                action={setMarca}
+                value={hmi}
+                action={setHmi}
                 readOnly={false}
                 class="inputFormOrder"
               />
@@ -303,8 +310,8 @@ function Machines() {
               <InputForm
                 type="text"
                 size="20"
-                value={marcam}
-                action={setMarcam}
+                value={camara}
+                action={setCamara}
                 readOnly={false}
                 class="inputFormOrder"
               />

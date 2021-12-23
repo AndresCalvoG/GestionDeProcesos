@@ -143,7 +143,6 @@ function AppProvider(props) {
 
   async function updateFireStoreData(id) {
     let Data = await database.getData(id);
-    console.log(Data);
   }
 
   return (
