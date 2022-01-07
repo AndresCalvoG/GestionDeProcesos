@@ -18,7 +18,7 @@ class Autenticacion {
         .auth()
         .signInWithEmailAndPassword(email, password);
       if (result.user.emailVerified) {
-        return "/loader";
+        return "/home";
       } else {
         await firebase.auth().signOut();
         return "Por favor verifique email enviado";

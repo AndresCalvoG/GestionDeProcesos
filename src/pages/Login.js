@@ -9,13 +9,13 @@ import userLogo from "../images/user.svg";
 
 import InputForm from "../components/InputForm";
 import Button from "../components/Button";
-import Progress from "../components/progress/Progress";
+import Loader from "../components/Loader";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fault, setFault] = useState("");
-  const [clase, setClase] = useState("hidenProgress");
+  const [clase, setClase] = useState("hideContent");
   const history = useHistory();
 
   const { setLoader, getDataUsers } = React.useContext(AppContext);
@@ -26,7 +26,7 @@ const Login = () => {
       setFault("Por favor completa todos los campos");
     } else {
       setFault("");
-      setClase("showProgress");
+      setClase("content");
       const response = await Auth.authEmailPass(email, password);
 
       if (response.code === "auth/wrong-password") {
@@ -90,7 +90,7 @@ const Login = () => {
             />
           </div>
         </form>
-        <Progress class={clase} />
+        <Loader class={clase} />
       </article>
     </main>
   );
