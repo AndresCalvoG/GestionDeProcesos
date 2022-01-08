@@ -16,7 +16,7 @@ const Login = () => {
   const [fault, setFault] = useState("");
   const [clase, setClase] = useState("hidenLoader");
 
-  const { setLoader, getDataUsers } = React.useContext(AppContext);
+  const { getDataUsers } = React.useContext(AppContext);
 
   //Funciones de la pagina Login
   const handleLogin = async () => {
@@ -43,7 +43,6 @@ const Login = () => {
         setFault(response);
         setClase("hidenLoader");
       } else {
-        setLoader(response);
         setClase("hidenLoader");
         await getDataUsers();
       }
@@ -88,9 +87,7 @@ const Login = () => {
             />
           </div>
         </form>
-        <div className={clase}>
-          <Loader />
-        </div>
+        <Loader class={clase} />
       </article>
     </main>
   );

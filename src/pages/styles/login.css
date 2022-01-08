@@ -45,21 +45,7 @@
   font-size: 1.4rem;
   text-decoration: none;
 }
-.hidenLoader {
-  display: none;
-}
-.showLoader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 30rem;
-  height: 10rem;
-  border: 2px solid black;
-}
-.login {
-  margin-top: 15rem;
-}
+
 @media screen and (min-width: 900px) {
   .mainLogin {
     margin-top: 10%;

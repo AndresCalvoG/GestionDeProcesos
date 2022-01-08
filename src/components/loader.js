@@ -1,9 +1,9 @@
 import React from "react";
 import "./styles/loader.css";
 
-function Loader() {
+function Loader(props) {
   return (
-    <div className="content-loader">
+    <div className={props.class}>
       <div className="loader"> </div>
     </div>
   );

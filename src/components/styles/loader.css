@@ -1,15 +1,24 @@
-.content-loader {
-  background-color: var(--blanco);
-  position: absolute;
-  top: 0;
+.hidenLoader {
+  display: none;
+}
+.showLoader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
   width: 30rem;
   height: 10rem;
   z-index: 9999;
   transition: all 1.5s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: var(--blanco);
 }
+.login {
+  margin-top: 15rem;
+}
+.register {
+  margin-top: -5rem;
+}
+
 .loader,
 .loader:before,
 .loader:after {
@@ -21,7 +30,8 @@
 .loader {
   color: var(--blue);
   font-size: 1.3rem;
-  position: relative;
+  position: absolute;
+  top: 0;
   animation-delay: -0.16s;
 }
 .loader:before,

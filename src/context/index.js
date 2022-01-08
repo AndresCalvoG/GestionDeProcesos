@@ -62,7 +62,6 @@ function AppProvider(props) {
   const [nameCompany, setNameCompany] = useState(parseNameCompany);
   const [auth, setAuth] = useState(parseAuth);
   const [user, setUser] = useState(parseUser);
-  const [loader, setLoader] = useState(false);
   const [areas, setAreas] = useState([]);
   const [equipos, setEquipos] = useState([]);
   const [partes, setPartes] = useState([]);
@@ -92,11 +91,9 @@ function AppProvider(props) {
         response.photoURL,
         nameC
       );
-      setLoader(false);
       history.replace("/home");
     } else {
       handleValid(false, { value: false }, false, UserProfile, " ");
-      setLoader(false);
     }
   }
 
@@ -120,7 +117,6 @@ function AppProvider(props) {
 
   const handleLogout = async () => {
     const route = await Auth.logoutUsers();
-    setLoader(true);
     history.push("/Loader");
     getDataUsers();
     history.push(route);
@@ -154,7 +150,6 @@ function AppProvider(props) {
         nameCompany,
         user,
         auth,
-        loader,
         areas,
         equipos,
         partes,
@@ -167,7 +162,6 @@ function AppProvider(props) {
         setNewNotify,
         setUser,
         setAuth,
-        setLoader,
         setUpdate,
         setPhotoUrl,
         handleLogout,

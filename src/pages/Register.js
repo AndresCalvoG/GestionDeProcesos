@@ -19,7 +19,7 @@ const Register = () => {
   const [cargo, setCargo] = useState("");
   const [code, setCode] = useState("");
   const [fault, setFault] = useState("");
-  const [clase, setClase] = useState("showLoader");
+  const [clase, setClase] = useState("hidenLoader");
   const nombres = `${firstName} ${lastName}`;
 
   const { companyID, setCompanyID, adminEmail, adminPass } =
@@ -40,7 +40,7 @@ const Register = () => {
       setFault("Por favor completa TODOS los campos");
     } else {
       setFault("");
-      setClase("showProgress");
+      setClase("showLoader register");
       await Auth.authEmailPass(adminEmail, adminPass);
       let existID = await database.companyExist(companyID);
       Auth.logoutUsers();
@@ -77,6 +77,7 @@ const Register = () => {
           id: response.uid,
         });
         setContain(true);
+        setClase("hidenLoader");
         setCompanyID("");
         Auth.logoutUsers();
       } else {
@@ -156,9 +157,7 @@ const Register = () => {
               />
             </form>
           </section>
-          <div className={clase}>
-            <Loader />
-          </div>
+          <Loader class={clase} />
         </main>
       ) : (
         <main className="main-success">
