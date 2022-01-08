@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import Auth from "../utils/autenticacion";
 import "./styles/login.css";
 import { AppContext } from "../context";
@@ -15,8 +14,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fault, setFault] = useState("");
-  const [clase, setClase] = useState("hideContent");
-  const history = useHistory();
+  const [clase, setClase] = useState("hidenLoader");
 
   const { setLoader, getDataUsers } = React.useContext(AppContext);
 
@@ -26,27 +24,27 @@ const Login = () => {
       setFault("Por favor completa todos los campos");
     } else {
       setFault("");
-      setClase("content");
+      setClase("showLoader login");
       const response = await Auth.authEmailPass(email, password);
 
       if (response.code === "auth/wrong-password") {
         setFault("Contraseña Incorrecta");
-        setClase("hidenProgress");
+        setClase("hidenLoader");
       } else if (response.code === "auth/user-not-found") {
         setFault("Usuario ó Email Incorrecto");
-        setClase("hidenProgress");
+        setClase("hidenLoader");
       } else if (response.code === "auth/invalid-email") {
         setFault("Email Invalido");
-        setClase("hidenProgress");
+        setClase("hidenLoader");
       } else if (response.code === "auth/network-request-failed") {
         setFault("Sin conexion a Internet");
-        setClase("hidenProgress");
+        setClase("hidenLoader");
       } else if (response === "Por favor verifique email enviado") {
         setFault(response);
-        setClase("hidenProgress");
+        setClase("hidenLoader");
       } else {
-        setLoader(true);
-        history.replace(response);
+        setLoader(response);
+        setClase("hidenLoader");
         await getDataUsers();
       }
     }
@@ -90,7 +88,9 @@ const Login = () => {
             />
           </div>
         </form>
-        <Loader class={clase} />
+        <div className={clase}>
+          <Loader />
+        </div>
       </article>
     </main>
   );

@@ -6,7 +6,6 @@ import "../global.css";
 
 import Landing from "../pages/Landing";
 import Login from "../pages/Login";
-import Loader from "./Loader";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import Home from "../pages/Home";
@@ -31,7 +30,7 @@ function App() {
       <AppProvider>
         <Layout>
           <AppContext.Consumer>
-            {({ auth, loader }) =>
+            {({ auth }) =>
               auth ? (
                 <Switch>
                   <Route
@@ -95,15 +94,7 @@ function App() {
                     path="/Machines"
                     render={(props) => <Machines {...props} />}
                   />
-                  {loader ? (
-                    <Route
-                      exact
-                      path="/loader"
-                      render={(props) => <Loader {...props} />}
-                    />
-                  ) : (
-                    <Route component={NotFound} />
-                  )}
+                  <Route component={NotFound} />
                 </Switch>
               ) : (
                 <Switch>
@@ -123,15 +114,7 @@ function App() {
                     path="/password/reset"
                     render={(props) => <PasswordReset {...props} />}
                   />
-                  {loader ? (
-                    <Route
-                      exact
-                      path="/loader"
-                      render={(props) => <Loader {...props} />}
-                    />
-                  ) : (
-                    <Route render={(props) => <NotRegisterUser {...props} />} />
-                  )}
+                  <Route render={(props) => <NotRegisterUser {...props} />} />
                 </Switch>
               )
             }

@@ -45,13 +45,20 @@
   font-size: 1.4rem;
   text-decoration: none;
 }
-.hidenProgress {
+.hidenLoader {
   display: none;
 }
-.showProgress {
-  display: block;
-  position: absolute;
-  bottom: 20px;
+.showLoader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 30rem;
+  height: 10rem;
+  border: 2px solid black;
+}
+.login {
+  margin-top: 15rem;
 }
 @media screen and (min-width: 900px) {
   .mainLogin {

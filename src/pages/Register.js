@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../context";
 import InputForm from "../components/InputForm";
 import Button from "../components/Button";
-import Progress from "../components/progress/Progress";
+import Loader from "../components/Loader";
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
 
@@ -19,7 +19,7 @@ const Register = () => {
   const [cargo, setCargo] = useState("");
   const [code, setCode] = useState("");
   const [fault, setFault] = useState("");
-  const [clase, setClase] = useState("hidenProgress");
+  const [clase, setClase] = useState("showLoader");
   const nombres = `${firstName} ${lastName}`;
 
   const { companyID, setCompanyID, adminEmail, adminPass } =
@@ -154,9 +154,11 @@ const Register = () => {
                 class="button submit"
                 action={handleRegister}
               />
-              <Progress class={clase} />
             </form>
           </section>
+          <div className={clase}>
+            <Loader />
+          </div>
         </main>
       ) : (
         <main className="main-success">
