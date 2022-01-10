@@ -47,7 +47,14 @@ const Navbar = () => {
               Mi Perfil
             </Link>
             <p>Noticias</p>
-            <p onClick={handleLogout}>Logout</p>
+            <p
+              onClick={() => {
+                showModal();
+                handleLogout();
+              }}
+            >
+              Logout
+            </p>
           </Modal>
         </header>
       )}

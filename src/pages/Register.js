@@ -18,6 +18,7 @@ const Register = () => {
   const [area, setArea] = useState("");
   const [cargo, setCargo] = useState("");
   const [code, setCode] = useState("");
+
   const [fault, setFault] = useState("");
   const [clase, setClase] = useState("hidenLoader");
   const nombres = `${firstName} ${lastName}`;
@@ -145,6 +146,13 @@ const Register = () => {
               <InputForm
                 type="text"
                 label="Tu codigo de empleado..."
+                value={code}
+                action={setCode}
+                class="inputForm"
+              />
+              <InputForm
+                type="text"
+                label="Privilegio"
                 value={code}
                 action={setCode}
                 class="inputForm"
