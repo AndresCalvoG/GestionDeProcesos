@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../context";
 import InputForm from "../components/InputForm";
+import SelectOption from "../components/SelectOption";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
 import Auth from "../utils/autenticacion";
@@ -10,6 +11,14 @@ import database from "../utils/fireStore";
 import "./styles/register.css";
 
 const Register = () => {
+  const privileges = [
+    "Administrador",
+    "Gerencia",
+    "Supervisor",
+    "Tecnico",
+    "Operador",
+    "invitado",
+  ];
   const [contain, setContain] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -18,7 +27,7 @@ const Register = () => {
   const [area, setArea] = useState("");
   const [cargo, setCargo] = useState("");
   const [code, setCode] = useState("");
-
+  const [privilege, setPrivilege] = useState();
   const [fault, setFault] = useState("");
   const [clase, setClase] = useState("hidenLoader");
   const nombres = `${firstName} ${lastName}`;
@@ -36,7 +45,8 @@ const Register = () => {
       cargo === "" ||
       companyID === "" ||
       area === "" ||
-      code === ""
+      code === "" ||
+      privilege === ""
     ) {
       setFault("Por favor completa TODOS los campos");
     } else {
@@ -76,6 +86,7 @@ const Register = () => {
           area: area,
           code: code,
           id: response.uid,
+          privilege: privilege,
         });
         setContain(true);
         setClase("hidenLoader");
@@ -150,13 +161,14 @@ const Register = () => {
                 action={setCode}
                 class="inputForm"
               />
-              <InputForm
-                type="text"
-                label="Privilegio"
-                value={code}
-                action={setCode}
-                class="inputForm"
-              />
+              <label className="form-select">
+                Privilegio:
+                <SelectOption
+                  options={privileges}
+                  value={privilege}
+                  action={setPrivilege}
+                />
+              </label>
               <span className="fault">{fault}</span>
               <Button
                 name="Registrarme"

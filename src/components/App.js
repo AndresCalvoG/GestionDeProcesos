@@ -94,6 +94,7 @@ function App() {
                     path="/Machines"
                     render={(props) => <Machines {...props} />}
                   />
+                  <Route render={(props) => <NotFound {...props} />} />
                 </Switch>
               ) : (
                 <Switch>

@@ -28,6 +28,12 @@
   align-items: center;
   width: 80%;
 }
+.form-select {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
 .main-success {
   display: flex;
   flex-direction: column;
