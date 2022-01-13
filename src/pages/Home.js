@@ -13,11 +13,11 @@ import Passwords from "../images/home/password.svg";
 import Card from "../components/Card";
 
 function Home() {
-  const { nameCompany } = React.useContext(AppContext);
+  const { companyName } = React.useContext(AppContext);
 
   return (
     <main className="main-home">
-      <h1 className="home-title">{nameCompany}</h1>
+      <h1 className="home-title">{companyName}</h1>
       <section className="home-menu">
         <Card name="Maquinas" image={Machines} route="/Machines" />
         <Card name="Manuales" image={Manuals} route="/Manuals" />

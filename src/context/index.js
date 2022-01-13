@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import useLocalStorage from "../customHooks/useLocalStorage";
 import users from "../utils/objects/user";
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
@@ -25,50 +26,18 @@ function AppProvider(props) {
   const [update, setUpdate] = useState(false);
 
   //algoritmo para local storege
-  const authenticated = localStorage.getItem("valid");
-  const userActive = localStorage.getItem("user");
-  const URLphoto = localStorage.getItem("PhotoUrl");
-  const lnameCompany = localStorage.getItem("nameCompany");
-  let parseAuth = JSON.parse(authenticated);
-  let parseUser = JSON.parse(userActive);
-  let parsePhoto = JSON.parse(URLphoto);
-  let parseNameCompany = JSON.parse(lnameCompany);
+  const [auth, saveAuth] = useLocalStorage("valid", false);
+  const [user, saveUser] = useLocalStorage("user", { value: false });
+  const [photoUrl, savePhotoUrl] = useLocalStorage("PhotoUrl", UserProfile);
+  const [companyName, saveCompanyName] = useLocalStorage("companyName", " ");
 
-  if (!authenticated) {
-    localStorage.setItem("valid", JSON.stringify(false));
-    parseAuth = false;
-  } else {
-    parseAuth = JSON.parse(authenticated);
-  }
-  if (!userActive) {
-    localStorage.setItem("user", JSON.stringify({ value: false }));
-    parseUser = { value: false };
-  } else {
-    parseUser = JSON.parse(userActive);
-  }
-  if (!URLphoto) {
-    localStorage.setItem("PhotoUrl", JSON.stringify(UserProfile));
-    parsePhoto = UserProfile;
-  } else {
-    parsePhoto = JSON.parse(URLphoto);
-  }
-  if (!lnameCompany) {
-    localStorage.setItem("nameCompany", JSON.stringify(" "));
-    parseNameCompany = " ";
-  } else {
-    parseNameCompany = JSON.parse(lnameCompany);
-  }
   //estados compartidos de context
   const [companyID, setCompanyID] = useState("");
-  const [nameCompany, setNameCompany] = useState(parseNameCompany);
-  const [auth, setAuth] = useState(parseAuth);
-  const [user, setUser] = useState(parseUser);
   const [areas, setAreas] = useState([]);
   const [equipos, setEquipos] = useState([]);
   const [partes, setPartes] = useState([]);
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
-  const [photoUrl, setPhotoUrl] = useState(parsePhoto);
   const history = useHistory();
 
   async function getDataUsers() {
@@ -95,30 +64,18 @@ function AppProvider(props) {
       var nameC = await database.getNameCompany(User.company);
     }
     if (data.exists) {
-      handleValid(true, User, true, User.photoUrl, nameC);
+      saveAuth(true);
+      saveUser(User);
+      savePhotoUrl(User.photoUrl);
+      saveCompanyName(nameC);
       history.replace("/home");
     } else {
-      handleValid(false, { value: false }, false, UserProfile, " ");
+      saveAuth(false);
+      saveUser({ value: false });
+      savePhotoUrl(UserProfile);
+      saveCompanyName(" ");
     }
   }
-
-  const handleValid = (token, user, mode, photo, name) => {
-    localStorage.setItem("valid", JSON.stringify(token));
-    localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("PhotoUrl", JSON.stringify(photo));
-    localStorage.setItem("nameCompany", JSON.stringify(name));
-    if (mode) {
-      setUser(user);
-      setAuth(token);
-      setPhotoUrl(photo);
-      setNameCompany(name);
-    } else {
-      setAuth(token);
-      setUser(user);
-      setPhotoUrl(photo);
-      setNameCompany(name);
-    }
-  };
 
   const handleLogout = async () => {
     const route = await Auth.logoutUsers();
@@ -151,7 +108,7 @@ function AppProvider(props) {
         adminEmail,
         adminPass,
         companyID,
-        nameCompany,
+        companyName,
         user,
         auth,
         areas,
@@ -164,10 +121,9 @@ function AppProvider(props) {
         photoUrl,
         setCompanyID,
         setNewNotify,
-        setUser,
-        setAuth,
+        saveUser,
         setUpdate,
-        setPhotoUrl,
+        savePhotoUrl,
         handleLogout,
         getDataUsers,
         getCurrentDate,
