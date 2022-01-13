@@ -35,10 +35,10 @@ const Navbar = () => {
           <section className="main-header-avatar">
             <div className="avatar-info">
               <p>
-                {user.fields.first.stringValue} {user.fields.last.stringValue}
+                {user.firstName} {user.lastName}
               </p>
-              <p>{user.fields.charge.stringValue}</p>
-              <p>{user.fields.code.stringValue}</p>
+              <p>{user.charge}</p>
+              <p>{user.code}</p>
             </div>
             <ImageUser action={showModal} />
           </section>

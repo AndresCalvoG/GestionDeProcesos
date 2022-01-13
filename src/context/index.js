@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import users from "../utils/objects/user";
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
 
@@ -79,18 +80,22 @@ function AppProvider(props) {
     //console.log(response); // informacion de usuario de autenticacion
     if (response !== "/") {
       data = await database.getDataUser(response.uid);
-      var nameC = await database.getNameCompany(
-        data._delegate._document.data.value.mapValue.fields.company.stringValue
+      var User = new users(
+        response.photoURL,
+        data._delegate._document.data.value.mapValue.fields.id.stringValue,
+        data._delegate._document.data.value.mapValue.fields.first.stringValue,
+        data._delegate._document.data.value.mapValue.fields.last.stringValue,
+        data._delegate._document.data.value.mapValue.fields.email.stringValue,
+        data._delegate._document.data.value.mapValue.fields.company.stringValue,
+        data._delegate._document.data.value.mapValue.fields.area.stringValue,
+        data._delegate._document.data.value.mapValue.fields.charge.stringValue,
+        data._delegate._document.data.value.mapValue.fields.code.stringValue,
+        data._delegate._document.data.value.mapValue.fields.privilege.stringValue
       );
+      var nameC = await database.getNameCompany(User.company);
     }
     if (data.exists) {
-      handleValid(
-        true,
-        data._delegate._document.data.value.mapValue,
-        true,
-        response.photoURL,
-        nameC
-      );
+      handleValid(true, User, true, User.photoUrl, nameC);
       history.replace("/home");
     } else {
       handleValid(false, { value: false }, false, UserProfile, " ");
@@ -117,7 +122,6 @@ function AppProvider(props) {
 
   const handleLogout = async () => {
     const route = await Auth.logoutUsers();
-    history.push("/Loader");
     getDataUsers();
     history.push(route);
   };

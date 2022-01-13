@@ -54,6 +54,7 @@ class Database {
         .collection("Users")
         .doc(props.id)
         .set(props);
+      await db.collection("Users").doc(props.id).set(props);
     } catch (error) {
       console.log(error.message);
     }

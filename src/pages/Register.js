@@ -17,7 +17,7 @@ const Register = () => {
     "Supervisor",
     "Tecnico",
     "Operador",
-    "invitado",
+    "Invitado",
   ];
   const [contain, setContain] = useState(false);
   const [firstName, setFirstName] = useState("");

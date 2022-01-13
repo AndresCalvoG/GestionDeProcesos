@@ -1,13 +1,8 @@
-const person = {
-  id="",
-  name:"",
-  last:"",
-  email:"",
-  company:"",
-  area:"",
-  charge:"",
-  code:"",
-  privilege=""
-};
+class person {
+  constructor({ firstName, lastName }) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+}
 
 export default person;
