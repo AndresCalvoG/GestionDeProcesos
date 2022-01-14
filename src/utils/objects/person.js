@@ -1,7 +1,8 @@
 class person {
-  constructor({ firstName, lastName }) {
+  constructor({ firstName, lastName, date }) {
     this.firstName = firstName;
     this.lastName = lastName;
+    this.date = date;
   }
 }
 

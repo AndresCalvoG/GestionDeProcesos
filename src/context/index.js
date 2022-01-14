@@ -59,7 +59,8 @@ function AppProvider(props) {
         data._delegate._document.data.value.mapValue.fields.area.stringValue,
         data._delegate._document.data.value.mapValue.fields.charge.stringValue,
         data._delegate._document.data.value.mapValue.fields.code.stringValue,
-        data._delegate._document.data.value.mapValue.fields.privilege.stringValue
+        data._delegate._document.data.value.mapValue.fields.privilege.stringValue,
+        data._delegate._document.data.value.mapValue.fields.date.stringValue
       );
       var nameC = await database.getNameCompany(User.company);
     }

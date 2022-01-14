@@ -2,6 +2,9 @@
   position: absolute;
   width: 100vw;
   top: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .machines-content {
   width: 100vw;

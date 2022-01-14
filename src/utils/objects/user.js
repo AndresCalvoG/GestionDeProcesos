@@ -11,9 +11,10 @@ class user extends person {
     area,
     charge,
     code,
-    privilege = "Invitado"
+    privilege = "Invitado",
+    date
   ) {
-    super({ firstName, lastName });
+    super({ firstName, lastName, date });
     this.photoUrl = photoUrl;
     this.id = id;
     this.email = email;

@@ -34,7 +34,7 @@ function Machines() {
 
   useEffect(() => {
     (async function () {
-      let order = await updateFireStoreData(user.fields.company.stringValue);
+      let order = await updateFireStoreData(user.company);
       // for (let i = 0; i < order.docs.length; i++) {
       //   arrayOrders.push({
       //     values: order.docs[i]._delegate._document.data.value.mapValue.fields,
@@ -46,12 +46,17 @@ function Machines() {
   }, []);
 
   const showModalDel = () => {
-    if (dell === "hidenModal") {
-      setDell("showModal-full");
+    if (user.privilege === "Administrador") {
+      if (dell === "hidenModal") {
+        setDell("showModal-full");
+      } else {
+        setDell("hidenModal");
+      }
     } else {
-      setDell("hidenModal");
+      setFault("not permision");
     }
   };
+
   const showModalAdd = () => {
     setFault("");
     if (classe === "hidenModal") {
@@ -124,6 +129,7 @@ function Machines() {
         <Card name="Nueva" image={Plus} action={showModalAdd} />
         <Card name="Eliminar" image={Less} action={showModalDel} />
       </section>
+      <span className="fault">{fault}</span>
       <Modal classe={dell}>
         <div className="main-modal">
           <h2>Eliminar Maquina </h2>

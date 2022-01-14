@@ -21,6 +21,7 @@ const Register = () => {
   ];
   const [contain, setContain] = useState(false);
   const [firstName, setFirstName] = useState("");
+  const [date, setDate] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,6 +41,7 @@ const Register = () => {
     if (
       firstName === "" ||
       lastName === "" ||
+      date === "" ||
       email === "" ||
       password === "" ||
       cargo === "" ||
@@ -80,6 +82,7 @@ const Register = () => {
         await database.crearUsersDb({
           first: firstName,
           last: lastName,
+          date: date,
           email: email,
           charge: cargo,
           company: companyID,
@@ -119,6 +122,15 @@ const Register = () => {
                 action={setLastName}
                 class="inputForm"
               />
+              <label className="form-select">
+                Fecha de Nacimiento:
+                <InputForm
+                  type="date"
+                  value={date}
+                  action={setDate}
+                  class="inputForm"
+                />
+              </label>
               <InputForm
                 type="email"
                 label="Tu correo..."
