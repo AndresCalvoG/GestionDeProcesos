@@ -9,7 +9,8 @@ import Auth from "../utils/autenticacion";
 import storage from "../utils/storege";
 
 function Profile() {
-  const { user, getDataUsers, setPhotoUrl } = React.useContext(AppContext);
+  const { user, getDataUsers, savePhotoUrl, User } =
+    React.useContext(AppContext);
   const [photo, setPhoto] = useState("");
   const [file, setFile] = useState("");
   const [clase, setClase] = useState("hidenModal");
@@ -20,12 +21,11 @@ function Profile() {
     if (clase === "hidenModal") {
       setClase("showModal-full");
       showMenu();
+      console.log(User);
     } else {
       setClase("hidenModal");
       setPhoto("");
-      const URLphoto = localStorage.getItem("PhotoUrl");
-      let parsePhoto = JSON.parse(URLphoto);
-      setPhotoUrl(parsePhoto);
+      savePhotoUrl(user.photoUrl);
     }
   };
   function showMenu() {
@@ -43,11 +43,10 @@ function Profile() {
 
   async function updatePhoto() {
     if (file) {
-      const company = user.fields.company.stringValue;
       let imageURL = await storage.uploadProfilePhoto(
-        company,
+        user.company,
         file,
-        user.fields.id.stringValue
+        user.id
       );
       const response = await Auth.validUser();
       await Auth.updatePhoto(response, imageURL);
@@ -56,12 +55,9 @@ function Profile() {
       console.log("sin foto");
     }
   }
+
   async function deletePhoto() {
-    const company = user.fields.company.stringValue;
-    let defaultImage = await storage.deleteProfilePhoto(
-      company,
-      user.fields.id.stringValue
-    );
+    let defaultImage = await storage.deleteProfilePhoto(user.company, user.id);
     const response = await Auth.validUser();
     await Auth.updatePhoto(response, defaultImage);
     await getDataUsers();
@@ -87,14 +83,14 @@ function Profile() {
         <div className="card-info">
           <p className="info-item">Nombre:</p>
           <p>
-            {user.fields.first.stringValue} {user.fields.last.stringValue}
+            {user.firstName} {user.lastName}
           </p>
           <p className="info-item">Email:</p>
-          <p>{user.fields.email.stringValue}</p>
+          <p>{user.email}</p>
           <p className="info-item">Cargo:</p>
-          <p>{user.fields.charge.stringValue}</p>
+          <p>{user.charge}</p>
           <p className="info-item">Codigo:</p>
-          <p>{user.fields.code.stringValue}</p>
+          <p>{user.code}</p>
         </div>
       </section>
       <Modal classe={clase}>
@@ -107,7 +103,7 @@ function Profile() {
             value={photo}
             action={setPhoto}
             File={setFile}
-            currentPhoto={setPhotoUrl}
+            currentPhoto={savePhotoUrl}
             readOnly={false}
             class="inputForm"
           />

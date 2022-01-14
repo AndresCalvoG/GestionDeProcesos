@@ -12,6 +12,21 @@ function AppProvider(props) {
   const adminPass = "123456";
   const UserProfile =
     "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/profilePhotos%2Fprofile.png?alt=media&token=b4bd3414-7c8f-4b08-bff9-9e46b113e884";
+
+  var User = new users({
+    photoUrl: UserProfile,
+    id: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    company: "",
+    area: "",
+    charge: "",
+    code: "",
+    privilege: "",
+    date: "",
+    phone: "",
+  });
   //notificador
   const [newNotify, setNewNotify] = useState([
     {
@@ -31,11 +46,22 @@ function AppProvider(props) {
   const [photoUrl, savePhotoUrl] = useLocalStorage("PhotoUrl", UserProfile);
   const [companyName, saveCompanyName] = useLocalStorage("companyName", " ");
 
+  if (!user.value) {
+    User.setPhotoUrl(user.photoURL);
+    User.setId(user.id);
+    User.setFirstName(user.firstName);
+    User.setLastName(user.lastName);
+    User.setEmail(user.email);
+    User.setCompany(user.company);
+    User.setArea(user.area);
+    User.setCharge(user.charge);
+    User.setCode(user.code);
+    User.setPrivilege(user.privilege);
+    User.setDate(user.date);
+    User.setPhoneNumber(user.phoneNumber);
+  }
   //estados compartidos de context
   const [companyID, setCompanyID] = useState("");
-  const [areas, setAreas] = useState([]);
-  const [equipos, setEquipos] = useState([]);
-  const [partes, setPartes] = useState([]);
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const history = useHistory();
@@ -49,19 +75,40 @@ function AppProvider(props) {
     //console.log(response); // informacion de usuario de autenticacion
     if (response !== "/") {
       data = await database.getDataUser(response.uid);
-      var User = new users(
-        response.photoURL,
-        data._delegate._document.data.value.mapValue.fields.id.stringValue,
-        data._delegate._document.data.value.mapValue.fields.first.stringValue,
-        data._delegate._document.data.value.mapValue.fields.last.stringValue,
-        data._delegate._document.data.value.mapValue.fields.email.stringValue,
-        data._delegate._document.data.value.mapValue.fields.company.stringValue,
-        data._delegate._document.data.value.mapValue.fields.area.stringValue,
-        data._delegate._document.data.value.mapValue.fields.charge.stringValue,
-        data._delegate._document.data.value.mapValue.fields.code.stringValue,
-        data._delegate._document.data.value.mapValue.fields.privilege.stringValue,
+      User.setPhotoUrl(response.photoURL);
+      User.setId(
+        data._delegate._document.data.value.mapValue.fields.id.stringValue
+      );
+      User.setFirstName(
+        data._delegate._document.data.value.mapValue.fields.first.stringValue
+      );
+      User.setLastName(
+        data._delegate._document.data.value.mapValue.fields.last.stringValue
+      );
+      User.setEmail(
+        data._delegate._document.data.value.mapValue.fields.email.stringValue
+      );
+      User.setCompany(
+        data._delegate._document.data.value.mapValue.fields.company.stringValue
+      );
+      User.setArea(
+        data._delegate._document.data.value.mapValue.fields.area.stringValue
+      );
+      User.setCharge(
+        data._delegate._document.data.value.mapValue.fields.charge.stringValue
+      );
+      User.setCode(
+        data._delegate._document.data.value.mapValue.fields.code.stringValue
+      );
+      User.setPrivilege(
+        data._delegate._document.data.value.mapValue.fields.privilege
+          .stringValue
+      );
+      User.setDate(
         data._delegate._document.data.value.mapValue.fields.date.stringValue
       );
+      User.setPhoneNumber(response.phoneNumber);
+      console.log(User);
       var nameC = await database.getNameCompany(User.company);
     }
     if (data.exists) {
@@ -111,10 +158,8 @@ function AppProvider(props) {
         companyID,
         companyName,
         user,
+        User,
         auth,
-        areas,
-        equipos,
-        partes,
         fecha,
         hora,
         newNotify,

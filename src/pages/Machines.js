@@ -103,17 +103,20 @@ function Machines() {
     } else {
       setFault("");
       setClaseSelect("hidenModal");
-      const company = user.fields.company.stringValue;
-      let imageURL = await storage.uploadMachinePhoto(company, file, refer);
+      let imageURL = await storage.uploadMachinePhoto(
+        user.company,
+        file,
+        refer
+      );
 
-      let areaRef = await database.createNewArea(company, area);
+      let areaRef = await database.createNewArea(user.company, area);
       let equipoRef = await database.createNewMachine(
-        company,
+        user.company,
         areaRef.id,
         refer
       );
       await database.addDataMachine(
-        company,
+        user.company,
         areaRef.id,
         equipoRef.id,
         { hmi },

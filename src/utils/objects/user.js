@@ -1,7 +1,7 @@
 import person from "./person";
 
 class user extends person {
-  constructor(
+  constructor({
     photoUrl,
     id,
     firstName,
@@ -12,9 +12,10 @@ class user extends person {
     charge,
     code,
     privilege = "Invitado",
-    date
-  ) {
-    super({ firstName, lastName, date });
+    date,
+    phone,
+  }) {
+    super({ firstName, lastName, date, phone });
     this.photoUrl = photoUrl;
     this.id = id;
     this.email = email;
@@ -24,7 +25,56 @@ class user extends person {
     this.code = code;
     this.privilege = privilege;
   }
-  s;
+
+  setPhotoUrl(urlPhoto) {
+    this.photoUrl = urlPhoto;
+  }
+  setId(ID) {
+    this.id = ID;
+  }
+  setEmail(email) {
+    this.email = email;
+  }
+  setCompany(idCompany) {
+    this.company = idCompany;
+  }
+  setArea(area) {
+    this.area = area;
+  }
+  setCharge(charge) {
+    this.charge = charge;
+  }
+  setCode(code) {
+    this.code = code;
+  }
+  setPrivilege(privilege) {
+    this.privilege = privilege;
+  }
+
+  getPhotoUrl() {
+    return this.photoUrl;
+  }
+  getId() {
+    return this.id;
+  }
+  getEmail() {
+    return this.email;
+  }
+  getCompany() {
+    return this.company;
+  }
+  getArea() {
+    return this.area;
+  }
+  getCharge() {
+    return this.charge;
+  }
+  getCode() {
+    return this.code;
+  }
+  getPrivilege() {
+    return this.privilege;
+  }
 }
 
 export default user;
