@@ -43,11 +43,10 @@ function AppProvider(props) {
   //algoritmo para local storege
   const [auth, saveAuth] = useLocalStorage("valid", false);
   const [user, saveUser] = useLocalStorage("user", { value: false });
-  const [photoUrl, savePhotoUrl] = useLocalStorage("PhotoUrl", UserProfile);
   const [companyName, saveCompanyName] = useLocalStorage("companyName", " ");
 
   if (!user.value) {
-    User.setPhotoUrl(user.photoURL);
+    User.setPhotoUrl(user.photoUrl);
     User.setId(user.id);
     User.setFirstName(user.firstName);
     User.setLastName(user.lastName);
@@ -108,19 +107,16 @@ function AppProvider(props) {
         data._delegate._document.data.value.mapValue.fields.date.stringValue
       );
       User.setPhoneNumber(response.phoneNumber);
-      console.log(User);
       var nameC = await database.getNameCompany(User.company);
     }
     if (data.exists) {
       saveAuth(true);
       saveUser(User);
-      savePhotoUrl(User.photoUrl);
       saveCompanyName(nameC);
       history.replace("/home");
     } else {
       saveAuth(false);
       saveUser({ value: false });
-      savePhotoUrl(UserProfile);
       saveCompanyName(" ");
     }
   }
@@ -164,12 +160,10 @@ function AppProvider(props) {
         hora,
         newNotify,
         update,
-        photoUrl,
         setCompanyID,
         setNewNotify,
         saveUser,
         setUpdate,
-        savePhotoUrl,
         handleLogout,
         getDataUsers,
         getCurrentDate,

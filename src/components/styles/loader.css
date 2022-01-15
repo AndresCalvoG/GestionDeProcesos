@@ -18,6 +18,9 @@
 .register {
   margin-top: -5rem;
 }
+.profile {
+  margin: 15rem auto;
+}
 
 .loader,
 .loader:before,

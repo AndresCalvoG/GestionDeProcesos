@@ -50,31 +50,6 @@ class user extends person {
   setPrivilege(privilege) {
     this.privilege = privilege;
   }
-
-  getPhotoUrl() {
-    return this.photoUrl;
-  }
-  getId() {
-    return this.id;
-  }
-  getEmail() {
-    return this.email;
-  }
-  getCompany() {
-    return this.company;
-  }
-  getArea() {
-    return this.area;
-  }
-  getCharge() {
-    return this.charge;
-  }
-  getCode() {
-    return this.code;
-  }
-  getPrivilege() {
-    return this.privilege;
-  }
 }
 
 export default user;
