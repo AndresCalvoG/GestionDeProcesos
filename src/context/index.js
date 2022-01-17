@@ -70,11 +70,11 @@ function AppProvider(props) {
       User.photoUrl = response.photoURL;
       User.id = path.id.stringValue;
       User.firstName = capitalizeText(path.first.stringValue);
-      User.lastName = path.last.stringValue;
+      User.lastName = capitalizeText(path.last.stringValue);
       User.email = path.email.stringValue;
       User.company = path.company.stringValue;
-      User.area = path.area.stringValue;
-      User.charge = path.charge.stringValue;
+      User.area = capitalizeText(path.area.stringValue);
+      User.charge = capitalizeText(path.charge.stringValue);
       User.code = path.code.stringValue;
       User.privilege = path.privilege.stringValue;
       User.date = path.date.stringValue;
@@ -85,9 +85,8 @@ function AppProvider(props) {
       Company.date.fullYear = path2.date.mapValue.fields.fullYear.stringValue;
       Company.date.fullHour = path2.date.mapValue.fields.fullHour.stringValue;
       Company.id = path2.id.stringValue;
-      Company.businessName = path2.businessName.stringValue;
+      Company.businessName = capitalizeText(path2.businessName.stringValue);
       Company.phoneNumber = path2.phoneNumber.stringValue;
-      console.log(Company);
     }
     if (data.exists) {
       saveAuth(true);
@@ -124,13 +123,13 @@ function AppProvider(props) {
   }
 
   function capitalizeText(text) {
-    text
+    let capitalText = text
       .toLowerCase()
       .trim()
       .split(" ")
       .map((v) => v[0].toUpperCase() + v.substring(1))
       .join(" ");
-    return text;
+    return capitalText;
   }
 
   return (
