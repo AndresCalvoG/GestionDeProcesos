@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import useLocalStorage from "../customHooks/useLocalStorage";
-import users from "../utils/objects/user";
+
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
 
@@ -12,6 +12,27 @@ function AppProvider(props) {
   const adminPass = "123456";
   const UserProfile =
     "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/profilePhotos%2Fprofile.png?alt=media&token=b4bd3414-7c8f-4b08-bff9-9e46b113e884";
+
+  var User = {
+    photoUrl: UserProfile,
+    id: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    company: "",
+    area: "",
+    charge: "",
+    code: "",
+    privilege: "",
+    date: "",
+    phoneNumber: "",
+  };
+  var Company = {
+    date: { fullYear: "", fullHour: "" },
+    id: "",
+    businessName: "",
+    phoneNumber: "",
+  };
   //notificador
   const [newNotify, setNewNotify] = useState([
     {
@@ -28,14 +49,10 @@ function AppProvider(props) {
   //algoritmo para local storege
   const [auth, saveAuth] = useLocalStorage("valid", false);
   const [user, saveUser] = useLocalStorage("user", { value: false });
-  const [photoUrl, savePhotoUrl] = useLocalStorage("PhotoUrl", UserProfile);
-  const [companyName, saveCompanyName] = useLocalStorage("companyName", " ");
+  const [company, saveCompany] = useLocalStorage("company", {});
 
   //estados compartidos de context
   const [companyID, setCompanyID] = useState("");
-  const [areas, setAreas] = useState([]);
-  const [equipos, setEquipos] = useState([]);
-  const [partes, setPartes] = useState([]);
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const history = useHistory();
@@ -49,32 +66,38 @@ function AppProvider(props) {
     //console.log(response); // informacion de usuario de autenticacion
     if (response !== "/") {
       data = await database.getDataUser(response.uid);
-      var User = new users(
-        response.photoURL,
-        data._delegate._document.data.value.mapValue.fields.id.stringValue,
-        data._delegate._document.data.value.mapValue.fields.first.stringValue,
-        data._delegate._document.data.value.mapValue.fields.last.stringValue,
-        data._delegate._document.data.value.mapValue.fields.email.stringValue,
-        data._delegate._document.data.value.mapValue.fields.company.stringValue,
-        data._delegate._document.data.value.mapValue.fields.area.stringValue,
-        data._delegate._document.data.value.mapValue.fields.charge.stringValue,
-        data._delegate._document.data.value.mapValue.fields.code.stringValue,
-        data._delegate._document.data.value.mapValue.fields.privilege.stringValue,
-        data._delegate._document.data.value.mapValue.fields.date.stringValue
-      );
-      var nameC = await database.getNameCompany(User.company);
+      let path = data._delegate._document.data.value.mapValue.fields;
+      User.photoUrl = response.photoURL;
+      User.id = path.id.stringValue;
+      User.firstName = capitalizeText(path.first.stringValue);
+      User.lastName = path.last.stringValue;
+      User.email = path.email.stringValue;
+      User.company = path.company.stringValue;
+      User.area = path.area.stringValue;
+      User.charge = path.charge.stringValue;
+      User.code = path.code.stringValue;
+      User.privilege = path.privilege.stringValue;
+      User.date = path.date.stringValue;
+      User.phoneNumber = response.phoneNumber;
+
+      let dataCompany = await database.getCompany(User.company);
+      let path2 = dataCompany._delegate._document.data.value.mapValue.fields;
+      Company.date.fullYear = path2.date.mapValue.fields.fullYear.stringValue;
+      Company.date.fullHour = path2.date.mapValue.fields.fullHour.stringValue;
+      Company.id = path2.id.stringValue;
+      Company.businessName = path2.businessName.stringValue;
+      Company.phoneNumber = path2.phoneNumber.stringValue;
+      console.log(Company);
     }
     if (data.exists) {
       saveAuth(true);
       saveUser(User);
-      savePhotoUrl(User.photoUrl);
-      saveCompanyName(nameC);
+      saveCompany(Company);
       history.replace("/home");
     } else {
       saveAuth(false);
       saveUser({ value: false });
-      savePhotoUrl(UserProfile);
-      saveCompanyName(" ");
+      saveCompany({});
     }
   }
 
@@ -94,13 +117,20 @@ function AppProvider(props) {
     var sec = date.getSeconds();
 
     var fullHour = `${hour}:${min}:${sec}`;
-    var fullDate = `${dd}/${mm}/${yyyy}`;
-    setFecha(fullDate);
+    var fullYear = `${yyyy}/${mm}/${dd}`;
+    setFecha(fullYear);
     setHora(fullHour);
+    return { fullYear, fullHour };
   }
 
-  async function updateFireStoreData(id) {
-    let Data = await database.getData(id);
+  function capitalizeText(text) {
+    text
+      .toLowerCase()
+      .trim()
+      .split(" ")
+      .map((v) => v[0].toUpperCase() + v.substring(1))
+      .join(" ");
+    return text;
   }
 
   return (
@@ -108,27 +138,22 @@ function AppProvider(props) {
       value={{
         adminEmail,
         adminPass,
+        company,
+        saveCompany,
         companyID,
-        companyName,
+        setCompanyID,
         user,
+        saveUser,
         auth,
-        areas,
-        equipos,
-        partes,
         fecha,
         hora,
         newNotify,
         update,
-        photoUrl,
-        setCompanyID,
         setNewNotify,
-        saveUser,
         setUpdate,
-        savePhotoUrl,
         handleLogout,
         getDataUsers,
         getCurrentDate,
-        updateFireStoreData,
       }}
     >
       {props.children}

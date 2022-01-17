@@ -201,7 +201,7 @@ const Register = () => {
                   .toLowerCase()
                   .trim()
                   .split(" ")
-                  .map((v) => v[0].toUpperCase() + v.substr(1))
+                  .map((v) => v[0].toUpperCase() + v.substring(1))
                   .join(" ")}
               </b>{" "}
               debes realizar el proceso de verificacion desde el correo enviado

@@ -7,7 +7,17 @@ class Database {
   async createCompany(props) {
     var db = firebase.firestore();
     try {
-      let docRef = await db.collection("Companies").add({ name: props });
+      let docRef = await db.collection("Companies").add({
+        businessName: props.businessName,
+        date: props.date,
+        phoneNumber: props.phone,
+      });
+      await db.collection("Companies").doc(docRef.id).set(
+        {
+          id: docRef.id,
+        },
+        { merge: true }
+      );
       return docRef.id;
     } catch (error) {
       console.log(error.message);
@@ -33,12 +43,11 @@ class Database {
     }
   }
   //metodo para obtener nombre de compañia
-  async getNameCompany(id) {
+  async getCompany(id) {
     var db = firebase.firestore();
     try {
       var docRef = await db.collection("Companies").doc(id).get();
-      return docRef._delegate._document.data.value.mapValue.fields.name
-        .stringValue;
+      return docRef;
     } catch (error) {
       console.log(error);
       return error;

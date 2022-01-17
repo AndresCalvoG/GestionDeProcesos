@@ -66,7 +66,7 @@ class Autenticacion {
       user.updateProfile({
         photoURL: photo,
       });
-      console.log("foto enviada");
+      //console.log("foto enviada");
     } catch (error) {
       console.log(error);
     }
