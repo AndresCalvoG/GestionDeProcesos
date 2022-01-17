@@ -10,12 +10,14 @@ import companyImg from "../images/landing/company.png";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import InputForm from "../components/InputForm";
+import Loader from "../components/Loader";
 
 function Landing() {
   const [clase, setClase] = useState("hidenModal");
-  const [company, setCompany] = useState("");
   const [next, setNext] = useState(false);
-  const { companyID, setCompanyID, adminEmail, adminPass } =
+  const [claseLoader, setClaseLoader] = useState("hidenLoader");
+  const [businessName, setBusinessName] = useState("");
+  const { companyID, setCompanyID, adminEmail, adminPass, getCurrentDate } =
     React.useContext(AppContext);
 
   const showModal = () => {
@@ -23,17 +25,23 @@ function Landing() {
       setClase("showModal-full");
     } else {
       setClase("hidenModal");
-      setCompany("");
+      setCompanyID("");
     }
   };
 
   async function createCompany() {
+    setClaseLoader("showLoader landing");
     await Auth.authEmailPass(adminEmail, adminPass);
-    let companyID = await database.createCompany(company);
-    setCompanyID(companyID);
+    let date = getCurrentDate();
+    let companyRef = await database.createCompany({
+      businessName,
+      date,
+      phone: "",
+    });
+    setCompanyID(companyRef);
     Auth.logoutUsers();
     setClase("hidenModal");
-    setCompany("");
+    setClaseLoader("hidenLoader");
     setNext(true);
   }
 
@@ -79,7 +87,7 @@ function Landing() {
             <h1 className="card-code">{companyID}</h1>
             <h1 className="card-title">Tu Codigo Empresarial</h1>
             <Link to="/Register">
-              <Button name="Continuar a Registro" class="button--long" />
+              <Button name="Continuar a Registro" class="button--long submit" />
             </Link>
           </section>
         )}
@@ -90,8 +98,8 @@ function Landing() {
             <InputForm
               type="text"
               size="28"
-              value={company}
-              action={setCompany}
+              value={businessName}
+              action={setBusinessName}
               readOnly={false}
               class="inputFormOrder"
             />
@@ -109,6 +117,7 @@ function Landing() {
             </div>
           </div>
         </Modal>
+        <Loader class={claseLoader} />
       </main>
     </>
   );

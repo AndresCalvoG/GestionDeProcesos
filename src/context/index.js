@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import useLocalStorage from "../customHooks/useLocalStorage";
-import users from "../utils/objects/user";
+
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
 
@@ -13,7 +13,7 @@ function AppProvider(props) {
   const UserProfile =
     "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/profilePhotos%2Fprofile.png?alt=media&token=b4bd3414-7c8f-4b08-bff9-9e46b113e884";
 
-  var User = new users({
+  var User = {
     photoUrl: UserProfile,
     id: "",
     firstName: "",
@@ -25,8 +25,14 @@ function AppProvider(props) {
     code: "",
     privilege: "",
     date: "",
-    phone: "",
-  });
+    phoneNumber: "",
+  };
+  var Company = {
+    date: { fullYear: "", fullHour: "" },
+    id: "",
+    businessName: "",
+    phoneNumber: "",
+  };
   //notificador
   const [newNotify, setNewNotify] = useState([
     {
@@ -43,22 +49,8 @@ function AppProvider(props) {
   //algoritmo para local storege
   const [auth, saveAuth] = useLocalStorage("valid", false);
   const [user, saveUser] = useLocalStorage("user", { value: false });
-  const [companyName, saveCompanyName] = useLocalStorage("companyName", " ");
+  const [company, saveCompany] = useLocalStorage("company", {});
 
-  if (!user.value) {
-    User.setPhotoUrl(user.photoUrl);
-    User.setId(user.id);
-    User.setFirstName(user.firstName);
-    User.setLastName(user.lastName);
-    User.setEmail(user.email);
-    User.setCompany(user.company);
-    User.setArea(user.area);
-    User.setCharge(user.charge);
-    User.setCode(user.code);
-    User.setPrivilege(user.privilege);
-    User.setDate(user.date);
-    User.setPhoneNumber(user.phoneNumber);
-  }
   //estados compartidos de context
   const [companyID, setCompanyID] = useState("");
   const [fecha, setFecha] = useState("");
@@ -74,50 +66,38 @@ function AppProvider(props) {
     //console.log(response); // informacion de usuario de autenticacion
     if (response !== "/") {
       data = await database.getDataUser(response.uid);
-      User.setPhotoUrl(response.photoURL);
-      User.setId(
-        data._delegate._document.data.value.mapValue.fields.id.stringValue
-      );
-      User.setFirstName(
-        data._delegate._document.data.value.mapValue.fields.first.stringValue
-      );
-      User.setLastName(
-        data._delegate._document.data.value.mapValue.fields.last.stringValue
-      );
-      User.setEmail(
-        data._delegate._document.data.value.mapValue.fields.email.stringValue
-      );
-      User.setCompany(
-        data._delegate._document.data.value.mapValue.fields.company.stringValue
-      );
-      User.setArea(
-        data._delegate._document.data.value.mapValue.fields.area.stringValue
-      );
-      User.setCharge(
-        data._delegate._document.data.value.mapValue.fields.charge.stringValue
-      );
-      User.setCode(
-        data._delegate._document.data.value.mapValue.fields.code.stringValue
-      );
-      User.setPrivilege(
-        data._delegate._document.data.value.mapValue.fields.privilege
-          .stringValue
-      );
-      User.setDate(
-        data._delegate._document.data.value.mapValue.fields.date.stringValue
-      );
-      User.setPhoneNumber(response.phoneNumber);
-      var nameC = await database.getNameCompany(User.company);
+      let path = data._delegate._document.data.value.mapValue.fields;
+      User.photoUrl = response.photoURL;
+      User.id = path.id.stringValue;
+      User.firstName = capitalizeText(path.first.stringValue);
+      User.lastName = path.last.stringValue;
+      User.email = path.email.stringValue;
+      User.company = path.company.stringValue;
+      User.area = path.area.stringValue;
+      User.charge = path.charge.stringValue;
+      User.code = path.code.stringValue;
+      User.privilege = path.privilege.stringValue;
+      User.date = path.date.stringValue;
+      User.phoneNumber = response.phoneNumber;
+
+      let dataCompany = await database.getCompany(User.company);
+      let path2 = dataCompany._delegate._document.data.value.mapValue.fields;
+      Company.date.fullYear = path2.date.mapValue.fields.fullYear.stringValue;
+      Company.date.fullHour = path2.date.mapValue.fields.fullHour.stringValue;
+      Company.id = path2.id.stringValue;
+      Company.businessName = path2.businessName.stringValue;
+      Company.phoneNumber = path2.phoneNumber.stringValue;
+      console.log(Company);
     }
     if (data.exists) {
       saveAuth(true);
       saveUser(User);
-      saveCompanyName(nameC);
+      saveCompany(Company);
       history.replace("/home");
     } else {
       saveAuth(false);
       saveUser({ value: false });
-      saveCompanyName(" ");
+      saveCompany({});
     }
   }
 
@@ -137,13 +117,20 @@ function AppProvider(props) {
     var sec = date.getSeconds();
 
     var fullHour = `${hour}:${min}:${sec}`;
-    var fullDate = `${dd}/${mm}/${yyyy}`;
-    setFecha(fullDate);
+    var fullYear = `${yyyy}/${mm}/${dd}`;
+    setFecha(fullYear);
     setHora(fullHour);
+    return { fullYear, fullHour };
   }
 
-  async function updateFireStoreData(id) {
-    let Data = await database.getData(id);
+  function capitalizeText(text) {
+    text
+      .toLowerCase()
+      .trim()
+      .split(" ")
+      .map((v) => v[0].toUpperCase() + v.substring(1))
+      .join(" ");
+    return text;
   }
 
   return (
@@ -151,23 +138,22 @@ function AppProvider(props) {
       value={{
         adminEmail,
         adminPass,
+        company,
+        saveCompany,
         companyID,
-        companyName,
+        setCompanyID,
         user,
-        User,
+        saveUser,
         auth,
         fecha,
         hora,
         newNotify,
         update,
-        setCompanyID,
         setNewNotify,
-        saveUser,
         setUpdate,
         handleLogout,
         getDataUsers,
         getCurrentDate,
-        updateFireStoreData,
       }}
     >
       {props.children}

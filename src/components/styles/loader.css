@@ -21,6 +21,9 @@
 .profile {
   margin: 15rem auto;
 }
+.landing {
+  margin: 15rem auto;
+}
 
 .loader,
 .loader:before,
