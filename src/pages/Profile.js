@@ -25,7 +25,7 @@ function Profile() {
     } else {
       setClase("hidenModal");
       setPhoto("");
-      User.setPhotoUrl(user.photoUrl);
+      User.photoUrl = user.photoUrl;
     }
   };
   function showMenu() {
@@ -106,7 +106,7 @@ function Profile() {
             action={setPhoto}
             File={setFile}
             currentPhoto={(img) => {
-              User.setPhotoUrl(img);
+              User.photoUrl = img;
             }}
             readOnly={false}
             class="inputForm"

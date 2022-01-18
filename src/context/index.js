@@ -50,7 +50,7 @@ function AppProvider(props) {
   const [auth, saveAuth] = useLocalStorage("valid", false);
   const [user, saveUser] = useLocalStorage("user", { value: false });
   const [company, saveCompany] = useLocalStorage("company", {});
-
+  User = { ...user };
   //estados compartidos de context
   const [companyID, setCompanyID] = useState("");
   const [fecha, setFecha] = useState("");
@@ -143,6 +143,7 @@ function AppProvider(props) {
         setCompanyID,
         user,
         saveUser,
+        User,
         auth,
         fecha,
         hora,
