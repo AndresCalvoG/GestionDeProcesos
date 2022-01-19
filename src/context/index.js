@@ -53,6 +53,7 @@ function AppProvider(props) {
   User = { ...user };
   //estados compartidos de context
   const [companyID, setCompanyID] = useState("");
+  const [areas, setAreas] = useState([]);
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const history = useHistory();
@@ -132,6 +133,11 @@ function AppProvider(props) {
     return capitalText;
   }
 
+  async function updateDataCompany(id) {
+    let areas = await database.getDataAreas(id);
+    return areas;
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -148,12 +154,15 @@ function AppProvider(props) {
         fecha,
         hora,
         newNotify,
-        update,
         setNewNotify,
+        update,
         setUpdate,
+        areas,
+        setAreas,
         handleLogout,
         getDataUsers,
         getCurrentDate,
+        updateDataCompany,
       }}
     >
       {props.children}

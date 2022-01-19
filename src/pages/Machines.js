@@ -11,10 +11,12 @@ import Card from "../components/Card";
 import Modal from "../components/Modal";
 import Button from "../components/Button";
 import InputForm from "../components/InputForm";
+import Loader from "../components/Loader";
 
 function Machines() {
-  const { user, updateFireStoreData } = React.useContext(AppContext);
-
+  const { user, updateDataCompany, areas, setAreas } =
+    React.useContext(AppContext);
+  const [clase, setClase] = useState("hidenLoader");
   const [dell, setDell] = useState("hidenModal");
   const [classe, setClasse] = useState("hidenModal");
   const [claseData, setClaseData] = useState("hidenModal");
@@ -34,14 +36,8 @@ function Machines() {
 
   useEffect(() => {
     (async function () {
-      let order = await updateFireStoreData(user.company);
-      // for (let i = 0; i < order.docs.length; i++) {
-      //   arrayOrders.push({
-      //     values: order.docs[i]._delegate._document.data.value.mapValue.fields,
-      //     id: order.docs[i].id,
-      //   });
-      // }
-      //console.log(arrayOrders);
+      let data = await updateDataCompany(user.company);
+      setAreas(data.docs);
     })();
   }, []);
 
@@ -64,7 +60,7 @@ function Machines() {
     } else {
       setClasse("hidenModal");
       setPhotoName("");
-      setPhoto("");
+      setPhoto(Machine);
       setFile("");
     }
   };
@@ -106,12 +102,13 @@ function Machines() {
     } else {
       setFault("");
       setClaseSelect("hidenModal");
+      setClase("showLoader machine");
       let imageURL = await storage.uploadMachinePhoto(
         user.company,
         file,
         refer
       );
-
+      setPhoto(Machine);
       let areaRef = await database.createNewArea(user.company, area);
       let equipoRef = await database.createNewMachine(
         user.company,
@@ -126,16 +123,22 @@ function Machines() {
         { camara },
         { imageURL, type, cubicle }
       );
+      setClase("hidenLoader");
     }
   }
 
   return (
     <main className="main-machines">
+      <section className="machines-controls">
+        <Card name="Nueva" image={Plus} action={showModalAdd} />
+        <Card name="Eliminar" image={Less} action={showModalDel} />
+      </section>
       <section className="machines-content">
         <Card name="Nueva" image={Plus} action={showModalAdd} />
         <Card name="Eliminar" image={Less} action={showModalDel} />
       </section>
       <span className="fault">{fault}</span>
+      <Loader class={clase} />
       <Modal classe={dell}>
         <div className="main-modal">
           <h2>Eliminar Maquina </h2>

@@ -84,7 +84,7 @@ class Database {
     }
   }
   //Metodo para obtener data de base de datos
-  async getData(props) {
+  async getDataAreas(props) {
     var db = firebase.firestore();
     try {
       var docData = await db
@@ -195,6 +195,17 @@ class Database {
         .doc(company)
         .collection("Areas")
         .add({ name: area });
+      await db
+        .collection("Companies")
+        .doc(company)
+        .collection("Areas")
+        .doc(areaRef.id)
+        .set(
+          {
+            id: areaRef.id,
+          },
+          { merge: true }
+        );
       return areaRef;
     } catch (error) {
       console.log(error);
@@ -210,8 +221,21 @@ class Database {
         .doc(company)
         .collection("Areas")
         .doc(areaID)
-        .collection("Equipos")
+        .collection("Machines")
         .add({ name: machine });
+      await db
+        .collection("Companies")
+        .doc(company)
+        .collection("Areas")
+        .doc(areaID)
+        .collection("Machines")
+        .doc(machineRef.id)
+        .set(
+          {
+            id: machineRef.id,
+          },
+          { merge: true }
+        );
       return machineRef;
     } catch (error) {
       console.log(error);
@@ -223,33 +247,63 @@ class Database {
     var db = firebase.firestore();
     try {
       if (hmi.hmi !== "") {
-        await db
+        let hmiRef = await db
           .collection("Companies")
           .doc(company)
           .collection("Areas")
           .doc(area)
-          .collection("Equipos")
+          .collection("Machines")
           .doc(equipo)
           .collection("Components")
           .add(hmi);
-      }
-      if (camara.camara !== "") {
         await db
           .collection("Companies")
           .doc(company)
           .collection("Areas")
           .doc(area)
-          .collection("Equipos")
+          .collection("Machines")
+          .doc(equipo)
+          .collection("Components")
+          .doc(hmiRef.id)
+          .set(
+            {
+              id: hmiRef.id,
+            },
+            { merge: true }
+          );
+      }
+      if (camara.camara !== "") {
+        let camaraRef = await db
+          .collection("Companies")
+          .doc(company)
+          .collection("Areas")
+          .doc(area)
+          .collection("Machines")
           .doc(equipo)
           .collection("Components")
           .add(camara);
+        await db
+          .collection("Companies")
+          .doc(company)
+          .collection("Areas")
+          .doc(area)
+          .collection("Machines")
+          .doc(equipo)
+          .collection("Components")
+          .doc(camaraRef.id)
+          .set(
+            {
+              id: camaraRef.id,
+            },
+            { merge: true }
+          );
       }
       await db
         .collection("Companies")
         .doc(company)
         .collection("Areas")
         .doc(area)
-        .collection("Equipos")
+        .collection("Machines")
         .doc(equipo)
         .set(data, { merge: true });
     } catch (error) {
