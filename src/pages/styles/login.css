@@ -45,14 +45,7 @@
   font-size: 1.4rem;
   text-decoration: none;
 }
-.hidenProgress {
-  display: none;
-}
-.showProgress {
-  display: block;
-  position: absolute;
-  bottom: 20px;
-}
+
 @media screen and (min-width: 900px) {
   .mainLogin {
     margin-top: 10%;

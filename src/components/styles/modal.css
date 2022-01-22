@@ -19,6 +19,7 @@
   height: 100vh;
   background: rgba(32, 35, 41, 0.8);
   position: fixed;
+  top: 0;
   margin: 0;
   display: flex;
   justify-content: center;
@@ -46,4 +47,7 @@
 }
 .main-modal h2 {
   margin-bottom: 2rem;
+}
+.modal-title {
+  margin-bottom: 20rem;
 }

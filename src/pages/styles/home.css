@@ -1,33 +1,29 @@
-.main-container {
+.main-home {
   position: absolute;
   width: 100vw;
-  top: 15%;
+  height: 80vh;
+  top: 10%;
 }
-.main-container--menu {
+.home-title {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+  color: var(--blue);
+}
+.home-menu {
   width: 100vw;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
 }
-.main-container--card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.main-container--card div {
-  width: 90px;
-  height: 90px;
-  margin-bottom: 10px;
-}
 
 @media screen and (min-width: 900px) {
-  .main-container {
+  .main-home {
     display: flex;
     justify-content: center;
     top: 20%;
   }
-  .main-container--menu {
+  .home-menu {
     width: 50vw;
   }
 }

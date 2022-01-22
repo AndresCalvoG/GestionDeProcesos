@@ -3,11 +3,11 @@ import "firebase/storage";
 
 class Storage {
   //metodo para subir una foto de perfil
-  async uploadProfilePhoto(photo, userID) {
+  async uploadProfilePhoto(company, photo, userID) {
     var storageRef = firebase
       .storage()
       .ref()
-      .child("profilePhotos/" + userID + "/profile.jpeg");
+      .child(company + "/profilePhotos/" + userID + "/profile.jpeg");
     var file = photo;
     try {
       var result = await storageRef.put(file);
@@ -33,11 +33,11 @@ class Storage {
   }
 
   //Metodo par eliminar photo de perfile
-  async deleteProfilePhoto(userID) {
+  async deleteProfilePhoto(company, userID) {
     var storageRef = firebase
       .storage()
       .ref()
-      .child("profilePhotos/" + userID + "/profile.jpeg");
+      .child(company + "/profilePhotos/" + userID + "/profile.jpeg");
     try {
       storageRef.delete();
       let url = await this.downloadDocument(
@@ -49,11 +49,11 @@ class Storage {
     }
   }
   //metodo para subir foto de maquina
-  async uploadMachinePhoto(photo, name) {
+  async uploadMachinePhoto(company, photo, name) {
     var storageRef = firebase
       .storage()
       .ref()
-      .child("machines/" + name + ".jpeg");
+      .child(company + "/machines/" + name + ".jpeg");
     var file = photo;
     try {
       var result = await storageRef.put(file);

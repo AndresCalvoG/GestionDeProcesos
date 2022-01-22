@@ -3,8 +3,8 @@ import { AppContext } from "../context";
 import database from "../utils/fireStore";
 
 import "./styles/documents.css";
-import newOrder from "../images/newPage.png";
-import deleteFile from "../images/delete.png";
+import NewOrder from "../images/utils/newPage.png";
+import DeleteFile from "../images/utils/delete.png";
 import Card from "../components/Card";
 import Notifier from "../components/Notifier";
 import Modal from "../components/Modal";
@@ -38,10 +38,10 @@ function Documents() {
   return (
     <main className="main-documents">
       <section className="main-documents--menu">
-        <Card name="Nueva Orden" image={newOrder} route="/WorkOrder" />
+        <Card name="Nueva Orden" image={NewOrder} route="/WorkOrder" />
         <Card
           name="Eliminar orden"
-          image={deleteFile}
+          image={DeleteFile}
           route=""
           action={showModal}
         />

@@ -1,47 +1,69 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { AppContext } from "../context";
 import InputForm from "../components/InputForm";
+import SelectOption from "../components/SelectOption";
 import Button from "../components/Button";
-import Progress from "../components/progress/Progress";
+import Loader from "../components/Loader";
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
 
 import "./styles/register.css";
 
 const Register = () => {
-  const adminEmail = "andrescalvo9407@gmail.com";
-  const adminPass = "987654321";
-  //estados de pagina de registro
+  const privileges = [
+    "Administrador",
+    "Gerencia",
+    "Supervisor",
+    "Tecnico",
+    "Operador",
+    "Invitado",
+  ];
   const [contain, setContain] = useState(false);
   const [firstName, setFirstName] = useState("");
+  const [date, setDate] = useState("");
   const [lastName, setLastName] = useState("");
-  const [emailReg, setEmailReg] = useState("");
-  const [passwordReg, setPasswordReg] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [area, setArea] = useState("");
   const [cargo, setCargo] = useState("");
   const [code, setCode] = useState("");
+  const [privilege, setPrivilege] = useState();
   const [fault, setFault] = useState("");
-  const [clase, setClase] = useState("hidenProgress");
+  const [clase, setClase] = useState("hidenLoader");
   const nombres = `${firstName} ${lastName}`;
+
+  const { companyID, setCompanyID, adminEmail, adminPass } =
+    React.useContext(AppContext);
 
   // funciones de pagina de registro
   const handleRegister = async () => {
     if (
       firstName === "" ||
       lastName === "" ||
-      emailReg === "" ||
-      passwordReg === "" ||
+      date === "" ||
+      email === "" ||
+      password === "" ||
       cargo === "" ||
+      companyID === "" ||
       area === "" ||
-      code === ""
+      code === "" ||
+      privilege === ""
     ) {
       setFault("Por favor completa TODOS los campos");
     } else {
       setFault("");
-      setClase("showProgress");
+      setClase("showLoader register");
+      await Auth.authEmailPass(adminEmail, adminPass);
+      let existID = await database.companyExist(companyID);
+      Auth.logoutUsers();
+      if (existID === false) {
+        setFault("Empresa no Existe o Codigo Empresarial Equivocado");
+        return;
+      }
       const response = await Auth.crearCuentaEmailPass(
-        emailReg,
-        passwordReg,
+        email,
+        password,
         nombres
       );
 
@@ -60,13 +82,18 @@ const Register = () => {
         await database.crearUsersDb({
           first: firstName,
           last: lastName,
-          email: emailReg,
-          cargo: cargo,
+          date: date,
+          email: email,
+          charge: cargo,
+          company: companyID,
           area: area,
           code: code,
           id: response.uid,
+          privilege: privilege,
         });
         setContain(true);
+        setClase("hidenLoader");
+        setCompanyID("");
         Auth.logoutUsers();
       } else {
         console.log(response.code);
@@ -95,18 +122,34 @@ const Register = () => {
                 action={setLastName}
                 class="inputForm"
               />
+              <label className="form-select">
+                Fecha de Nacimiento:
+                <InputForm
+                  type="date"
+                  value={date}
+                  action={setDate}
+                  class="inputForm"
+                />
+              </label>
               <InputForm
                 type="email"
                 label="Tu correo..."
-                value={emailReg}
-                action={setEmailReg}
+                value={email}
+                action={setEmail}
                 class="inputForm"
               />
               <InputForm
                 type="password"
                 label="Contraseña..."
-                value={passwordReg}
-                action={setPasswordReg}
+                value={password}
+                action={setPassword}
+                class="inputForm"
+              />
+              <InputForm
+                type="text"
+                label="Tu Codigo Empresarial..."
+                value={companyID}
+                action={setCompanyID}
                 class="inputForm"
               />
               <InputForm
@@ -130,15 +173,23 @@ const Register = () => {
                 action={setCode}
                 class="inputForm"
               />
+              <label className="form-select">
+                Privilegio:
+                <SelectOption
+                  options={privileges}
+                  value={privilege}
+                  action={setPrivilege}
+                />
+              </label>
               <span className="fault">{fault}</span>
               <Button
                 name="Registrarme"
-                class="submit"
+                class="button submit"
                 action={handleRegister}
               />
-              <Progress class={clase} />
             </form>
           </section>
+          <Loader class={clase} />
         </main>
       ) : (
         <main className="main-success">
@@ -150,14 +201,14 @@ const Register = () => {
                   .toLowerCase()
                   .trim()
                   .split(" ")
-                  .map((v) => v[0].toUpperCase() + v.substr(1))
+                  .map((v) => v[0].toUpperCase() + v.substring(1))
                   .join(" ")}
               </b>{" "}
               debes realizar el proceso de verificacion desde el correo enviado
               a tu <b>email</b> para ingresar correctamente a la plataforma
             </p>
           </section>
-          <Link to="/" className="mainReset-link">
+          <Link to="/Login" className="mainReset-link">
             &#11013; Regresar a inicio de sesion
           </Link>
         </main>

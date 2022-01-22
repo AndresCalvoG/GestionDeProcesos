@@ -4,8 +4,8 @@ import { HashRouter, Switch, Route } from "react-router-dom";
 
 import "../global.css";
 
+import Landing from "../pages/Landing";
 import Login from "../pages/Login";
-import Loader from "./Loader";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import Home from "../pages/Home";
@@ -22,7 +22,7 @@ import Profile from "../pages/Profile";
 import Machines from "../pages/Machines";
 import Passwords from "../pages/Passwords";
 
-import { AppContext } from "../context";
+import { AppContext } from "../context/index";
 
 function App() {
   return (
@@ -30,12 +30,12 @@ function App() {
       <AppProvider>
         <Layout>
           <AppContext.Consumer>
-            {({ auth, loader }) =>
+            {({ auth }) =>
               auth ? (
                 <Switch>
                   <Route
                     exact
-                    path="/"
+                    path="/Login"
                     render={(props) => <Login {...props} />}
                   />
                   <Route exact path="/Register" component={Register} />
@@ -94,21 +94,18 @@ function App() {
                     path="/Machines"
                     render={(props) => <Machines {...props} />}
                   />
-                  {loader ? (
-                    <Route
-                      exact
-                      path="/loader"
-                      render={(props) => <Loader {...props} />}
-                    />
-                  ) : (
-                    <Route component={NotFound} />
-                  )}
+                  <Route render={(props) => <NotFound {...props} />} />
                 </Switch>
               ) : (
                 <Switch>
                   <Route
                     exact
                     path="/"
+                    render={(props) => <Landing {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/Login"
                     render={(props) => <Login {...props} />}
                   />
                   <Route exact path="/Register" component={Register} />
@@ -117,15 +114,7 @@ function App() {
                     path="/password/reset"
                     render={(props) => <PasswordReset {...props} />}
                   />
-                  {loader ? (
-                    <Route
-                      exact
-                      path="/loader"
-                      render={(props) => <Loader {...props} />}
-                    />
-                  ) : (
-                    <Route render={(props) => <NotRegisterUser {...props} />} />
-                  )}
+                  <Route render={(props) => <NotRegisterUser {...props} />} />
                 </Switch>
               )
             }

@@ -6,15 +6,18 @@ import Button from "../components/Button";
 import SelectOption from "../components/SelectOption";
 import InputForm from "../components/InputForm";
 import Viwer from "../components/Viwer";
-import plus from "../images/plus.png";
-import less from "../images/less.png";
 
 import database from "../utils/fireStore";
 
 function Passwords() {
+  const Plus =
+    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Futils%2Fplus.png?alt=media&token=61e48bf0-a78f-4dc3-b2fd-7f36f6493598";
+  const Less =
+    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Futils%2Fless.png?alt=media&token=7b9abfca-6c64-4884-94ea-37e57d2aef24";
   const types = ["admin", "superv", "Tech", "oper"];
-  const { areas, equipos, partes, getFireStoreData } =
-    React.useContext(AppContext);
+  const partes = ["Hmi", "Camara"];
+  const { areas, equipos, getFireStoreData } = React.useContext(AppContext);
+
   const [clase, setClase] = useState("hidenModal");
   const [classe, setClasse] = useState("hidenModal");
   const [equipo, setEquipo] = useState("");
@@ -73,8 +76,8 @@ function Passwords() {
   return (
     <main className="main-documents">
       <section className="main-documents--menu">
-        <Card name="Nueva" image={plus} action={showModalAdd} />
-        <Card name="Eliminar" image={less} action={showModalDel} />
+        <Card name="Nueva" image={Plus} action={showModalAdd} />
+        <Card name="Eliminar" image={Less} action={showModalDel} />
       </section>
       <section>
         <div className="contBody">

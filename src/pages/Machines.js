@@ -1,50 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { AppContext } from "../context";
 import storage from "../utils/storege";
 import database from "../utils/fireStore";
+import "./styles/machines.css";
 
+import Plus from "../images/utils/plus.png";
+import Less from "../images/utils/less.png";
+import Machine from "../images/home/maquina.png";
 import Card from "../components/Card";
 import Modal from "../components/Modal";
 import Button from "../components/Button";
 import InputForm from "../components/InputForm";
-import "./styles/machines.css";
-import plus from "../images/plus.png";
-import less from "../images/less.png";
+import Loader from "../components/Loader";
 
 function Machines() {
-  const [clase, setClase] = useState("hidenModal");
+  const { user, updateAreasCompany, machines } = React.useContext(AppContext);
+  const [clase, setClase] = useState("hidenLoader");
+  const [dell, setDell] = useState("hidenModal");
   const [classe, setClasse] = useState("hidenModal");
   const [claseData, setClaseData] = useState("hidenModal");
   const [claseSelect, setClaseSelect] = useState("hidenModal");
   const [photoName, setPhotoName] = useState("");
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState(Machine);
   const [file, setFile] = useState("");
   const [fault, setFault] = useState("");
   const [type, setType] = useState("");
   const [refer, setRefer] = useState("");
   const [area, setArea] = useState("");
-  const [cubiculo, setCubiculo] = useState("");
+  const [cubicle, setCubicle] = useState("");
   const [display, setDisplay] = useState([false, false]);
-  const [marca, setMarca] = useState("");
+  const [hmi, setHmi] = useState("");
   const [camera, setCamera] = useState([false, false]);
-  const [marcam, setMarcam] = useState("");
+  const [camara, setCamara] = useState("");
+
+  useEffect(() => {
+    (async function () {
+      await updateAreasCompany(user.company);
+    })();
+  }, []);
 
   const showModalDel = () => {
-    if (clase === "hidenModal") {
-      setClase("showModal-full");
+    if (user.privilege === "Administrador") {
+      if (dell === "hidenModal") {
+        setDell("showModal-full");
+      } else {
+        setDell("hidenModal");
+      }
     } else {
-      setClase("hidenModal");
+      setFault("not permision");
     }
   };
+
   const showModalAdd = () => {
     if (classe === "hidenModal") {
       setClasse("showModal-full");
     } else {
       setClasse("hidenModal");
       setPhotoName("");
-      setPhoto("");
+      setPhoto(Machine);
       setFile("");
     }
   };
+
   function showModalData() {
     if (photoName === "" || file === "") {
       setClasse("showModal-full");
@@ -56,8 +73,9 @@ function Machines() {
       setClaseData("showModal-full");
     }
   }
+
   function showModalSelect() {
-    if (type === "" || refer === "" || area === "" || cubiculo === "") {
+    if (type === "" || refer === "" || area === "" || cubicle === "") {
       setClaseData("showModal-full");
       setClaseSelect("hidenModal");
       setFault("Completa todos los campos");
@@ -67,42 +85,78 @@ function Machines() {
       setFault("");
     }
   }
+
   async function createMachine() {
     if (
       (display[0] === false && display[1] === false) ||
       (camera[0] === false && camera[1] === false)
     ) {
       setFault("Completa los campos de Si o No");
-    } else if (display[0] === true && marca === "") {
+    } else if (display[0] === true && hmi === "") {
       setFault("completa la marca del HMI");
-    } else if (camera[0] === true && marcam === "") {
+    } else if (camera[0] === true && camara === "") {
       setFault("completa la marca de la camara");
     } else {
       setFault("");
       setClaseSelect("hidenModal");
-      let imageURL = await storage.uploadMachinePhoto(file, refer);
-      await database.createNewMachine(
-        area,
-        refer,
-        { marca },
-        { marcam },
-        { imageURL, type, cubiculo }
+      setClase("showLoader machine");
+      let imageURL = await storage.uploadMachinePhoto(
+        user.company,
+        file,
+        refer
       );
+      setPhoto(Machine);
+      let areaRef = await database.createNewArea(user.company, area);
+      let equipoRef = await database.createNewMachine(
+        user.company,
+        areaRef.id,
+        refer
+      );
+      await database.addDataMachine(
+        user.company,
+        areaRef.id,
+        equipoRef.id,
+        { hmi },
+        { camara },
+        { imageURL, type, cubicle }
+      );
+      setClase("hidenLoader");
     }
   }
 
   return (
     <main className="main-machines">
-      <section className="machines-content">
-        <Card name="Nueva" image={plus} action={showModalAdd} />
-        <Card name="Eliminar" image={less} action={showModalDel} />
+      <section className="machines-controls">
+        <Card name="Nueva" image={Plus} action={showModalAdd} />
+        <Card name="Eliminar" image={Less} action={showModalDel} />
       </section>
-      <Modal classe={clase}>
+      <section className="machines-content">
+        <Card type="area">
+          {machines.map((element) => {
+            return (
+              <Card
+                name={element.name}
+                image={element.imageURL}
+                tipo={element.type}
+                cub={element.cubicle}
+                type="machine"
+              />
+            );
+          })}
+        </Card>
+      </section>
+      <span className="fault">{fault}</span>
+      <Loader class={clase} />
+      <Modal classe={dell}>
         <div className="main-modal">
           <h2>Eliminar Maquina </h2>
           <div className="modalKeypad">
-            <Button name="Eliminar" class="modalMenu" />
-            <Button name="cancelar" class="modalMenu" action={showModalDel} />
+            <Button name="Eliminar" class="button submitb" />
+            <Button
+              name="Cancelar"
+              class="button submit"
+              action={showModalDel}
+            />
           </div>
         </div>
       </Modal>
@@ -123,8 +177,16 @@ function Machines() {
           />
           <span className="fault">{fault}</span>
           <div className="modalKeypad">
-            <Button name="cancelar" class="modalMenu" action={showModalAdd} />
-            <Button name="Siguiente" class="modalMenu" action={showModalData} />
+            <Button
+              name="Cancelar"
+              class="button submitb"
+              action={showModalAdd}
+            />
+            <Button
+              name="Siguiente"
+              class="button submit"
+              action={showModalData}
+            />
           </div>
         </div>
       </Modal>
@@ -171,8 +233,8 @@ function Machines() {
             <InputForm
               type="text"
               size="20"
-              value={cubiculo}
-              action={setCubiculo}
+              value={cubicle}
+              action={setCubicle}
               readOnly={false}
               class="inputFormOrder"
             />
@@ -182,7 +244,7 @@ function Machines() {
           <div className="modalKeypad">
             <Button
               name="Atras"
-              class="modalMenu"
+              class="button submitb"
               action={() => {
                 setClasse("showModal-full");
                 setClaseData("hidenModal");
@@ -191,7 +253,7 @@ function Machines() {
             />
             <Button
               name="Siguiente"
-              class="modalMenu"
+              class="button submit"
               action={showModalSelect}
             />
           </div>
@@ -231,8 +293,8 @@ function Machines() {
               <InputForm
                 type="text"
                 size="20"
-                value={marca}
-                action={setMarca}
+                value={hmi}
+                action={setHmi}
                 readOnly={false}
                 class="inputFormOrder"
               />
@@ -271,8 +333,8 @@ function Machines() {
               <InputForm
                 type="text"
                 size="20"
-                value={marcam}
-                action={setMarcam}
+                value={camara}
+                action={setCamara}
                 readOnly={false}
                 class="inputFormOrder"
               />
@@ -283,15 +345,19 @@ function Machines() {
           <span className="fault">{fault}</span>
           <div className="modalKeypad">
             <Button
-              name="atras"
-              class="modalMenu"
+              name="Atras"
+              class="button submitb"
               action={() => {
                 setFault("");
                 setClaseData("showModal-full");
                 setClaseSelect("hidenModal");
               }}
             />
-            <Button name="Finalizar" class="modalMenu" action={createMachine} />
+            <Button
+              name="Finalizar"
+              class="button submit"
+              action={createMachine}
+            />
           </div>
         </div>
       </Modal>

@@ -35,10 +35,10 @@ const Navbar = () => {
           <section className="main-header-avatar">
             <div className="avatar-info">
               <p>
-                {user.fields.first.stringValue} {user.fields.last.stringValue}
+                {user.firstName} {user.lastName}
               </p>
-              <p>{user.fields.cargo.stringValue}</p>
-              <p>{user.fields.code.stringValue}</p>
+              <p>{user.charge}</p>
+              <p>{user.code}</p>
             </div>
             <ImageUser action={showModal} />
           </section>
@@ -47,7 +47,14 @@ const Navbar = () => {
               Mi Perfil
             </Link>
             <p>Noticias</p>
-            <p onClick={handleLogout}>Logout</p>
+            <p
+              onClick={() => {
+                showModal();
+                handleLogout();
+              }}
+            >
+              Logout
+            </p>
           </Modal>
         </header>
       )}

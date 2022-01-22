@@ -3,18 +3,20 @@ import ImageUser from "../components/ImageUser";
 import Modal from "../components/Modal";
 import Button from "../components/Button";
 import InputForm from "../components/InputForm";
+import Loader from "../components/Loader";
 import { AppContext } from "../context";
 import "./styles/profile.css";
 import Auth from "../utils/autenticacion";
 import storage from "../utils/storege";
 
 function Profile() {
-  const { user, getDataUsers, setPhotoUrl } = React.useContext(AppContext);
+  const { user, getDataUsers, User } = React.useContext(AppContext);
   const [photo, setPhoto] = useState("");
   const [file, setFile] = useState("");
   const [clase, setClase] = useState("hidenModal");
   const [menu, setMenu] = useState("hiden");
   const [items, setItems] = useState("hiden");
+  const [claseLoader, setClaseLoader] = useState("hidenLoader");
 
   const showModalAdd = () => {
     if (clase === "hidenModal") {
@@ -23,9 +25,7 @@ function Profile() {
     } else {
       setClase("hidenModal");
       setPhoto("");
-      const URLphoto = localStorage.getItem("PhotoUrl");
-      let parsePhoto = JSON.parse(URLphoto);
-      setPhotoUrl(parsePhoto);
+      User.photoUrl = user.photoUrl;
     }
   };
   function showMenu() {
@@ -42,10 +42,12 @@ function Profile() {
   }
 
   async function updatePhoto() {
+    setClaseLoader("showLoader profile");
     if (file) {
       let imageURL = await storage.uploadProfilePhoto(
+        user.company,
         file,
-        user.fields.id.stringValue
+        user.id
       );
       const response = await Auth.validUser();
       await Auth.updatePhoto(response, imageURL);
@@ -54,14 +56,13 @@ function Profile() {
       console.log("sin foto");
     }
   }
+
   async function deletePhoto() {
-    let defaultImage = await storage.deleteProfilePhoto(
-      user.fields.id.stringValue
-    );
+    setClaseLoader("showLoader profile");
+    let defaultImage = await storage.deleteProfilePhoto(user.company, user.id);
     const response = await Auth.validUser();
     await Auth.updatePhoto(response, defaultImage);
     await getDataUsers();
-    console.log("eliminado");
   }
 
   return (
@@ -83,16 +84,17 @@ function Profile() {
         <div className="card-info">
           <p className="info-item">Nombre:</p>
           <p>
-            {user.fields.first.stringValue} {user.fields.last.stringValue}
+            {user.firstName} {user.lastName}
           </p>
           <p className="info-item">Email:</p>
-          <p>{user.fields.email.stringValue}</p>
+          <p>{user.email}</p>
           <p className="info-item">Cargo:</p>
-          <p>{user.fields.cargo.stringValue}</p>
+          <p>{user.charge}</p>
           <p className="info-item">Codigo:</p>
-          <p>{user.fields.code.stringValue}</p>
+          <p>{user.code}</p>
         </div>
       </section>
+      <Loader class={claseLoader} />
       <Modal classe={clase}>
         <div className="main-modal">
           <div className="card-photo">
@@ -103,13 +105,19 @@ function Profile() {
             value={photo}
             action={setPhoto}
             File={setFile}
-            currentPhoto={setPhotoUrl}
+            currentPhoto={(img) => {
+              User.photoUrl = img;
+            }}
             readOnly={false}
             class="inputForm"
           />
           <div className="modalKeypad">
-            <Button name="Subir" class="modalMenu" action={updatePhoto} />
-            <Button name="cancelar" class="modalMenu" action={showModalAdd} />
+            <Button
+              name="cancelar"
+              class="button submitb"
+              action={showModalAdd}
+            />
+            <Button name="Subir" class="button submit" action={updatePhoto} />
           </div>
         </div>
       </Modal>

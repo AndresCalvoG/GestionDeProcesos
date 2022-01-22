@@ -25,17 +25,17 @@ function Notifier() {
   return (
     <div className="notify">
       <h1>Ultimas Ordenes Creadas</h1>
-      <ul>
+      <ol>
         {newNotify.map((element) => {
           return (
             <li key={element.id}>
-              {`${element.values.fecha.stringValue}
-              ${element.values.equipo.stringValue}  
+              {`${element.values.fecha.stringValue} -
+              ${element.values.equipo.stringValue} -  
               ${element.values.anomalia.stringValue}`}
             </li>
           );
         })}
-      </ul>
+      </ol>
     </div>
   );
 }

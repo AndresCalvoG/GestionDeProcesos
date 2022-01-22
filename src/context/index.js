@@ -1,12 +1,38 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import useLocalStorage from "../customHooks/useLocalStorage";
+
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
-import userProfile from "../images/profile.png";
 
 const AppContext = React.createContext();
 
 function AppProvider(props) {
+  const adminEmail = "elprogramador94@gmail.com";
+  const adminPass = "123456";
+  const UserProfile =
+    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/profilePhotos%2Fprofile.png?alt=media&token=b4bd3414-7c8f-4b08-bff9-9e46b113e884";
+
+  var User = {
+    photoUrl: UserProfile,
+    id: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    company: "",
+    area: "",
+    charge: "",
+    code: "",
+    privilege: "",
+    date: "",
+    phoneNumber: "",
+  };
+  var Company = {
+    date: { fullYear: "", fullHour: "" },
+    id: "",
+    businessName: "",
+    phoneNumber: "",
+  };
   //notificador
   const [newNotify, setNewNotify] = useState([
     {
@@ -21,44 +47,19 @@ function AppProvider(props) {
   const [update, setUpdate] = useState(false);
 
   //algoritmo para local storege
-  const authenticated = localStorage.getItem("valid");
-  const userActive = localStorage.getItem("user");
-  const URLphoto = localStorage.getItem("PhotoUrl");
-  let parseAuth = JSON.parse(authenticated);
-  let parseUser = JSON.parse(userActive);
-  let parsePhoto = JSON.parse(URLphoto);
-
-  if (!authenticated) {
-    localStorage.setItem("valid", JSON.stringify(false));
-    parseAuth = false;
-  } else {
-    parseAuth = JSON.parse(authenticated);
-  }
-  if (!userActive) {
-    localStorage.setItem("user", JSON.stringify({ value: false }));
-    parseUser = { value: false };
-  } else {
-    parseUser = JSON.parse(userActive);
-  }
-  if (!URLphoto) {
-    localStorage.setItem("PhotoUrl", JSON.stringify(userProfile));
-    parsePhoto = userProfile;
-  } else {
-    parsePhoto = JSON.parse(URLphoto);
-  }
+  const [auth, saveAuth] = useLocalStorage("valid", false);
+  const [user, saveUser] = useLocalStorage("user", { value: false });
+  const [company, saveCompany] = useLocalStorage("company", {});
+  const [areas, saveAreas] = useLocalStorage("areas", []);
+  User = { ...user };
   //estados compartidos de context
-  const [auth, setAuth] = useState(parseAuth);
-  const [user, setUser] = useState(parseUser);
-  const [loader, setLoader] = useState(false);
-  const [areas, setAreas] = useState([]);
-  const [equipos, setEquipos] = useState([]);
-  const [partes, setPartes] = useState([]);
+  const [companyID, setCompanyID] = useState("");
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
-  const [photoUrl, setPhotoUrl] = useState(parsePhoto);
+  const [machines, setMachines] = useState([]);
   const history = useHistory();
 
-  const getDataUsers = async () => {
+  async function getDataUsers() {
     let data = {
       value: "0",
       exists: false,
@@ -67,43 +68,45 @@ function AppProvider(props) {
     //console.log(response); // informacion de usuario de autenticacion
     if (response !== "/") {
       data = await database.getDataUser(response.uid);
+      let path = data._delegate._document.data.value.mapValue.fields;
+      User.photoUrl = response.photoURL;
+      User.id = path.id.stringValue;
+      User.firstName = capitalizeText(path.first.stringValue);
+      User.lastName = capitalizeText(path.last.stringValue);
+      User.email = path.email.stringValue;
+      User.company = path.company.stringValue;
+      User.area = capitalizeText(path.area.stringValue);
+      User.charge = capitalizeText(path.charge.stringValue);
+      User.code = path.code.stringValue;
+      User.privilege = path.privilege.stringValue;
+      User.date = path.date.stringValue;
+      User.phoneNumber = response.phoneNumber;
+
+      let dataCompany = await database.getCompany(User.company);
+      let path2 = dataCompany._delegate._document.data.value.mapValue.fields;
+      Company.date.fullYear = path2.date.mapValue.fields.fullYear.stringValue;
+      Company.date.fullHour = path2.date.mapValue.fields.fullHour.stringValue;
+      Company.id = path2.id.stringValue;
+      Company.businessName = capitalizeText(path2.businessName.stringValue);
+      Company.phoneNumber = path2.phoneNumber.stringValue;
+
+      await updateAreasCompany(Company.id);
     }
     if (data.exists) {
-      handleValid(
-        true,
-        data._delegate._document.data.value.mapValue,
-        true,
-        response.photoURL
-      );
-      setLoader(false);
+      saveAuth(true);
+      saveUser(User);
+      saveCompany(Company);
       history.replace("/home");
-      //console.log("reder true en app");
     } else {
-      handleValid(false, { value: false }, false, userProfile);
-      setLoader(false);
-      //console.log("render false en app");
+      saveAuth(false);
+      saveUser({ value: false });
+      saveCompany({});
+      saveAreas([]);
     }
-  };
-
-  const handleValid = (token, user, mode, photo) => {
-    localStorage.setItem("valid", JSON.stringify(token));
-    localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("PhotoUrl", JSON.stringify(photo));
-    if (mode) {
-      setUser(user);
-      setAuth(token);
-      setPhotoUrl(photo);
-    } else {
-      setAuth(token);
-      setUser(user);
-      setPhotoUrl(photo);
-    }
-  };
+  }
 
   const handleLogout = async () => {
     const route = await Auth.logoutUsers();
-    setLoader(true);
-    history.push("/Loader");
     getDataUsers();
     history.push(route);
   };
@@ -118,86 +121,97 @@ function AppProvider(props) {
     var sec = date.getSeconds();
 
     var fullHour = `${hour}:${min}:${sec}`;
-    var fullDate = `${dd}/${mm}/${yyyy}`;
-    setFecha(fullDate);
+    var fullYear = `${yyyy}/${mm}/${dd}`;
+    setFecha(fullYear);
     setHora(fullHour);
+    return { fullYear, fullHour };
   }
 
-  async function getFireStoreData(area, equipo) {
-    let docPlantaRef = "fCD5Pe1enki9eJkwuRQH";
-    let Data = await database.getData(docPlantaRef);
-    const path = Data._delegate._document.data.value.mapValue.fields;
-    let arrayAreas = path.areas.arrayValue.values;
-    let arrayEquipos = [];
-    let arrayPartes = [];
+  function capitalizeText(text) {
+    let capitalText = text
+      .toLowerCase()
+      .trim()
+      .split(" ")
+      .map((v) => v[0].toUpperCase() + v.substring(1))
+      .join(" ");
+    return capitalText;
+  }
 
-    if (area && area === "envase") {
-      arrayEquipos = path.envase.arrayValue.values;
-    } else if (area === "empaque") {
-      arrayEquipos = path.empaque.arrayValue.values;
-    } else if (area === "planta 4") {
-      arrayEquipos = path.planta4.arrayValue.values;
-    } else if (area === "planta 2") {
-      arrayEquipos = path.planta2.arrayValue.values;
-    } else if (area === "recubrimiento") {
-      arrayEquipos = path.recubrimiento.arrayValue.values;
-    } else if (area === "capsulas blandas") {
-      arrayEquipos = path.capsulasBlandas.arrayValue.values;
-    } else if (area === "tableteria") {
-      arrayEquipos = path.tableteria.arrayValue.values;
-    } else if (area === "mezclas secas") {
-      arrayEquipos = path.mezclasSecas.arrayValue.values;
-    } else if (area === "granulacion") {
-      arrayEquipos = path.granulacion.arrayValue.values;
-    } else if (area === "esteriles") {
-      arrayEquipos = path.esteriles.arrayValue.values;
-    }
-
-    if (area && equipo === "blister 3") {
-      arrayPartes = path.blister3.arrayValue.values;
+  async function updateAreasCompany(id) {
+    let areasRef = await database.getDataAreas(id);
+    if (areasRef.empty) {
+      saveAreas([{ id: "", name: "", empty: areasRef.empty }]);
     } else {
-      arrayPartes = [];
+      let areasArray = areasRef.docs.map((element) => {
+        let item = {
+          id: element._delegate._document.data.value.mapValue.fields.id
+            .stringValue,
+          name: element._delegate._document.data.value.mapValue.fields.name
+            .stringValue,
+        };
+        return item;
+      });
+      saveAreas(areasArray);
     }
-
-    let equipos = arrayEquipos.map((element) => {
-      return element.stringValue;
-    });
-    let areas = arrayAreas.map((element) => {
-      return element.stringValue;
-    });
-    let partes = arrayPartes.map((element) => {
-      return element.stringValue;
-    });
-    //console.log(path);
-    setAreas(areas);
-    setEquipos(equipos);
-    setPartes(partes);
+  }
+  async function updateMachinesArea(idArea) {
+    if (idArea === "") {
+      setMachines([]);
+    } else {
+      let machinesRef = await database.getDataMachines(company.id, idArea);
+      if (machinesRef.empty) {
+        setMachines([{ id: "", name: "", empty: machinesRef.empty }]);
+      } else {
+        let arrayMachines = machinesRef.docs.map((element) => {
+          let item = {
+            id: element._delegate._document.data.value.mapValue.fields.id
+              .stringValue,
+            name: element._delegate._document.data.value.mapValue.fields.name
+              .stringValue,
+            cubicle:
+              element._delegate._document.data.value.mapValue.fields.cubicle
+                .stringValue,
+            type: element._delegate._document.data.value.mapValue.fields.type
+              .stringValue,
+            imageURL:
+              element._delegate._document.data.value.mapValue.fields.imageURL
+                .stringValue,
+          };
+          console.log(item);
+          return item;
+        });
+        setMachines(arrayMachines);
+      }
+    }
   }
 
   return (
     <AppContext.Provider
       value={{
+        adminEmail,
+        adminPass,
+        company,
+        saveCompany,
+        companyID,
+        setCompanyID,
         user,
+        saveUser,
+        User,
         auth,
-        loader,
-        areas,
-        equipos,
-        partes,
         fecha,
         hora,
         newNotify,
-        update,
-        photoUrl,
         setNewNotify,
-        setUser,
-        setAuth,
-        setLoader,
+        update,
         setUpdate,
-        setPhotoUrl,
+        areas,
+        saveAreas,
+        machines,
         handleLogout,
         getDataUsers,
         getCurrentDate,
-        getFireStoreData,
+        updateAreasCompany,
+        updateMachinesArea,
       }}
     >
       {props.children}
