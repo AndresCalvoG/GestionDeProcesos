@@ -50,12 +50,13 @@ function AppProvider(props) {
   const [auth, saveAuth] = useLocalStorage("valid", false);
   const [user, saveUser] = useLocalStorage("user", { value: false });
   const [company, saveCompany] = useLocalStorage("company", {});
+  const [areas, saveAreas] = useLocalStorage("areas", []);
   User = { ...user };
   //estados compartidos de context
   const [companyID, setCompanyID] = useState("");
-  const [areas, setAreas] = useState([]);
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
+  const [machines, setMachines] = useState([]);
   const history = useHistory();
 
   async function getDataUsers() {
@@ -88,6 +89,8 @@ function AppProvider(props) {
       Company.id = path2.id.stringValue;
       Company.businessName = capitalizeText(path2.businessName.stringValue);
       Company.phoneNumber = path2.phoneNumber.stringValue;
+
+      await updateAreasCompany(Company.id);
     }
     if (data.exists) {
       saveAuth(true);
@@ -98,6 +101,7 @@ function AppProvider(props) {
       saveAuth(false);
       saveUser({ value: false });
       saveCompany({});
+      saveAreas([]);
     }
   }
 
@@ -133,9 +137,52 @@ function AppProvider(props) {
     return capitalText;
   }
 
-  async function updateDataCompany(id) {
-    let areas = await database.getDataAreas(id);
-    return areas;
+  async function updateAreasCompany(id) {
+    let areasRef = await database.getDataAreas(id);
+    if (areasRef.empty) {
+      saveAreas([{ id: "", name: "", empty: areasRef.empty }]);
+    } else {
+      let areasArray = areasRef.docs.map((element) => {
+        let item = {
+          id: element._delegate._document.data.value.mapValue.fields.id
+            .stringValue,
+          name: element._delegate._document.data.value.mapValue.fields.name
+            .stringValue,
+        };
+        return item;
+      });
+      saveAreas(areasArray);
+    }
+  }
+  async function updateMachinesArea(idArea) {
+    if (idArea === "") {
+      setMachines([]);
+    } else {
+      let machinesRef = await database.getDataMachines(company.id, idArea);
+      if (machinesRef.empty) {
+        setMachines([{ id: "", name: "", empty: machinesRef.empty }]);
+      } else {
+        let arrayMachines = machinesRef.docs.map((element) => {
+          let item = {
+            id: element._delegate._document.data.value.mapValue.fields.id
+              .stringValue,
+            name: element._delegate._document.data.value.mapValue.fields.name
+              .stringValue,
+            cubicle:
+              element._delegate._document.data.value.mapValue.fields.cubicle
+                .stringValue,
+            type: element._delegate._document.data.value.mapValue.fields.type
+              .stringValue,
+            imageURL:
+              element._delegate._document.data.value.mapValue.fields.imageURL
+                .stringValue,
+          };
+          console.log(item);
+          return item;
+        });
+        setMachines(arrayMachines);
+      }
+    }
   }
 
   return (
@@ -158,11 +205,13 @@ function AppProvider(props) {
         update,
         setUpdate,
         areas,
-        setAreas,
+        saveAreas,
+        machines,
         handleLogout,
         getDataUsers,
         getCurrentDate,
-        updateDataCompany,
+        updateAreasCompany,
+        updateMachinesArea,
       }}
     >
       {props.children}

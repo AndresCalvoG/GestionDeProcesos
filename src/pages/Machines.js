@@ -14,8 +14,7 @@ import InputForm from "../components/InputForm";
 import Loader from "../components/Loader";
 
 function Machines() {
-  const { user, updateDataCompany, areas, setAreas } =
-    React.useContext(AppContext);
+  const { user, updateAreasCompany, machines } = React.useContext(AppContext);
   const [clase, setClase] = useState("hidenLoader");
   const [dell, setDell] = useState("hidenModal");
   const [classe, setClasse] = useState("hidenModal");
@@ -36,8 +35,7 @@ function Machines() {
 
   useEffect(() => {
     (async function () {
-      let data = await updateDataCompany(user.company);
-      setAreas(data.docs);
+      await updateAreasCompany(user.company);
     })();
   }, []);
 
@@ -134,8 +132,19 @@ function Machines() {
         <Card name="Eliminar" image={Less} action={showModalDel} />
       </section>
       <section className="machines-content">
-        <Card name="Nueva" image={Plus} action={showModalAdd} />
-        <Card name="Eliminar" image={Less} action={showModalDel} />
+        <Card type="area">
+          {machines.map((element) => {
+            return (
+              <Card
+                name={element.name}
+                image={element.imageURL}
+                tipo={element.type}
+                cub={element.cubicle}
+                type="machine"
+              />
+            );
+          })}
+        </Card>
       </section>
       <span className="fault">{fault}</span>
       <Loader class={clase} />

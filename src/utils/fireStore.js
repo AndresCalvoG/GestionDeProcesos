@@ -101,6 +101,26 @@ class Database {
       };
     }
   }
+  //Metodo para obtener datos de maquinas
+  async getDataMachines(idcompany, idArea) {
+    var db = firebase.firestore();
+    try {
+      var docData = await db
+        .collection("Companies")
+        .doc(idcompany)
+        .collection("Areas")
+        .doc(idArea)
+        .collection("Machines")
+        .get();
+      return docData;
+    } catch (error) {
+      console.log(error);
+      return {
+        value: "0",
+        exists: false,
+      };
+    }
+  }
   //Metodo para enviar datos obtenidos a firestore database
   async createNewOrder(props) {
     var db = firebase.firestore();

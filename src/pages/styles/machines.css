@@ -14,9 +14,7 @@
 }
 .machines-content {
   width: 100vw;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-rows: 150px;
+  height: 53rem;
 }
 .modal-image {
   width: 300px;
