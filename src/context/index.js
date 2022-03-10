@@ -177,7 +177,6 @@ function AppProvider(props) {
               element._delegate._document.data.value.mapValue.fields.imageURL
                 .stringValue,
           };
-          console.log(item);
           return item;
         });
         setMachines(arrayMachines);

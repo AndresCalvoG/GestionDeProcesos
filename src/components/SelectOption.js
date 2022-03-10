@@ -12,6 +12,9 @@ const SelectOption = (props) => {
       }}
       value={props.value}
     >
+      <option selected disabled>
+        {}
+      </option>
       {[
         { values: { anomalia: { stringValue: "" } }, id: "0" },
         ...props.options,
