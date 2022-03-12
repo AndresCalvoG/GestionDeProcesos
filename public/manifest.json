@@ -1,0 +1,18 @@
+{
+  "short_name": "Gestioner",
+  "name": "Gestioner",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#3d7fbc",
+  "background_color": "#ffffff",
+  "related_applications": [],
+  "prefer_related_applications": false
+}
