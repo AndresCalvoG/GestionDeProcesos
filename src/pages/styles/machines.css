@@ -28,3 +28,11 @@
   display: flex;
   justify-content: space-evenly;
 }
+.modal-label {
+  width: 80%;
+  height: 5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1.6rem;
+}

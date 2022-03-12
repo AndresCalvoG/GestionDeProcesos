@@ -12,9 +12,17 @@ import Modal from "../components/Modal";
 import Button from "../components/Button";
 import InputForm from "../components/InputForm";
 import Loader from "../components/Loader";
+import SelectOption from "../components/SelectOption";
 
 function Machines() {
-  const { user, updateAreasCompany, machines } = React.useContext(AppContext);
+  const {
+    company,
+    user,
+    updateAreasCompany,
+    machines,
+    updateMachinesArea,
+    areas,
+  } = React.useContext(AppContext);
   const [clase, setClase] = useState("hidenLoader");
   const [dell, setDell] = useState("hidenModal");
   const [classe, setClasse] = useState("hidenModal");
@@ -32,6 +40,8 @@ function Machines() {
   const [hmi, setHmi] = useState("");
   const [camera, setCamera] = useState([false, false]);
   const [camara, setCamara] = useState("");
+  const [machineToDelete, setMachineToDelete] = useState("");
+  const [areaToDelete, setAreaToDelete] = useState("");
 
   useEffect(() => {
     (async function () {
@@ -124,6 +134,11 @@ function Machines() {
     }
   }
 
+  async function deleteMachine() {
+    database.deleteMachine(company.id, areaToDelete, machineToDelete);
+    console.log("eliminado");
+  }
+
   return (
     <main className="main-machines">
       <section className="machines-controls">
@@ -150,8 +165,35 @@ function Machines() {
       <Modal classe={dell}>
         <div className="main-modal">
           <h2>Eliminar Maquina </h2>
+          <label className="modal-label">
+            <h1>Area:</h1>
+            <SelectOption
+              options={areas}
+              value={area}
+              action={setArea}
+              actionMachines={(e) => {
+                updateMachinesArea(e);
+                setAreaToDelete(e);
+              }}
+              type="area"
+            />
+          </label>
+          <label className="modal-label">
+            <h1>Maquina:</h1>
+            <SelectOption
+              options={machines}
+              value={refer}
+              action={setRefer}
+              actionMachines={setMachineToDelete}
+              type="area"
+            />
+          </label>
           <div className="modalKeypad">
-            <Button name="Eliminar" class="button submitb" />
+            <Button
+              name="Eliminar"
+              class="button submitb"
+              action={deleteMachine}
+            />
             <Button
               name="Cancelar"
               class="button submit"

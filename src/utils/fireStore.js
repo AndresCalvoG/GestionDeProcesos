@@ -331,6 +331,30 @@ class Database {
       return error.message;
     }
   }
+
+  async deleteMachine(companyId, AreaId, MachineId) {
+    var db = firebase.firestore();
+    try {
+      db.collection("Companies")
+        .doc(companyId)
+        .collection("Areas")
+        .doc(AreaId)
+        .collection("Machines")
+        .doc(MachineId)
+        .delete();
+
+      db.collection("Companies")
+        .doc(companyId)
+        .collection("Areas")
+        .doc(AreaId)
+        .collection("Machines")
+        .doc(MachineId)
+        .collection("Components")
+        .delete();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 const database = new Database();
