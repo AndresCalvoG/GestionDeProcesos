@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../context";
 import InputForm from "../components/InputForm";
 import SelectOption from "../components/SelectOption";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button.js";
 import Loader from "../components/Loader";
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";

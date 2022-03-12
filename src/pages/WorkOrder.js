@@ -6,7 +6,7 @@ import database from "../utils/fireStore";
 import "./styles/workOrder.css";
 import InputForm from "../components/InputForm";
 import SelectOption from "../components/SelectOption";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button.js";
 import Reloj from "../components/Reloj";
 
 function WorkOrder() {

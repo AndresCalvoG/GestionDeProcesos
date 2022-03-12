@@ -9,7 +9,7 @@ import Card from "../components/Card";
 import Notifier from "../components/Notifier";
 import Modal from "../components/Modal";
 import SelectOption from "../components/SelectOption";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button.js";
 
 function Documents() {
   const [orderDeleted, setOrderDeleted] = useState("");

@@ -7,7 +7,7 @@ import { AppContext } from "../context";
 import userLogo from "../images/user.svg";
 
 import InputForm from "../components/InputForm";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button.js";
 import Loader from "../components/Loader";
 
 const Login = () => {

@@ -9,7 +9,7 @@ import Less from "../images/utils/less.png";
 import Machine from "../images/home/maquina.png";
 import Card from "../components/Card";
 import Modal from "../components/Modal";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button.js";
 import InputForm from "../components/InputForm";
 import Loader from "../components/Loader";
 import SelectOption from "../components/SelectOption";

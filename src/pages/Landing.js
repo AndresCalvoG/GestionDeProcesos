@@ -7,7 +7,7 @@ import "./styles/landing.css";
 
 import information from "../images/landing/information.jpg";
 import companyImg from "../images/landing/company.png";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button.js";
 import Modal from "../components/Modal";
 import InputForm from "../components/InputForm";
 import Loader from "../components/Loader";

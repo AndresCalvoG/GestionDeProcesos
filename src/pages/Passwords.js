@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AppContext } from "../context";
 import Card from "../components/Card";
 import Modal from "../components/Modal";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button.js";
 import SelectOption from "../components/SelectOption";
 import InputForm from "../components/InputForm";
 import Viwer from "../components/Viwer";
