@@ -17,32 +17,43 @@ function Landing() {
   const [next, setNext] = useState(false);
   const [claseLoader, setClaseLoader] = useState("hidenLoader");
   const [businessName, setBusinessName] = useState("");
+  const [fault, setFault] = useState("");
   const { companyID, setCompanyID, adminEmail, adminPass, getCurrentDate } =
     React.useContext(AppContext);
 
-  const showModal = () => {
+  function showModal() {
     if (clase === "hidenModal") {
       setClase("showModal-full");
     } else {
       setClase("hidenModal");
       setCompanyID("");
+      setBusinessName("");
+      setFault("");
     }
-  };
+  }
 
   async function createCompany() {
     setClaseLoader("showLoader landing");
     await Auth.authEmailPass(adminEmail, adminPass);
-    let date = getCurrentDate();
-    let companyRef = await database.createCompany({
-      businessName,
-      date,
-      phone: "",
-    });
-    setCompanyID(companyRef);
-    Auth.logoutUsers();
-    setClase("hidenModal");
-    setClaseLoader("hidenLoader");
-    setNext(true);
+    const validate = await database.validateCompanyName(businessName);
+    if (validate) {
+      setFault("Nombre ya existe, ingresa otro");
+      setBusinessName("");
+      Auth.logoutUsers();
+      setClaseLoader("hidenLoader");
+    } else {
+      let date = getCurrentDate();
+      let companyRef = await database.createCompany({
+        businessName,
+        date,
+        phone: "",
+      });
+      setCompanyID(companyRef);
+      Auth.logoutUsers();
+      setClase("hidenModal");
+      setClaseLoader("hidenLoader");
+      setNext(true);
+    }
   }
 
   return (
@@ -84,8 +95,9 @@ function Landing() {
             <figure>
               <img src={companyImg} alt="imagen de un edificio o empresa" />
             </figure>
-            <h1 className="card-code">{companyID}</h1>
             <h1 className="card-title">Tu Codigo Empresarial</h1>
+            <h1 className="card-title">{businessName}</h1>
+            <h1 className="card-code">{companyID}</h1>
             <Link to="/Register">
               <Button name="Continuar a Registro" class="button--long submit" />
             </Link>
@@ -115,6 +127,7 @@ function Landing() {
                 action={createCompany}
               />
             </div>
+            <span className="fault">{fault}</span>
           </div>
         </Modal>
         <Loader class={claseLoader} />

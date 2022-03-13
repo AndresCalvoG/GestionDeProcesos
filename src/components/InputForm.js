@@ -34,6 +34,20 @@ const InputForm = (props) => {
       className={props.class}
       readOnly={props.readOnly}
     />
+  ) : props.type === "password" ? (
+    <input
+      type={props.type}
+      placeholder={props.label}
+      autoComplete="on"
+      value={props.value}
+      size={props.size}
+      onChange={(e) => {
+        props.action(e.target.value);
+        console.log(e.target.value);
+      }}
+      className={props.class}
+      readOnly={props.readOnly}
+    />
   ) : (
     <input
       type={props.type}
@@ -41,7 +55,7 @@ const InputForm = (props) => {
       autoComplete="on"
       value={props.value}
       size={props.size}
-      onChange={(e) => props.action(e.target.value)}
+      onChange={(e) => props.action(e.target.value.toUpperCase())}
       className={props.class}
       readOnly={props.readOnly}
     />

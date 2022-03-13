@@ -39,9 +39,10 @@
 .main-modal {
   width: 90vw;
   height: 40rem;
+  padding-top: 3rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background-color: var(--white);
 }
@@ -49,5 +50,11 @@
   margin-bottom: 2rem;
 }
 .modal-title {
-  margin-bottom: 20rem;
+  margin-bottom: 15rem;
+}
+.modalKeypad {
+  width: 100vw;
+  display: flex;
+  margin-bottom: 4rem;
+  justify-content: space-evenly;
 }

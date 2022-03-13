@@ -23,6 +23,21 @@ class Database {
       console.log(error.message);
     }
   }
+  //Method to verify company name
+  async validateCompanyName(name) {
+    var db = firebase.firestore();
+    try {
+      var docRef = await db.collection("Companies").get();
+      let companies = docRef.docs.map((element) => {
+        return element._delegate._document.data.value.mapValue.fields
+          .businessName.stringValue;
+      });
+      return companies.includes(name);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
   // Metodo para verificar compañia
   async companyExist(id) {
     var db = firebase.firestore();
@@ -53,22 +68,16 @@ class Database {
       return error;
     }
   }
+
   //Metodo para enviar datos obtenidos a firestore database
   async crearUsersDb(props) {
     var db = firebase.firestore();
     try {
-      await db
-        .collection("Companies")
-        .doc(props.company)
-        .collection("Users")
-        .doc(props.id)
-        .set(props);
       await db.collection("Users").doc(props.id).set(props);
     } catch (error) {
       console.log(error.message);
     }
   }
-
   // Metodo para obtener datos de firestore
   async getDataUser(props) {
     var db = firebase.firestore();
