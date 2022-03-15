@@ -94,7 +94,6 @@ function Profile() {
           <p>{user.code}</p>
         </div>
       </section>
-      <Loader class={claseLoader} />
       <Modal classe={clase}>
         <div className="main-modal">
           <div className="card-photo">
@@ -121,6 +120,7 @@ function Profile() {
           </div>
         </div>
       </Modal>
+      <Loader class={claseLoader} />
     </main>
   );
 }

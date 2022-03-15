@@ -55,6 +55,6 @@
 .modalKeypad {
   width: 100vw;
   display: flex;
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
   justify-content: space-evenly;
 }

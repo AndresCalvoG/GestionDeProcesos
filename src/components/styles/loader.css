@@ -14,16 +14,16 @@
   background-color: var(--blanco);
 }
 .login {
-  margin-top: 15rem;
+  margin-top: 35rem;
 }
 .register {
-  margin-top: -5rem;
+  margin-top: 13rem;
 }
 .profile {
-  margin: 15rem auto;
+  margin: 20rem 5rem;
 }
 .landing {
-  margin: 15rem auto;
+  margin-top: 15rem;
 }
 .machine {
   margin: 15rem auto;
