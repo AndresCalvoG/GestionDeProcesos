@@ -17,7 +17,7 @@ function Landing() {
   const [next, setNext] = useState(false);
   const [claseLoader, setClaseLoader] = useState("hidenLoader");
   const [businessName, setBusinessName] = useState("");
-  const [fault, setFault] = useState("");
+  const [fault, setFault] = useState("prueba de fault");
   const { companyID, setCompanyID, adminEmail, adminPass, getCurrentDate } =
     React.useContext(AppContext);
 
@@ -107,15 +107,17 @@ function Landing() {
         <Modal classe={clase}>
           <div className="main-modal">
             <h3 className="modal-title">¿Como se llama tu Empresa? </h3>
-            <InputForm
-              type="text"
-              size="28"
-              value={businessName}
-              action={setBusinessName}
-              readOnly={false}
-              class="inputFormOrder"
-            />
-            <div className="modalKeypad">
+            <div className="modal-input">
+              <InputForm
+                type="text"
+                size="28"
+                value={businessName}
+                action={setBusinessName}
+                readOnly={false}
+                class="inputFormOrder"
+              />
+            </div>
+            <div className="modal-Keypad">
               <Button
                 name="Cancelar"
                 class="button submitb"
@@ -127,7 +129,9 @@ function Landing() {
                 action={createCompany}
               />
             </div>
-            <span className="fault">{fault}</span>
+            <div className="modal-fault">
+              <span className="fault">{fault}</span>
+            </div>
           </div>
         </Modal>
         <Loader class={claseLoader} />
