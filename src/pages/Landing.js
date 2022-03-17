@@ -17,7 +17,7 @@ function Landing() {
   const [next, setNext] = useState(false);
   const [claseLoader, setClaseLoader] = useState("hidenLoader");
   const [businessName, setBusinessName] = useState("");
-  const [fault, setFault] = useState("prueba de fault");
+  const [fault, setFault] = useState("");
   const { companyID, setCompanyID, adminEmail, adminPass, getCurrentDate } =
     React.useContext(AppContext);
 

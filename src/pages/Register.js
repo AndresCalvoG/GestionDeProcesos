@@ -182,11 +182,13 @@ const Register = () => {
                 />
               </label>
               <span className="fault">{fault}</span>
-              <Button
-                name="Registrarme"
-                class="button submit"
-                action={handleRegister}
-              />
+              <div className="form-keypad">
+                <Button
+                  name="Registrarme"
+                  class="button submit"
+                  action={handleRegister}
+                />
+              </div>
             </form>
           </section>
           <Loader class={clase} />
