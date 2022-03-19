@@ -43,8 +43,8 @@ const Login = () => {
         setFault(response);
         setClase("hidenLoader");
       } else {
-        setClase("hidenLoader");
         await getDataUsers();
+        setClase("hidenLoader");
       }
     }
   };

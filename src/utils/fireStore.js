@@ -3,7 +3,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 
 class Database {
-  //Metodo crear una compañia en firestore database
+  //Methods to create and modify companies
   async createCompany(props) {
     var db = firebase.firestore();
     try {
@@ -23,7 +23,6 @@ class Database {
       console.log(error.message);
     }
   }
-  //Method to verify company name
   async validateCompanyName(name) {
     var db = firebase.firestore();
     try {
@@ -38,7 +37,6 @@ class Database {
       return error;
     }
   }
-  // Metodo para verificar compañia
   async companyExist(id) {
     var db = firebase.firestore();
     try {
@@ -46,18 +44,12 @@ class Database {
       let companies = docRef.docs.map((element) => {
         return element.id;
       });
-      for (let i of companies) {
-        if (i === id) {
-          return true;
-        }
-      }
-      return false;
+      return companies.includes(id);
     } catch (error) {
       console.log(error);
       return error;
     }
   }
-  //metodo para obtener nombre de compañia
   async getCompany(id) {
     var db = firebase.firestore();
     try {
@@ -69,7 +61,7 @@ class Database {
     }
   }
 
-  //Metodo para enviar datos obtenidos a firestore database
+  // Methods to create and modify users
   async crearUsersDb(props) {
     var db = firebase.firestore();
     try {
@@ -78,7 +70,6 @@ class Database {
       console.log(error.message);
     }
   }
-  // Metodo para obtener datos de firestore
   async getDataUser(props) {
     var db = firebase.firestore();
     try {
@@ -92,130 +83,8 @@ class Database {
       };
     }
   }
-  //Metodo para obtener data de base de datos
-  async getDataAreas(props) {
-    var db = firebase.firestore();
-    try {
-      var docData = await db
-        .collection("Companies")
-        .doc(props)
-        .collection("Areas")
-        .get();
-      return docData;
-    } catch (error) {
-      console.log(error);
-      return {
-        value: "0",
-        exists: false,
-      };
-    }
-  }
-  //Metodo para obtener datos de maquinas
-  async getDataMachines(idcompany, idArea) {
-    var db = firebase.firestore();
-    try {
-      var docData = await db
-        .collection("Companies")
-        .doc(idcompany)
-        .collection("Areas")
-        .doc(idArea)
-        .collection("Machines")
-        .get();
-      return docData;
-    } catch (error) {
-      console.log(error);
-      return {
-        value: "0",
-        exists: false,
-      };
-    }
-  }
-  //Metodo para enviar datos obtenidos a firestore database
-  async createNewOrder(props) {
-    var db = firebase.firestore();
-    try {
-      await db
-        .collection("users")
-        .doc(props.id)
-        .collection("orders")
-        .add(props);
-    } catch (error) {
-      return error.message;
-    }
-  }
-  //Metodo para obtener ordenes
-  async getOrder(props) {
-    var db = firebase.firestore();
-    try {
-      var docData = await db
-        .collection("users")
-        .doc(props)
-        .collection("orders")
-        .get();
-      return docData;
-    } catch (error) {
-      console.log(error);
-      return {
-        value: "0",
-        exists: false,
-      };
-    }
-  }
-  //Metodo para borrar ordenes
-  async deleteOrder(props) {
-    var db = firebase.firestore();
-    try {
-      db.collection("users")
-        .doc(props.userID)
-        .collection("orders")
-        .doc(props.orderID)
-        .delete();
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
-  //metodo para crear nuevas contraseñas
-  async createNewPassword(area, equipo, parte, user, props) {
-    var db = firebase.firestore();
-    try {
-      await db
-        .collection("areas")
-        .doc(area)
-        .collection(equipo)
-        .doc(parte)
-        .collection("usuarios")
-        .doc(user)
-        .set(props);
-      console.log("creado");
-    } catch (error) {
-      console.log(error);
-      return error.message;
-    }
-  }
-
-  //metodo para traer contraseñas
-  async getPasswords(area, machine, parte) {
-    var db = firebase.firestore();
-    try {
-      var docData = await db
-        .collection("areas")
-        .doc(area)
-        .collection(machine)
-        .doc(parte)
-        .collection("usuarios")
-        .get();
-      return docData;
-    } catch (error) {
-      console.log(error);
-      return {
-        value: "0",
-        exists: false,
-      };
-    }
-  }
-
-  //metodo para crear nuevas area
+  //Methods to create and modify areas
   async createNewArea(company, area) {
     var db = firebase.firestore();
     try {
@@ -241,7 +110,138 @@ class Database {
       return error.message;
     }
   }
+  async getDataAreas(companyId) {
+    var db = firebase.firestore();
+    try {
+      var docData = await db
+        .collection("Companies")
+        .doc(companyId)
+        .collection("Areas")
+        .get();
+      return docData;
+    } catch (error) {
+      console.log(error);
+      return {
+        value: "0",
+        exists: false,
+      };
+    }
+  }
+  async validateAreaName(companyId, name) {
+    var db = firebase.firestore();
+    try {
+      var docRef = await db
+        .collection("Companies")
+        .doc(companyId)
+        .collection("Areas")
+        .get();
+      let Areas = docRef.docs.map((element) => {
+        let item = {
+          name: element._delegate._document.data.value.mapValue.fields.name
+            .stringValue,
+          id: element._delegate._document.data.value.mapValue.fields.id
+            .stringValue,
+        };
+        return item;
+      });
+      let area = Areas.find((element) => {
+        if (element.name === name) {
+          return element;
+        }
+      });
+      if (area) {
+        return area;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
 
+  //Methods to create and modify Orders
+  async createNewOrder(props) {
+    var db = firebase.firestore();
+    try {
+      await db
+        .collection("users")
+        .doc(props.id)
+        .collection("orders")
+        .add(props);
+    } catch (error) {
+      return error.message;
+    }
+  }
+  async getOrder(props) {
+    var db = firebase.firestore();
+    try {
+      var docData = await db
+        .collection("users")
+        .doc(props)
+        .collection("orders")
+        .get();
+      return docData;
+    } catch (error) {
+      console.log(error);
+      return {
+        value: "0",
+        exists: false,
+      };
+    }
+  }
+  async deleteOrder(props) {
+    var db = firebase.firestore();
+    try {
+      db.collection("users")
+        .doc(props.userID)
+        .collection("orders")
+        .doc(props.orderID)
+        .delete();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  //Methods to create and modify passwods
+  async createNewPassword(area, equipo, parte, user, props) {
+    var db = firebase.firestore();
+    try {
+      await db
+        .collection("areas")
+        .doc(area)
+        .collection(equipo)
+        .doc(parte)
+        .collection("usuarios")
+        .doc(user)
+        .set(props);
+      console.log("creado");
+    } catch (error) {
+      console.log(error);
+      return error.message;
+    }
+  }
+  async getPasswords(area, machine, parte) {
+    var db = firebase.firestore();
+    try {
+      var docData = await db
+        .collection("areas")
+        .doc(area)
+        .collection(machine)
+        .doc(parte)
+        .collection("usuarios")
+        .get();
+      return docData;
+    } catch (error) {
+      console.log(error);
+      return {
+        value: "0",
+        exists: false,
+      };
+    }
+  }
+
+  // methods to create and modify machines
   async createNewMachine(company, areaID, machine) {
     var db = firebase.firestore();
     try {
@@ -271,7 +271,25 @@ class Database {
       return error.message;
     }
   }
-
+  async getDataMachines(idcompany, idArea) {
+    var db = firebase.firestore();
+    try {
+      var docData = await db
+        .collection("Companies")
+        .doc(idcompany)
+        .collection("Areas")
+        .doc(idArea)
+        .collection("Machines")
+        .get();
+      return docData;
+    } catch (error) {
+      console.log(error);
+      return {
+        value: "0",
+        exists: false,
+      };
+    }
+  }
   async addDataMachine(company, area, equipo, hmi, camara, data) {
     var db = firebase.firestore();
     try {
@@ -340,28 +358,76 @@ class Database {
       return error.message;
     }
   }
-
   async deleteMachine(companyId, AreaId, MachineId) {
     var db = firebase.firestore();
     try {
-      db.collection("Companies")
-        .doc(companyId)
-        .collection("Areas")
-        .doc(AreaId)
-        .collection("Machines")
-        .doc(MachineId)
-        .delete();
-
-      db.collection("Companies")
+      let components = await db
+        .collection("Companies")
         .doc(companyId)
         .collection("Areas")
         .doc(AreaId)
         .collection("Machines")
         .doc(MachineId)
         .collection("Components")
+        .get();
+      components.docs.map(async (element) => {
+        let id =
+          element._delegate._document.data.value.mapValue.fields.id.stringValue;
+        await db
+          .collection("Companies")
+          .doc(companyId)
+          .collection("Areas")
+          .doc(AreaId)
+          .collection("Machines")
+          .doc(MachineId)
+          .collection("Components")
+          .doc(id)
+          .delete();
+      });
+      await db
+        .collection("Companies")
+        .doc(companyId)
+        .collection("Areas")
+        .doc(AreaId)
+        .collection("Machines")
+        .doc(MachineId)
         .delete();
     } catch (error) {
       console.log(error);
+    }
+  }
+  async validateMachineName(companyId, areaId, name) {
+    var db = firebase.firestore();
+    try {
+      var docRef = await db
+        .collection("Companies")
+        .doc(companyId)
+        .collection("Areas")
+        .doc(areaId)
+        .collection("Machines")
+        .get();
+      let machines = docRef.docs.map((element) => {
+        let item = {
+          name: element._delegate._document.data.value.mapValue.fields.name
+            .stringValue,
+          id: element._delegate._document.data.value.mapValue.fields.id
+            .stringValue,
+        };
+        return item;
+      });
+      let machine = machines.find((element) => {
+        if (element.name === name) {
+          return element;
+        }
+      });
+      if (machine) {
+        return machine;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+      return error;
     }
   }
 }

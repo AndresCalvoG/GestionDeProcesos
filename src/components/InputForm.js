@@ -34,7 +34,7 @@ const InputForm = (props) => {
       className={props.class}
       readOnly={props.readOnly}
     />
-  ) : props.type === "password" ? (
+  ) : props.type === "password" || props.type === "email" ? (
     <input
       type={props.type}
       placeholder={props.label}
@@ -43,7 +43,6 @@ const InputForm = (props) => {
       size={props.size}
       onChange={(e) => {
         props.action(e.target.value);
-        console.log(e.target.value);
       }}
       className={props.class}
       readOnly={props.readOnly}
