@@ -41,6 +41,7 @@ function Machines() {
   const [camara, setCamara] = useState("");
   const [machineToDelete, setMachineToDelete] = useState("");
   const [areaToDelete, setAreaToDelete] = useState("");
+  const [showMachines, setShowMachines] = useState("hiden");
   const [fault, setFault] = useState("");
 
   useEffect(() => {
@@ -56,6 +57,8 @@ function Machines() {
       } else {
         setDell("hidenModal");
         setFault("");
+        setArea("");
+        setRefer("");
       }
     } else {
       setFault("not permision");
@@ -206,6 +209,7 @@ function Machines() {
       setFault("Completa los campos");
     } else {
       database.deleteMachine(company.id, areaToDelete, machineToDelete);
+      storage.deleteMachinePhoto(company.id, refer);
       setDell("hidenModal");
       setArea("");
       setRefer("");
@@ -219,17 +223,22 @@ function Machines() {
         <Card name="Eliminar" image={Less} action={showModalDel} />
       </section>
       <section className="machines-content">
-        <Card type="area">
+        <Card type="area" class={showMachines} show={setShowMachines}>
           {machines.map((element) => {
-            return (
-              <Card
-                name={element.name}
-                image={element.imageURL}
-                tipo={element.type}
-                cub={element.cubicle}
-                type="machine"
-              />
-            );
+            if (element.empty) {
+              return <p className="empty">No existen maquinas en esta area</p>;
+            } else {
+              return (
+                <Card
+                  name={element.name}
+                  image={element.imageURL}
+                  tipo={element.type}
+                  cub={element.cubicle}
+                  key={element.id}
+                  type="machine"
+                />
+              );
+            }
           })}
         </Card>
       </section>
