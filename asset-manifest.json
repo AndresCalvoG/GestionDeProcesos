@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/GestionDeProcesos/static/css/main.5a685b4e.chunk.css",
-    "main.js": "/GestionDeProcesos/static/js/main.295389c0.chunk.js",
-    "main.js.map": "/GestionDeProcesos/static/js/main.295389c0.chunk.js.map",
+    "main.css": "/GestionDeProcesos/static/css/main.defd9964.chunk.css",
+    "main.js": "/GestionDeProcesos/static/js/main.8e5211f5.chunk.js",
+    "main.js.map": "/GestionDeProcesos/static/js/main.8e5211f5.chunk.js.map",
     "runtime-main.js": "/GestionDeProcesos/static/js/runtime-main.55d3c9b4.js",
     "runtime-main.js.map": "/GestionDeProcesos/static/js/runtime-main.55d3c9b4.js.map",
-    "static/js/2.6c06a7a7.chunk.js": "/GestionDeProcesos/static/js/2.6c06a7a7.chunk.js",
-    "static/js/2.6c06a7a7.chunk.js.map": "/GestionDeProcesos/static/js/2.6c06a7a7.chunk.js.map",
+    "static/js/2.a46d3567.chunk.js": "/GestionDeProcesos/static/js/2.a46d3567.chunk.js",
+    "static/js/2.a46d3567.chunk.js.map": "/GestionDeProcesos/static/js/2.a46d3567.chunk.js.map",
     "index.html": "/GestionDeProcesos/index.html",
-    "static/css/main.5a685b4e.chunk.css.map": "/GestionDeProcesos/static/css/main.5a685b4e.chunk.css.map",
-    "static/js/2.6c06a7a7.chunk.js.LICENSE.txt": "/GestionDeProcesos/static/js/2.6c06a7a7.chunk.js.LICENSE.txt",
+    "static/css/main.defd9964.chunk.css.map": "/GestionDeProcesos/static/css/main.defd9964.chunk.css.map",
+    "static/js/2.a46d3567.chunk.js.LICENSE.txt": "/GestionDeProcesos/static/js/2.a46d3567.chunk.js.LICENSE.txt",
     "static/media/BG44x25-SI.1987ff1e.jpg": "/GestionDeProcesos/static/media/BG44x25-SI.1987ff1e.jpg",
     "static/media/BG44x50-SI.76a9a885.jpg": "/GestionDeProcesos/static/media/BG44x50-SI.76a9a885.jpg",
     "static/media/Bitacora.be86942d.jpg": "/GestionDeProcesos/static/media/Bitacora.be86942d.jpg",
@@ -18,7 +18,7 @@
     "static/media/delete.cc0b1113.png": "/GestionDeProcesos/static/media/delete.cc0b1113.png",
     "static/media/help.36cf5b7a.png": "/GestionDeProcesos/static/media/help.36cf5b7a.png",
     "static/media/horario.5ca068f8.png": "/GestionDeProcesos/static/media/horario.5ca068f8.png",
-    "static/media/information.722e40a8.jpg": "/GestionDeProcesos/static/media/information.722e40a8.jpg",
+    "static/media/information.ebc34242.jpg": "/GestionDeProcesos/static/media/information.ebc34242.jpg",
     "static/media/less.cc77b84b.png": "/GestionDeProcesos/static/media/less.cc77b84b.png",
     "static/media/manual.da5d87c9.png": "/GestionDeProcesos/static/media/manual.da5d87c9.png",
     "static/media/newPage.a49d70fd.png": "/GestionDeProcesos/static/media/newPage.a49d70fd.png",
@@ -29,8 +29,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.55d3c9b4.js",
-    "static/js/2.6c06a7a7.chunk.js",
-    "static/css/main.5a685b4e.chunk.css",
-    "static/js/main.295389c0.chunk.js"
+    "static/js/2.a46d3567.chunk.js",
+    "static/css/main.defd9964.chunk.css",
+    "static/js/main.8e5211f5.chunk.js"
   ]
 }
