@@ -1,7 +1,6 @@
 .button {
   width: 15rem;
   height: 5rem;
-  margin-top: 15px;
   border: none;
   padding: 0.7rem;
   font-size: 2rem;
@@ -10,7 +9,6 @@
 .button--long {
   width: 30rem;
   height: 4rem;
-  margin-top: 15px;
   border: none;
   padding: 0.7rem;
   font-size: 2rem;

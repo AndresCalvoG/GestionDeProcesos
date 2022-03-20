@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import "./styles/passwordReset.css";
 import InputForm from "../components/InputForm";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button.js";
 import Auth from "../utils/autenticacion";
 
 function PasswordReset() {

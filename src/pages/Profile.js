@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ImageUser from "../components/ImageUser";
 import Modal from "../components/Modal";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button.js";
 import InputForm from "../components/InputForm";
 import Loader from "../components/Loader";
 import { AppContext } from "../context";
@@ -94,7 +94,6 @@ function Profile() {
           <p>{user.code}</p>
         </div>
       </section>
-      <Loader class={claseLoader} />
       <Modal classe={clase}>
         <div className="main-modal">
           <div className="card-photo">
@@ -121,6 +120,7 @@ function Profile() {
           </div>
         </div>
       </Modal>
+      <Loader class={claseLoader} />
     </main>
   );
 }

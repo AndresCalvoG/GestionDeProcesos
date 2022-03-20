@@ -52,12 +52,13 @@
 }
 .card-code {
   font-size: 2rem;
-  margin-top: 5rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
   color: var(--black);
 }
 .card-title {
   font-size: 2rem;
   margin-top: 2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   color: var(--text);
 }

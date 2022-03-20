@@ -5,7 +5,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: fixed;
+  top: 20rem;
   width: 30rem;
   height: 10rem;
   z-index: 9999;
@@ -13,16 +14,16 @@
   background-color: var(--blanco);
 }
 .login {
-  margin-top: 15rem;
+  margin-top: 35rem;
 }
 .register {
-  margin-top: -5rem;
+  margin-top: 13rem;
 }
 .profile {
-  margin: 15rem auto;
+  margin: 20rem 5rem;
 }
 .landing {
-  margin: 15rem auto;
+  margin-top: 15rem;
 }
 .machine {
   margin: 15rem auto;

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../context";
 import InputForm from "../components/InputForm";
 import SelectOption from "../components/SelectOption";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button.js";
 import Loader from "../components/Loader";
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
@@ -182,11 +182,13 @@ const Register = () => {
                 />
               </label>
               <span className="fault">{fault}</span>
-              <Button
-                name="Registrarme"
-                class="button submit"
-                action={handleRegister}
-              />
+              <div className="form-keypad">
+                <Button
+                  name="Registrarme"
+                  class="button submit"
+                  action={handleRegister}
+                />
+              </div>
             </form>
           </section>
           <Loader class={clase} />

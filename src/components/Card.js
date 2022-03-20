@@ -16,11 +16,14 @@ function Card(props) {
           options={areas}
           value={area}
           action={setArea}
-          actionMachines={updateMachinesArea}
+          actionMachines={(e) => {
+            updateMachinesArea(e);
+            props.show("contentCards");
+          }}
           type="area"
         />
       </label>
-      <div className="contentCards">{props.children}</div>
+      <div className={props.class}>{props.children}</div>
     </article>
   ) : props.type === "machine" ? (
     <article className="machineContent" onClick={props.action}>

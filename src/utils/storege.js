@@ -53,7 +53,7 @@ class Storage {
     var storageRef = firebase
       .storage()
       .ref()
-      .child(company + "/machines/" + name + ".jpeg");
+      .child(company + "/Machines/" + name + ".jpeg");
     var file = photo;
     try {
       var result = await storageRef.put(file);
@@ -61,6 +61,17 @@ class Storage {
         "gs://gestion-de-procesoso-tq.appspot.com/" + result.task._ref.fullPath
       );
       return URL;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async deleteMachinePhoto(companyId, name) {
+    var storageRef = firebase
+      .storage()
+      .ref()
+      .child(companyId + "/Machines/" + name + ".jpeg");
+    try {
+      storageRef.delete();
     } catch (error) {
       console.log(error);
     }

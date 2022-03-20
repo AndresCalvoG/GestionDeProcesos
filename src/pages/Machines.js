@@ -9,7 +9,7 @@ import Less from "../images/utils/less.png";
 import Machine from "../images/home/maquina.png";
 import Card from "../components/Card";
 import Modal from "../components/Modal";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button.js";
 import InputForm from "../components/InputForm";
 import Loader from "../components/Loader";
 import SelectOption from "../components/SelectOption";
@@ -31,7 +31,6 @@ function Machines() {
   const [photoName, setPhotoName] = useState("");
   const [photo, setPhoto] = useState(Machine);
   const [file, setFile] = useState("");
-  const [fault, setFault] = useState("");
   const [type, setType] = useState("");
   const [refer, setRefer] = useState("");
   const [area, setArea] = useState("");
@@ -42,6 +41,8 @@ function Machines() {
   const [camara, setCamara] = useState("");
   const [machineToDelete, setMachineToDelete] = useState("");
   const [areaToDelete, setAreaToDelete] = useState("");
+  const [showMachines, setShowMachines] = useState("hiden");
+  const [fault, setFault] = useState("");
 
   useEffect(() => {
     (async function () {
@@ -55,6 +56,9 @@ function Machines() {
         setDell("showModal-full");
       } else {
         setDell("hidenModal");
+        setFault("");
+        setArea("");
+        setRefer("");
       }
     } else {
       setFault("not permision");
@@ -110,33 +114,105 @@ function Machines() {
       setFault("");
       setClaseSelect("hidenModal");
       setClase("showLoader machine");
-      let imageURL = await storage.uploadMachinePhoto(
-        user.company,
-        file,
-        refer
-      );
-      setPhoto(Machine);
-      let areaRef = await database.createNewArea(user.company, area);
-      let equipoRef = await database.createNewMachine(
-        user.company,
-        areaRef.id,
-        refer
-      );
-      await database.addDataMachine(
-        user.company,
-        areaRef.id,
-        equipoRef.id,
-        { hmi },
-        { camara },
-        { imageURL, type, cubicle }
-      );
-      setClase("hidenLoader");
+      let currentArea = await database.validateAreaName(company.id, area);
+      if (currentArea) {
+        let currentMachine = await database.validateMachineName(
+          company.id,
+          currentArea.id,
+          refer
+        );
+        if (currentMachine) {
+          setFault("Maquina ya existe");
+          setPhotoName("");
+          setPhoto(Machine);
+          setFile("");
+          setType("");
+          setRefer("");
+          setArea("");
+          setCubicle("");
+          setDisplay([false, false]);
+          setHmi("");
+          setCamera([false, false]);
+          setCamara("");
+          setClase("hidenLoader");
+        } else {
+          let equipoRef = await database.createNewMachine(
+            user.company,
+            currentArea.id,
+            refer
+          );
+          let imageURL = await storage.uploadMachinePhoto(
+            user.company,
+            file,
+            refer
+          );
+          await database.addDataMachine(
+            user.company,
+            currentArea.id,
+            equipoRef.id,
+            { hmi },
+            { camara },
+            { imageURL, type, cubicle }
+          );
+          setPhotoName("");
+          setPhoto(Machine);
+          setFile("");
+          setType("");
+          setRefer("");
+          setArea("");
+          setCubicle("");
+          setDisplay([false, false]);
+          setHmi("");
+          setCamera([false, false]);
+          setCamara("");
+          setClase("hidenLoader");
+        }
+      } else {
+        let areaRef = await database.createNewArea(user.company, area);
+        let equipoRef = await database.createNewMachine(
+          user.company,
+          areaRef.id,
+          refer
+        );
+        let imageURL = await storage.uploadMachinePhoto(
+          user.company,
+          file,
+          refer
+        );
+        await database.addDataMachine(
+          user.company,
+          areaRef.id,
+          equipoRef.id,
+          { hmi },
+          { camara },
+          { imageURL, type, cubicle }
+        );
+        setPhotoName("");
+        setPhoto(Machine);
+        setFile("");
+        setType("");
+        setRefer("");
+        setArea("");
+        setCubicle("");
+        setDisplay([false, false]);
+        setHmi("");
+        setCamera([false, false]);
+        setCamara("");
+        setClase("hidenLoader");
+      }
     }
   }
 
   async function deleteMachine() {
-    database.deleteMachine(company.id, areaToDelete, machineToDelete);
-    console.log("eliminado");
+    if (area === "" || refer === "") {
+      setFault("Completa los campos");
+    } else {
+      database.deleteMachine(company.id, areaToDelete, machineToDelete);
+      storage.deleteMachinePhoto(company.id, refer);
+      setDell("hidenModal");
+      setArea("");
+      setRefer("");
+    }
   }
 
   return (
@@ -146,17 +222,22 @@ function Machines() {
         <Card name="Eliminar" image={Less} action={showModalDel} />
       </section>
       <section className="machines-content">
-        <Card type="area">
+        <Card type="area" class={showMachines} show={setShowMachines}>
           {machines.map((element) => {
-            return (
-              <Card
-                name={element.name}
-                image={element.imageURL}
-                tipo={element.type}
-                cub={element.cubicle}
-                type="machine"
-              />
-            );
+            if (element.empty) {
+              return <p className="empty">No existen maquinas en esta area</p>;
+            } else {
+              return (
+                <Card
+                  name={element.name}
+                  image={element.imageURL}
+                  tipo={element.type}
+                  cub={element.cubicle}
+                  key={element.id}
+                  type="machine"
+                />
+              );
+            }
           })}
         </Card>
       </section>
@@ -188,7 +269,8 @@ function Machines() {
               type="area"
             />
           </label>
-          <div className="modalKeypad">
+          <span className="fault">{fault}</span>
+          <div className="modal-Keypad">
             <Button
               name="Eliminar"
               class="button submitb"
@@ -218,7 +300,7 @@ function Machines() {
             class="inputForm"
           />
           <span className="fault">{fault}</span>
-          <div className="modalKeypad">
+          <div className="modal-Keypad">
             <Button
               name="Cancelar"
               class="button submitb"
@@ -283,7 +365,7 @@ function Machines() {
           </label>
           <br />
           <span className="fault">{fault}</span>
-          <div className="modalKeypad">
+          <div className="modal-Keypad">
             <Button
               name="Atras"
               class="button submitb"
@@ -385,7 +467,7 @@ function Machines() {
             <p></p>
           )}
           <span className="fault">{fault}</span>
-          <div className="modalKeypad">
+          <div className="modal-Keypad">
             <Button
               name="Atras"
               class="button submitb"
