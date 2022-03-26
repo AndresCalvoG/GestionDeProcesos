@@ -1,11 +1,22 @@
 import React from "react";
+import { AppContext } from "../context";
 import "./styles/loader.css";
 
-function Loader(props) {
+function Loader() {
+  const { loading } = React.useContext(AppContext);
+
   return (
-    <div className={props.class}>
-      <div className="loader"> </div>
-    </div>
+    <>
+      {loading ? (
+        <div className="showLoader">
+          <div className="loader"> </div>
+        </div>
+      ) : (
+        <div className="hidenLoader">
+          <div className="loader"> </div>
+        </div>
+      )}
+    </>
   );
 }
 

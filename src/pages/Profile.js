@@ -3,20 +3,18 @@ import ImageUser from "../components/ImageUser";
 import Modal from "../components/Modal";
 import Button from "../components/Buttons/Button.js";
 import InputForm from "../components/InputForm";
-import Loader from "../components/Loader";
 import { AppContext } from "../context";
 import "./styles/profile.css";
 import Auth from "../utils/autenticacion";
 import storage from "../utils/storege";
 
 function Profile() {
-  const { user, getDataUsers, User } = React.useContext(AppContext);
+  const { user, getDataUsers, User, setLoading } = React.useContext(AppContext);
   const [photo, setPhoto] = useState("");
   const [file, setFile] = useState("");
   const [clase, setClase] = useState("hidenModal");
   const [menu, setMenu] = useState("hiden");
   const [items, setItems] = useState("hiden");
-  const [claseLoader, setClaseLoader] = useState("hidenLoader");
 
   const showModalAdd = () => {
     if (clase === "hidenModal") {
@@ -42,7 +40,7 @@ function Profile() {
   }
 
   async function updatePhoto() {
-    setClaseLoader("showLoader profile");
+    setLoading(true);
     if (file) {
       let imageURL = await storage.uploadProfilePhoto(
         user.company,
@@ -58,7 +56,7 @@ function Profile() {
   }
 
   async function deletePhoto() {
-    setClaseLoader("showLoader profile");
+    setLoading(true);
     let defaultImage = await storage.deleteProfilePhoto(user.company, user.id);
     const response = await Auth.validUser();
     await Auth.updatePhoto(response, defaultImage);
@@ -120,7 +118,6 @@ function Profile() {
           </div>
         </div>
       </Modal>
-      <Loader class={claseLoader} />
     </main>
   );
 }

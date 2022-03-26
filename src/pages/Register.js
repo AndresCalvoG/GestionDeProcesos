@@ -4,7 +4,6 @@ import { AppContext } from "../context";
 import InputForm from "../components/InputForm";
 import SelectOption from "../components/SelectOption";
 import Button from "../components/Buttons/Button.js";
-import Loader from "../components/Loader";
 import Auth from "../utils/autenticacion";
 import database from "../utils/fireStore";
 
@@ -30,10 +29,9 @@ const Register = () => {
   const [code, setCode] = useState("");
   const [privilege, setPrivilege] = useState();
   const [fault, setFault] = useState("");
-  const [clase, setClase] = useState("hidenLoader");
   const nombres = `${firstName} ${lastName}`;
 
-  const { companyID, setCompanyID, adminEmail, adminPass } =
+  const { companyID, setCompanyID, adminEmail, adminPass, setLoading } =
     React.useContext(AppContext);
 
   // funciones de pagina de registro
@@ -53,12 +51,13 @@ const Register = () => {
       setFault("Por favor completa TODOS los campos");
     } else {
       setFault("");
-      setClase("showLoader register");
+      setLoading(true);
       await Auth.authEmailPass(adminEmail, adminPass);
       let existID = await database.companyExist(companyID);
       Auth.logoutUsers();
       if (existID === false) {
         setFault("Empresa no Existe o Codigo Empresarial Equivocado");
+        setLoading(false);
         return;
       }
       const response = await Auth.crearCuentaEmailPass(
@@ -69,14 +68,19 @@ const Register = () => {
 
       if (response.code === "auth/wrong-password") {
         setFault("Contraseña Incorrecta");
+        setLoading(false);
       } else if (response.code === "auth/user-not-found") {
         setFault("Usuario Incorrecto");
+        setLoading(false);
       } else if (response.code === "auth/invalid-email") {
         setFault("Email invalido");
+        setLoading(false);
       } else if (response.code === "auth/weak-password") {
         setFault("Contraseña demasiado corta");
+        setLoading(false);
       } else if (response.code === "auth/email-already-in-use") {
         setFault("Email ya registrado");
+        setLoading(false);
       } else if (response.uid) {
         await Auth.authEmailPass(adminEmail, adminPass);
         await database.crearUsersDb({
@@ -92,11 +96,12 @@ const Register = () => {
           privilege: privilege,
         });
         setContain(true);
-        setClase("hidenLoader");
+        setLoading(false);
         setCompanyID("");
         Auth.logoutUsers();
       } else {
         console.log(response.code);
+        setLoading(false);
       }
     }
   };
@@ -191,7 +196,6 @@ const Register = () => {
               </div>
             </form>
           </section>
-          <Loader class={clase} />
         </main>
       ) : (
         <main className="main-success">

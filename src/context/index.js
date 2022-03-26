@@ -8,6 +8,7 @@ import database from "../utils/fireStore";
 const AppContext = React.createContext();
 
 function AppProvider(props) {
+  //Constants
   const adminEmail = "elprogramador94@gmail.com";
   const adminPass = "123456";
   const UserProfile =
@@ -54,9 +55,10 @@ function AppProvider(props) {
   User = { ...user };
   //estados compartidos de context
   const [companyID, setCompanyID] = useState("");
+  const [machines, setMachines] = useState([]);
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
-  const [machines, setMachines] = useState([]);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
 
   async function getDataUsers() {
@@ -96,6 +98,7 @@ function AppProvider(props) {
       saveAuth(true);
       saveUser(User);
       saveCompany(Company);
+      setLoading(false);
       history.replace("/home");
     } else {
       saveAuth(false);
@@ -199,6 +202,8 @@ function AppProvider(props) {
         auth,
         fecha,
         hora,
+        loading,
+        setLoading,
         newNotify,
         setNewNotify,
         update,
