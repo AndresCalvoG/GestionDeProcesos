@@ -26,9 +26,23 @@ function Card(props) {
       <div className={props.class}>{props.children}</div>
     </article>
   ) : props.type === "machine" ? (
-    <article className="machineContent" onClick={props.action}>
+    <article className="cardMachine">
       <h2>{props.name}</h2>
-      <figure className="machine-image">
+      <figure className="cardMachine-image">
+        <img src={props.image} alt={props.name} />
+      </figure>
+      <div className="cardMachine-props">
+        <p>Tipo: {props.tipo}</p>
+        <p>Cubiculo: {props.cub}</p>
+        <Link to="" className="props-link">
+          &#11013; Ver hoja de vida
+        </Link>
+      </div>
+    </article>
+  ) : (
+    <article className="card-body" onClick={props.action}>
+      <h2>{props.name}</h2>
+      <figure className="body-image">
         {props.route ? (
           <Link to={props.route}>
             <img src={props.image} alt={props.name} />
@@ -41,27 +55,6 @@ function Card(props) {
           <img src={props.image} alt={props.name} />
         )}
       </figure>
-      <div className="machine-props">
-        <p>Tipo: {props.tipo}</p>
-        <p>Cubiculo: {props.cub}</p>
-      </div>
-    </article>
-  ) : (
-    <article className="card-body" onClick={props.action}>
-      <h2>{props.name}</h2>
-      <div className="body-image">
-        {props.route ? (
-          <Link to={props.route}>
-            <img src={props.image} alt={props.name} />
-          </Link>
-        ) : props.link ? (
-          <a href={props.link}>
-            <img src={props.image} alt={props.name} />
-          </a>
-        ) : (
-          <img src={props.image} alt={props.name} />
-        )}
-      </div>
     </article>
   );
 }
