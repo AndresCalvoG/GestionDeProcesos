@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AppContext } from "../context";
-import Card from "../components/Card";
+import Card from "../components/Card/Card";
 import Modal from "../components/Modal";
 import Button from "../components/Buttons/Button.js";
 import SelectOption from "../components/SelectOption";

@@ -5,7 +5,7 @@ import database from "../utils/fireStore";
 import "./styles/documents.css";
 import NewOrder from "../images/utils/newPage.png";
 import DeleteFile from "../images/utils/delete.png";
-import Card from "../components/Card";
+import Card from "../components/Card/Card";
 import Notifier from "../components/Notifier";
 import Modal from "../components/Modal";
 import SelectOption from "../components/SelectOption";
