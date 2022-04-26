@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/GestionDeProcesos/static/css/main.defd9964.chunk.css",
-    "main.js": "/GestionDeProcesos/static/js/main.8e5211f5.chunk.js",
-    "main.js.map": "/GestionDeProcesos/static/js/main.8e5211f5.chunk.js.map",
+    "main.css": "/GestionDeProcesos/static/css/main.3ca299aa.chunk.css",
+    "main.js": "/GestionDeProcesos/static/js/main.09771d7e.chunk.js",
+    "main.js.map": "/GestionDeProcesos/static/js/main.09771d7e.chunk.js.map",
     "runtime-main.js": "/GestionDeProcesos/static/js/runtime-main.55d3c9b4.js",
     "runtime-main.js.map": "/GestionDeProcesos/static/js/runtime-main.55d3c9b4.js.map",
     "static/js/2.a46d3567.chunk.js": "/GestionDeProcesos/static/js/2.a46d3567.chunk.js",
     "static/js/2.a46d3567.chunk.js.map": "/GestionDeProcesos/static/js/2.a46d3567.chunk.js.map",
     "index.html": "/GestionDeProcesos/index.html",
-    "static/css/main.defd9964.chunk.css.map": "/GestionDeProcesos/static/css/main.defd9964.chunk.css.map",
+    "static/css/main.3ca299aa.chunk.css.map": "/GestionDeProcesos/static/css/main.3ca299aa.chunk.css.map",
     "static/js/2.a46d3567.chunk.js.LICENSE.txt": "/GestionDeProcesos/static/js/2.a46d3567.chunk.js.LICENSE.txt",
     "static/media/BG44x25-SI.1987ff1e.jpg": "/GestionDeProcesos/static/media/BG44x25-SI.1987ff1e.jpg",
     "static/media/BG44x50-SI.76a9a885.jpg": "/GestionDeProcesos/static/media/BG44x50-SI.76a9a885.jpg",
@@ -30,7 +30,7 @@
   "entrypoints": [
     "static/js/runtime-main.55d3c9b4.js",
     "static/js/2.a46d3567.chunk.js",
-    "static/css/main.defd9964.chunk.css",
-    "static/js/main.8e5211f5.chunk.js"
+    "static/css/main.3ca299aa.chunk.css",
+    "static/js/main.09771d7e.chunk.js"
   ]
 }
