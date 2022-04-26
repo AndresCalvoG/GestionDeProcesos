@@ -8,15 +8,13 @@ import userLogo from "../images/user.svg";
 
 import InputForm from "../components/InputForm";
 import Button from "../components/Buttons/Button.js";
-import Loader from "../components/Loader";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fault, setFault] = useState("");
-  const [clase, setClase] = useState("hidenLoader");
 
-  const { getDataUsers } = React.useContext(AppContext);
+  const { getDataUsers, setLoading } = React.useContext(AppContext);
 
   //Funciones de la pagina Login
   const handleLogin = async () => {
@@ -24,27 +22,27 @@ const Login = () => {
       setFault("Por favor completa todos los campos");
     } else {
       setFault("");
-      setClase("showLoader login");
+      setLoading(true);
       const response = await Auth.authEmailPass(email, password);
 
       if (response.code === "auth/wrong-password") {
         setFault("Contraseña Incorrecta");
-        setClase("hidenLoader");
+        setLoading(false);
       } else if (response.code === "auth/user-not-found") {
         setFault("Usuario ó Email Incorrecto");
-        setClase("hidenLoader");
+        setLoading(false);
       } else if (response.code === "auth/invalid-email") {
         setFault("Email Invalido");
-        setClase("hidenLoader");
+        setLoading(false);
       } else if (response.code === "auth/network-request-failed") {
         setFault("Sin conexion a Internet");
-        setClase("hidenLoader");
+        setLoading(false);
       } else if (response === "Por favor verifique email enviado") {
         setFault(response);
-        setClase("hidenLoader");
+        setLoading(false);
       } else {
         await getDataUsers();
-        setClase("hidenLoader");
+        setLoading(false);
       }
     }
   };
@@ -87,7 +85,6 @@ const Login = () => {
             />
           </div>
         </form>
-        <Loader class={clase} />
       </article>
     </main>
   );

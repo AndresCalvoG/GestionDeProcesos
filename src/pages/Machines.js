@@ -7,11 +7,10 @@ import "./styles/machines.css";
 import Plus from "../images/utils/plus.png";
 import Less from "../images/utils/less.png";
 import Machine from "../images/home/maquina.png";
-import Card from "../components/Card";
+import Card from "../components/Card/Card";
 import Modal from "../components/Modal";
 import Button from "../components/Buttons/Button.js";
 import InputForm from "../components/InputForm";
-import Loader from "../components/Loader";
 import SelectOption from "../components/SelectOption";
 
 function Machines() {
@@ -22,8 +21,8 @@ function Machines() {
     machines,
     updateMachinesArea,
     areas,
+    setLoading,
   } = React.useContext(AppContext);
-  const [clase, setClase] = useState("hidenLoader");
   const [dell, setDell] = useState("hidenModal");
   const [classe, setClasse] = useState("hidenModal");
   const [claseData, setClaseData] = useState("hidenModal");
@@ -113,7 +112,7 @@ function Machines() {
     } else {
       setFault("");
       setClaseSelect("hidenModal");
-      setClase("showLoader machine");
+      setLoading(true);
       let currentArea = await database.validateAreaName(company.id, area);
       if (currentArea) {
         let currentMachine = await database.validateMachineName(
@@ -134,7 +133,7 @@ function Machines() {
           setHmi("");
           setCamera([false, false]);
           setCamara("");
-          setClase("hidenLoader");
+          setLoading(false);
         } else {
           let equipoRef = await database.createNewMachine(
             user.company,
@@ -165,7 +164,7 @@ function Machines() {
           setHmi("");
           setCamera([false, false]);
           setCamara("");
-          setClase("hidenLoader");
+          setLoading(false);
         }
       } else {
         let areaRef = await database.createNewArea(user.company, area);
@@ -198,7 +197,7 @@ function Machines() {
         setHmi("");
         setCamera([false, false]);
         setCamara("");
-        setClase("hidenLoader");
+        setLoading(false);
       }
     }
   }
@@ -207,11 +206,13 @@ function Machines() {
     if (area === "" || refer === "") {
       setFault("Completa los campos");
     } else {
+      setLoading(true);
       database.deleteMachine(company.id, areaToDelete, machineToDelete);
       storage.deleteMachinePhoto(company.id, refer);
       setDell("hidenModal");
       setArea("");
       setRefer("");
+      setLoading(false);
     }
   }
 
@@ -242,7 +243,6 @@ function Machines() {
         </Card>
       </section>
       <span className="fault">{fault}</span>
-      <Loader class={clase} />
       <Modal classe={dell}>
         <div className="main-modal">
           <h2>Eliminar Maquina </h2>

@@ -10,16 +10,20 @@ import companyImg from "../images/landing/company.png";
 import Button from "../components/Buttons/Button.js";
 import Modal from "../components/Modal";
 import InputForm from "../components/InputForm";
-import Loader from "../components/Loader";
 
 function Landing() {
   const [clase, setClase] = useState("hidenModal");
   const [next, setNext] = useState(false);
-  const [claseLoader, setClaseLoader] = useState("hidenLoader");
   const [businessName, setBusinessName] = useState("");
   const [fault, setFault] = useState("");
-  const { companyID, setCompanyID, adminEmail, adminPass, getCurrentDate } =
-    React.useContext(AppContext);
+  const {
+    companyID,
+    setCompanyID,
+    adminEmail,
+    adminPass,
+    getCurrentDate,
+    setLoading,
+  } = React.useContext(AppContext);
 
   function showModal() {
     if (clase === "hidenModal") {
@@ -33,14 +37,14 @@ function Landing() {
   }
 
   async function createCompany() {
-    setClaseLoader("showLoader landing");
+    setLoading(true);
     await Auth.authEmailPass(adminEmail, adminPass);
     const validate = await database.validateCompanyName(businessName);
     if (validate) {
       setFault("Nombre ya existe, ingresa otro");
       setBusinessName("");
       Auth.logoutUsers();
-      setClaseLoader("hidenLoader");
+      setLoading(false);
     } else {
       let date = getCurrentDate();
       let companyRef = await database.createCompany({
@@ -51,7 +55,7 @@ function Landing() {
       setCompanyID(companyRef);
       Auth.logoutUsers();
       setClase("hidenModal");
-      setClaseLoader("hidenLoader");
+      setLoading(false);
       setNext(true);
     }
   }
@@ -134,7 +138,6 @@ function Landing() {
             </div>
           </div>
         </Modal>
-        <Loader class={claseLoader} />
       </main>
     </>
   );

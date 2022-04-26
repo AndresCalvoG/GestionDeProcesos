@@ -10,7 +10,7 @@ import Help from "../images/home/help.png";
 import Schedule from "../images/home/horario.png";
 import Binnacle from "../images/home/Bitacora.jpg";
 import Passwords from "../images/home/password.svg";
-import Card from "../components/Card";
+import Card from "../components/Card/Card";
 
 function Home() {
   const { company, areas } = React.useContext(AppContext);

@@ -38,7 +38,7 @@
   font-size: 2rem;
   color: var(--red);
 }
-.machineContent {
+.cardMachine {
   width: 36rem;
   height: 40rem;
   display: flex;
@@ -46,28 +46,33 @@
   justify-content: flex-start;
   align-items: center;
   border: 2px solid black;
-  border-radius: 20px;
 }
-.machineContent h2 {
+.cardMachine h2 {
   font-size: 3rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
   color: var(--black);
 }
-.machine-image {
+.cardMachine-image {
   width: 35rem;
   height: 19rem;
   margin-bottom: 2rem;
   object-fit: scale-down;
 }
-.machine-props {
+.cardMachine-props {
   width: 33rem;
   height: 11.5rem;
   padding: 1rem;
   border: 2px solid black;
   border-radius: 20px;
 }
-.machine-props p {
+.cardMachine-props p {
   font-size: 2rem;
   color: var(--black);
+  margin-bottom: 0.5rem;
+}
+.props-link {
+  text-decoration: underline;
+  color: var(--blue);
+  font-size: 2rem;
 }

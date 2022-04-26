@@ -2,7 +2,7 @@ import React from "react";
 
 import BG44x25_SI from "../images/handBooks/BG44x25-SI.jpg";
 import BG44x50_SI from "../images/handBooks/BG44x50-SI.jpg";
-import Card from "../components/Card";
+import Card from "../components/Card/Card";
 
 function HandBooks() {
   return (
