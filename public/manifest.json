@@ -3,16 +3,23 @@
   "name": "Gestioner",
   "icons": [
     {
-      "src": "/icon.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
-  "start_url": "/",
-  "scope": "/",
+  "start_url": ".",
   "display": "standalone",
-  "theme_color": "#3d7fbc",
-  "background_color": "#ffffff",
-  "related_applications": [],
-  "prefer_related_applications": false
+  "theme_color": "#1c2d4e",
+  "background_color": "#ffffff"
 }
