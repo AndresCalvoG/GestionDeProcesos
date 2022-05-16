@@ -9,8 +9,8 @@ const AppContext = React.createContext();
 
 function AppProvider(props) {
   //Constants
-  const adminEmail = "elprogramador94@gmail.com";
-  const adminPass = "123456";
+  const adminEmail = process.env.REACT_APP_FIREBASE_ADMIN_EMAIL;
+  const adminPass = process.env.REACT_APP_FIREBASE_ADMIN_PASSWORD;
   const UserProfile =
     "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/profilePhotos%2Fprofile.png?alt=media&token=b4bd3414-7c8f-4b08-bff9-9e46b113e884";
 

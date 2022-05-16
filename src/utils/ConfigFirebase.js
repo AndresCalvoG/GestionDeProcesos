@@ -1,13 +1,12 @@
 var firebaseConfig = {
-    apiKey: "AIzaSyA5sY9N_TINZNrnelG1KSdd4812cBn-O_c",
-    authDomain: "gestion-de-procesoso-tq.firebaseapp.com",
-    databaseURL: "https://gestion-de-procesoso-tq.firebaseio.com",
-    projectId: "gestion-de-procesoso-tq",
-    storageBucket: "gestion-de-procesoso-tq.appspot.com",
-    messagingSenderId: "156651852513",
-    appId: "1:156651852513:web:e481bf0026651f271e9da0",
-    measurementId: "G-YVPPSWK58L"
-  };
+  apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASEURL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGINGSENDERID,
+  appId: process.env.REACT_APP_FIREBASE_APPID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENTID,
+};
 
-  
-  export default firebaseConfig
+export default firebaseConfig;

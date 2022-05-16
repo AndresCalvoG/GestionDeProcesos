@@ -2,7 +2,7 @@ import React from "react";
 import { AppProvider } from "../context/index";
 import { HashRouter, Switch, Route } from "react-router-dom";
 
-import "../global.css";
+import "../index.css";
 
 import Landing from "../pages/Landing";
 import Login from "../pages/Login";
@@ -10,7 +10,7 @@ import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import Home from "../pages/Home";
 import PasswordReset from "../pages/PasswordReset";
-import Layout from "./Layout";
+import Layout from "../components/Layout";
 import NotRegisterUser from "../pages/NotRegisterUser";
 import HandBooks from "../pages/HandBooks";
 import WorkOrder from "../pages/WorkOrder";
