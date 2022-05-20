@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/GestionDeProcesos/static/css/main.3ca299aa.chunk.css",
-    "main.js": "/GestionDeProcesos/static/js/main.4f20fed4.chunk.js",
-    "main.js.map": "/GestionDeProcesos/static/js/main.4f20fed4.chunk.js.map",
-    "runtime-main.js": "/GestionDeProcesos/static/js/runtime-main.55d3c9b4.js",
-    "runtime-main.js.map": "/GestionDeProcesos/static/js/runtime-main.55d3c9b4.js.map",
-    "static/js/2.a46d3567.chunk.js": "/GestionDeProcesos/static/js/2.a46d3567.chunk.js",
-    "static/js/2.a46d3567.chunk.js.map": "/GestionDeProcesos/static/js/2.a46d3567.chunk.js.map",
+    "main.css": "/GestionDeProcesos/static/css/main.212ad590.chunk.css",
+    "main.js": "/GestionDeProcesos/static/js/main.3dae26dc.chunk.js",
+    "main.js.map": "/GestionDeProcesos/static/js/main.3dae26dc.chunk.js.map",
+    "runtime-main.js": "/GestionDeProcesos/static/js/runtime-main.507d243f.js",
+    "runtime-main.js.map": "/GestionDeProcesos/static/js/runtime-main.507d243f.js.map",
+    "static/js/2.7d59f84c.chunk.js": "/GestionDeProcesos/static/js/2.7d59f84c.chunk.js",
+    "static/js/2.7d59f84c.chunk.js.map": "/GestionDeProcesos/static/js/2.7d59f84c.chunk.js.map",
     "index.html": "/GestionDeProcesos/index.html",
-    "static/css/main.3ca299aa.chunk.css.map": "/GestionDeProcesos/static/css/main.3ca299aa.chunk.css.map",
-    "static/js/2.a46d3567.chunk.js.LICENSE.txt": "/GestionDeProcesos/static/js/2.a46d3567.chunk.js.LICENSE.txt",
+    "static/css/main.212ad590.chunk.css.map": "/GestionDeProcesos/static/css/main.212ad590.chunk.css.map",
+    "static/js/2.7d59f84c.chunk.js.LICENSE.txt": "/GestionDeProcesos/static/js/2.7d59f84c.chunk.js.LICENSE.txt",
     "static/media/BG44x25-SI.1987ff1e.jpg": "/GestionDeProcesos/static/media/BG44x25-SI.1987ff1e.jpg",
     "static/media/BG44x50-SI.76a9a885.jpg": "/GestionDeProcesos/static/media/BG44x50-SI.76a9a885.jpg",
     "static/media/Bitacora.be86942d.jpg": "/GestionDeProcesos/static/media/Bitacora.be86942d.jpg",
@@ -28,9 +28,9 @@
     "static/media/user.3c5dfe5d.svg": "/GestionDeProcesos/static/media/user.3c5dfe5d.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.55d3c9b4.js",
-    "static/js/2.a46d3567.chunk.js",
-    "static/css/main.3ca299aa.chunk.css",
-    "static/js/main.4f20fed4.chunk.js"
+    "static/js/runtime-main.507d243f.js",
+    "static/js/2.7d59f84c.chunk.js",
+    "static/css/main.212ad590.chunk.css",
+    "static/js/main.3dae26dc.chunk.js"
   ]
 }
