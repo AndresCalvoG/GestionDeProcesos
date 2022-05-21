@@ -30,15 +30,16 @@
     font-size: 2rem;
   }
   .button--long {
-    width: 60rem;
+    width: 25rem;
     font-size: 2rem;
   }
 }
 
 @media screen and (max-width: 390px) {
-  .submit {
-    font-size: 2rem;
+  .button {
     width: 12rem;
-    height: 5rem;
+  }
+  .button--long {
+    width: 25rem;
   }
 }
