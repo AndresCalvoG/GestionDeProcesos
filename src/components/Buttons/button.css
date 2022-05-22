@@ -13,6 +13,7 @@
   padding: 0.7rem;
   font-size: 2rem;
   box-shadow: 0px 8px 10px 0px #575656;
+  border-radius: 20px;
 }
 .submit {
   background-color: var(--blue);
@@ -22,6 +23,11 @@
 .submitb {
   background-color: var(--white);
   color: var(--blue);
+  font-weight: bold;
+}
+.info {
+  background-color: var(--orange);
+  color: var(--white);
   font-weight: bold;
 }
 
@@ -37,7 +43,7 @@
 
 @media screen and (max-width: 390px) {
   .button {
-    width: 12rem;
+    width: 11rem;
   }
   .button--long {
     width: 25rem;

@@ -1,6 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300&display=swap");
+
 :root {
   --blue: #3d7fbc;
   --gray: #999999;
+  --orange: #dfa01f;
   --baseWhite: #f6f5f5;
   --white: #ffffff;
   --lightgray: #ddd9d9;
@@ -12,7 +15,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Roboto Flex", sans-serif;
 }
 html {
   font-size: 62.5%;
@@ -24,8 +27,7 @@ img {
 body {
   display: flex;
   flex-direction: column;
-  background-color: var(--baseWhite);
-  color: var(--gray);
+  color: var(--black);
 }
 .fault {
   color: var(--red);

@@ -1,0 +1,88 @@
+/* styles for size widtg=320px */
+.landing-main {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.landing-slogan {
+  width: 100vw;
+  height: 50rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-top: 2px solid white;
+  color: var(--white);
+  padding: 2rem;
+  background-color: var(--blue);
+}
+.slogan-title {
+  margin-top: 2rem;
+  font-size: 4rem;
+  text-align: center;
+  font-weight: bold;
+}
+.slogan-message {
+  margin-top: 2rem;
+  margin-bottom: 5.5rem;
+  font-size: 1.8rem;
+  text-align: center;
+}
+.triangle-equilateral-bottom-left {
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 44.8rem;
+  left: 0;
+  border-right: 25px solid transparent;
+  border-top: 25px solid transparent;
+  border-left: 25px solid var(--orange);
+  border-bottom: 25px solid var(--orange);
+}
+.triangle-equilateral-top-right {
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-right: 25px solid var(--orange);
+  border-top: 25px solid var(--orange);
+  border-left: 25px solid transparent;
+  border-bottom: 25px solid transparent;
+}
+.landing-keyPad {
+  width: 100vw;
+  height: 15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+.landing-card {
+  width: 100vw;
+  height: 65rem;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card-img {
+  width: 80vw;
+}
+.card-code {
+  font-size: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  color: var(--black);
+}
+.card-title {
+  font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
