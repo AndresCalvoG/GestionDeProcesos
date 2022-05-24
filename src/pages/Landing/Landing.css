@@ -14,7 +14,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  border-top: 2px solid white;
   color: var(--white);
   padding: 2rem;
   background-color: var(--blue);
@@ -35,7 +34,7 @@
   width: 0;
   height: 0;
   position: absolute;
-  top: 44.8rem;
+  top: 45rem;
   left: 0;
   border-right: 25px solid transparent;
   border-top: 25px solid transparent;
@@ -66,7 +65,7 @@
 .landing-card {
   width: 100vw;
   height: 65rem;
-  margin-top: 1rem;
+  padding-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -100,7 +99,7 @@
     font-size: 2rem;
   }
   .triangle-equilateral-bottom-left {
-    top: 49.8rem;
+    top: 50rem;
   }
   .landing-keyPad {
     height: 18rem;
@@ -109,6 +108,7 @@
   }
   .landing-card {
     height: 70rem;
+    padding-top: 3rem;
   }
   .card-title {
     font-size: 2.5rem;

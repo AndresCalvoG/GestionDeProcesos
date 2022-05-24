@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { AppContext } from "../context";
-import "./styles/navar.css";
-import Modal from "./Modal";
-import ImageUser from "./ImageUser";
+import { AppContext } from "../../context";
+import "./navar.css";
+import Modal from "../Modal";
+import ImageUser from "../ImageUser";
+import Logo from "./images/logo256.png";
 
 const Navbar = () => {
   const [clase, setClase] = useState("hidenModal");
@@ -21,9 +22,15 @@ const Navbar = () => {
   return (
     <>
       {!auth ? (
-        <header className="header">
+        <header className="header-main">
+          <figure className="header-logo">
+            <img src={Logo} alt="logo" />
+          </figure>
           <section className="header-title">
-            <h1>Gestion de Procesos</h1>
+            <h1>Gestioner</h1>
+          </section>
+          <section className="header-avatar">
+            <ImageUser action={showModal} />
           </section>
         </header>
       ) : (
