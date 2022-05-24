@@ -74,15 +74,47 @@
 .card-img {
   width: 80vw;
 }
+.card-title {
+  font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
 .card-code {
   font-size: 2rem;
   margin-top: 1rem;
   margin-bottom: 2rem;
   color: var(--black);
 }
-.card-title {
-  font-size: 2rem;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  color: var(--text);
+
+@media screen and (min-width: 410px) {
+  .landing-slogan {
+    height: 55rem;
+    padding: 3rem;
+  }
+  .slogan-title {
+    font-size: 5rem;
+  }
+  .slogan-message {
+    margin-top: 3rem;
+    font-size: 2rem;
+  }
+  .triangle-equilateral-bottom-left {
+    top: 49.8rem;
+  }
+  .landing-keyPad {
+    height: 18rem;
+    padding-top: 2rem;
+    padding-bottom: 3.5rem;
+  }
+  .landing-card {
+    height: 70rem;
+  }
+  .card-title {
+    font-size: 2.5rem;
+  }
+  .card-code {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+  }
 }

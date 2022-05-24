@@ -79,13 +79,12 @@ function Landing() {
             <div className="triangle-equilateral-bottom-left"></div>
             <div className="triangle-equilateral-top-right"></div>
           </section>
-          <div className="triangle"></div>
           <section className="landing-keyPad">
             <Link to="/Login">
               <Button name="Iniciar Sesion" class="button--long submit" />
             </Link>
             <Link to="/Register">
-              <Button name="Unirme A Empresa" class="button--long submit" />
+              <Button name="Unirme a Empresa" class="button--long submit" />
             </Link>
           </section>
         </>
