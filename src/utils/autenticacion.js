@@ -17,7 +17,6 @@ class Autenticacion {
       const result = await firebase
         .auth()
         .signInWithEmailAndPassword(email, password);
-      console.log(result);
       if (result.user.emailVerified) {
         return true;
       } else {
