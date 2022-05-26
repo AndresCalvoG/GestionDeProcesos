@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/GestionDeProcesos/static/css/main.212ad590.chunk.css",
-    "main.js": "/GestionDeProcesos/static/js/main.3dae26dc.chunk.js",
-    "main.js.map": "/GestionDeProcesos/static/js/main.3dae26dc.chunk.js.map",
+    "main.css": "/GestionDeProcesos/static/css/main.a316b696.chunk.css",
+    "main.js": "/GestionDeProcesos/static/js/main.14f33d7d.chunk.js",
+    "main.js.map": "/GestionDeProcesos/static/js/main.14f33d7d.chunk.js.map",
     "runtime-main.js": "/GestionDeProcesos/static/js/runtime-main.507d243f.js",
     "runtime-main.js.map": "/GestionDeProcesos/static/js/runtime-main.507d243f.js.map",
     "static/js/2.7d59f84c.chunk.js": "/GestionDeProcesos/static/js/2.7d59f84c.chunk.js",
     "static/js/2.7d59f84c.chunk.js.map": "/GestionDeProcesos/static/js/2.7d59f84c.chunk.js.map",
     "index.html": "/GestionDeProcesos/index.html",
-    "static/css/main.212ad590.chunk.css.map": "/GestionDeProcesos/static/css/main.212ad590.chunk.css.map",
+    "static/css/main.a316b696.chunk.css.map": "/GestionDeProcesos/static/css/main.a316b696.chunk.css.map",
     "static/js/2.7d59f84c.chunk.js.LICENSE.txt": "/GestionDeProcesos/static/js/2.7d59f84c.chunk.js.LICENSE.txt",
     "static/media/BG44x25-SI.1987ff1e.jpg": "/GestionDeProcesos/static/media/BG44x25-SI.1987ff1e.jpg",
     "static/media/BG44x50-SI.76a9a885.jpg": "/GestionDeProcesos/static/media/BG44x50-SI.76a9a885.jpg",
@@ -18,8 +18,8 @@
     "static/media/delete.cc0b1113.png": "/GestionDeProcesos/static/media/delete.cc0b1113.png",
     "static/media/help.36cf5b7a.png": "/GestionDeProcesos/static/media/help.36cf5b7a.png",
     "static/media/horario.5ca068f8.png": "/GestionDeProcesos/static/media/horario.5ca068f8.png",
-    "static/media/information.ebc34242.jpg": "/GestionDeProcesos/static/media/information.ebc34242.jpg",
     "static/media/less.cc77b84b.png": "/GestionDeProcesos/static/media/less.cc77b84b.png",
+    "static/media/logo256.4570a78d.png": "/GestionDeProcesos/static/media/logo256.4570a78d.png",
     "static/media/manual.da5d87c9.png": "/GestionDeProcesos/static/media/manual.da5d87c9.png",
     "static/media/newPage.a49d70fd.png": "/GestionDeProcesos/static/media/newPage.a49d70fd.png",
     "static/media/password.d297a302.svg": "/GestionDeProcesos/static/media/password.d297a302.svg",
@@ -30,7 +30,7 @@
   "entrypoints": [
     "static/js/runtime-main.507d243f.js",
     "static/js/2.7d59f84c.chunk.js",
-    "static/css/main.212ad590.chunk.css",
-    "static/js/main.3dae26dc.chunk.js"
+    "static/css/main.a316b696.chunk.css",
+    "static/js/main.14f33d7d.chunk.js"
   ]
 }
