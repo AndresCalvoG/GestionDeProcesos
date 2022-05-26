@@ -27,6 +27,9 @@
 }
 
 @media screen and (min-width: 410px) {
+  .button {
+    width: 11rem;
+  }
   .button--long {
     height: 5rem;
     font-size: 2.5rem;
@@ -36,18 +39,5 @@
 @media screen and (min-width: 900px) {
   .submit {
     font-size: 2rem;
-  }
-  .button--long {
-    width: 25rem;
-    font-size: 2rem;
-  }
-}
-
-@media screen and (max-width: 390px) {
-  .button {
-    width: 11rem;
-  }
-  .button--long {
-    width: 25rem;
   }
 }

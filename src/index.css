@@ -38,9 +38,3 @@ body {
 .hiden {
   display: none;
 }
-
-@media screen and (width: 1366px) {
-  body {
-    width: 98.7vw;
-  }
-}

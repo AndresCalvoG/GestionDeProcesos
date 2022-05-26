@@ -1,4 +1,3 @@
-/* styles for size widtg=320px */
 .landing-main {
   width: 100vw;
   display: flex;
@@ -116,5 +115,33 @@
   .card-code {
     font-size: 2.5rem;
     margin-bottom: 3rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .landing-main {
+    flex-direction: row;
+  }
+  .landing-slogan {
+    width: 70vw;
+    height: 60rem;
+    align-items: flex-start;
+    padding-left: 5rem;
+  }
+  .slogan-title {
+    text-align: left;
+  }
+  .slogan-message {
+    text-align: left;
+  }
+  .slogan-board {
+    width: 55rem;
+    height: 30rem;
+  }
+  .triangle-equilateral-bottom-left {
+    top: 55rem;
+  }
+  .landing-keyPad {
+    width: 30vw;
   }
 }

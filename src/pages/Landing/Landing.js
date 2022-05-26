@@ -64,13 +64,15 @@ function Landing() {
       {!next ? (
         <>
           <section className="landing-slogan">
-            <p className="slogan-title">
-              Controla los datos de tu negocio y dejalo crecer
-            </p>
-            <p className="slogan-message">
-              Gestioner es una aplicacion de control de datos que ayuda a
-              construir y crecer el negocio que amas.
-            </p>
+            <article className="slogan-board">
+              <p className="slogan-title">
+                Controla los datos de tu negocio y dejalo crecer
+              </p>
+              <p className="slogan-message">
+                Gestioner es una aplicacion de control de datos que ayuda a
+                construir y crecer el negocio que amas.
+              </p>
+            </article>
             <Button
               name="Comenzar"
               class="button--long submitb"
