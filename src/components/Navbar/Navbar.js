@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../../context";
 import "./navar.css";
 import Modal from "../Modal";
-import ImageUser from "../ImageUser";
+import ImageUser from "../ImageUser/ImageUser";
 import Logo from "./images/logo256.png";
 
 const Navbar = () => {
@@ -11,60 +11,52 @@ const Navbar = () => {
   const { user, auth, handleLogout } = React.useContext(AppContext);
 
   // funciones showModal
-  const showModal = () => {
-    if (clase === "hidenModal") {
+  function showModal() {
+    if (clase === "hidenModal" && auth) {
       setClase("showModal-menu");
     } else {
       setClase("hidenModal");
     }
-  };
+  }
 
   return (
     <>
-      {!auth ? (
-        <header className="header-main">
+      <header className="header-main">
+        <section className="header-title">
           <figure className="header-logo">
             <img src={Logo} alt="logo" />
           </figure>
-          <section className="header-title">
-            <h1>Gestioner</h1>
-          </section>
-          <section className="header-avatar">
-            <ImageUser action={showModal} />
-          </section>
-        </header>
-      ) : (
-        <header className="main-header">
-          <section className="main-header-title">
-            <h1 className="title-mobile">GP</h1>
-            <h1 className="title-desk">Gestion de Procesos</h1>
-          </section>
-          <section className="main-header-avatar">
-            <div className="avatar-info">
+          <h1>Gestioner</h1>
+        </section>
+        <nav className="header-avatar">
+          {!auth ? (
+            <span></span>
+          ) : (
+            <div className="header-info">
               <p>
                 {user.firstName} {user.lastName}
               </p>
               <p>{user.charge}</p>
               <p>{user.code}</p>
             </div>
-            <ImageUser action={showModal} />
-          </section>
-          <Modal classe={clase}>
-            <Link to="/Profile" onClick={showModal}>
-              Mi Perfil
-            </Link>
-            <p>Noticias</p>
-            <p
-              onClick={() => {
-                showModal();
-                handleLogout();
-              }}
-            >
-              Logout
-            </p>
-          </Modal>
-        </header>
-      )}
+          )}
+          <ImageUser action={showModal} />
+        </nav>
+      </header>
+      <Modal classe={clase}>
+        <Link to="/Profile" onClick={showModal}>
+          Mi Perfil
+        </Link>
+        <p>Noticias</p>
+        <p
+          onClick={() => {
+            showModal();
+            handleLogout();
+          }}
+        >
+          Logout
+        </p>
+      </Modal>
     </>
   );
 };

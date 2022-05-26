@@ -25,6 +25,8 @@ img {
   height: 100%;
 }
 body {
+  width: 100vw;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   color: var(--black);
@@ -35,4 +37,10 @@ body {
 }
 .hiden {
   display: none;
+}
+
+@media screen and (width: 1366px) {
+  body {
+    width: 98.7vw;
+  }
 }

@@ -3,9 +3,9 @@
   height: 10rem;
   background: rgba(32, 35, 41, 0.95);
   position: fixed;
-  top: 6rem;
+  top: 5rem;
   right: 0;
-  margin: 10px;
+  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

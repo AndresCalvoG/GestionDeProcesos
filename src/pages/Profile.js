@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ImageUser from "../components/ImageUser";
+import ImageUser from "../components/ImageUser/ImageUser";
 import Modal from "../components/Modal";
 import Button from "../components/Buttons/Button.js";
 import InputForm from "../components/InputForm";
