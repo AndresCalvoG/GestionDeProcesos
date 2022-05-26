@@ -4,7 +4,7 @@ import { HashRouter, Switch, Route } from "react-router-dom";
 
 import "../index.css";
 
-import Landing from "../pages/Landing";
+import Landing from "../pages/Landing/Landing";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";

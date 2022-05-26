@@ -1,0 +1,147 @@
+.landing-main {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.landing-slogan {
+  width: 100vw;
+  height: 50rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--white);
+  padding: 2rem;
+  background-color: var(--blue);
+}
+.slogan-title {
+  margin-top: 2rem;
+  font-size: 4rem;
+  text-align: center;
+  font-weight: bold;
+}
+.slogan-message {
+  margin-top: 2rem;
+  margin-bottom: 5.5rem;
+  font-size: 1.8rem;
+  text-align: center;
+}
+.triangle-equilateral-bottom-left {
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 45rem;
+  left: 0;
+  border-right: 25px solid transparent;
+  border-top: 25px solid transparent;
+  border-left: 25px solid var(--orange);
+  border-bottom: 25px solid var(--orange);
+}
+.triangle-equilateral-top-right {
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-right: 25px solid var(--orange);
+  border-top: 25px solid var(--orange);
+  border-left: 25px solid transparent;
+  border-bottom: 25px solid transparent;
+}
+.landing-keyPad {
+  width: 100vw;
+  height: 15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+.landing-card {
+  width: 100vw;
+  height: 65rem;
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card-img {
+  width: 80vw;
+}
+.card-title {
+  font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+.card-code {
+  font-size: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  color: var(--black);
+}
+
+@media screen and (min-width: 410px) {
+  .landing-slogan {
+    height: 55rem;
+    padding: 3rem;
+  }
+  .slogan-title {
+    font-size: 5rem;
+  }
+  .slogan-message {
+    margin-top: 3rem;
+    font-size: 2rem;
+  }
+  .triangle-equilateral-bottom-left {
+    top: 50rem;
+  }
+  .landing-keyPad {
+    height: 18rem;
+    padding-top: 2rem;
+    padding-bottom: 3.5rem;
+  }
+  .landing-card {
+    height: 70rem;
+    padding-top: 3rem;
+  }
+  .card-title {
+    font-size: 2.5rem;
+  }
+  .card-code {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .landing-main {
+    flex-direction: row;
+  }
+  .landing-slogan {
+    width: 70vw;
+    height: 60rem;
+    align-items: flex-start;
+    padding-left: 5rem;
+  }
+  .slogan-title {
+    text-align: left;
+  }
+  .slogan-message {
+    text-align: left;
+  }
+  .slogan-board {
+    width: 55rem;
+    height: 30rem;
+  }
+  .triangle-equilateral-bottom-left {
+    top: 55rem;
+  }
+  .landing-keyPad {
+    width: 30vw;
+  }
+}

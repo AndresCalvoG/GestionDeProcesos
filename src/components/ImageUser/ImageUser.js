@@ -1,6 +1,6 @@
 import React from "react";
-import { AppContext } from "../context";
-import "./styles/imageUser.css";
+import { AppContext } from "../../context";
+import "./imageUser.css";
 
 function ImageUser(props) {
   const { User } = React.useContext(AppContext);

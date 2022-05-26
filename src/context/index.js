@@ -52,7 +52,7 @@ function AppProvider(props) {
   const [user, saveUser] = useLocalStorage("user", { value: false });
   const [company, saveCompany] = useLocalStorage("company", {});
   const [areas, saveAreas] = useLocalStorage("areas", []);
-  User = { ...user };
+  User = { ...User, ...user };
   //estados compartidos de context
   const [companyID, setCompanyID] = useState("");
   const [machines, setMachines] = useState([]);

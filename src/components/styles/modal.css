@@ -3,9 +3,9 @@
   height: 10rem;
   background: rgba(32, 35, 41, 0.95);
   position: fixed;
-  top: 6rem;
+  top: 5rem;
   right: 0;
-  margin: 10px;
+  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -39,7 +39,17 @@
 .main-modal {
   width: 90vw;
   height: 40rem;
-  padding-top: 3rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--white);
+}
+.main-modal--small {
+  width: 90vw;
+  height: 30rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -51,6 +61,9 @@
 }
 .modal-title {
   margin-bottom: 15rem;
+}
+.modal-title--small {
+  margin-bottom: 5rem;
 }
 .modal-input {
   width: 100%;
