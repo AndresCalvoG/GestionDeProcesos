@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Auth from "../utils/autenticacion";
-import "./styles/login.css";
-import { AppContext } from "../context";
+import Auth from "../../utils/autenticacion";
+import "./login.css";
+import { AppContext } from "../../context";
 
-import userLogo from "../images/user.svg";
+import userLogo from "./images/user.svg";
 
-import InputForm from "../components/InputForm";
-import Button from "../components/Buttons/Button.js";
+import InputForm from "../../components/InputForm";
+import Button from "../../components/Buttons/Button.js";
 
-const Login = () => {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fault, setFault] = useState("");
@@ -17,7 +17,7 @@ const Login = () => {
   const { getDataUsers, setLoading } = React.useContext(AppContext);
 
   //Funciones de la pagina Login
-  const handleLogin = async () => {
+  async function handleLogin() {
     if (email === "" || password === "") {
       setFault("Por favor completa todos los campos");
     } else {
@@ -45,15 +45,15 @@ const Login = () => {
         setLoading(false);
       }
     }
-  };
+  }
 
   return (
-    <main className="mainLogin">
-      <article className="mainLogin-card">
-        <figure className="mainLogin-image">
+    <main className="Login-main">
+      <section className="Login-card">
+        <figure className="Login-image">
           <img src={userLogo} alt="Logo Usuario" />
         </figure>
-        <form className="mainLogin-form" onSubmit={(e) => e.preventDefault()}>
+        <form className="Login-form" onSubmit={(e) => e.preventDefault()}>
           <InputForm
             type="email"
             label="Email"
@@ -68,13 +68,13 @@ const Login = () => {
             action={setPassword}
             class="inputForm"
           />
-          <div className="mainLogin-board">
-            <Link to="/password/reset" className="mainLogin-link">
+          <div className="Login-board">
+            <Link to="/password/reset" className="Login-link">
               ¿Olvidaste tu Contraseña?
             </Link>
             <span className="fault">{fault}</span>
           </div>
-          <div className="mainLogin-keypad">
+          <div className="Login-keypad">
             <Link to="/Register">
               <Button name="Registrarme" class="button submitb" />
             </Link>
@@ -85,9 +85,9 @@ const Login = () => {
             />
           </div>
         </form>
-      </article>
+      </section>
     </main>
   );
-};
+}
 
 export default Login;
