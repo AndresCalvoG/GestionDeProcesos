@@ -8,7 +8,7 @@ import Landing from "../pages/Landing/Landing";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
-import Home from "../pages/Home";
+import Home from "../pages/Home/Home";
 import PasswordReset from "../pages/PasswordReset";
 import Layout from "../components/Layout";
 import NotRegisterUser from "../pages/NotRegisterUser";

@@ -1,23 +1,23 @@
 import React, { useState } from "react";
-import { AppContext } from "../context";
-import "./styles/home.css";
+import { AppContext } from "../../context";
+import "./home.css";
 
-import Documents from "../images/home/Documents.png";
-import Manuals from "../images/home/manual.png";
-import Machines from "../images/home/maquina.png";
-import Calendar from "../images/home/calendar.png";
-import Help from "../images/home/help.png";
-import Schedule from "../images/home/horario.png";
-import Binnacle from "../images/home/Bitacora.jpg";
-import Passwords from "../images/home/password.svg";
-import Card from "../components/Card/Card";
+import Documents from "./images/Documents.png";
+import Manuals from "./images/manual.png";
+import Machines from "./images/maquina.png";
+import Calendar from "./images/calendar.png";
+import Help from "./images/help.png";
+import Schedule from "./images/horario.png";
+import Binnacle from "./images/Bitacora.jpg";
+import Passwords from "./images/password.svg";
+import Card from "../../components/Card/Card";
 
 function Home() {
   const { company, areas } = React.useContext(AppContext);
   const [fault, setFault] = useState("");
 
   return (
-    <main className="main-home">
+    <main className="Home-main">
       <h1 className="home-title">{company.businessName}</h1>
       <section className="home-menu">
         <Card name="Maquinas" image={Machines} route="/Machines" />

@@ -6,7 +6,7 @@ import "./styles/machines.css";
 
 import Plus from "../images/utils/plus.png";
 import Less from "../images/utils/less.png";
-import Machine from "../images/home/maquina.png";
+import Machine from "./Home/images/maquina.png";
 import Card from "../components/Card/Card";
 import Modal from "../components/Modal";
 import Button from "../components/Buttons/Button.js";

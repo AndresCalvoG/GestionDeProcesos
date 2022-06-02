@@ -1,0 +1,30 @@
+.Home-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  height: 80vh;
+}
+.home-title {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+  color: var(--blue);
+}
+.home-menu {
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+@media screen and (min-width: 600px) {
+  .home-menu {
+    width: 100vw;
+    max-width: 80rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+}
