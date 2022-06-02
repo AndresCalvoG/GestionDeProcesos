@@ -8,7 +8,7 @@ import Plus from "../images/utils/plus.png";
 import Less from "../images/utils/less.png";
 import Machine from "./Home/images/maquina.png";
 import Card from "../components/Card/Card";
-import Modal from "../components/Modal";
+import Modal from "../components/Modal/Modal.js";
 import Button from "../components/Buttons/Button.js";
 import InputForm from "../components/InputForm";
 import SelectOption from "../components/SelectOption";

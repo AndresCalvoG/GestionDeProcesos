@@ -7,7 +7,7 @@ import NewOrder from "../images/utils/newPage.png";
 import DeleteFile from "../images/utils/delete.png";
 import Card from "../components/Card/Card";
 import Notifier from "../components/Notifier";
-import Modal from "../components/Modal";
+import Modal from "../components/Modal/Modal.js";
 import SelectOption from "../components/SelectOption";
 import Button from "../components/Buttons/Button.js";
 
