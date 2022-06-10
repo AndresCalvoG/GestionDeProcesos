@@ -23,10 +23,10 @@ function Machines() {
     areas,
     setLoading,
   } = React.useContext(AppContext);
-  const [dell, setDell] = useState("hidenModal");
-  const [classe, setClasse] = useState("hidenModal");
-  const [claseData, setClaseData] = useState("hidenModal");
-  const [claseSelect, setClaseSelect] = useState("hidenModal");
+  const [dell, setDell] = useState("modal-hiden");
+  const [classe, setClasse] = useState("modal-hiden");
+  const [claseData, setClaseData] = useState("modal-hiden");
+  const [claseSelect, setClaseSelect] = useState("modal-hiden");
   const [photoName, setPhotoName] = useState("");
   const [photo, setPhoto] = useState(Machine);
   const [file, setFile] = useState("");
@@ -49,12 +49,12 @@ function Machines() {
     })();
   }, []);
 
-  const showModalDel = () => {
+  function showModalDel() {
     if (user.privilege === "Administrador") {
-      if (dell === "hidenModal") {
-        setDell("showModal-full");
+      if (dell === "modal-hiden") {
+        setDell("modal-full");
       } else {
-        setDell("hidenModal");
+        setDell("modal-hiden");
         setFault("");
         setArea("");
         setRefer("");
@@ -62,40 +62,40 @@ function Machines() {
     } else {
       setFault("not permision");
     }
-  };
+  }
 
-  const showModalAdd = () => {
+  function showModalAdd() {
     setFault("");
-    if (classe === "hidenModal") {
-      setClasse("showModal-full");
+    if (classe === "modal-hiden") {
+      setClasse("modal-full");
     } else {
-      setClasse("hidenModal");
+      setClasse("modal-hiden");
       setPhotoName("");
       setPhoto(Machine);
       setFile("");
     }
-  };
+  }
 
   function showModalData() {
     if (photoName === "" || file === "") {
-      setClasse("showModal-full");
-      setClaseData("hidenModal");
+      setClasse("modal-full");
+      setClaseData("modal-hiden");
       setFault("Selecciona una foto primero");
     } else {
       setFault("");
-      setClasse("hidenModal");
-      setClaseData("showModal-full");
+      setClasse("modal-hiden");
+      setClaseData("modal-full");
     }
   }
 
   function showModalSelect() {
     if (type === "" || refer === "" || area === "" || cubicle === "") {
-      setClaseData("showModal-full");
-      setClaseSelect("hidenModal");
+      setClaseData("modal-full");
+      setClaseSelect("modal-hiden");
       setFault("Completa todos los campos");
     } else {
-      setClaseData("hidenModal");
-      setClaseSelect("showModal-full");
+      setClaseData("modal-hiden");
+      setClaseSelect("modal-full");
       setFault("");
     }
   }
@@ -112,7 +112,7 @@ function Machines() {
       setFault("completa la marca de la camara");
     } else {
       setFault("");
-      setClaseSelect("hidenModal");
+      setClaseSelect("Modal-hiden");
       setLoading(true);
       let currentArea = await database.validateAreaName(company.id, area);
       if (currentArea) {
@@ -210,7 +210,7 @@ function Machines() {
       setLoading(true);
       database.deleteMachine(company.id, areaToDelete, machineToDelete);
       storage.deleteMachinePhoto(company.id, refer);
-      setDell("hidenModal");
+      setDell("Modal-hiden");
       setArea("");
       setRefer("");
       setLoading(false);
@@ -244,8 +244,9 @@ function Machines() {
         </Card>
       </section>
       <span className="fault">{fault}</span>
+
       <Modal classe={dell}>
-        <div className="main-modal">
+        <div className="modal-main">
           <h2>Eliminar Maquina </h2>
           <label className="modal-label">
             <h1>Area:</h1>
@@ -286,7 +287,7 @@ function Machines() {
         </div>
       </Modal>
       <Modal classe={classe}>
-        <div className="main-modal">
+        <div className="modal-main">
           <h4>Toma una foto horizontalmente </h4>
           <figure className="modal-image">
             <img id="photo" src={photo} alt="Imagen de Maquina" />
@@ -316,11 +317,11 @@ function Machines() {
         </div>
       </Modal>
       <Modal classe={claseData}>
-        <div className="main-modal">
+        <div className="modal-main">
           <h4>Completa la informacion </h4>
           <br />
           <br />
-          <label>
+          <label className="modal-label">
             Tipo:
             <InputForm
               type="text"
@@ -331,7 +332,7 @@ function Machines() {
               class="inputFormOrder"
             />
           </label>
-          <label>
+          <label className="modal-label">
             Referencia:
             <InputForm
               type="text"
@@ -342,7 +343,7 @@ function Machines() {
               class="inputFormOrder"
             />
           </label>
-          <label>
+          <label className="modal-label">
             Area:
             <InputForm
               type="text"
@@ -353,7 +354,7 @@ function Machines() {
               class="inputFormOrder"
             />
           </label>
-          <label>
+          <label className="modal-label">
             Cubiculo:
             <InputForm
               type="text"
@@ -371,8 +372,8 @@ function Machines() {
               name="Atras"
               class="button submitb"
               action={() => {
-                setClasse("showModal-full");
-                setClaseData("hidenModal");
+                setClasse("modal-full");
+                setClaseData("modal-hiden");
                 setFault("");
               }}
             />
@@ -385,7 +386,7 @@ function Machines() {
         </div>
       </Modal>
       <Modal classe={claseSelect}>
-        <div className="main-modal">
+        <div className="modal-main">
           <h4>Selecciona los componentes </h4>
           <br />
           <div className="modal-select">
@@ -420,7 +421,7 @@ function Machines() {
                 size="20"
                 value={hmi}
                 action={setHmi}
-                readOnly={false}
+                readOnly={display[0] ? false : true}
                 class="inputFormOrder"
               />
             </label>
@@ -474,8 +475,8 @@ function Machines() {
               class="button submitb"
               action={() => {
                 setFault("");
-                setClaseData("showModal-full");
-                setClaseSelect("hidenModal");
+                setClaseData("modal-full");
+                setClaseSelect("modal-hiden");
               }}
             />
             <Button

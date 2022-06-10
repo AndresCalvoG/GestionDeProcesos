@@ -7,15 +7,15 @@ import ImageUser from "../ImageUser/ImageUser";
 import Logo from "./images/logo256.png";
 
 const Navbar = () => {
-  const [clase, setClase] = useState("hidenModal");
+  const [clase, setClase] = useState("modal-hiden");
   const { user, auth, handleLogout } = React.useContext(AppContext);
 
   // funciones showModal
   function showModal() {
-    if (clase === "hidenModal" && auth) {
-      setClase("showModal-menu");
+    if (clase === "modal-hiden" && auth) {
+      setClase("modal-small");
     } else {
-      setClase("hidenModal");
+      setClase("modal-hiden");
     }
   }
 

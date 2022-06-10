@@ -1,4 +1,4 @@
-.showModal-menu {
+.modal-small {
   width: 15rem;
   height: 10rem;
   background: rgba(32, 35, 41, 0.95);
@@ -14,7 +14,7 @@
   padding: 10px;
   font-size: 2rem;
 }
-.showModal-full {
+.modal-full {
   width: 100vw;
   height: 100vh;
   background: rgba(32, 35, 41, 0.8);
@@ -28,16 +28,19 @@
   padding: 10px;
   font-size: 2rem;
 }
-.hidenModal {
+.modal-hiden {
   display: none;
 }
-.showModal-menu a {
+
+.modal-small a {
   font-size: 2rem;
   text-decoration: none;
   color: var(--white);
 }
-.main-modal {
+
+.modal-main {
   width: 90vw;
+  max-width: 40rem;
   height: 40rem;
   padding: 2rem;
   display: flex;
@@ -46,8 +49,9 @@
   align-items: center;
   background-color: var(--white);
 }
-.main-modal--small {
+.modal-main--small {
   width: 90vw;
+  max-width: 40rem;
   height: 30rem;
   padding: 2rem;
   display: flex;
@@ -56,7 +60,7 @@
   align-items: center;
   background-color: var(--white);
 }
-.main-modal h2 {
+.modal-main h2 {
   margin-bottom: 10rem;
 }
 .modal-title {
@@ -67,6 +71,7 @@
 }
 .modal-input {
   width: 100%;
+  max-width: 29rem;
   margin-bottom: 2rem;
   padding: 0.5rem;
   display: flex;
@@ -82,9 +87,15 @@
 }
 .modal-fault {
   width: 100%;
+  max-width: 29rem;
   height: 3rem;
   display: flex;
-  padding-left: 3rem;
   justify-content: flex-start;
   align-items: center;
+}
+
+@media screen and (min-width: 370px) {
+  .modal-main--small {
+    height: 28rem;
+  }
 }

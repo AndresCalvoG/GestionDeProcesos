@@ -12,16 +12,16 @@ function Profile() {
   const { user, getDataUsers, User, setLoading } = React.useContext(AppContext);
   const [photo, setPhoto] = useState("");
   const [file, setFile] = useState("");
-  const [clase, setClase] = useState("hidenModal");
+  const [clase, setClase] = useState("modal-hiden");
   const [menu, setMenu] = useState("hiden");
   const [items, setItems] = useState("hiden");
 
   const showModalAdd = () => {
-    if (clase === "hidenModal") {
-      setClase("showModal-full");
+    if (clase === "modal-hiden") {
+      setClase("modal-full");
       showMenu();
     } else {
-      setClase("hidenModal");
+      setClase("modal-hiden");
       setPhoto("");
       User.photoUrl = user.photoUrl;
     }
@@ -93,7 +93,7 @@ function Profile() {
         </div>
       </section>
       <Modal classe={clase}>
-        <div className="main-modal">
+        <div className="modal-main">
           <div className="card-photo">
             <ImageUser />
           </div>
@@ -108,7 +108,7 @@ function Profile() {
             readOnly={false}
             class="inputForm"
           />
-          <div className="modalKeypad">
+          <div className="modal-Keypad">
             <Button
               name="cancelar"
               class="button submitb"
