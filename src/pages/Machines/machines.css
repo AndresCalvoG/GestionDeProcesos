@@ -1,7 +1,5 @@
 .machines-main {
-  position: absolute;
   width: 100vw;
-  top: 12%;
   display: flex;
   flex-direction: column;
   align-items: center;
