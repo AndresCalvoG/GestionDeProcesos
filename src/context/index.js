@@ -163,7 +163,8 @@ function AppProvider(props) {
     } else {
       let machinesRef = await database.getDataMachines(company.id, idArea);
       if (machinesRef.empty) {
-        setMachines([{ id: "", name: "", empty: machinesRef.empty }]);
+        setMachines([{ id: "empty", name: "empty", empty: machinesRef.empty }]);
+        return [{ id: "empty", name: "empty", empty: machinesRef.empty }];
       } else {
         let arrayMachines = machinesRef.docs.map((element) => {
           let item = {

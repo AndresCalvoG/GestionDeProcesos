@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { AppContext } from "../context";
-import storage from "../utils/storege";
-import database from "../utils/fireStore";
-import "./styles/machines.css";
+import { AppContext } from "../../context";
+import storage from "../../utils/storege";
+import database from "../../utils/fireStore";
+import "./machines.css";
 
-import Plus from "../images/utils/plus.png";
-import Less from "../images/utils/less.png";
-import Machine from "./Home/images/maquina.png";
-import Card from "../components/Card/Card";
-import Modal from "../components/Modal/Modal.js";
-import Button from "../components/Buttons/Button.js";
-import InputForm from "../components/InputForm";
-import SelectOption from "../components/SelectOption";
+import Plus from "../../images/utils/plus.png";
+import Less from "../../images/utils/less.png";
+import Machine from "../Home/images/maquina.png";
+import Card from "../../components/Card/Card";
+import Modal from "../../components/Modal/Modal.js";
+import Button from "../../components/Buttons/Button.js";
+import InputForm from "../../components/InputForm";
+import SelectOption from "../../components/SelectOption";
 
 function Machines() {
   const {
@@ -22,6 +22,7 @@ function Machines() {
     updateMachinesArea,
     areas,
     setLoading,
+    loading,
   } = React.useContext(AppContext);
   const [dell, setDell] = useState("modal-hiden");
   const [classe, setClasse] = useState("modal-hiden");
@@ -47,7 +48,7 @@ function Machines() {
     (async function () {
       await updateAreasCompany(user.company);
     })();
-  }, []);
+  }, [loading]);
 
   function showModalDel() {
     if (user.privilege === "Administrador") {
@@ -112,7 +113,7 @@ function Machines() {
       setFault("completa la marca de la camara");
     } else {
       setFault("");
-      setClaseSelect("Modal-hiden");
+      setClaseSelect("modal-hiden");
       setLoading(true);
       let currentArea = await database.validateAreaName(company.id, area);
       if (currentArea) {
@@ -210,7 +211,7 @@ function Machines() {
       setLoading(true);
       database.deleteMachine(company.id, areaToDelete, machineToDelete);
       storage.deleteMachinePhoto(company.id, refer);
-      setDell("Modal-hiden");
+      setDell("modal-hiden");
       setArea("");
       setRefer("");
       setLoading(false);
@@ -218,7 +219,7 @@ function Machines() {
   }
 
   return (
-    <main className="main-machines">
+    <main className="machines-main">
       <section className="machines-controls">
         <Card name="Nueva" image={Plus} action={showModalAdd} />
         <Card name="Eliminar" image={Less} action={showModalDel} />

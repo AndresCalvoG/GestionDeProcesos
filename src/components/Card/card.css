@@ -27,6 +27,9 @@
   color: var(--black);
   background-color: lightgray;
 }
+.areasContent-title h1 {
+  margin-left: 1rem;
+}
 .areasContent .contentCards {
   width: 100vw;
   height: 48rem;

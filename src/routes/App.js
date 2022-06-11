@@ -19,7 +19,7 @@ import Help from "../pages/Help";
 import Binnacle from "../pages/Binnacle";
 import Documents from "../pages/Documents";
 import Profile from "../pages/Profile";
-import Machines from "../pages/Machines";
+import Machines from "../pages/Machines/Machines";
 import Passwords from "../pages/Passwords";
 
 import { AppContext } from "../context/index";
