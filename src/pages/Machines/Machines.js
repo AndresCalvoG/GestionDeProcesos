@@ -100,8 +100,36 @@ function Machines() {
       setFault("");
     }
   }
+  async function createMachine(areaId) {
+    let equipoRef = await database.createNewMachine(
+      user.company,
+      areaId,
+      refer
+    );
+    let imageURL = await storage.uploadMachinePhoto(user.company, file, refer);
+    await database.addDataMachine(
+      user.company,
+      areaId,
+      equipoRef.id,
+      { hmi },
+      { camara },
+      { imageURL, type, cubicle }
+    );
+    setPhotoName("");
+    setPhoto(Machine);
+    setFile("");
+    setType("");
+    setRefer("");
+    setArea("");
+    setCubicle("");
+    setDisplay([false, false]);
+    setHmi("");
+    setCamera([false, false]);
+    setCamara("");
+    setLoading(false);
+  }
 
-  async function createMachine() {
+  async function validateMachine() {
     if (
       (display[0] === false && display[1] === false) ||
       (camera[0] === false && camera[1] === false)
@@ -137,69 +165,11 @@ function Machines() {
           setCamara("");
           setLoading(false);
         } else {
-          let equipoRef = await database.createNewMachine(
-            user.company,
-            currentArea.id,
-            refer
-          );
-          let imageURL = await storage.uploadMachinePhoto(
-            user.company,
-            file,
-            refer
-          );
-          await database.addDataMachine(
-            user.company,
-            currentArea.id,
-            equipoRef.id,
-            { hmi },
-            { camara },
-            { imageURL, type, cubicle }
-          );
-          setPhotoName("");
-          setPhoto(Machine);
-          setFile("");
-          setType("");
-          setRefer("");
-          setArea("");
-          setCubicle("");
-          setDisplay([false, false]);
-          setHmi("");
-          setCamera([false, false]);
-          setCamara("");
-          setLoading(false);
+          await createMachine(currentArea.id);
         }
       } else {
         let areaRef = await database.createNewArea(user.company, area);
-        let equipoRef = await database.createNewMachine(
-          user.company,
-          areaRef.id,
-          refer
-        );
-        let imageURL = await storage.uploadMachinePhoto(
-          user.company,
-          file,
-          refer
-        );
-        await database.addDataMachine(
-          user.company,
-          areaRef.id,
-          equipoRef.id,
-          { hmi },
-          { camara },
-          { imageURL, type, cubicle }
-        );
-        setPhotoName("");
-        setPhoto(Machine);
-        setFile("");
-        setType("");
-        setRefer("");
-        setArea("");
-        setCubicle("");
-        setDisplay([false, false]);
-        setHmi("");
-        setCamera([false, false]);
-        setCamara("");
-        setLoading(false);
+        await createMachine(areaRef.id);
       }
     }
   }
@@ -483,7 +453,7 @@ function Machines() {
             <Button
               name="Finalizar"
               class="button submit"
-              action={createMachine}
+              action={validateMachine}
             />
           </div>
         </div>
