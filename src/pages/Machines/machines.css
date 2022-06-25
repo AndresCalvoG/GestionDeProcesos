@@ -11,10 +11,9 @@
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: 130px;
 }
-.machines-content {
+.machines-slider {
   width: 100vw;
-  height: 53rem;
-  max-width: 60rem;
+  max-width: 70rem;
 }
 .modal-image {
   width: 300px;
@@ -43,11 +42,11 @@
     align-items: flex-start;
     justify-content: center;
   }
-  .machines-content {
-    width: 80vw;
-  }
   .machines-controls {
     width: 20vw;
     grid-template-columns: 1fr;
+  }
+  .machines-slider {
+    width: 80vw;
   }
 }

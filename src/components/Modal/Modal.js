@@ -2,9 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./modal.css";
 
-function Modal({ children, classe }) {
+function Modal({ children, show }) {
+  let style = "";
+  show ? (style = "modal-full") : (style = "modal-hiden");
   return ReactDOM.createPortal(
-    <div className={classe}>{children}</div>,
+    <div className={style}>{children}</div>,
     document.getElementById("modal")
   );
 }
