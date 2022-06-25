@@ -11,7 +11,7 @@ import Modal from "../../components/Modal/Modal.js";
 import InputForm from "../../components/InputForm";
 
 function Landing() {
-  const [clase, setClase] = useState("modal-hiden");
+  const [modal, setModal] = useState(false);
   const [next, setNext] = useState(false);
   const [businessName, setBusinessName] = useState("");
   const [fault, setFault] = useState("");
@@ -25,10 +25,10 @@ function Landing() {
   } = React.useContext(AppContext);
 
   function showModal() {
-    if (clase === "modal-hiden") {
-      setClase("modal-full");
+    if (!modal) {
+      setModal(true);
     } else {
-      setClase("modal-hiden");
+      setModal(false);
       setCompanyID("");
       setBusinessName("");
       setFault("");
@@ -53,7 +53,7 @@ function Landing() {
       });
       setCompanyID(companyRef);
       Auth.logoutUsers();
-      setClase("hidenModal");
+      setModal(false);
       setLoading(false);
       setNext(true);
     }
@@ -103,7 +103,7 @@ function Landing() {
           </Link>
         </section>
       )}
-      <Modal classe={clase}>
+      <Modal show={modal}>
         <div className="modal-main--small">
           <h3 className="modal-title--small">* Como se llama tu Empresa? </h3>
           <div className="modal-input">

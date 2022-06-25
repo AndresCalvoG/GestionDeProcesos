@@ -7,15 +7,15 @@ import ImageUser from "../ImageUser/ImageUser";
 import Logo from "./images/logo256.png";
 
 const Navbar = () => {
-  const [clase, setClase] = useState("modal-hiden");
+  const [modal, setModal] = useState(false);
   const { user, auth, handleLogout } = React.useContext(AppContext);
 
   // funciones showModal
   function showModal() {
-    if (clase === "modal-hiden" && auth) {
-      setClase("modal-small");
+    if (!modal && auth) {
+      setModal(true); //small
     } else {
-      setClase("modal-hiden");
+      setModal(false);
     }
   }
 
@@ -43,7 +43,7 @@ const Navbar = () => {
           <ImageUser action={showModal} />
         </nav>
       </header>
-      <Modal classe={clase}>
+      <Modal showMenu={modal}>
         <Link to="/Profile" onClick={showModal}>
           Mi Perfil
         </Link>

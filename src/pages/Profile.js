@@ -12,20 +12,20 @@ function Profile() {
   const { user, getDataUsers, User, setLoading } = React.useContext(AppContext);
   const [photo, setPhoto] = useState("");
   const [file, setFile] = useState("");
-  const [clase, setClase] = useState("modal-hiden");
+  const [modal, setModal] = useState(false);
   const [menu, setMenu] = useState("hiden");
   const [items, setItems] = useState("hiden");
 
-  const showModalAdd = () => {
-    if (clase === "modal-hiden") {
-      setClase("modal-full");
+  function showModalAdd() {
+    if (!modal) {
+      setModal(true);
       showMenu();
     } else {
-      setClase("modal-hiden");
+      setModal(false);
       setPhoto("");
       User.photoUrl = user.photoUrl;
     }
-  };
+  }
   function showMenu() {
     if (menu === "hiden") {
       setMenu("photo-menu--list");
@@ -92,7 +92,7 @@ function Profile() {
           <p>{user.code}</p>
         </div>
       </section>
-      <Modal classe={clase}>
+      <Modal show={modal}>
         <div className="modal-main">
           <div className="card-photo">
             <ImageUser />
