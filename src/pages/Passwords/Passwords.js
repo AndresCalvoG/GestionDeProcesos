@@ -1,75 +1,82 @@
 import React, { useState, useEffect } from "react";
-import { AppContext } from "../context";
-import Card from "../components/Card/Card";
-import Modal from "../components/Modal/Modal.js";
-import Button from "../components/Buttons/Button.js";
-import SelectOption from "../components/SelectOption";
-import InputForm from "../components/InputForm";
-import Viwer from "../components/Viwer";
+import { AppContext } from "../../context";
 
-import database from "../utils/fireStore";
+import Plus from "../../images/utils/plus.png";
+import Less from "../../images/utils/less.png";
+import Card from "../../components/Card/Card";
+import Modal from "../../components/Modal/Modal.js";
+import Button from "../../components/Buttons/Button.js";
+import SelectOption from "../../components/SelectOption";
+import InputForm from "../../components/InputForm";
+import Viwer from "../../components/Viwer";
+
+import database from "../../utils/fireStore";
 
 function Passwords() {
-  const Plus =
-    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Futils%2Fplus.png?alt=media&token=61e48bf0-a78f-4dc3-b2fd-7f36f6493598";
-  const Less =
-    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/root%2Fimages%2Futils%2Fless.png?alt=media&token=7b9abfca-6c64-4884-94ea-37e57d2aef24";
-  const types = ["admin", "superv", "Tech", "oper"];
-  const partes = ["Hmi", "Camara"];
-  const { areas, equipos, getFireStoreData } = React.useContext(AppContext);
+  const LEVELS = ["Admin", "Super", "Tech", "Oper"];
+  const {
+    user,
+    updateAreasCompany,
+    areas,
+    machines,
+    parts,
+    updateMachinesArea,
+    updatePartsMachine,
+  } = React.useContext(AppContext);
 
-  const [clase, setClase] = useState("hidenModal");
-  const [classe, setClasse] = useState("hidenModal");
-  const [equipo, setEquipo] = useState("");
+  const [modal, setModal] = useState([false, false]);
+  const [machine, setMachine] = useState("");
+  const [machineID, setMachineID] = useState("");
   const [area, setArea] = useState("");
-  const [user, setUser] = useState("");
+  const [areaID, setAreaID] = useState("");
+  const [newUser, setNewUser] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [parte, setParte] = useState("");
-  const [type, setType] = useState("");
+  const [part, setPart] = useState("");
+  const [level, setLevel] = useState("");
   const [fault, setFault] = useState("");
 
   useEffect(() => {
     (async function () {
-      await getFireStoreData(area, equipo);
+      await updateAreasCompany(user.company);
     })();
-  }, [area, equipo]);
+  }, []);
 
-  const showModalDel = () => {
-    if (clase === "hidenModal") {
-      setClase("showModal-full");
+  function showModalDel() {
+    if (!modal[0]) {
+      setModal([true, false]);
     } else {
-      setClase("hidenModal");
+      setModal([false, false]);
     }
-  };
+  }
 
-  const showModalAdd = () => {
-    if (area === "" || equipo === "" || parte === "") {
+  function showModalAdd() {
+    if (area === "" || machine === "" || part === "") {
       setFault("*Debes seleccionar un area y un equipo");
     } else {
       setFault("");
-      if (classe === "hidenModal") {
-        setClasse("showModal-full");
+      if (!modal[1]) {
+        setModal([false, true]);
       } else {
-        setClasse("hidenModal");
+        setModal([false, false]);
       }
     }
-  };
+  }
 
   async function createPassword() {
-    await database.createNewPassword(area, equipo, parte, user, {
+    await database.createNewPassword(area, machine, part, user, {
       user,
       password,
-      type,
+      level,
       name,
     });
     setArea("");
-    setEquipo("");
-    setParte("");
-    setUser("");
+    setMachine("");
+    setPart("");
+    setNewUser("");
     setName("");
     setPassword("");
-    setType("");
+    setLevel("");
     showModalAdd();
   }
 
@@ -83,21 +90,43 @@ function Passwords() {
         <div className="contBody">
           <label>
             Area:
-            <SelectOption options={areas} value={area} action={setArea} />
+            <SelectOption
+              options={areas}
+              value={area}
+              action={setArea}
+              actionMachines={(e) => {
+                updateMachinesArea(e);
+                setAreaID(e);
+              }}
+              type="area"
+            />
           </label>
           <label>
-            Equipo:
-            <SelectOption options={equipos} value={equipo} action={setEquipo} />
+            Maquina:
+            <SelectOption
+              options={machines}
+              value={machine}
+              action={setMachine}
+              actionMachines={(e) => {
+                updatePartsMachine(areaID, e);
+              }}
+              type="area"
+            />
           </label>
           <label>
             Dispositivo:
-            <SelectOption options={partes} value={parte} action={setParte} />
+            <SelectOption
+              options={parts}
+              value={part}
+              action={setPart}
+              type="area"
+            />
           </label>
           <span>{fault}</span>
         </div>
       </section>
-      <Viwer area={area} machine={equipo} parte={parte} />
-      <Modal classe={clase}>
+      {/* <Viwer area={area} machine={equipo} parte={parte} /> */}
+      <Modal show={modal[0]}>
         <div className="main-modal">
           <h2>Eliminar Password </h2>
           <div className="modalKeypad">
@@ -106,7 +135,7 @@ function Passwords() {
           </div>
         </div>
       </Modal>
-      <Modal classe={classe}>
+      <Modal show={modal[1]}>
         <div className="main-modal">
           <h2>Nuevo Password </h2>
           <label>
@@ -125,8 +154,8 @@ function Passwords() {
             <InputForm
               type="text"
               size="20"
-              value={user}
-              action={setUser}
+              value={newUser}
+              action={setNewUser}
               readOnly={false}
               class="inputFormOrder"
             />
@@ -144,7 +173,7 @@ function Passwords() {
           </label>
           <label>
             tipo:
-            <SelectOption options={types} value={type} action={setType} />
+            <SelectOption options={LEVELS} value={level} action={setLevel} />
           </label>
           <div className="modalKeypad">
             <Button name="Crear" class="modalMenu" action={createPassword} />

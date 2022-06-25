@@ -56,6 +56,7 @@ function AppProvider(props) {
   //estados compartidos de context
   const [companyID, setCompanyID] = useState("");
   const [machines, setMachines] = useState([]);
+  const [parts, setParts] = useState([]);
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [loading, setLoading] = useState(false);
@@ -157,11 +158,11 @@ function AppProvider(props) {
       saveAreas(areasArray);
     }
   }
-  async function updateMachinesArea(idArea) {
-    if (idArea === "") {
+  async function updateMachinesArea(areaID) {
+    if (areaID === "") {
       setMachines([]);
     } else {
-      let machinesRef = await database.getDataMachines(company.id, idArea);
+      let machinesRef = await database.getDataMachines(company.id, areaID);
       if (machinesRef.empty) {
         setMachines([{ id: "empty", name: "empty", empty: machinesRef.empty }]);
         return [{ id: "empty", name: "empty", empty: machinesRef.empty }];
@@ -184,6 +185,32 @@ function AppProvider(props) {
           return item;
         });
         setMachines(arrayMachines);
+      }
+    }
+  }
+  async function updatePartsMachine(areaID, machineID) {
+    if (machineID === "") {
+      setParts([]);
+    } else {
+      let partsRef = await database.getPartsMachine(
+        company.id,
+        areaID,
+        machineID
+      );
+      if (partsRef.empty) {
+        setParts([{ id: "empty", name: "empty", empty: partsRef.empty }]);
+        return [{ id: "empty", name: "empty", empty: partsRef.empty }];
+      } else {
+        let arrayParts = partsRef.docs.map((element) => {
+          let item = {
+            id: element._delegate._document.data.value.mapValue.fields.id
+              .stringValue,
+            name: element._delegate._document.data.value.mapValue.fields.camara //modificar este nombre
+              .stringValue,
+          };
+          return item;
+        });
+        setParts(arrayParts);
       }
     }
   }
@@ -212,11 +239,13 @@ function AppProvider(props) {
         areas,
         saveAreas,
         machines,
+        parts,
         handleLogout,
         getDataUsers,
         getCurrentDate,
         updateAreasCompany,
         updateMachinesArea,
+        updatePartsMachine,
       }}
     >
       {props.children}

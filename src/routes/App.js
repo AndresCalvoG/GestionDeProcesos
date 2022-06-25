@@ -20,7 +20,7 @@ import Binnacle from "../pages/Binnacle";
 import Documents from "../pages/Documents";
 import Profile from "../pages/Profile";
 import Machines from "../pages/Machines/Machines";
-import Passwords from "../pages/Passwords";
+import Passwords from "../pages/Passwords/Passwords";
 
 import { AppContext } from "../context/index";
 

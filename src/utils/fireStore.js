@@ -293,7 +293,7 @@ class Database {
   }
   async getDataMachines(idcompany, idArea) {
     try {
-      var docData = await this.db
+      let docData = await this.db
         .collection("Companies")
         .doc(idcompany)
         .collection("Areas")
@@ -419,7 +419,7 @@ class Database {
   }
   async validateMachineName(companyId, areaId, name) {
     try {
-      var docRef = await this.db
+      let docRef = await this.db
         .collection("Companies")
         .doc(companyId)
         .collection("Areas")
@@ -454,6 +454,26 @@ class Database {
     } catch (error) {
       console.log(error);
       return error;
+    }
+  }
+  async getPartsMachine(companyID, areaID, machineID) {
+    try {
+      let components = await this.db
+        .collection("Companies")
+        .doc(companyID)
+        .collection("Areas")
+        .doc(areaID)
+        .collection("Machines")
+        .doc(machineID)
+        .collection("Components")
+        .get();
+      return components;
+    } catch (error) {
+      console.log(error);
+      return {
+        value: "0",
+        exists: false,
+      };
     }
   }
 }

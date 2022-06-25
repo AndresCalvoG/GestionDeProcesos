@@ -13,11 +13,9 @@ import Button from "../../components/Buttons/Button.js";
 import InputForm from "../../components/InputForm";
 import SelectOption from "../../components/SelectOption";
 import Slideshow from "../../components/Slideshow/Slideshow";
-import AreasSelector from "../../components/AreasSelector/AreasSelector";
 
 function Machines() {
   const {
-    company,
     user,
     updateAreasCompany,
     machines,
@@ -137,10 +135,10 @@ function Machines() {
       setFault("");
       setModal([false, false, false, false]);
       setLoading(true);
-      let currentArea = await database.validateAreaName(company.id, area);
+      let currentArea = await database.validateAreaName(user.company, area);
       if (currentArea) {
         let currentMachine = await database.validateMachineName(
-          company.id,
+          user.company,
           currentArea.id,
           refer
         );
@@ -173,8 +171,8 @@ function Machines() {
       setFault("Completa los campos");
     } else {
       setLoading(true);
-      database.deleteMachine(company.id, areaID, machineToDelete);
-      storage.deleteMachinePhoto(company.id, refer);
+      database.deleteMachine(user.company, areaID, machineToDelete);
+      storage.deleteMachinePhoto(user.company, refer);
       setModal([false, false, false, false]);
       setArea("");
       setRefer("");
@@ -189,7 +187,18 @@ function Machines() {
         <Card name="Eliminar" image={Less} action={showModalDel} />
       </section>
       <section className="machines-slider">
-        <AreasSelector />
+        <label className="machines-selector">
+          <h1 className="machines-selector--title">Area:</h1>
+          <SelectOption
+            options={areas}
+            value={area}
+            action={setArea}
+            actionMachines={(e) => {
+              updateMachinesArea(e);
+            }}
+            type="area"
+          />
+        </label>
         <Slideshow />
         <span className="fault">{fault}</span>
       </section>
