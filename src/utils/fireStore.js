@@ -227,30 +227,68 @@ class Database {
   }
 
   //Methods to create and modify passwods
-  async createNewPassword(area, equipo, parte, user, props) {
+  async createNewPassword(companyID, areaID, machineID, partID, passwords) {
     try {
-      await this.db
-        .collection("areas")
-        .doc(area)
-        .collection(equipo)
-        .doc(parte)
-        .collection("usuarios")
-        .doc(user)
-        .set(props);
+      let passwordsRef = await this.getPasswords(
+        companyID,
+        areaID,
+        machineID,
+        partID
+      );
+      if (
+        passwordsRef._delegate._document.data.value.mapValue.fields.passwords
+      ) {
+        let oldPass =
+          passwordsRef._delegate._document.data.value.mapValue.fields.passwords
+            .arrayValue.values;
+        let arrayPass = oldPass.map((element) => {
+          let item = {
+            User: element.mapValue.fields.User.stringValue,
+            level: element.mapValue.fields.level.stringValue,
+            name: element.mapValue.fields.name.stringValue,
+            password: element.mapValue.fields.password.stringValue,
+          };
+          return item;
+        });
+        await this.db
+          .collection("Companies")
+          .doc(companyID)
+          .collection("Areas")
+          .doc(areaID)
+          .collection("Machines")
+          .doc(machineID)
+          .collection("Components")
+          .doc(partID)
+          .set({ passwords: [...arrayPass, passwords] }, { merge: true });
+      } else {
+        await this.db
+          .collection("Companies")
+          .doc(companyID)
+          .collection("Areas")
+          .doc(areaID)
+          .collection("Machines")
+          .doc(machineID)
+          .collection("Components")
+          .doc(partID)
+          .set({ passwords: [passwords] }, { merge: true });
+      }
       console.log("creado");
     } catch (error) {
       console.log(error);
       return error.message;
     }
   }
-  async getPasswords(area, machine, parte) {
+  async getPasswords(companyID, areaID, machineID, partID) {
     try {
       let docData = await this.db
-        .collection("areas")
-        .doc(area)
-        .collection(machine)
-        .doc(parte)
-        .collection("usuarios")
+        .collection("Companies")
+        .doc(companyID)
+        .collection("Areas")
+        .doc(areaID)
+        .collection("Machines")
+        .doc(machineID)
+        .collection("Components")
+        .doc(partID)
         .get();
       return docData;
     } catch (error) {
@@ -261,7 +299,50 @@ class Database {
       };
     }
   }
+  async deletePassword(companyID, areaID, machineID, partID, pass) {
+    try {
+      let passwordsRef = await this.getPasswords(
+        companyID,
+        areaID,
+        machineID,
+        partID
+      );
+      if (
+        passwordsRef._delegate._document.data.value.mapValue.fields.passwords
+      ) {
+        let oldPass =
+          passwordsRef._delegate._document.data.value.mapValue.fields.passwords
+            .arrayValue.values;
+        let arrayPass = oldPass.map((element) => {
+          let item = {
+            User: element.mapValue.fields.User.stringValue,
+            level: element.mapValue.fields.level.stringValue,
+            name: element.mapValue.fields.name.stringValue,
+            password: element.mapValue.fields.password.stringValue,
+          };
+          return item;
+        });
+        let newArray = arrayPass.filter((element) => {
+          if (element.name !== pass) {
+            return element;
+          }
+        });
 
+        await this.db
+          .collection("Companies")
+          .doc(companyID)
+          .collection("Areas")
+          .doc(areaID)
+          .collection("Machines")
+          .doc(machineID)
+          .collection("Components")
+          .doc(partID)
+          .set({ passwords: [...newArray] }, { merge: true });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   // methods to create and modify machines
   async createNewMachine(company, areaID, machine) {
     try {
@@ -311,7 +392,7 @@ class Database {
   }
   async addDataMachine(company, area, equipo, hmi, camara, data) {
     try {
-      if (hmi.hmi !== "") {
+      if (hmi !== "") {
         let hmiRef = await this.db
           .collection("Companies")
           .doc(company)
@@ -320,7 +401,7 @@ class Database {
           .collection("Machines")
           .doc(equipo)
           .collection("Components")
-          .add(hmi);
+          .add({ name: hmi });
         await this.db
           .collection("Companies")
           .doc(company)
@@ -333,11 +414,12 @@ class Database {
           .set(
             {
               id: hmiRef.id,
+              type: "Hmi",
             },
             { merge: true }
           );
       }
-      if (camara.camara !== "") {
+      if (camara !== "") {
         let camaraRef = await this.db
           .collection("Companies")
           .doc(company)
@@ -346,7 +428,7 @@ class Database {
           .collection("Machines")
           .doc(equipo)
           .collection("Components")
-          .add(camara);
+          .add({ name: camara });
         await this.db
           .collection("Companies")
           .doc(company)
@@ -359,6 +441,7 @@ class Database {
           .set(
             {
               id: camaraRef.id,
+              type: "Camara",
             },
             { merge: true }
           );

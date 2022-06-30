@@ -205,7 +205,7 @@ function AppProvider(props) {
           let item = {
             id: element._delegate._document.data.value.mapValue.fields.id
               .stringValue,
-            name: element._delegate._document.data.value.mapValue.fields.camara //modificar este nombre
+            name: element._delegate._document.data.value.mapValue.fields.name
               .stringValue,
           };
           return item;

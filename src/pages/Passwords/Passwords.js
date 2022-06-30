@@ -13,7 +13,7 @@ import Viwer from "../../components/Viwer";
 import database from "../../utils/fireStore";
 
 function Passwords() {
-  const LEVELS = ["Admin", "Super", "Tech", "Oper"];
+  const LEVELS = ["ADMINISTRATOR", "SUPERVISOR", "TECHNICAL", "OPERATOR"];
   const {
     user,
     updateAreasCompany,
@@ -22,6 +22,7 @@ function Passwords() {
     parts,
     updateMachinesArea,
     updatePartsMachine,
+    setLoading,
   } = React.useContext(AppContext);
 
   const [modal, setModal] = useState([false, false]);
@@ -29,12 +30,15 @@ function Passwords() {
   const [machineID, setMachineID] = useState("");
   const [area, setArea] = useState("");
   const [areaID, setAreaID] = useState("");
-  const [newUser, setNewUser] = useState("");
+  const [User, setUser] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [part, setPart] = useState("");
+  const [partID, setPartID] = useState("");
   const [level, setLevel] = useState("");
   const [fault, setFault] = useState("");
+  const [passwords, setPasswords] = useState([]);
+  const [passToDelete, setPassToDelete] = useState("");
 
   useEffect(() => {
     (async function () {
@@ -43,16 +47,26 @@ function Passwords() {
   }, []);
 
   function showModalDel() {
-    if (!modal[0]) {
-      setModal([true, false]);
+    if (user.privilege === "Administrador") {
+      if (area === "" || machine === "" || part === "") {
+        setFault("*Debes seleccionar un area, un equipo y un dispositivo");
+      } else {
+        setFault("");
+        getPasswords();
+        if (!modal[0]) {
+          setModal([true, false]);
+        } else {
+          setModal([false, false]);
+        }
+      }
     } else {
-      setModal([false, false]);
+      setFault("not permision");
     }
   }
 
   function showModalAdd() {
     if (area === "" || machine === "" || part === "") {
-      setFault("*Debes seleccionar un area y un equipo");
+      setFault("*Debes seleccionar un area, un equipo y un dispositivo");
     } else {
       setFault("");
       if (!modal[1]) {
@@ -64,8 +78,9 @@ function Passwords() {
   }
 
   async function createPassword() {
-    await database.createNewPassword(area, machine, part, user, {
-      user,
+    setLoading(true);
+    await database.createNewPassword(user.company, areaID, machineID, partID, {
+      User,
       password,
       level,
       name,
@@ -73,11 +88,71 @@ function Passwords() {
     setArea("");
     setMachine("");
     setPart("");
-    setNewUser("");
+    setUser("");
     setName("");
     setPassword("");
     setLevel("");
     showModalAdd();
+    setLoading(false);
+  }
+  async function getPasswords() {
+    if (areaID === "" || machineID === "" || partID === "") {
+      setPasswords([]);
+      setFault("*Debes seleccionar un area, un equipo y un dispositivo");
+    } else {
+      setLoading(true);
+      let passwordsRef = await database.getPasswords(
+        user.company,
+        areaID,
+        machineID,
+        partID
+      );
+      if (
+        passwordsRef._delegate._document.data.value.mapValue.fields.passwords
+      ) {
+        if (
+          !passwordsRef._delegate._document.data.value.mapValue.fields.passwords
+            .arrayValue.values
+        ) {
+          setPasswords([]);
+          setFault("No hay contraseñas");
+          setLoading(false);
+          return;
+        } else {
+          let arrayPasswords =
+            passwordsRef._delegate._document.data.value.mapValue.fields
+              .passwords.arrayValue.values;
+          let arrayPass = arrayPasswords.map((element) => {
+            let item = {
+              User: element.mapValue.fields.User.stringValue,
+              level: element.mapValue.fields.level.stringValue,
+              name: element.mapValue.fields.name.stringValue,
+              password: element.mapValue.fields.password.stringValue,
+              id: element.mapValue.fields.name.stringValue,
+            };
+            return item;
+          });
+          setPasswords(arrayPass);
+          setLoading(false);
+        }
+      } else {
+        setLoading(false);
+        setFault("No hay contraseñas");
+        setPasswords([]);
+      }
+    }
+  }
+  async function deletePassword() {
+    setLoading(true);
+    await database.deletePassword(
+      user.company,
+      areaID,
+      machineID,
+      partID,
+      passToDelete
+    );
+    setLoading(false);
+    setModal([false, false]);
   }
 
   return (
@@ -109,6 +184,7 @@ function Passwords() {
               action={setMachine}
               actionMachines={(e) => {
                 updatePartsMachine(areaID, e);
+                setMachineID(e);
               }}
               type="area"
             />
@@ -119,25 +195,49 @@ function Passwords() {
               options={parts}
               value={part}
               action={setPart}
+              actionMachines={(e) => {
+                setPartID(e);
+              }}
               type="area"
             />
           </label>
-          <span>{fault}</span>
+          <Button name="Buscar" class="button submit" action={getPasswords} />
+          <span className="fault">{fault}</span>
         </div>
       </section>
-      {/* <Viwer area={area} machine={equipo} parte={parte} /> */}
+      <Viwer area={area} machine={machine} parte={part} />
       <Modal show={modal[0]}>
-        <div className="main-modal">
+        <div className="modal-main">
           <h2>Eliminar Password </h2>
-          <div className="modalKeypad">
-            <Button name="Eliminar" class="modalMenu" />
-            <Button name="cancelar" class="modalMenu" action={showModalDel} />
+          <label>
+            Passwords:
+            <SelectOption
+              options={passwords}
+              value={passToDelete}
+              action={setPassToDelete}
+              actionMachines={(e) => {
+                console.log("");
+              }}
+              type="area"
+            />
+          </label>
+          <div className="modal-Keypad">
+            <Button
+              name="Eliminar"
+              class="button submit"
+              action={deletePassword}
+            />
+            <Button
+              name="cancelar"
+              class="button submitb"
+              action={showModalDel}
+            />
           </div>
         </div>
       </Modal>
       <Modal show={modal[1]}>
-        <div className="main-modal">
-          <h2>Nuevo Password </h2>
+        <div className="modal-main">
+          <h3>Nuevo Password </h3>
           <label>
             Nombre:
             <InputForm
@@ -154,8 +254,8 @@ function Passwords() {
             <InputForm
               type="text"
               size="20"
-              value={newUser}
-              action={setNewUser}
+              value={User}
+              action={setUser}
               readOnly={false}
               class="inputFormOrder"
             />
@@ -175,9 +275,17 @@ function Passwords() {
             tipo:
             <SelectOption options={LEVELS} value={level} action={setLevel} />
           </label>
-          <div className="modalKeypad">
-            <Button name="Crear" class="modalMenu" action={createPassword} />
-            <Button name="cancelar" class="modalMenu" action={showModalAdd} />
+          <div className="modal-Keypad">
+            <Button
+              name="Crear"
+              class="button submit"
+              action={createPassword}
+            />
+            <Button
+              name="cancelar"
+              class="button submitb"
+              action={showModalAdd}
+            />
           </div>
         </div>
       </Modal>

@@ -33,9 +33,9 @@ function Machines() {
   const [area, setArea] = useState("");
   const [cubicle, setCubicle] = useState("");
   const [display, setDisplay] = useState([false, false]);
-  const [hmi, setHmi] = useState("");
-  const [camera, setCamera] = useState([false, false]);
-  const [camara, setCamara] = useState("");
+  const [hmiName, setHmiName] = useState("");
+  const [camara, setCamara] = useState([false, false]);
+  const [camaraName, setCamaraName] = useState("");
   const [machineToDelete, setMachineToDelete] = useState("");
   const [areaID, setAreaID] = useState("");
   const [fault, setFault] = useState("");
@@ -103,8 +103,8 @@ function Machines() {
       user.company,
       areaId,
       equipoRef.id,
-      { hmi },
-      { camara },
+      hmiName,
+      camaraName,
       { imageURL, type, cubicle }
     );
     setPhotoName("");
@@ -115,21 +115,21 @@ function Machines() {
     setArea("");
     setCubicle("");
     setDisplay([false, false]);
-    setHmi("");
-    setCamera([false, false]);
-    setCamara("");
+    setHmiName("");
+    setCamara([false, false]);
+    setCamaraName("");
     setLoading(false);
   }
 
   async function validateMachine() {
     if (
       (display[0] === false && display[1] === false) ||
-      (camera[0] === false && camera[1] === false)
+      (camara[0] === false && camara[1] === false)
     ) {
       setFault("Completa los campos de Si o No");
-    } else if (display[0] === true && hmi === "") {
+    } else if (display[0] === true && hmiName === "") {
       setFault("completa la marca del HMI");
-    } else if (camera[0] === true && camara === "") {
+    } else if (camara[0] === true && camaraName === "") {
       setFault("completa la marca de la camara");
     } else {
       setFault("");
@@ -152,9 +152,9 @@ function Machines() {
           setArea("");
           setCubicle("");
           setDisplay([false, false]);
-          setHmi("");
-          setCamera([false, false]);
-          setCamara("");
+          setHmiName("");
+          setCamara([false, false]);
+          setCamaraName("");
           setLoading(false);
         } else {
           await createMachine(currentArea.id);
@@ -376,8 +376,8 @@ function Machines() {
               <InputForm
                 type="text"
                 size="20"
-                value={hmi}
-                action={setHmi}
+                value={hmiName}
+                action={setHmiName}
                 readOnly={display[0] ? false : true}
                 class="inputFormOrder"
               />
@@ -392,32 +392,32 @@ function Machines() {
               Si
               <InputForm
                 type="checkbox"
-                value={camera[0]}
-                action={setCamera}
+                value={camara[0]}
+                action={setCamara}
                 index={0}
-                array={camera.length}
+                array={camara.length}
               />
             </label>
             <label>
               No
               <InputForm
                 type="checkbox"
-                value={camera[1]}
-                action={setCamera}
+                value={camara[1]}
+                action={setCamara}
                 index={1}
-                array={camera.length}
+                array={camara.length}
               />
             </label>
           </div>
           <br />
-          {camera[0] ? (
+          {camara[0] ? (
             <label>
               Marca:
               <InputForm
                 type="text"
                 size="20"
-                value={camara}
-                action={setCamara}
+                value={camaraName}
+                action={setCamaraName}
                 readOnly={false}
                 class="inputFormOrder"
               />
