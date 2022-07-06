@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AppContext } from "../../context";
+import "./passwords.css";
 
 import Plus from "../../images/utils/plus.png";
 import Less from "../../images/utils/less.png";
@@ -8,7 +9,6 @@ import Modal from "../../components/Modal/Modal.js";
 import Button from "../../components/Buttons/Button.js";
 import SelectOption from "../../components/SelectOption";
 import InputForm from "../../components/InputForm";
-import Viwer from "../../components/Viwer";
 
 import database from "../../utils/fireStore";
 
@@ -39,12 +39,13 @@ function Passwords() {
   const [fault, setFault] = useState("");
   const [passwords, setPasswords] = useState([]);
   const [passToDelete, setPassToDelete] = useState("");
+  //const [personal, setPersonal] = useState(false);
 
   useEffect(() => {
     (async function () {
       await updateAreasCompany(user.company);
     })();
-  }, []);
+  }, [updateAreasCompany, user.company]);
 
   function showModalDel() {
     if (user.privilege === "Administrador") {
@@ -151,61 +152,87 @@ function Passwords() {
       partID,
       passToDelete
     );
+    setArea("");
+    setMachine("");
+    setPart("");
+    setUser("");
+    setName("");
+    setPassword("");
+    setLevel("");
     setLoading(false);
     setModal([false, false]);
+    getPasswords();
   }
 
   return (
-    <main className="main-documents">
-      <section className="main-documents--menu">
+    <main className="passwords-main">
+      <section className="passwords-controls">
         <Card name="Nueva" image={Plus} action={showModalAdd} />
         <Card name="Eliminar" image={Less} action={showModalDel} />
       </section>
-      <section>
-        <div className="contBody">
-          <label>
-            Area:
-            <SelectOption
-              options={areas}
-              value={area}
-              action={setArea}
-              actionMachines={(e) => {
-                updateMachinesArea(e);
-                setAreaID(e);
-              }}
-              type="area"
-            />
-          </label>
-          <label>
-            Maquina:
-            <SelectOption
-              options={machines}
-              value={machine}
-              action={setMachine}
-              actionMachines={(e) => {
-                updatePartsMachine(areaID, e);
-                setMachineID(e);
-              }}
-              type="area"
-            />
-          </label>
-          <label>
-            Dispositivo:
-            <SelectOption
-              options={parts}
-              value={part}
-              action={setPart}
-              actionMachines={(e) => {
-                setPartID(e);
-              }}
-              type="area"
-            />
-          </label>
-          <Button name="Buscar" class="button submit" action={getPasswords} />
-          <span className="fault">{fault}</span>
-        </div>
+      <section className="passwords-container">
+        <label>
+          Area:
+          <SelectOption
+            options={areas}
+            value={area}
+            action={setArea}
+            actionMachines={(e) => {
+              updateMachinesArea(e);
+              setAreaID(e);
+            }}
+            type="area"
+          />
+        </label>
+        <label>
+          Maquina:
+          <SelectOption
+            options={machines}
+            value={machine}
+            action={setMachine}
+            actionMachines={(e) => {
+              updatePartsMachine(areaID, e);
+              setMachineID(e);
+            }}
+            type="area"
+          />
+        </label>
+        <label>
+          Dispositivo:
+          <SelectOption
+            options={parts}
+            value={part}
+            action={setPart}
+            actionMachines={(e) => {
+              setPartID(e);
+            }}
+            type="area"
+          />
+        </label>
+        <Button name="Buscar" class="button submit" action={getPasswords} />
+        <span className="fault">{fault}</span>
       </section>
-      <Viwer area={area} machine={machine} parte={part} />
+      <section className="passwords-viwer">
+        <h1>Contraseñas</h1>
+        {passwords.map((element) => {
+          return (
+            <article className="passwords-viwer-info" key={element.id}>
+              <p>
+                <b>Nombre:</b> {element.name}
+              </p>
+              <p>
+                <b>Usuario:</b> {element.User}
+              </p>
+              <p>
+                <b>Contraseña:</b> {element.password}
+              </p>
+              <p>
+                <b>Nivel:</b> {element.level}
+              </p>
+            </article>
+          );
+        })}
+      </section>
       <Modal show={modal[0]}>
         <div className="modal-main">
           <h2>Eliminar Password </h2>
@@ -275,6 +302,16 @@ function Passwords() {
             tipo:
             <SelectOption options={LEVELS} value={level} action={setLevel} />
           </label>
+          {/* <label>
+            Personal:
+            <input
+              type="checkbox"
+              value={personal}
+              onChange={(e) => {
+                setPersonal(e.target.checked);
+              }}
+            />
+          </label> */}
           <div className="modal-Keypad">
             <Button
               name="Crear"

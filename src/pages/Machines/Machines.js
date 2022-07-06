@@ -44,7 +44,7 @@ function Machines() {
     (async function () {
       await updateAreasCompany(user.company);
     })();
-  }, [loading]);
+  }, [loading, updateAreasCompany, user.company]);
 
   function showModalDel() {
     if (user.privilege === "Administrador") {

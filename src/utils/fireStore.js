@@ -241,15 +241,18 @@ class Database {
         let oldPass =
           passwordsRef._delegate._document.data.value.mapValue.fields.passwords
             .arrayValue.values;
-        let arrayPass = oldPass.map((element) => {
-          let item = {
-            User: element.mapValue.fields.User.stringValue,
-            level: element.mapValue.fields.level.stringValue,
-            name: element.mapValue.fields.name.stringValue,
-            password: element.mapValue.fields.password.stringValue,
-          };
-          return item;
-        });
+        let arrayPass = [];
+        if (oldPass) {
+          arrayPass = oldPass.map((element) => {
+            let item = {
+              User: element.mapValue.fields.User.stringValue,
+              level: element.mapValue.fields.level.stringValue,
+              name: element.mapValue.fields.name.stringValue,
+              password: element.mapValue.fields.password.stringValue,
+            };
+            return item;
+          });
+        }
         await this.db
           .collection("Companies")
           .doc(companyID)
@@ -272,7 +275,6 @@ class Database {
           .doc(partID)
           .set({ passwords: [passwords] }, { merge: true });
       }
-      console.log("creado");
     } catch (error) {
       console.log(error);
       return error.message;
@@ -323,9 +325,7 @@ class Database {
           return item;
         });
         let newArray = arrayPass.filter((element) => {
-          if (element.name !== pass) {
-            return element;
-          }
+          return element.name !== pass;
         });
 
         await this.db
