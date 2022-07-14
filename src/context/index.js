@@ -12,7 +12,7 @@ function AppProvider(props) {
   const adminEmail = process.env.REACT_APP_FIREBASE_ADMIN_EMAIL;
   const adminPass = process.env.REACT_APP_FIREBASE_ADMIN_PASSWORD;
   const UserProfile =
-    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/profilePhotos%2Fprofile.png?alt=media&token=b4bd3414-7c8f-4b08-bff9-9e46b113e884";
+    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/profilePhotos%2Fprofile.png?alt=media&token=951d5d9e-8e58-48e1-87a6-4bf6ce2de4f2";
 
   var User = {
     photoUrl: UserProfile,
