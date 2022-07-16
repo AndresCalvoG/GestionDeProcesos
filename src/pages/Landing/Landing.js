@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import database from "../../utils/fireStore";
+
 import Auth from "../../utils/autenticacion";
+import database from "../../utils/fireStore";
 import { AppContext } from "../../context";
 import { Link } from "react-router-dom";
 import "./Landing.css";
@@ -13,7 +14,7 @@ import InputForm from "../../components/InputForm";
 
 function Landing() {
   const [modal, setModal] = useState(false);
-  const [next, setNext] = useState(true);
+  const [next, setNext] = useState(false);
   const [businessName, setBusinessName] = useState("");
   const [fault, setFault] = useState("");
   const {
@@ -88,7 +89,7 @@ function Landing() {
           </section>
           <article className="landing-arrow">
             <Link to="/Blog">
-              <p> Ver Blog</p>
+              <p>Ver Blog</p>
               <img src={arrowBlue} alt="link a blog" />
             </Link>
           </article>
@@ -108,7 +109,7 @@ function Landing() {
           </article>
         </section>
       )}
-      <Modal show={modal}>
+      {/* <Modal show={modal}>
         <div className="modal-main--small">
           <h3 className="modal-title--small">* Como se llama tu Empresa? </h3>
           <div className="modal-input">
@@ -129,7 +130,7 @@ function Landing() {
             <span className="fault">{fault}</span>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
     </main>
   );
 }

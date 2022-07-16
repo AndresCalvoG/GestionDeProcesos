@@ -22,7 +22,7 @@ import Profile from "../pages/Profile";
 import Machines from "../pages/Machines/Machines";
 import Passwords from "../pages/Passwords/Passwords";
 
-import { AppContext } from "../context/index";
+import { AppProvider, AppContext } from "../context/index";
 
 function App() {
   return (
