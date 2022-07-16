@@ -8,7 +8,8 @@
   border-radius: 20px;
 }
 .button--long {
-  width: 29rem;
+  width: 70vw;
+  max-width: 29rem;
   height: 4rem;
   border: none;
   padding: 0.7rem;

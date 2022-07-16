@@ -62,45 +62,41 @@ function Landing() {
   return (
     <main className="landing-main">
       {!next ? (
-        <>
-          <section className="landing-slogan">
-            <article className="slogan-board">
-              <p className="slogan-title">
-                Controla los datos de tu negocio y dejalo crecer
-              </p>
-              <p className="slogan-message">
-                Gestioner es una aplicacion de control de datos que ayuda a
-                construir y crecer el negocio que amas.
-              </p>
-            </article>
+        <section className="landing-slogan">
+          <article className="landing-slogan--text">
+            <p>Controla los datos de tu negocio y dejalo crecer</p>
+            <p>
+              Gestioner es una aplicacion de control de datos que ayuda a
+              construir y crecer el negocio que amas.
+            </p>
+          </article>
+          <article className="landing-keypad">
             <Button
               name="Comenzar"
               class="button--long submitb"
               action={showModal}
             />
-            <div className="triangle-equilateral-bottom-left"></div>
-            <div className="triangle-equilateral-top-right"></div>
-          </section>
-          <section className="landing-keyPad">
             <Link to="/Login">
-              <Button name="Iniciar Sesion" class="button--long submit" />
+              <Button name="Iniciar Sesion" class="button--long submitb" />
             </Link>
             <Link to="/Register">
-              <Button name="Unirme a Empresa" class="button--long submit" />
+              <Button name="Unirme a Empresa" class="button--long submitb" />
             </Link>
-          </section>
-        </>
+          </article>
+        </section>
       ) : (
-        <section className="landing-card">
-          <figure className="card-img">
+        <section className="landing-success">
+          <figure>
             <img src={companyImg} alt="imagen de un edificio o empresa" />
           </figure>
-          <h1 className="card-title">Tu Codigo Empresarial</h1>
-          <h1 className="card-title">{businessName}</h1>
-          <h1 className="card-code">{companyID}</h1>
-          <Link to="/Register">
-            <Button name="Continuar a Registro" class="button--long submit" />
-          </Link>
+          <article className="landing-success--info">
+            <p>Tu Codigo Empresarial es:</p>
+            <p>{businessName}</p>
+            <p>{companyID}</p>
+            <Link to="/Register">
+              <Button name="Continuar a Registro" class="button--long submit" />
+            </Link>
+          </article>
         </section>
       )}
       <Modal show={modal}>
