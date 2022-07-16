@@ -109,7 +109,7 @@ function Landing() {
           </article>
         </section>
       )}
-      {/* <Modal show={modal}>
+      <Modal show={modal}>
         <div className="modal-main--small">
           <h3 className="modal-title--small">* Como se llama tu Empresa? </h3>
           <div className="modal-input">
@@ -130,7 +130,7 @@ function Landing() {
             <span className="fault">{fault}</span>
           </div>
         </div>
-      </Modal> */}
+      </Modal>
     </main>
   );
 }
