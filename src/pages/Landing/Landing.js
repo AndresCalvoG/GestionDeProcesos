@@ -6,13 +6,14 @@ import { Link } from "react-router-dom";
 import "./Landing.css";
 
 import companyImg from "./images/company.png";
+import arrowBlue from "./images/fast-forward-blue.png";
 import Button from "../../components/Buttons/Button.js";
 import Modal from "../../components/Modal/Modal.js";
 import InputForm from "../../components/InputForm";
 
 function Landing() {
   const [modal, setModal] = useState(false);
-  const [next, setNext] = useState(false);
+  const [next, setNext] = useState(true);
   const [businessName, setBusinessName] = useState("");
   const [fault, setFault] = useState("");
   const {
@@ -62,28 +63,36 @@ function Landing() {
   return (
     <main className="landing-main">
       {!next ? (
-        <section className="landing-slogan">
-          <article className="landing-slogan--text">
-            <p>Controla los datos de tu negocio y dejalo crecer</p>
-            <p>
-              Gestioner es una aplicacion de control de datos que ayuda a
-              construir y crecer el negocio que amas.
-            </p>
-          </article>
-          <article className="landing-keypad">
-            <Button
-              name="Comenzar"
-              class="button--long submitb"
-              action={showModal}
-            />
-            <Link to="/Login">
-              <Button name="Iniciar Sesion" class="button--long submitb" />
+        <>
+          <section className="landing-slogan">
+            <article className="landing-slogan--text">
+              <p>Controla los datos de tu negocio y dejalo crecer</p>
+              <p>
+                Gestioner es una aplicacion de control de datos que ayuda a
+                construir y crecer el negocio que amas.
+              </p>
+            </article>
+            <article className="landing-keypad">
+              <Button
+                name="Comenzar"
+                class="button--long submitb"
+                action={showModal}
+              />
+              <Link to="/Login">
+                <Button name="Iniciar Sesion" class="button--long submitb" />
+              </Link>
+              <Link to="/Register">
+                <Button name="Unirme a Empresa" class="button--long submitb" />
+              </Link>
+            </article>
+          </section>
+          <article className="landing-arrow">
+            <Link to="/Blog">
+              <p> Ver Blog</p>
+              <img src={arrowBlue} alt="link a blog" />
             </Link>
-            <Link to="/Register">
-              <Button name="Unirme a Empresa" class="button--long submitb" />
-            </Link>
           </article>
-        </section>
+        </>
       ) : (
         <section className="landing-success">
           <figure>
