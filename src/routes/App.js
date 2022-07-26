@@ -1,5 +1,5 @@
 import React from "react";
-import { AppProvider } from "../context/index";
+import { AppProvider, AppContext } from "../context/index";
 import { HashRouter, Switch, Route } from "react-router-dom";
 
 import "../index.css";
@@ -21,8 +21,6 @@ import Documents from "../pages/Documents";
 import Profile from "../pages/Profile";
 import Machines from "../pages/Machines/Machines";
 import Passwords from "../pages/Passwords/Passwords";
-
-import { AppProvider, AppContext } from "../context/index";
 
 function App() {
   return (

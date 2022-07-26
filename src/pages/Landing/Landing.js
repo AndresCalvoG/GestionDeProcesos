@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled, { keyframes } from "styled-components";
 
 import Auth from "../../utils/autenticacion";
 import database from "../../utils/fireStore";
@@ -11,6 +12,57 @@ import arrowBlue from "./images/fast-forward-blue.png";
 import Button from "../../components/Buttons/Button.js";
 import Modal from "../../components/Modal/Modal.js";
 import InputForm from "../../components/InputForm";
+
+const StyledMain = styled.main`
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+`;
+const Slogan = styled.section`
+  width: 95%;
+  max-width: 50rem;
+  height: 54rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--white);
+  background-color: var(--blue);
+  margin-top: 1rem;
+  border-radius: 20px;
+  box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+`;
+const slogan = keyframes`
+from {
+    transform: translateY(-400px);
+  }
+  to {
+    transform: translate(0px);
+  }
+`;
+const Message = styled.article`
+  width: 100%;
+  height: 30rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  animation: ${slogan} 1.5s ease-in-out;
+
+  p:first-child {
+    font-size: 4rem;
+    text-align: center;
+    font-weight: bold;
+  }
+  p:nth-child(2) {
+    margin-top: 2rem;
+    font-size: 1.8rem;
+    text-align: center;
+  }
+`;
 
 function Landing() {
   const [modal, setModal] = useState(false);
@@ -62,17 +114,17 @@ function Landing() {
   }
 
   return (
-    <main className="landing-main">
+    <StyledMain /*className="landing-main"*/>
       {!next ? (
         <>
-          <section className="landing-slogan">
-            <article className="landing-slogan--text">
+          <Slogan /*className="landing-slogan"*/>
+            <Message /*className="landing-slogan--text"*/>
               <p>Controla los datos de tu negocio y dejalo crecer</p>
               <p>
                 Gestioner es una aplicacion de control de datos que ayuda a
                 construir y crecer el negocio que amas.
               </p>
-            </article>
+            </Message>
             <article className="landing-keypad">
               <Button
                 name="Comenzar"
@@ -86,7 +138,7 @@ function Landing() {
                 <Button name="Unirme a Empresa" class="button--long submitb" />
               </Link>
             </article>
-          </section>
+          </Slogan>
           <article className="landing-arrow">
             <Link to="/Blog">
               <p>Ver Blog</p>
@@ -131,7 +183,7 @@ function Landing() {
           </div>
         </div>
       </Modal>
-    </main>
+    </StyledMain>
   );
 }
 

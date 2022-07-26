@@ -1,12 +1,12 @@
-.landing-main {
+/* .landing-main {
   width: 100vw;
   height: calc(100vh - 107px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-}
-.landing-slogan {
+} */
+/* .landing-slogan {
   width: 97%;
   max-width: 50rem;
   height: 54rem;
@@ -19,8 +19,8 @@
   margin-top: 1rem;
   border-radius: 20px;
   box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
-}
-.landing-slogan--text {
+} */
+/* .landing-slogan--text {
   width: 100%;
   height: 30rem;
   display: flex;
@@ -29,25 +29,25 @@
   align-items: center;
   padding: 2rem;
   animation: slogan 1.5s ease-in-out;
-}
-@keyframes slogan {
+} */
+/* @keyframes slogan {
   from {
     transform: translateY(-400px);
   }
   to {
     transform: translate(0px);
   }
-}
-.landing-slogan--text p:first-child {
+} */
+/* .landing-slogan--text p:first-child {
   font-size: 4rem;
   text-align: center;
   font-weight: bold;
-}
-.landing-slogan--text p:nth-child(2) {
+} */
+/* .landing-slogan--text p:nth-child(2) {
   margin-top: 2rem;
   font-size: 1.8rem;
   text-align: center;
-}
+} */
 .landing-keypad {
   width: 100%;
   height: 20rem;
