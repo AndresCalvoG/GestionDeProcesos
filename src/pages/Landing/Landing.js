@@ -21,16 +21,17 @@ const StyledMain = styled.main`
   justify-content: flex-start;
 `;
 const Slogan = styled.section`
-  width: 95%;
+  width: 87.5%;
   max-width: 50rem;
-  height: 54rem;
+  height: 90rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   color: var(--white);
   background-color: var(--blue);
-  margin-top: 1rem;
+  margin-top: 2rem;
+  padding: 4rem;
   border-radius: 20px;
   box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
 `;
@@ -44,23 +45,95 @@ from {
 `;
 const Message = styled.article`
   width: 100%;
-  height: 30rem;
+  height: 40rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding: 2rem;
   animation: ${slogan} 1.5s ease-in-out;
 
   p:first-child {
+    width: 100%;
+    height: 25rem;
+    display: flex;
+    align-items: center;
     font-size: 4rem;
     text-align: center;
     font-weight: bold;
   }
-  p:nth-child(2) {
-    margin-top: 2rem;
+  p:last-child {
+    width: 100%;
+    height: 15rem;
+    display: flex;
+    align-items: center;
     font-size: 1.8rem;
     text-align: center;
+  }
+`;
+const keypad = keyframes`
+from {
+    transform: translateY(1000px);
+  }
+  to {
+    transform: translateY(0);
+  }
+`;
+const Keypad = styled.article`
+  width: 100%;
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  animation: ${keypad} 1.5s ease-in-out;
+`;
+const arrow = keyframes`
+from {
+    transform: translateX(-1000px);
+  }
+  to {
+    transform: translateX(0px);
+  }
+`;
+const Arrow = styled.article`
+  width: 100%;
+  height: 4rem;
+  margin-top: 1rem;
+  border-radius: 20px;
+  background-color: var(--white);
+  box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+  animation: ${arrow} 1.5s ease-in-out;
+
+  a {
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--blue);
+
+    p {
+      width: 60%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+    }
+    img {
+      width: 35%;
+      height: 100%;
+    }
+    &:hover {
+      border: 2px solid var(--white);
+      color: var(--white);
+      background-color: var(--blue);
+      border-radius: 20px;
+      opacity: 0.8;
+    }
   }
 `;
 
@@ -116,36 +189,41 @@ function Landing() {
   return (
     <StyledMain /*className="landing-main"*/>
       {!next ? (
-        <>
-          <Slogan /*className="landing-slogan"*/>
-            <Message /*className="landing-slogan--text"*/>
-              <p>Controla los datos de tu negocio y dejalo crecer</p>
-              <p>
-                Gestioner es una aplicacion de control de datos que ayuda a
-                construir y crecer el negocio que amas.
-              </p>
-            </Message>
-            <article className="landing-keypad">
-              <Button
-                name="Comenzar"
-                class="button--long submitb"
-                action={showModal}
-              />
-              <Link to="/Login">
-                <Button name="Iniciar Sesion" class="button--long submitb" />
-              </Link>
-              <Link to="/Register">
-                <Button name="Unirme a Empresa" class="button--long submitb" />
-              </Link>
-            </article>
-          </Slogan>
-          <article className="landing-arrow">
+        <Slogan /*className="landing-slogan"*/>
+          <Message /*className="landing-slogan--text"*/>
+            <p>
+              Controla los datos de tu negocio y dejalo
+              <br /> crecer
+            </p>
+            <p>
+              Gestioner es una aplicacion de control de datos que ayuda a
+              construir y crecer el negocio que amas.
+            </p>
+          </Message>
+          {/*<Arrow /*className="landing-arrow">
             <Link to="/Blog">
               <p>Ver Blog</p>
               <img src={arrowBlue} alt="link a blog" />
             </Link>
-          </article>
-        </>
+          </Arrow>*/}
+          <Button class="link">
+            <p>Ver Blog</p>
+            <img src={arrowBlue} alt="link a blog" />
+          </Button>
+          <Keypad /*className="landing-keypad"*/>
+            <Button
+              name="Comenzar"
+              class="button--long submitb"
+              action={showModal}
+            />
+            <Link to="/Login">
+              <Button name="Iniciar Sesion" class="button--long submitb" />
+            </Link>
+            <Link to="/Register">
+              <Button name="Unirme a Empresa" class="button--long submitb" />
+            </Link>
+          </Keypad>
+        </Slogan>
       ) : (
         <section className="landing-success">
           <figure>
