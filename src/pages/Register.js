@@ -190,7 +190,7 @@ const Register = () => {
               <div className="form-keypad">
                 <Button
                   name="Registrarme"
-                  class="button submit"
+                  type="basic"
                   action={handleRegister}
                 />
               </div>

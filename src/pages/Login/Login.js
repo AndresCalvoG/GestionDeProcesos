@@ -76,11 +76,12 @@ function Login() {
           </div>
           <div className="Login-keypad">
             <Link to="/Register">
-              <Button name="Registrarme" class="button submitb" />
+              <Button name="Registrarme" type="basic" />
             </Link>
             <Button
               name="Ingresar"
-              class="button submit"
+              type="basic"
+              invertColor={true}
               action={handleLogin}
             />
           </div>
