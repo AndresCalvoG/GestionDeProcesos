@@ -159,26 +159,30 @@ function Landing() {
   }
 
   async function createCompany() {
-    setLoading(true);
-    await Auth.authEmailPass(adminEmail, adminPass);
-    const validate = await database.validateCompanyName(businessName);
-    if (validate) {
-      setFault("Nombre ya existe, ingresa otro");
-      setBusinessName("");
-      Auth.logoutUsers();
-      setLoading(false);
+    if (businessName === "") {
+      setFault("Complete todos los campos");
     } else {
-      let date = getCurrentDate();
-      let companyRef = await database.createCompany({
-        businessName,
-        date,
-        phone: "",
-      });
-      setCompanyID(companyRef);
-      Auth.logoutUsers();
-      setModal(false);
-      setLoading(false);
-      setNext(true);
+      setLoading(true);
+      await Auth.authEmailPass(adminEmail, adminPass);
+      const validate = await database.validateCompanyName(businessName);
+      if (validate) {
+        setFault("Nombre ya existe, ingresa otro");
+        setBusinessName("");
+        Auth.logoutUsers();
+        setLoading(false);
+      } else {
+        let date = getCurrentDate();
+        let companyRef = await database.createCompany({
+          businessName,
+          date,
+          phone: "",
+        });
+        setCompanyID(companyRef);
+        Auth.logoutUsers();
+        setModal(false);
+        setLoading(false);
+        setNext(true);
+      }
     }
   }
 
