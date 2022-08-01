@@ -5,14 +5,16 @@ import Auth from "../../utils/autenticacion";
 import database from "../../utils/fireStore";
 import { AppContext } from "../../context";
 import { Link } from "react-router-dom";
-import "./Landing.css";
 
+//images
 import companyImg from "./images/company.png";
 import arrowBlue from "./images/fast-forward-blue.png";
+//components
 import Button from "../../components/Buttons/Button.js";
 import Modal from "../../components/Modal/Modal.js";
 import InputForm from "../../components/InputForm";
 
+//styles main screen
 const StyledMain = styled.main`
   width: 100vw;
   display: flex;
@@ -34,6 +36,9 @@ const Slogan = styled.section`
   padding: 4rem;
   border-radius: 20px;
   box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+  @media (min-width: 1024px) {
+    height: 85rem;
+  }
 `;
 const slogan = keyframes`
 from {
@@ -86,54 +91,45 @@ const Keypad = styled.article`
   justify-content: space-evenly;
   align-items: center;
   animation: ${keypad} 1.5s ease-in-out;
+  margin-top: 2rem;
 `;
-const arrow = keyframes`
+//styles success screen
+const figure = keyframes`
 from {
     transform: translateX(-1000px);
   }
   to {
-    transform: translateX(0px);
+    transform: translateX(0);
   }
 `;
-const Arrow = styled.article`
+const Success = styled.section`
   width: 100%;
-  height: 4rem;
-  margin-top: 1rem;
-  border-radius: 20px;
-  background-color: var(--white);
-  box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
-  animation: ${arrow} 1.5s ease-in-out;
+  max-width: 55rem;
+  height: 100%;
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  a {
+  figure {
+    width: 80%;
+    max-width: 35rem;
+    animation: ${figure} 1.5s ease-in-out;
+  }
+  article {
     width: 100%;
-    height: 100%;
-    text-decoration: none;
+    height: 25rem;
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
     align-items: center;
-    color: var(--blue);
-
-    p {
-      width: 60%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 2rem;
-      font-weight: bold;
-      text-align: center;
-    }
-    img {
-      width: 35%;
-      height: 100%;
-    }
-    &:hover {
-      border: 2px solid var(--white);
-      color: var(--white);
-      background-color: var(--blue);
-      border-radius: 20px;
-      opacity: 0.8;
-    }
+    justify-content: space-evenly;
+  }
+  p:first-child {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  p {
+    font-size: 2rem;
   }
 `;
 
@@ -187,10 +183,10 @@ function Landing() {
   }
 
   return (
-    <StyledMain /*className="landing-main"*/>
+    <StyledMain>
       {!next ? (
-        <Slogan /*className="landing-slogan"*/>
-          <Message /*className="landing-slogan--text"*/>
+        <Slogan>
+          <Message>
             <p>
               Controla los datos de tu negocio y dejalo
               <br /> crecer
@@ -200,44 +196,41 @@ function Landing() {
               construir y crecer el negocio que amas.
             </p>
           </Message>
-          {/*<Arrow /*className="landing-arrow">
-            <Link to="/Blog">
+          <Link to="/Blog">
+            <Button type="withImage">
               <p>Ver Blog</p>
               <img src={arrowBlue} alt="link a blog" />
-            </Link>
-          </Arrow>*/}
-          <Button class="link">
-            <p>Ver Blog</p>
-            <img src={arrowBlue} alt="link a blog" />
-          </Button>
-          <Keypad /*className="landing-keypad"*/>
+            </Button>
+          </Link>
+          <Keypad>
             <Button
               name="Comenzar"
-              class="button--long submitb"
+              type="long"
+              invertColor={false}
               action={showModal}
             />
             <Link to="/Login">
-              <Button name="Iniciar Sesion" class="button--long submitb" />
+              <Button name="Iniciar Sesion" type="long" />
             </Link>
             <Link to="/Register">
-              <Button name="Unirme a Empresa" class="button--long submitb" />
+              <Button name="Unirme a Empresa" type="long" />
             </Link>
           </Keypad>
         </Slogan>
       ) : (
-        <section className="landing-success">
+        <Success>
           <figure>
             <img src={companyImg} alt="imagen de un edificio o empresa" />
           </figure>
-          <article className="landing-success--info">
+          <article>
             <p>Tu Codigo Empresarial es:</p>
             <p>{businessName}</p>
             <p>{companyID}</p>
             <Link to="/Register">
-              <Button name="Continuar a Registro" class="button--long submit" />
+              <Button name="Continuar a Registro" type="long" />
             </Link>
           </article>
-        </section>
+        </Success>
       )}
       <Modal show={modal}>
         <div className="modal-main--small">
@@ -253,8 +246,18 @@ function Landing() {
             />
           </div>
           <div className="modal-Keypad">
-            <Button name="Cancelar" class="button submitb" action={showModal} />
-            <Button name="Crear" class="button submit" action={createCompany} />
+            <Button
+              name="Cancelar"
+              type="basic"
+              invertColor={false}
+              action={showModal}
+            />
+            <Button
+              name="Crear"
+              type="basic"
+              invertColor={true}
+              action={createCompany}
+            />
           </div>
           <div className="modal-fault">
             <span className="fault">{fault}</span>
