@@ -21,6 +21,7 @@ import Documents from "../pages/Documents";
 import Profile from "../pages/Profile";
 import Machines from "../pages/Machines/Machines";
 import Passwords from "../pages/Passwords/Passwords";
+import Blog from "../pages/Blog/Blog";
 
 function App() {
   return (
@@ -111,6 +112,11 @@ function App() {
                     exact
                     path="/password/reset"
                     render={(props) => <PasswordReset {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/Blog"
+                    render={(props) => <Blog {...props} />}
                   />
                   <Route render={(props) => <NotRegisterUser {...props} />} />
                 </Switch>
