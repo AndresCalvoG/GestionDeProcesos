@@ -1,38 +1,9 @@
-import React, { useState } from "react";
-import styled, { keyframes } from "styled-components";
+import React from "react";
+import Styled from "styled-components";
+import { AppContext } from "../../context";
+import ScrollList from "../../components/ScrollList/ScrollList";
 
-const AreasList = styled.section`
-  width: 100%;
-  height: 5rem;
-  font-size: 1.6rem;
-  font-weight: bold;
-  background-color: var(--blue);
-  color: var(--blue);
-  padding: 10px 14px 0 14px;
-  overflow: auto;
-  white-space: nowrap;
-`;
-
-const AreaItem = styled.article`
-  width: 10rem;
-  height: 3rem;
-  display: inline-block;
-  text-align: center;
-  border-radius: 15px;
-  margin-right: 10px;
-  padding: 6px 0 8px 0;
-  background-color: ${(props) =>
-    props.current ? "var(--purple)" : "var(--blue)"};
-  color: var(--white);
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${(props) => (props.current ? "" : "var(--white)")};
-    color: ${(props) => (props.current ? "" : "var(--blue)")};
-  }
-`;
-
-const ContributionList = styled.section`
+const ContributionList = Styled.section`
   width: 30.4rem;
   height: 100rem;
   margin: 0 auto;
@@ -41,7 +12,7 @@ const ContributionList = styled.section`
     text-align: center;
   }
 `;
-const ContributionItem = styled.article`
+const ContributionItem = Styled.article`
   width: 30rem;
   height: 10.3rem;
   display: flex;
@@ -57,9 +28,9 @@ const ContributionItem = styled.article`
     p {
       width: 4rem;
       height: 5rem;
-      font-size: 1.6rem;
+      font-size: 1.3rem;
       text-align: center;
-      padding-top: 0.5rem;
+      padding-top: 1rem;
       border-radius: 10px;
       background-color: var(--white);
       box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
@@ -97,33 +68,22 @@ const ContributionItem = styled.article`
 `;
 
 function Blog() {
-  const [selected, setSelected] = useState(0);
-  const names = ["Envase", "Empaque", "Granulacion", "Esteril", "Imprenta"];
-  const areas = ["Blog", ...names];
+  const { areas, updateAreasCompany } = React.useContext(AppContext);
+  const items = ["Blog", ...areas];
+
+  // useEffect(async () => {
+  //   await updateAreasCompany("dzNfWzE9v3ceAPDBAxvp");
+  // }, []);
 
   return (
     <>
-      <AreasList>
-        {areas.map((value, index) => {
-          return (
-            <AreaItem
-              current={index === selected ? true : false}
-              onClick={() => {
-                setSelected(index);
-              }}
-              key={index}
-            >
-              <p>{value}</p>
-            </AreaItem>
-          );
-        })}
-      </AreasList>
+      <ScrollList list={items} />
       <ContributionList>
         <h1>Posts</h1>
         <ContributionItem>
           <div className="like">
             <p>
-              likes
+              Views
               <br /> 30
             </p>
           </div>

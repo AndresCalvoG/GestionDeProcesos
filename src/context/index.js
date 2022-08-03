@@ -143,6 +143,7 @@ function AppProvider(props) {
 
   async function updateAreasCompany(id) {
     let areasRef = await database.getDataAreas(id);
+    console.log(areasRef);
     if (areasRef.empty) {
       saveAreas([{ id: "", name: "", empty: areasRef.empty }]);
     } else {

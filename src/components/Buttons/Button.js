@@ -1,9 +1,9 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import Styled, { keyframes } from "styled-components";
 
 let invertColor = false;
 
-const BasicButton = styled.button`
+const BasicButton = Styled.button`
   width: 10rem;
   height: 4rem;
   border: ${() => (invertColor ? "none" : "1px solid var(--blue)")};
@@ -23,7 +23,7 @@ from {
   }
 `;
 
-const SmallButton = styled(BasicButton)`
+const SmallButton = Styled(BasicButton)`
   width: 11rem;
   font-size: 1.6rem;
   @media (min-width: 410px) {
@@ -32,7 +32,7 @@ const SmallButton = styled(BasicButton)`
     font-size: 2rem;
   }
 `;
-const LongButton = styled(BasicButton)`
+const LongButton = Styled(BasicButton)`
   width: 70vw;
   max-width: 29rem;
   font-size: 2rem;
@@ -41,7 +41,7 @@ const LongButton = styled(BasicButton)`
     font-size: 2.5rem;
   }
 `;
-const ButtonWithImage = styled(LongButton)`
+const ButtonWithImage = Styled(LongButton)`
   margin-top: 1rem;
   animation: ${arrow} 1.5s ease-in-out;
   display: flex;

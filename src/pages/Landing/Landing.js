@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled, { keyframes } from "styled-components";
+import Styled, { keyframes } from "styled-components";
 
 import Auth from "../../utils/autenticacion";
 import database from "../../utils/fireStore";
@@ -15,14 +15,14 @@ import Modal from "../../components/Modal/Modal.js";
 import InputForm from "../../components/InputForm";
 
 //styles main screen
-const StyledMain = styled.main`
+const StyledMain = Styled.main`
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
 `;
-const Slogan = styled.section`
+const Slogan = Styled.section`
   width: 87.5%;
   max-width: 50rem;
   height: 90rem;
@@ -48,7 +48,7 @@ from {
     transform: translate(0px);
   }
 `;
-const Message = styled.article`
+const Message = Styled.article`
   width: 100%;
   height: 40rem;
   display: flex;
@@ -83,7 +83,7 @@ from {
     transform: translateY(0);
   }
 `;
-const Keypad = styled.article`
+const Keypad = Styled.article`
   width: 100%;
   height: 20rem;
   display: flex;
@@ -102,7 +102,7 @@ from {
     transform: translateX(0);
   }
 `;
-const Success = styled.section`
+const Success = Styled.section`
   width: 100%;
   max-width: 55rem;
   height: 100%;
