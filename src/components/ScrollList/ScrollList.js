@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Styled from "styled-components";
+import { AppContext } from "../../context";
 
 const List = Styled.section`
   width: 100%;
@@ -33,7 +34,9 @@ const Item = Styled.article`
 `;
 
 function ScrollList(props) {
+  const { machines, updateMachinesArea } = React.useContext(AppContext);
   const [selected, setSelected] = useState(0);
+  console.log(machines);
 
   return (
     <List>
@@ -43,10 +46,11 @@ function ScrollList(props) {
             current={index === selected ? true : false}
             onClick={() => {
               setSelected(index);
+              updateMachinesArea(value.id);
             }}
-            key={index}
+            key={value.id}
           >
-            <p>{value}</p>
+            <p>{value.name}</p>
           </Item>
         );
       })}

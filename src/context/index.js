@@ -30,7 +30,7 @@ function AppProvider(props) {
   };
   var Company = {
     date: { fullYear: "", fullHour: "" },
-    id: "",
+    id: "dzNfWzE9v3ceAPDBAxvp",
     businessName: "",
     phoneNumber: "",
   };
@@ -143,7 +143,6 @@ function AppProvider(props) {
 
   async function updateAreasCompany(id) {
     let areasRef = await database.getDataAreas(id);
-    console.log(areasRef);
     if (areasRef.empty) {
       saveAreas([{ id: "", name: "", empty: areasRef.empty }]);
     } else {
@@ -163,7 +162,10 @@ function AppProvider(props) {
     if (areaID === "") {
       setMachines([]);
     } else {
-      let machinesRef = await database.getDataMachines(company.id, areaID);
+      let machinesRef = await database.getDataMachines(
+        company.id || Company.id,
+        areaID
+      );
       if (machinesRef.empty) {
         setMachines([{ id: "empty", name: "empty", empty: machinesRef.empty }]);
         return [{ id: "empty", name: "empty", empty: machinesRef.empty }];
@@ -219,6 +221,7 @@ function AppProvider(props) {
   return (
     <AppContext.Provider
       value={{
+        Company,
         adminEmail,
         adminPass,
         company,

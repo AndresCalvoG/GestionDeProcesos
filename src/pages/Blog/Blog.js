@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Styled from "styled-components";
 import { AppContext } from "../../context";
+import Auth from "../../utils/autenticacion";
+
 import ScrollList from "../../components/ScrollList/ScrollList";
 
 const ContributionList = Styled.section`
@@ -68,12 +70,17 @@ const ContributionItem = Styled.article`
 `;
 
 function Blog() {
-  const { areas, updateAreasCompany } = React.useContext(AppContext);
-  const items = ["Blog", ...areas];
+  const { Company, areas, updateAreasCompany, adminEmail, adminPass } =
+    React.useContext(AppContext);
+  const items = [{ name: "Blog", id: "0" }, ...areas];
 
-  // useEffect(async () => {
-  //   await updateAreasCompany("dzNfWzE9v3ceAPDBAxvp");
-  // }, []);
+  useEffect(() => {
+    async function fetchData() {
+      await Auth.authEmailPass(adminEmail, adminPass);
+      await updateAreasCompany(Company.id);
+    }
+    fetchData();
+  }, []);
 
   return (
     <>

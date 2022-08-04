@@ -231,14 +231,11 @@ function Machines() {
           </label>
           <span className="fault">{fault}</span>
           <div className="modal-Keypad">
-            <Button
-              name="Eliminar"
-              class="button submitb"
-              action={deleteMachine}
-            />
+            <Button name="Eliminar" type="basic" action={deleteMachine} />
             <Button
               name="Cancelar"
-              class="button submit"
+              type="basic"
+              invertColor={true}
               action={showModalDel}
             />
           </div>
