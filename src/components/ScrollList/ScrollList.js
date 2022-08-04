@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Styled from "styled-components";
 import { AppContext } from "../../context";
 
@@ -12,6 +13,7 @@ const List = Styled.section`
   padding: 10px 14px 0 14px;
   overflow: auto;
   white-space: nowrap;
+  margin-bottom: 1px;
 `;
 
 const Item = Styled.article`
@@ -35,26 +37,49 @@ const Item = Styled.article`
 
 function ScrollList(props) {
   const { machines, updateMachinesArea } = React.useContext(AppContext);
-  const [selected, setSelected] = useState(0);
-  console.log(machines);
+  const [menuIndex, setMenuIndex] = useState(0);
+  const [itemIndex, setItemIndex] = useState(0);
+  const history = useHistory();
 
   return (
-    <List>
-      {props.list.map((value, index) => {
-        return (
-          <Item
-            current={index === selected ? true : false}
-            onClick={() => {
-              setSelected(index);
-              updateMachinesArea(value.id);
-            }}
-            key={value.id}
-          >
-            <p>{value.name}</p>
-          </Item>
-        );
-      })}
-    </List>
+    <>
+      <List>
+        {props.list.map((value, index) => {
+          return (
+            <Item
+              current={index === menuIndex ? true : false}
+              onClick={() => {
+                setMenuIndex(index);
+                updateMachinesArea(value.id);
+              }}
+              key={value.id}
+            >
+              <p>{value.name}</p>
+            </Item>
+          );
+        })}
+      </List>
+      {machines.length !== 0 ? (
+        <List>
+          {machines.map((value, index) => {
+            return (
+              <Item
+                current={index === itemIndex ? true : false}
+                onClick={() => {
+                  setItemIndex(index);
+                  history.replace("/Description");
+                }}
+                key={value.id}
+              >
+                <p>{value.name}</p>
+              </Item>
+            );
+          })}
+        </List>
+      ) : (
+        <></>
+      )}
+    </>
   );
 }
 
