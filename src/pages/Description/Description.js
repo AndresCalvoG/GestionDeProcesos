@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
 import { AppContext } from "../../context";
 
@@ -28,6 +28,7 @@ const Container = Styled.section`
   }
 `;
 const Tabs = Styled.div`
+  width: 90%;
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: var(--white);
@@ -51,16 +52,14 @@ const Tabs = Styled.div`
 `;
 
 const TabContent = Styled.article`
-  display: none;
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
 `;
 
-const openDetail = (e) => {};
-
 function Description() {
   const { actualMachine, saveActualMachine } = React.useContext(AppContext);
+  const [currentTab, setCurrentTab] = useState(0);
 
   // useEffect(() => {
   //   return () => {
@@ -83,33 +82,50 @@ function Description() {
           enfermedades, y realizarle el empaquetamiento.
         </p>
       </article>
-      <section>
-        <Tabs>
-          <button className="tablinks" onClick={openDetail(event, "Sellado")}>
-            Sellado
-          </button>
-          <button className="tablinks" onClick={openDetail("Paris")}>
-            Formado
-          </button>
-          <button className="tablinks" onClick={openDetail("Tokyo")}>
-            Corte
-          </button>
-        </Tabs>
-        <TabContent id="Sellado">
+      <Tabs>
+        <button
+          className="tablinks"
+          onClick={() => {
+            setCurrentTab(0);
+          }}
+        >
+          Sellado
+        </button>
+        <button
+          className="tablinks"
+          onClick={() => {
+            setCurrentTab(1);
+          }}
+        >
+          Formado
+        </button>
+        <button
+          className="tablinks"
+          onClick={() => {
+            setCurrentTab(2);
+          }}
+        >
+          Corte
+        </button>
+      </Tabs>
+      {currentTab === 0 ? (
+        <TabContent>
           <h3>London</h3>
           <p>London is the capital city of England.</p>
         </TabContent>
-
-        <TabContent id="Paris">
+      ) : currentTab === 1 ? (
+        <TabContent>
           <h3>Paris</h3>
           <p>Paris is the capital of France.</p>
         </TabContent>
-
-        <TabContent id="Tokyo">
+      ) : currentTab === 2 ? (
+        <TabContent>
           <h3>Tokyo</h3>
           <p>Tokyo is the capital of Japan.</p>
         </TabContent>
-      </section>
+      ) : (
+        <></>
+      )}
     </Container>
   );
 }
