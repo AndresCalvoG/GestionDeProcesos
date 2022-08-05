@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Styled from "styled-components";
 import { AppContext } from "../../context";
@@ -36,10 +36,17 @@ const Item = Styled.article`
 `;
 
 function ScrollList(props) {
-  const { machines, updateMachinesArea } = React.useContext(AppContext);
+  const { machines, setMachines, updateMachinesArea, saveActualMachine } =
+    React.useContext(AppContext);
   const [menuIndex, setMenuIndex] = useState(0);
   const [itemIndex, setItemIndex] = useState(0);
   const history = useHistory();
+
+  useEffect(() => {
+    return () => {
+      setMachines([]);
+    };
+  }, []);
 
   return (
     <>
@@ -66,6 +73,7 @@ function ScrollList(props) {
               <Item
                 current={index === itemIndex ? true : false}
                 onClick={() => {
+                  saveActualMachine(machines[index]);
                   setItemIndex(index);
                   history.replace("/Description");
                 }}

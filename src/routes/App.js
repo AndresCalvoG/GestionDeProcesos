@@ -22,6 +22,7 @@ import Profile from "../pages/Profile";
 import Machines from "../pages/Machines/Machines";
 import Passwords from "../pages/Passwords/Passwords";
 import Blog from "../pages/Blog/Blog";
+import Description from "../pages/Description/Description";
 
 function App() {
   return (
@@ -117,6 +118,11 @@ function App() {
                     exact
                     path="/Blog"
                     render={(props) => <Blog {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/Description"
+                    render={(props) => <Description {...props} />}
                   />
                   <Route render={(props) => <NotRegisterUser {...props} />} />
                 </Switch>

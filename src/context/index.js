@@ -52,6 +52,10 @@ function AppProvider(props) {
   const [user, saveUser] = useLocalStorage("user", { value: false });
   const [company, saveCompany] = useLocalStorage("company", {});
   const [areas, saveAreas] = useLocalStorage("areas", []);
+  const [actualMachine, saveActualMachine] = useLocalStorage(
+    "actualMachine",
+    {}
+  );
   User = { ...User, ...user };
   //estados compartidos de context
   const [companyID, setCompanyID] = useState("");
@@ -243,7 +247,10 @@ function AppProvider(props) {
         areas,
         saveAreas,
         machines,
+        setMachines,
         parts,
+        actualMachine,
+        saveActualMachine,
         handleLogout,
         getDataUsers,
         getCurrentDate,
