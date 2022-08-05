@@ -57,9 +57,7 @@ const TabContent = Styled.article`
   border-top: none;
 `;
 
-const openDetail = (e) => {
-  console.log(e);
-};
+const openDetail = (e) => {};
 
 function Description() {
   const { actualMachine, saveActualMachine } = React.useContext(AppContext);
@@ -87,7 +85,7 @@ function Description() {
       </article>
       <section>
         <Tabs>
-          <button className="tablinks" onClick={openDetail("Sellado")}>
+          <button className="tablinks" onClick={openDetail(event, "Sellado")}>
             Sellado
           </button>
           <button className="tablinks" onClick={openDetail("Paris")}>
