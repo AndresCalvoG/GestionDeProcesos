@@ -81,11 +81,11 @@ function Description() {
   const { actualMachine, saveActualMachine } = React.useContext(AppContext);
   const [currentTab, setCurrentTab] = useState(0);
 
-  // useEffect(() => {
-  //   return () => {
-  //     saveActualMachine({});
-  //   };
-  // }, []);
+  useEffect(() => {
+    return () => {
+      saveActualMachine({});
+    };
+  }, []);
 
   return (
     <Container>
