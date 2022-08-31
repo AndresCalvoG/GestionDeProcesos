@@ -145,6 +145,16 @@ function AppProvider(props) {
     return capitalText;
   }
 
+  function getSimpleArray(arr) {
+    let simpleArray = arr.map((item) => {
+      return {
+        name: item.mapValue.fields.name.stringValue,
+        value: item.mapValue.fields.value.stringValue,
+      };
+    });
+    return simpleArray;
+  }
+
   async function updateAreasCompany(id) {
     let areasRef = await database.getDataAreas(id);
     if (areasRef.empty) {
@@ -175,19 +185,18 @@ function AppProvider(props) {
         return [{ id: "empty", name: "empty", empty: machinesRef.empty }];
       } else {
         let arrayMachines = machinesRef.docs.map((element) => {
+          //console.log(element);
+          const path = element._delegate._document.data.value.mapValue.fields;
           let item = {
-            id: element._delegate._document.data.value.mapValue.fields.id
-              .stringValue,
-            name: element._delegate._document.data.value.mapValue.fields.name
-              .stringValue,
-            cubicle:
-              element._delegate._document.data.value.mapValue.fields.cubicle
-                .stringValue,
-            type: element._delegate._document.data.value.mapValue.fields.type
-              .stringValue,
-            imageURL:
-              element._delegate._document.data.value.mapValue.fields.imageURL
-                .stringValue,
+            id: path.id.stringValue,
+            name: path.name.stringValue,
+            cubicle: path.cubicle.stringValue,
+            type: path.type.stringValue,
+            imageURL: path.imageURL.stringValue,
+            definition: path.definition ? path.definition.stringValue : null,
+            specs: path.specs
+              ? getSimpleArray(path.specs.arrayValue.values)
+              : null,
           };
           return item;
         });
