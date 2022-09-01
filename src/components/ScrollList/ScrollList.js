@@ -46,7 +46,7 @@ function ScrollList(props) {
     return () => {
       setMachines([]);
     };
-  }, []);
+  }, [setMachines]);
 
   return (
     <>
@@ -75,7 +75,7 @@ function ScrollList(props) {
                 onClick={() => {
                   saveActualMachine(machines[index]);
                   setItemIndex(index);
-                  history.replace("/Description");
+                  history.push("/Description");
                 }}
                 key={value.id}
               >

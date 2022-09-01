@@ -145,14 +145,25 @@ function AppProvider(props) {
     return capitalText;
   }
 
-  function getSimpleArray(arr) {
-    let simpleArray = arr.map((item) => {
-      return {
-        name: item.mapValue.fields.name.stringValue,
-        value: item.mapValue.fields.value.stringValue,
-      };
-    });
-    return simpleArray;
+  function getSimpleArray(arr, n = 2) {
+    if (n === 2) {
+      let simpleArray = arr.map((item) => {
+        return {
+          name: item.mapValue.fields.name.stringValue,
+          value: item.mapValue.fields.value.stringValue,
+        };
+      });
+      return simpleArray;
+    } else if (n === 3) {
+      let simpleArray = arr.map((item) => {
+        return {
+          name: item.mapValue.fields.name.stringValue,
+          valueOn: item.mapValue.fields.valueOn.stringValue,
+          valueOff: item.mapValue.fields.valueOff.stringValue,
+        };
+      });
+      return simpleArray;
+    }
   }
 
   async function updateAreasCompany(id) {
@@ -197,7 +208,11 @@ function AppProvider(props) {
             specs: path.specs
               ? getSimpleArray(path.specs.arrayValue.values)
               : null,
+            cams: path.cams
+              ? getSimpleArray(path.cams.arrayValue.values, 3)
+              : null,
           };
+          console.log(item);
           return item;
         });
         setMachines(arrayMachines);

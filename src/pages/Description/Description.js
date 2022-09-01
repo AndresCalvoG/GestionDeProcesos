@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Styled from "styled-components";
 import { AppContext } from "../../context";
+import { useHistory } from "react-router-dom";
 
 const Container = Styled.main`
   width: 100vw;
@@ -61,71 +62,47 @@ const Specs = Styled.table`
     }
 `;
 
-const Components = Styled.article`
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-    h1{
-      text-align: center;
-    }
-    ol{
-      width: 100%;
-      padding-left: 1rem;
-      font-size: 1.6rem;
-      list-style-position: inside;
-      color: var(--text);
-    }
-
-`;
-
 function Description() {
-  const { actualMachine, saveActualMachine } = React.useContext(AppContext);
-  console.log(actualMachine.specs);
+  const { actualMachine } = React.useContext(AppContext);
+  const history = useHistory();
+
   useEffect(() => {
-    return () => {
-      saveActualMachine({});
-    };
-  }, []);
+    if (!actualMachine) {
+      history.replace("/Blog");
+    }
+  }, [actualMachine, history]);
 
   return (
-    <Container>
-      <section>
-        <figure>
-          <img src={actualMachine.imageURL} alt={actualMachine.name} />
-        </figure>
-        <article>
-          <h1>{actualMachine.name}</h1>
-          <p>{actualMachine.definition}</p>
-        </article>
-        <Specs>
-          <caption>Especificaciones</caption>
-          <tbody>
-            {actualMachine.specs.map((item) => {
-              return (
-                <tr key={item.name}>
-                  <td className="left">{item.name}</td>
-                  <td>{item.value}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Specs>
-        <Components>
-          <h1>Componentes</h1>
-          <ol>
-            <li>desbobinador de PVC</li>
-            <li>Planchas de Calefaccion</li>
-            <li>Estacion de formado</li>
-            <li>Desbobinador de aluminio</li>
-            <li>Estacion de sellado</li>
-            <li>Avance</li>
-            <li>Estacion de precorte</li>
-            <li>Estacion de corte</li>
-            <li>Bobinador de retazo</li>
-          </ol>
-        </Components>
-      </section>
-    </Container>
+    <>
+      {actualMachine ? (
+        <Container>
+          <section>
+            <figure>
+              <img src={actualMachine.imageURL} alt={actualMachine.name} />
+            </figure>
+            <article>
+              <h1>{actualMachine.name}</h1>
+              <p>{actualMachine.definition}</p>
+            </article>
+            <Specs>
+              <caption>Especificaciones</caption>
+              <tbody>
+                {actualMachine.specs.map((item) => {
+                  return (
+                    <tr key={item.name}>
+                      <td className="left">{item.name}</td>
+                      <td>{item.value}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Specs>
+          </section>
+        </Container>
+      ) : (
+        <></>
+      )}
+    </>
   );
 }
 

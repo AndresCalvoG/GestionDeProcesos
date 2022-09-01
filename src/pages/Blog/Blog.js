@@ -70,8 +70,14 @@ const ContributionItem = Styled.article`
 `;
 
 function Blog() {
-  const { Company, areas, updateAreasCompany, adminEmail, adminPass } =
-    React.useContext(AppContext);
+  const {
+    Company,
+    areas,
+    updateAreasCompany,
+    adminEmail,
+    adminPass,
+    saveActualMachine,
+  } = React.useContext(AppContext);
   const items = [{ name: "Blog", id: "0" }, ...areas];
 
   useEffect(() => {
@@ -79,6 +85,7 @@ function Blog() {
       await Auth.authEmailPass(adminEmail, adminPass);
       await updateAreasCompany(Company.id);
     }
+    saveActualMachine(null);
     fetchData();
   }, []);
 
