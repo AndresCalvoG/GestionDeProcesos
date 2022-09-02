@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Styled from "styled-components";
 import { AppContext } from "../../context";
 import Auth from "../../utils/autenticacion";
+import { Link } from "react-router-dom";
 
 import ScrollList from "../../components/ScrollList/ScrollList";
 
@@ -110,6 +111,7 @@ function Blog() {
           </div>
         </ContributionItem>
       </ContributionList>
+      <Link to="/ExtraHours">Calcular Horas extras</Link>
     </>
   );
 }
