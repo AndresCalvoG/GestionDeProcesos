@@ -12,8 +12,9 @@ function AppProvider(props) {
   const adminEmail = process.env.REACT_APP_FIREBASE_ADMIN_EMAIL;
   const adminPass = process.env.REACT_APP_FIREBASE_ADMIN_PASSWORD;
   const UserProfile =
-    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/profilePhotos%2Fprofile.png?alt=media&token=b4bd3414-7c8f-4b08-bff9-9e46b113e884";
-
+    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/profilePhotos%2Fprofile.png?alt=media&token=951d5d9e-8e58-48e1-87a6-4bf6ce2de4f2";
+  const defaultMachine =
+    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/maquina.png?alt=media&token=3a931328-8dc2-4ff0-be05-805278d775c9";
   var User = {
     photoUrl: UserProfile,
     id: "",
@@ -30,7 +31,7 @@ function AppProvider(props) {
   };
   var Company = {
     date: { fullYear: "", fullHour: "" },
-    id: "",
+    id: "dzNfWzE9v3ceAPDBAxvp",
     businessName: "",
     phoneNumber: "",
   };
@@ -52,10 +53,15 @@ function AppProvider(props) {
   const [user, saveUser] = useLocalStorage("user", { value: false });
   const [company, saveCompany] = useLocalStorage("company", {});
   const [areas, saveAreas] = useLocalStorage("areas", []);
+  const [actualMachine, saveActualMachine] = useLocalStorage(
+    "actualMachine",
+    {}
+  );
   User = { ...User, ...user };
   //estados compartidos de context
   const [companyID, setCompanyID] = useState("");
   const [machines, setMachines] = useState([]);
+  const [parts, setParts] = useState([]);
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [loading, setLoading] = useState(false);
@@ -140,6 +146,27 @@ function AppProvider(props) {
     return capitalText;
   }
 
+  function getSimpleArray(arr, n = 2) {
+    if (n === 2) {
+      let simpleArray = arr.map((item) => {
+        return {
+          name: item.mapValue.fields.name.stringValue,
+          value: item.mapValue.fields.value.stringValue,
+        };
+      });
+      return simpleArray;
+    } else if (n === 3) {
+      let simpleArray = arr.map((item) => {
+        return {
+          name: item.mapValue.fields.name.stringValue,
+          valueOn: item.mapValue.fields.valueOn.stringValue,
+          valueOff: item.mapValue.fields.valueOff.stringValue,
+        };
+      });
+      return simpleArray;
+    }
+  }
+
   async function updateAreasCompany(id) {
     let areasRef = await database.getDataAreas(id);
     if (areasRef.empty) {
@@ -157,28 +184,33 @@ function AppProvider(props) {
       saveAreas(areasArray);
     }
   }
-  async function updateMachinesArea(idArea) {
-    if (idArea === "") {
+  async function updateMachinesArea(areaID) {
+    if (areaID === "") {
       setMachines([]);
     } else {
-      let machinesRef = await database.getDataMachines(company.id, idArea);
+      let machinesRef = await database.getDataMachines(
+        company.id || Company.id,
+        areaID
+      );
       if (machinesRef.empty) {
-        setMachines([{ id: "", name: "", empty: machinesRef.empty }]);
+        setMachines([{ id: "empty", name: "empty", empty: machinesRef.empty }]);
+        return [{ id: "empty", name: "empty", empty: machinesRef.empty }];
       } else {
         let arrayMachines = machinesRef.docs.map((element) => {
+          const path = element._delegate._document.data.value.mapValue.fields;
           let item = {
-            id: element._delegate._document.data.value.mapValue.fields.id
-              .stringValue,
-            name: element._delegate._document.data.value.mapValue.fields.name
-              .stringValue,
-            cubicle:
-              element._delegate._document.data.value.mapValue.fields.cubicle
-                .stringValue,
-            type: element._delegate._document.data.value.mapValue.fields.type
-              .stringValue,
-            imageURL:
-              element._delegate._document.data.value.mapValue.fields.imageURL
-                .stringValue,
+            id: path.id.stringValue,
+            name: path.name.stringValue,
+            cubicle: path.cubicle.stringValue,
+            type: path.type.stringValue,
+            imageURL: path.imageURL.stringValue,
+            definition: path.definition ? path.definition.stringValue : null,
+            specs: path.specs
+              ? getSimpleArray(path.specs.arrayValue.values)
+              : null,
+            cams: path.cams
+              ? getSimpleArray(path.cams.arrayValue.values, 3)
+              : null,
           };
           return item;
         });
@@ -186,10 +218,37 @@ function AppProvider(props) {
       }
     }
   }
+  async function updatePartsMachine(areaID, machineID) {
+    if (machineID === "") {
+      setParts([]);
+    } else {
+      let partsRef = await database.getPartsMachine(
+        company.id,
+        areaID,
+        machineID
+      );
+      if (partsRef.empty) {
+        setParts([{ id: "empty", name: "empty", empty: partsRef.empty }]);
+        return [{ id: "empty", name: "empty", empty: partsRef.empty }];
+      } else {
+        let arrayParts = partsRef.docs.map((element) => {
+          let item = {
+            id: element._delegate._document.data.value.mapValue.fields.id
+              .stringValue,
+            name: element._delegate._document.data.value.mapValue.fields.name
+              .stringValue,
+          };
+          return item;
+        });
+        setParts(arrayParts);
+      }
+    }
+  }
 
   return (
     <AppContext.Provider
       value={{
+        Company,
         adminEmail,
         adminPass,
         company,
@@ -211,11 +270,17 @@ function AppProvider(props) {
         areas,
         saveAreas,
         machines,
+        setMachines,
+        parts,
+        actualMachine,
+        saveActualMachine,
         handleLogout,
         getDataUsers,
         getCurrentDate,
         updateAreasCompany,
         updateMachinesArea,
+        updatePartsMachine,
+        defaultMachine,
       }}
     >
       {props.children}

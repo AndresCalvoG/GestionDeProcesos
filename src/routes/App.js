@@ -1,14 +1,14 @@
 import React from "react";
-import { AppProvider } from "../context/index";
+import { AppProvider, AppContext } from "../context/index";
 import { HashRouter, Switch, Route } from "react-router-dom";
 
 import "../index.css";
 
 import Landing from "../pages/Landing/Landing";
-import Login from "../pages/Login";
+import Login from "../pages/Login/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
-import Home from "../pages/Home";
+import Home from "../pages/Home/Home";
 import PasswordReset from "../pages/PasswordReset";
 import Layout from "../components/Layout";
 import NotRegisterUser from "../pages/NotRegisterUser";
@@ -19,10 +19,10 @@ import Help from "../pages/Help";
 import Binnacle from "../pages/Binnacle";
 import Documents from "../pages/Documents";
 import Profile from "../pages/Profile";
-import Machines from "../pages/Machines";
-import Passwords from "../pages/Passwords";
-
-import { AppContext } from "../context/index";
+import Machines from "../pages/Machines/Machines";
+import Passwords from "../pages/Passwords/Passwords";
+import Blog from "../pages/Blog/Blog";
+import Description from "../pages/Description/Description";
 
 function App() {
   return (
@@ -113,6 +113,16 @@ function App() {
                     exact
                     path="/password/reset"
                     render={(props) => <PasswordReset {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/Blog"
+                    render={(props) => <Blog {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/Description"
+                    render={(props) => <Description {...props} />}
                   />
                   <Route render={(props) => <NotRegisterUser {...props} />} />
                 </Switch>

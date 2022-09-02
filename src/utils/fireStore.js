@@ -3,16 +3,18 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 
 class Database {
+  constructor() {
+    this.db = firebase.firestore();
+  }
   //Methods to create and modify companies
   async createCompany(props) {
-    var db = firebase.firestore();
     try {
-      let docRef = await db.collection("Companies").add({
+      let docRef = await this.db.collection("Companies").add({
         businessName: props.businessName,
         date: props.date,
         phoneNumber: props.phone,
       });
-      await db.collection("Companies").doc(docRef.id).set(
+      await this.db.collection("Companies").doc(docRef.id).set(
         {
           id: docRef.id,
         },
@@ -24,9 +26,8 @@ class Database {
     }
   }
   async validateCompanyName(name) {
-    var db = firebase.firestore();
     try {
-      var docRef = await db.collection("Companies").get();
+      var docRef = await this.db.collection("Companies").get();
       let companies = docRef.docs.map((element) => {
         return element._delegate._document.data.value.mapValue.fields
           .businessName.stringValue;
@@ -38,9 +39,8 @@ class Database {
     }
   }
   async companyExist(id) {
-    var db = firebase.firestore();
     try {
-      var docRef = await db.collection("Companies").get();
+      var docRef = await this.db.collection("Companies").get();
       let companies = docRef.docs.map((element) => {
         return element.id;
       });
@@ -51,9 +51,8 @@ class Database {
     }
   }
   async getCompany(id) {
-    var db = firebase.firestore();
     try {
-      var docRef = await db.collection("Companies").doc(id).get();
+      var docRef = await this.db.collection("Companies").doc(id).get();
       return docRef;
     } catch (error) {
       console.log(error);
@@ -63,17 +62,15 @@ class Database {
 
   // Methods to create and modify users
   async crearUsersDb(props) {
-    var db = firebase.firestore();
     try {
-      await db.collection("Users").doc(props.id).set(props);
+      await this.db.collection("Users").doc(props.id).set(props);
     } catch (error) {
       console.log(error.message);
     }
   }
   async getDataUser(props) {
-    var db = firebase.firestore();
     try {
-      var docRef = await db.collection("Users").doc(props).get();
+      var docRef = await this.db.collection("Users").doc(props).get();
       return docRef;
     } catch (error) {
       console.log(error);
@@ -86,14 +83,13 @@ class Database {
 
   //Methods to create and modify areas
   async createNewArea(company, area) {
-    var db = firebase.firestore();
     try {
-      let areaRef = await db
+      let areaRef = await this.db
         .collection("Companies")
         .doc(company)
         .collection("Areas")
         .add({ name: area });
-      await db
+      await this.db
         .collection("Companies")
         .doc(company)
         .collection("Areas")
@@ -110,10 +106,26 @@ class Database {
       return error.message;
     }
   }
-  async getDataAreas(companyId) {
-    var db = firebase.firestore();
+  async getArea(companyId, IdArea) {
     try {
-      var docData = await db
+      let docData = await this.db
+        .collection("Companies")
+        .doc(companyId)
+        .collection("Areas")
+        .doc(IdArea)
+        .get();
+      return docData;
+    } catch (error) {
+      console.log(error);
+      return {
+        value: "0",
+        exists: false,
+      };
+    }
+  }
+  async getDataAreas(companyId) {
+    try {
+      let docData = await this.db
         .collection("Companies")
         .doc(companyId)
         .collection("Areas")
@@ -128,9 +140,8 @@ class Database {
     }
   }
   async validateAreaName(companyId, name) {
-    var db = firebase.firestore();
     try {
-      var docRef = await db
+      let docRef = await this.db
         .collection("Companies")
         .doc(companyId)
         .collection("Areas")
@@ -144,27 +155,40 @@ class Database {
         };
         return item;
       });
-      let area = Areas.find((element) => {
+      for (const element of Areas) {
         if (element.name === name) {
           return element;
         }
-      });
-      if (area) {
-        return area;
-      } else {
-        return false;
       }
+      return false;
+      // let area = Areas.find((element) => {
+      //   if (element.name === name) {
+      //     return element;
+      //   }
+      // });
+      // if (area) {
+      //   return area;
+      // } else {
+      //   return false;
+      // }
     } catch (error) {
       console.log(error);
       return error;
     }
   }
+  async deleteArea(companyId, areaId) {
+    await this.db
+      .collection("Companies")
+      .doc(companyId)
+      .collection("Areas")
+      .doc(areaId)
+      .delete();
+  }
 
   //Methods to create and modify Orders
   async createNewOrder(props) {
-    var db = firebase.firestore();
     try {
-      await db
+      await this.db
         .collection("users")
         .doc(props.id)
         .collection("orders")
@@ -174,9 +198,8 @@ class Database {
     }
   }
   async getOrder(props) {
-    var db = firebase.firestore();
     try {
-      var docData = await db
+      var docData = await this.db
         .collection("users")
         .doc(props)
         .collection("orders")
@@ -191,9 +214,9 @@ class Database {
     }
   }
   async deleteOrder(props) {
-    var db = firebase.firestore();
     try {
-      db.collection("users")
+      await this.db
+        .collection("users")
         .doc(props.userID)
         .collection("orders")
         .doc(props.orderID)
@@ -204,32 +227,70 @@ class Database {
   }
 
   //Methods to create and modify passwods
-  async createNewPassword(area, equipo, parte, user, props) {
-    var db = firebase.firestore();
+  async createNewPassword(companyID, areaID, machineID, partID, passwords) {
     try {
-      await db
-        .collection("areas")
-        .doc(area)
-        .collection(equipo)
-        .doc(parte)
-        .collection("usuarios")
-        .doc(user)
-        .set(props);
-      console.log("creado");
+      let passwordsRef = await this.getPasswords(
+        companyID,
+        areaID,
+        machineID,
+        partID
+      );
+      if (
+        passwordsRef._delegate._document.data.value.mapValue.fields.passwords
+      ) {
+        let oldPass =
+          passwordsRef._delegate._document.data.value.mapValue.fields.passwords
+            .arrayValue.values;
+        let arrayPass = [];
+        if (oldPass) {
+          arrayPass = oldPass.map((element) => {
+            let item = {
+              User: element.mapValue.fields.User.stringValue,
+              level: element.mapValue.fields.level.stringValue,
+              name: element.mapValue.fields.name.stringValue,
+              password: element.mapValue.fields.password.stringValue,
+            };
+            return item;
+          });
+        }
+        await this.db
+          .collection("Companies")
+          .doc(companyID)
+          .collection("Areas")
+          .doc(areaID)
+          .collection("Machines")
+          .doc(machineID)
+          .collection("Components")
+          .doc(partID)
+          .set({ passwords: [...arrayPass, passwords] }, { merge: true });
+      } else {
+        await this.db
+          .collection("Companies")
+          .doc(companyID)
+          .collection("Areas")
+          .doc(areaID)
+          .collection("Machines")
+          .doc(machineID)
+          .collection("Components")
+          .doc(partID)
+          .set({ passwords: [passwords] }, { merge: true });
+      }
     } catch (error) {
       console.log(error);
       return error.message;
     }
   }
-  async getPasswords(area, machine, parte) {
-    var db = firebase.firestore();
+  async getPasswords(companyID, areaID, machineID, partID) {
     try {
-      var docData = await db
-        .collection("areas")
-        .doc(area)
-        .collection(machine)
-        .doc(parte)
-        .collection("usuarios")
+      let docData = await this.db
+        .collection("Companies")
+        .doc(companyID)
+        .collection("Areas")
+        .doc(areaID)
+        .collection("Machines")
+        .doc(machineID)
+        .collection("Components")
+        .doc(partID)
         .get();
       return docData;
     } catch (error) {
@@ -240,19 +301,59 @@ class Database {
       };
     }
   }
+  async deletePassword(companyID, areaID, machineID, partID, pass) {
+    try {
+      let passwordsRef = await this.getPasswords(
+        companyID,
+        areaID,
+        machineID,
+        partID
+      );
+      if (
+        passwordsRef._delegate._document.data.value.mapValue.fields.passwords
+      ) {
+        let oldPass =
+          passwordsRef._delegate._document.data.value.mapValue.fields.passwords
+            .arrayValue.values;
+        let arrayPass = oldPass.map((element) => {
+          let item = {
+            User: element.mapValue.fields.User.stringValue,
+            level: element.mapValue.fields.level.stringValue,
+            name: element.mapValue.fields.name.stringValue,
+            password: element.mapValue.fields.password.stringValue,
+          };
+          return item;
+        });
+        let newArray = arrayPass.filter((element) => {
+          return element.name !== pass;
+        });
 
+        await this.db
+          .collection("Companies")
+          .doc(companyID)
+          .collection("Areas")
+          .doc(areaID)
+          .collection("Machines")
+          .doc(machineID)
+          .collection("Components")
+          .doc(partID)
+          .set({ passwords: [...newArray] }, { merge: true });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   // methods to create and modify machines
   async createNewMachine(company, areaID, machine) {
-    var db = firebase.firestore();
     try {
-      let machineRef = await db
+      let machineRef = await this.db
         .collection("Companies")
         .doc(company)
         .collection("Areas")
         .doc(areaID)
         .collection("Machines")
         .add({ name: machine });
-      await db
+      await this.db
         .collection("Companies")
         .doc(company)
         .collection("Areas")
@@ -272,9 +373,8 @@ class Database {
     }
   }
   async getDataMachines(idcompany, idArea) {
-    var db = firebase.firestore();
     try {
-      var docData = await db
+      let docData = await this.db
         .collection("Companies")
         .doc(idcompany)
         .collection("Areas")
@@ -291,10 +391,9 @@ class Database {
     }
   }
   async addDataMachine(company, area, equipo, hmi, camara, data) {
-    var db = firebase.firestore();
     try {
-      if (hmi.hmi !== "") {
-        let hmiRef = await db
+      if (hmi !== "") {
+        let hmiRef = await this.db
           .collection("Companies")
           .doc(company)
           .collection("Areas")
@@ -302,8 +401,8 @@ class Database {
           .collection("Machines")
           .doc(equipo)
           .collection("Components")
-          .add(hmi);
-        await db
+          .add({ name: hmi });
+        await this.db
           .collection("Companies")
           .doc(company)
           .collection("Areas")
@@ -315,12 +414,13 @@ class Database {
           .set(
             {
               id: hmiRef.id,
+              type: "Hmi",
             },
             { merge: true }
           );
       }
-      if (camara.camara !== "") {
-        let camaraRef = await db
+      if (camara !== "") {
+        let camaraRef = await this.db
           .collection("Companies")
           .doc(company)
           .collection("Areas")
@@ -328,8 +428,8 @@ class Database {
           .collection("Machines")
           .doc(equipo)
           .collection("Components")
-          .add(camara);
-        await db
+          .add({ name: camara });
+        await this.db
           .collection("Companies")
           .doc(company)
           .collection("Areas")
@@ -341,11 +441,12 @@ class Database {
           .set(
             {
               id: camaraRef.id,
+              type: "Camara",
             },
             { merge: true }
           );
       }
-      await db
+      await this.db
         .collection("Companies")
         .doc(company)
         .collection("Areas")
@@ -359,9 +460,8 @@ class Database {
     }
   }
   async deleteMachine(companyId, AreaId, MachineId) {
-    var db = firebase.firestore();
     try {
-      let components = await db
+      let components = await this.db
         .collection("Companies")
         .doc(companyId)
         .collection("Areas")
@@ -373,7 +473,7 @@ class Database {
       components.docs.map(async (element) => {
         let id =
           element._delegate._document.data.value.mapValue.fields.id.stringValue;
-        await db
+        await this.db
           .collection("Companies")
           .doc(companyId)
           .collection("Areas")
@@ -384,7 +484,7 @@ class Database {
           .doc(id)
           .delete();
       });
-      await db
+      await this.db
         .collection("Companies")
         .doc(companyId)
         .collection("Areas")
@@ -392,14 +492,17 @@ class Database {
         .collection("Machines")
         .doc(MachineId)
         .delete();
+      let areaEmpty = await this.getDataMachines(companyId, AreaId);
+      if (areaEmpty.empty) {
+        this.deleteArea(companyId, AreaId);
+      }
     } catch (error) {
       console.log(error);
     }
   }
   async validateMachineName(companyId, areaId, name) {
-    var db = firebase.firestore();
     try {
-      var docRef = await db
+      let docRef = await this.db
         .collection("Companies")
         .doc(companyId)
         .collection("Areas")
@@ -415,19 +518,45 @@ class Database {
         };
         return item;
       });
-      let machine = machines.find((element) => {
+      for (const element of machines) {
         if (element.name === name) {
           return element;
         }
-      });
-      if (machine) {
-        return machine;
-      } else {
-        return false;
       }
+      return false;
+      // let machine = machines.find((element) => {
+      //   if (element.name === name) {
+      //     return element;
+      //   }
+      // });
+      // if (machine) {
+      //   return machine;
+      // } else {
+      //   return false;
+      // }
     } catch (error) {
       console.log(error);
       return error;
+    }
+  }
+  async getPartsMachine(companyID, areaID, machineID) {
+    try {
+      let components = await this.db
+        .collection("Companies")
+        .doc(companyID)
+        .collection("Areas")
+        .doc(areaID)
+        .collection("Machines")
+        .doc(machineID)
+        .collection("Components")
+        .get();
+      return components;
+    } catch (error) {
+      console.log(error);
+      return {
+        value: "0",
+        exists: false,
+      };
     }
   }
 }

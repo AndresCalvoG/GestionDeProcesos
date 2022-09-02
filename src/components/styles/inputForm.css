@@ -12,7 +12,7 @@
   font-size: 1.6rem;
 }
 .inputFormOrder {
-  /* width: 100%; */
+  width: 100%;
   background: none;
   border-top: none;
   border-left: none;
@@ -25,9 +25,3 @@
   font-size: 1.6rem;
   text-align: center;
 }
-
-/* @media screen and (min-width: 900px) {
-	.inputForm {
-    font-size: 1.6rem;
-  }
-} */

@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context";
 import "./navar.css";
-import Modal from "../Modal";
+import Modal from "../Modal/Modal";
 import ImageUser from "../ImageUser/ImageUser";
 import Logo from "./images/logo256.png";
 
 const Navbar = () => {
-  const [clase, setClase] = useState("hidenModal");
+  const [modal, setModal] = useState(false);
   const { user, auth, handleLogout } = React.useContext(AppContext);
 
   // funciones showModal
   function showModal() {
-    if (clase === "hidenModal" && auth) {
-      setClase("showModal-menu");
+    if (!modal && auth) {
+      setModal(true); //small
     } else {
-      setClase("hidenModal");
+      setModal(false);
     }
   }
 
@@ -43,7 +43,7 @@ const Navbar = () => {
           <ImageUser action={showModal} />
         </nav>
       </header>
-      <Modal classe={clase}>
+      <Modal showMenu={modal}>
         <Link to="/Profile" onClick={showModal}>
           Mi Perfil
         </Link>

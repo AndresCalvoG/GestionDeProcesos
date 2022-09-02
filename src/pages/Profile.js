@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ImageUser from "../components/ImageUser/ImageUser";
-import Modal from "../components/Modal";
+import Modal from "../components/Modal/Modal.js";
 import Button from "../components/Buttons/Button.js";
 import InputForm from "../components/InputForm";
 import { AppContext } from "../context";
@@ -12,20 +12,20 @@ function Profile() {
   const { user, getDataUsers, User, setLoading } = React.useContext(AppContext);
   const [photo, setPhoto] = useState("");
   const [file, setFile] = useState("");
-  const [clase, setClase] = useState("hidenModal");
+  const [modal, setModal] = useState(false);
   const [menu, setMenu] = useState("hiden");
   const [items, setItems] = useState("hiden");
 
-  const showModalAdd = () => {
-    if (clase === "hidenModal") {
-      setClase("showModal-full");
+  function showModalAdd() {
+    if (!modal) {
+      setModal(true);
       showMenu();
     } else {
-      setClase("hidenModal");
+      setModal(false);
       setPhoto("");
       User.photoUrl = user.photoUrl;
     }
-  };
+  }
   function showMenu() {
     if (menu === "hiden") {
       setMenu("photo-menu--list");
@@ -92,8 +92,8 @@ function Profile() {
           <p>{user.code}</p>
         </div>
       </section>
-      <Modal classe={clase}>
-        <div className="main-modal">
+      <Modal show={modal}>
+        <div className="modal-main">
           <div className="card-photo">
             <ImageUser />
           </div>
@@ -108,7 +108,7 @@ function Profile() {
             readOnly={false}
             class="inputForm"
           />
-          <div className="modalKeypad">
+          <div className="modal-Keypad">
             <Button
               name="cancelar"
               class="button submitb"

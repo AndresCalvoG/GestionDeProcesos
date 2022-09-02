@@ -1,17 +1,140 @@
 import React, { useState } from "react";
-import database from "../../utils/fireStore";
+import Styled, { keyframes } from "styled-components";
+
 import Auth from "../../utils/autenticacion";
+import database from "../../utils/fireStore";
 import { AppContext } from "../../context";
 import { Link } from "react-router-dom";
-import "./Landing.css";
 
+//images
 import companyImg from "./images/company.png";
+import arrowBlue from "./images/fast-forward-blue.png";
+//components
 import Button from "../../components/Buttons/Button.js";
-import Modal from "../../components/Modal";
+import Modal from "../../components/Modal/Modal.js";
 import InputForm from "../../components/InputForm";
 
+//styles main screen
+const StyledMain = Styled.main`
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+`;
+const Slogan = Styled.section`
+  width: 87.5%;
+  max-width: 50rem;
+  height: 90rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--white);
+  background-color: var(--blue);
+  margin-top: 2rem;
+  padding: 4rem;
+  border-radius: 20px;
+  box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+  @media (min-width: 1024px) {
+    height: 85rem;
+  }
+`;
+const slogan = keyframes`
+from {
+    transform: translateY(-400px);
+  }
+  to {
+    transform: translate(0px);
+  }
+`;
+const Message = Styled.article`
+  width: 100%;
+  height: 40rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  animation: ${slogan} 1.5s ease-in-out;
+
+  p:first-child {
+    width: 100%;
+    height: 25rem;
+    display: flex;
+    align-items: center;
+    font-size: 4rem;
+    text-align: center;
+    font-weight: bold;
+  }
+  p:last-child {
+    width: 100%;
+    height: 15rem;
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    text-align: center;
+  }
+`;
+const keypad = keyframes`
+from {
+    transform: translateY(1000px);
+  }
+  to {
+    transform: translateY(0);
+  }
+`;
+const Keypad = Styled.article`
+  width: 100%;
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  animation: ${keypad} 1.5s ease-in-out;
+  margin-top: 2rem;
+`;
+//styles success screen
+const figure = keyframes`
+from {
+    transform: translateX(-1000px);
+  }
+  to {
+    transform: translateX(0);
+  }
+`;
+const Success = Styled.section`
+  width: 100%;
+  max-width: 55rem;
+  height: 100%;
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  figure {
+    width: 80%;
+    max-width: 35rem;
+    animation: ${figure} 1.5s ease-in-out;
+  }
+  article {
+    width: 100%;
+    height: 25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  p:first-child {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  p {
+    font-size: 2rem;
+  }
+`;
+
 function Landing() {
-  const [clase, setClase] = useState("hidenModal");
+  const [modal, setModal] = useState(false);
   const [next, setNext] = useState(false);
   const [businessName, setBusinessName] = useState("");
   const [fault, setFault] = useState("");
@@ -25,10 +148,10 @@ function Landing() {
   } = React.useContext(AppContext);
 
   function showModal() {
-    if (clase === "hidenModal") {
-      setClase("showModal-full");
+    if (!modal) {
+      setModal(true);
     } else {
-      setClase("hidenModal");
+      setModal(false);
       setCompanyID("");
       setBusinessName("");
       setFault("");
@@ -36,76 +159,85 @@ function Landing() {
   }
 
   async function createCompany() {
-    setLoading(true);
-    await Auth.authEmailPass(adminEmail, adminPass);
-    const validate = await database.validateCompanyName(businessName);
-    if (validate) {
-      setFault("Nombre ya existe, ingresa otro");
-      setBusinessName("");
-      Auth.logoutUsers();
-      setLoading(false);
+    if (businessName === "") {
+      setFault("Complete todos los campos");
     } else {
-      let date = getCurrentDate();
-      let companyRef = await database.createCompany({
-        businessName,
-        date,
-        phone: "",
-      });
-      setCompanyID(companyRef);
-      Auth.logoutUsers();
-      setClase("hidenModal");
-      setLoading(false);
-      setNext(true);
+      setLoading(true);
+      await Auth.authEmailPass(adminEmail, adminPass);
+      const validate = await database.validateCompanyName(businessName);
+      if (validate) {
+        setFault("Nombre ya existe, ingresa otro");
+        setBusinessName("");
+        Auth.logoutUsers();
+        setLoading(false);
+      } else {
+        let date = getCurrentDate();
+        let companyRef = await database.createCompany({
+          businessName,
+          date,
+          phone: "",
+        });
+        setCompanyID(companyRef);
+        Auth.logoutUsers();
+        setModal(false);
+        setLoading(false);
+        setNext(true);
+      }
     }
   }
 
   return (
-    <main className="landing-main">
+    <StyledMain>
       {!next ? (
-        <>
-          <section className="landing-slogan">
-            <article className="slogan-board">
-              <p className="slogan-title">
-                Controla los datos de tu negocio y dejalo crecer
-              </p>
-              <p className="slogan-message">
-                Gestioner es una aplicacion de control de datos que ayuda a
-                construir y crecer el negocio que amas.
-              </p>
-            </article>
+        <Slogan>
+          <Message>
+            <p>
+              Controla los datos de tu negocio y dejalo
+              <br /> crecer
+            </p>
+            <p>
+              Gestioner es una aplicacion de control de datos que ayuda a
+              construir y crecer el negocio que amas.
+            </p>
+          </Message>
+          <Link to="/Blog">
+            <Button type="withImage">
+              <p>Ver Blog</p>
+              <img src={arrowBlue} alt="link a blog" />
+            </Button>
+          </Link>
+          <Keypad>
             <Button
               name="Comenzar"
-              class="button--long submitb"
+              type="long"
+              invertColor={false}
               action={showModal}
             />
-            <div className="triangle-equilateral-bottom-left"></div>
-            <div className="triangle-equilateral-top-right"></div>
-          </section>
-          <section className="landing-keyPad">
             <Link to="/Login">
-              <Button name="Iniciar Sesion" class="button--long submit" />
+              <Button name="Iniciar Sesion" type="long" />
             </Link>
             <Link to="/Register">
-              <Button name="Unirme a Empresa" class="button--long submit" />
+              <Button name="Unirme a Empresa" type="long" />
             </Link>
-          </section>
-        </>
+          </Keypad>
+        </Slogan>
       ) : (
-        <section className="landing-card">
-          <figure className="card-img">
+        <Success>
+          <figure>
             <img src={companyImg} alt="imagen de un edificio o empresa" />
           </figure>
-          <h1 className="card-title">Tu Codigo Empresarial</h1>
-          <h1 className="card-title">{businessName}</h1>
-          <h1 className="card-code">{companyID}</h1>
-          <Link to="/Register">
-            <Button name="Continuar a Registro" class="button--long submit" />
-          </Link>
-        </section>
+          <article>
+            <p>Tu Codigo Empresarial es:</p>
+            <p>{businessName}</p>
+            <p>{companyID}</p>
+            <Link to="/Register">
+              <Button name="Continuar a Registro" type="long" />
+            </Link>
+          </article>
+        </Success>
       )}
-
-      <Modal classe={clase}>
-        <div className="main-modal--small">
+      <Modal show={modal}>
+        <div className="modal-main--small">
           <h3 className="modal-title--small">* Como se llama tu Empresa? </h3>
           <div className="modal-input">
             <InputForm
@@ -118,15 +250,25 @@ function Landing() {
             />
           </div>
           <div className="modal-Keypad">
-            <Button name="Cancelar" class="button submitb" action={showModal} />
-            <Button name="Crear" class="button submit" action={createCompany} />
+            <Button
+              name="Cancelar"
+              type="basic"
+              invertColor={false}
+              action={showModal}
+            />
+            <Button
+              name="Crear"
+              type="basic"
+              invertColor={true}
+              action={createCompany}
+            />
           </div>
           <div className="modal-fault">
             <span className="fault">{fault}</span>
           </div>
         </div>
       </Modal>
-    </main>
+    </StyledMain>
   );
 }
 
