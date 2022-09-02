@@ -13,7 +13,8 @@ function AppProvider(props) {
   const adminPass = process.env.REACT_APP_FIREBASE_ADMIN_PASSWORD;
   const UserProfile =
     "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/profilePhotos%2Fprofile.png?alt=media&token=951d5d9e-8e58-48e1-87a6-4bf6ce2de4f2";
-
+  const defaultMachine =
+    "https://firebasestorage.googleapis.com/v0/b/gestion-de-procesoso-tq.appspot.com/o/maquina.png?alt=media&token=3a931328-8dc2-4ff0-be05-805278d775c9";
   var User = {
     photoUrl: UserProfile,
     id: "",
@@ -196,7 +197,6 @@ function AppProvider(props) {
         return [{ id: "empty", name: "empty", empty: machinesRef.empty }];
       } else {
         let arrayMachines = machinesRef.docs.map((element) => {
-          //console.log(element);
           const path = element._delegate._document.data.value.mapValue.fields;
           let item = {
             id: path.id.stringValue,
@@ -212,7 +212,6 @@ function AppProvider(props) {
               ? getSimpleArray(path.cams.arrayValue.values, 3)
               : null,
           };
-          console.log(item);
           return item;
         });
         setMachines(arrayMachines);
@@ -281,6 +280,7 @@ function AppProvider(props) {
         updateAreasCompany,
         updateMachinesArea,
         updatePartsMachine,
+        defaultMachine,
       }}
     >
       {props.children}

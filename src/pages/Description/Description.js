@@ -63,7 +63,7 @@ const Specs = Styled.table`
 `;
 
 function Description() {
-  const { actualMachine } = React.useContext(AppContext);
+  const { actualMachine, defaultMachine } = React.useContext(AppContext);
   const history = useHistory();
 
   useEffect(() => {
@@ -78,25 +78,36 @@ function Description() {
         <Container>
           <section>
             <figure>
-              <img src={actualMachine.imageURL} alt={actualMachine.name} />
+              <img
+                src={
+                  actualMachine.imageURL === ""
+                    ? defaultMachine
+                    : actualMachine.imageURL
+                }
+                alt={actualMachine.name}
+              />
             </figure>
             <article>
               <h1>{actualMachine.name}</h1>
               <p>{actualMachine.definition}</p>
             </article>
-            <Specs>
-              <caption>Especificaciones</caption>
-              <tbody>
-                {actualMachine.specs.map((item) => {
-                  return (
-                    <tr key={item.name}>
-                      <td className="left">{item.name}</td>
-                      <td>{item.value}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Specs>
+            {actualMachine.specs ? (
+              <Specs>
+                <caption>Especificaciones</caption>
+                <tbody>
+                  {actualMachine.specs.map((item) => {
+                    return (
+                      <tr key={item.name}>
+                        <td className="left">{item.name}</td>
+                        <td>{item.value}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Specs>
+            ) : (
+              <></>
+            )}
           </section>
         </Container>
       ) : (
