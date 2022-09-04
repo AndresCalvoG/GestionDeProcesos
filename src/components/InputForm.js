@@ -2,7 +2,7 @@ import React from "react";
 import "./styles/inputForm.css";
 
 const InputForm = (props) => {
-  return props.type === "time" || "date" ? (
+  return props.type === "datetime-local" ? (
     <input
       type={props.type}
       value={props.value}
