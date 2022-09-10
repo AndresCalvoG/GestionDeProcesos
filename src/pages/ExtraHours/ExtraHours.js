@@ -41,8 +41,29 @@ const NewHour = Styled.article`
 `;
 
 function ExtraHours() {
-  const timeObj = { text: "", millis: 1662234000000 };
-  const timeObj2 = { text: "", millis: 1662263400000 };
+  const timeObj = {
+    text: "",
+    millis: 1662838800000,
+    dayNumber: 10,
+    dayName: "SAB",
+    month: "SEP",
+    year: 2022,
+    hour: 14,
+    minute: 40,
+    seconds: 0,
+  };
+  const timeObj2 = {
+    text: "",
+    millis: 1662868200000,
+    dayNumber: 10,
+    dayName: "SAB",
+    month: "SEP",
+    year: 2022,
+    hour: 22,
+    minute: 50,
+    seconds: 0,
+  };
+
   const [salary, setSalary] = useState(0);
   const [startDate, setStartDate] = useState(timeObj);
   const [endDate, setEndDate] = useState(timeObj2);
@@ -56,30 +77,52 @@ function ExtraHours() {
     } else {
       let hoursMillis = endDate.millis - startDate.millis;
       let totalHours = hoursMillis / 3600000;
+      console.log("Horas totales: " + totalHours);
+
       let ordinaryHours = 0;
       for (let i = 0; i < 15; i++) {
-        let hour = new Date(startDate.millis + 3600000 * i);
-        let valueHour = 6; //hour.getHours();
-        let valueMin = 0; //hour.getMinutes();
-        if (valueHour < 21) {
-          console.log(valueHour + ":" + valueMin);
+        let hours = startDate.hour + i;
+        if (hours >= 6 && hours < 21 && hours < endDate.hour) {
+          ordinaryHours++;
         } else {
-          if (valueMin < 59) {
-            let diff = ((60 - valueMin) * 100) / 60;
-            ordinaryHours = i - 1 + diff / 100;
-            break;
-          } else {
-            ordinaryHours = i - 1;
+          break;
+        }
+      }
+      console.log("Horas ordinarias: " + ordinaryHours);
+
+      let nigthHours = -1;
+      for (let i = 0; i < 54; i++) {
+        let hour = new Date(startDate.millis + 600000 * i).getHours();
+        let min = new Date(startDate.millis + 600000 * i).getMinutes();
+
+        if (hour <= 21) {
+          console.log(`h: ${hour}, m: ${min}`);
+          nigthHours++;
+          if (hour === 21 && min === 0) {
             break;
           }
         }
       }
-      let workHours = totalHours - 0.66;
-
-      console.log(ordinaryHours);
+      console.log("Horas Nocturnas: " + (nigthHours * 10) / 60);
     }
   }
+
   function convertTime(updater, value) {
+    const days = ["DOM", "LUN", "MAR", "MIE", "JUE", "VIE", "SAB"];
+    const months = [
+      "ENE",
+      "FEB",
+      "MAR",
+      "ABR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AGO",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DIC",
+    ];
     let dateTime = value.split("T");
     let arrayDate = dateTime[0].split("-");
     let arrayTime = dateTime[1].split(":");
@@ -90,8 +133,20 @@ function ExtraHours() {
       arrayTime[0],
       arrayTime[1]
     ); // dia 86400000
-    let dateMillis = Date.parse(d);
-    updater({ text: value, millis: dateMillis });
+    console.log(d);
+    let dateObj = {
+      text: value,
+      millis: Date.parse(d),
+      dayNumber: d.getDate(),
+      dayName: days[d.getDay()],
+      month: months[d.getMonth()],
+      year: d.getFullYear(),
+      hour: d.getHours(),
+      minute: d.getMinutes(),
+      seconds: d.getSeconds(),
+    };
+    console.log(dateObj);
+    updater(dateObj);
   }
 
   return (
@@ -105,7 +160,7 @@ function ExtraHours() {
         <NewHour>
           <h2>Nueva horario extra</h2>
           <label>
-            Fecha y hora de inicio:
+            Fecha y hora de iniciado:
             <Input
               type="datetime-local"
               value={startDate.text}
@@ -114,7 +169,7 @@ function ExtraHours() {
             />
           </label>
           <label>
-            Fecha y hora de fin:
+            Fecha y hora de finalizado:
             <Input
               type="datetime-local"
               value={endDate.text}
