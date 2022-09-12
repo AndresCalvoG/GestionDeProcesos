@@ -80,18 +80,10 @@ function ExtraHours() {
       console.log("Horas totales: " + totalHours);
 
       let ordinaryHours = 0;
-      for (let i = 0; i < 15; i++) {
-        let hours = startDate.hour + i;
-        if (hours >= 6 && hours < 21 && hours < endDate.hour) {
-          ordinaryHours++;
-        } else {
-          break;
-        }
-      }
-      console.log("Horas ordinarias: " + ordinaryHours);
-
       let nigthHours = -1;
-      for (let i = 0; i < 54; i++) {
+      let numCycles = hoursMillis / 600000;
+
+      for (let i = 0; i < numCycles; i++) {
         let hour = new Date(startDate.millis + 600000 * i).getHours();
         let min = new Date(startDate.millis + 600000 * i).getMinutes();
 
@@ -103,7 +95,9 @@ function ExtraHours() {
           }
         }
       }
-      console.log("Horas Nocturnas: " + (nigthHours * 10) / 60);
+      ordinaryHours = (nigthHours * 10) / 60;
+      console.log("Horas ordinarias: " + ordinaryHours);
+      console.log("Horas Nocturnas: " + (totalHours - ordinaryHours));
     }
   }
 
