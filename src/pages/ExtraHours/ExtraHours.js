@@ -43,61 +43,64 @@ const NewHour = Styled.article`
 function ExtraHours() {
   const timeObj = {
     text: "",
-    millis: 1662838800000,
-    dayNumber: 10,
-    dayName: "SAB",
-    month: "SEP",
-    year: 2022,
-    hour: 14,
-    minute: 40,
-    seconds: 0,
-  };
-  const timeObj2 = {
-    text: "",
-    millis: 1662868200000,
-    dayNumber: 10,
-    dayName: "SAB",
-    month: "SEP",
-    year: 2022,
-    hour: 22,
-    minute: 50,
+    millis: 0,
+    dayNumber: 0,
+    dayName: "",
+    month: "",
+    year: 0,
+    hour: 0,
+    minute: 0,
     seconds: 0,
   };
 
   const [salary, setSalary] = useState(0);
   const [startDate, setStartDate] = useState(timeObj);
-  const [endDate, setEndDate] = useState(timeObj2);
+  const [endDate, setEndDate] = useState(timeObj);
   const [holy, setHoly] = useState([false, false]);
   const [dominical, setDominical] = useState([false, false]);
   const [results, setResults] = useState([]);
 
   function calcExtraHour() {
+    if (salary === 0 || salary < 1000000) {
+      console.log("debe ingresaria mas de 1 millon cop");
+    }
+    if (startDate.millis === 0 || endDate.millis === 0) {
+      console.log("complete all spaces");
+      return;
+    }
+    if (holy[0] === false && holy[1] === false) {
+      console.log("select if is holy");
+      return;
+    }
+    if (dominical[0] === false && dominical[1] === false) {
+      console.log("select if is dominical");
+      return;
+    }
+
     if (holy[0] === true || dominical[0] === true) {
       console.log("fest");
     } else {
       let hoursMillis = endDate.millis - startDate.millis;
       let totalHours = hoursMillis / 3600000;
-      console.log("Horas totales: " + totalHours);
-
       let ordinaryHours = 0;
-      let nigthHours = -1;
-      let numCycles = hoursMillis / 600000;
+      let nigthHours = 0;
+
+      let numCycles = hoursMillis / 60000;
 
       for (let i = 0; i < numCycles; i++) {
-        let hour = new Date(startDate.millis + 600000 * i).getHours();
-        let min = new Date(startDate.millis + 600000 * i).getMinutes();
+        let hour = new Date(startDate.millis + 60000 * i).getHours();
 
-        if (hour <= 21) {
-          console.log(`h: ${hour}, m: ${min}`);
+        if ((hour >= 0 && hour < 6) || (hour >= 21 && hour < 24)) {
           nigthHours++;
-          if (hour === 21 && min === 0) {
-            break;
-          }
+        }
+        if (hour >= 6 && hour < 21) {
+          ordinaryHours++;
         }
       }
-      ordinaryHours = (nigthHours * 10) / 60;
-      console.log("Horas ordinarias: " + ordinaryHours);
-      console.log("Horas Nocturnas: " + (totalHours - ordinaryHours));
+
+      console.log("Horas totales: " + totalHours.toFixed(2));
+      console.log("Horas ordinarias: " + (ordinaryHours / 60).toFixed(2));
+      console.log("Horas Nocturnas: " + (nigthHours / 60).toFixed(2));
     }
   }
 
@@ -127,7 +130,10 @@ function ExtraHours() {
       arrayTime[0],
       arrayTime[1]
     ); // dia 86400000
-    console.log(d);
+    if (startDate.millis > Date.parse(d)) {
+      console.log("error end date minor to start date");
+      return;
+    }
     let dateObj = {
       text: value,
       millis: Date.parse(d),
@@ -139,7 +145,6 @@ function ExtraHours() {
       minute: d.getMinutes(),
       seconds: d.getSeconds(),
     };
-    console.log(dateObj);
     updater(dateObj);
   }
 
