@@ -56,8 +56,7 @@ function ExtraHours() {
   const [salary, setSalary] = useState(0);
   const [startDate, setStartDate] = useState(timeObj);
   const [endDate, setEndDate] = useState(timeObj);
-  const [holy, setHoly] = useState([false, false]);
-  const [dominical, setDominical] = useState([false, false]);
+  const [holy, setHoly] = useState(false);
   const [results, setResults] = useState([]);
 
   function calcExtraHour() {
@@ -68,40 +67,61 @@ function ExtraHours() {
       console.log("complete all spaces");
       return;
     }
-    if (holy[0] === false && holy[1] === false) {
+    if (!holy) {
       console.log("select if is holy");
       return;
     }
-    if (dominical[0] === false && dominical[1] === false) {
-      console.log("select if is dominical");
-      return;
-    }
 
-    if (holy[0] === true || dominical[0] === true) {
-      console.log("fest");
-    } else {
-      let hoursMillis = endDate.millis - startDate.millis;
-      let totalHours = hoursMillis / 3600000;
-      let ordinaryHours = 0;
-      let nigthHours = 0;
+    let hoursMillis = endDate.millis - startDate.millis;
+    let totalHours = hoursMillis / 3600000;
+    let ordinaryHours = 0;
+    let nigthHours = 0;
+    let dominicalNigthHours = 0;
+    let dominicalOrdinaryHours = 0;
+    let holyOrdinaryHours = 0;
+    let holyNigthHours = 0;
 
-      let numCycles = hoursMillis / 60000;
+    let numCycles = hoursMillis / 60000;
 
-      for (let i = 0; i < numCycles; i++) {
-        let hour = new Date(startDate.millis + 60000 * i).getHours();
+    for (let i = 0; i < numCycles; i++) {
+      let hour = new Date(startDate.millis + 60000 * i).getHours();
+      let day = new Date(startDate.millis + 60000 * i).getDay();
 
-        if ((hour >= 0 && hour < 6) || (hour >= 21 && hour < 24)) {
+      if ((hour >= 0 && hour < 6) || (hour >= 21 && hour < 24)) {
+        if (day === 0) {
+          dominicalNigthHours++;
+        } else if (holy && day !== 0) {
+          holyNigthHours++;
+        } else {
           nigthHours++;
         }
-        if (hour >= 6 && hour < 21) {
+      }
+      if (hour >= 6 && hour < 21) {
+        if (day === 0) {
+          dominicalOrdinaryHours++;
+        } else if (holy && day !== 0) {
+          holyOrdinaryHours++;
+        } else {
           ordinaryHours++;
         }
       }
-
-      console.log("Horas totales: " + totalHours.toFixed(2));
-      console.log("Horas ordinarias: " + (ordinaryHours / 60).toFixed(2));
-      console.log("Horas Nocturnas: " + (nigthHours / 60).toFixed(2));
     }
+
+    console.log("Horas totales: " + totalHours.toFixed(2));
+    console.log("Horas ordinarias: " + (ordinaryHours / 60).toFixed(2));
+    console.log("Horas Nocturnas: " + (nigthHours / 60).toFixed(2));
+    console.log(
+      "Horas Diurnas Dominical: " + (dominicalOrdinaryHours / 60).toFixed(2)
+    );
+    console.log(
+      "Horas Nocturnas Dominical: " + (dominicalNigthHours / 60).toFixed(2)
+    );
+    console.log(
+      "Horas Diurnas Festivas: " + (holyOrdinaryHours / 60).toFixed(2)
+    );
+    console.log(
+      "Horas Nocturnas Festivas: " + (holyNigthHours / 60).toFixed(2)
+    );
   }
 
   function convertTime(updater, value) {
@@ -130,10 +150,10 @@ function ExtraHours() {
       arrayTime[0],
       arrayTime[1]
     ); // dia 86400000
-    if (startDate.millis > Date.parse(d)) {
-      console.log("error end date minor to start date");
-      return;
-    }
+    // if (startDate.millis > Date.parse(d)) {
+    //   console.log("error end date minor to start date");
+    //   return;
+    // }
     let dateObj = {
       text: value,
       millis: Date.parse(d),
@@ -167,6 +187,19 @@ function ExtraHours() {
               converter={convertTime}
             />
           </label>
+          <div>
+            <p>Es festivo?</p>
+            <label>
+              Si
+              <input
+                type="checkbox"
+                value={holyStart}
+                onChange={(e) => {
+                  setHolyStart(e.target.checked);
+                }}
+              />
+            </label>
+          </div>
           <label>
             Fecha y hora de finalizado:
             <Input
@@ -180,45 +213,12 @@ function ExtraHours() {
             <p>Es festivo?</p>
             <label>
               Si
-              <Input
+              <input
                 type="checkbox"
-                value={holy[0]}
-                action={setHoly}
-                index={0}
-                array={holy.length}
-              />
-            </label>
-            <label>
-              No
-              <Input
-                type="checkbox"
-                value={holy[1]}
-                action={setHoly}
-                index={1}
-                array={holy.length}
-              />
-            </label>
-          </div>
-          <div>
-            <p>Es Domingo?</p>
-            <label>
-              Si
-              <Input
-                type="checkbox"
-                value={dominical[0]}
-                action={setDominical}
-                index={0}
-                array={dominical.length}
-              />
-            </label>
-            <label>
-              No
-              <Input
-                type="checkbox"
-                value={dominical[1]}
-                action={setDominical}
-                index={1}
-                array={dominical.length}
+                value={holyEnd}
+                onChange={(e) => {
+                  setHolyEnd(e.target.checked);
+                }}
               />
             </label>
           </div>
