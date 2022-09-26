@@ -79,120 +79,186 @@ function ExtraHours() {
   function calcExtraHour() {
     if (validation()) {
       let hoursMillis = endDate.millis - startDate.millis;
-      let totalHours = (hoursMillis / 3600000).toFixed(2);
-      let ordinaryHours = 0;
+
+      let ht = (hoursMillis / 3600000).toFixed(2);
+      let hod = 0;
+      let hon = 0;
       let hed = 0;
-      let nigthHours = 0;
       let hen = 0;
-      let dominicalNigthHours = 0;
-      let dominicalOrdinaryHours = 0;
-      let holyOrdinaryHours = 0;
-      let holyNigthHours = 0;
+      let hodd = 0;
+      let hodn = 0;
+      let hedd = 0;
+      let hedn = 0;
+      let hofd = 0;
+      let hofn = 0;
+      let hefd = 0;
+      let hefn = 0;
 
       let numCycles = hoursMillis / 60000;
-
       let startDay = new Date(startDate.millis).getDay();
+
+      function addHourToSchedule(hour, hd, hn) {
+        //horario diurno
+        if (hour >= 6 && hour < 21) {
+          hd++;
+        }
+        //horario nocturno
+        if ((hour >= 0 && hour < 6) || (hour >= 21 && hour < 24)) {
+          hn++;
+        }
+        return { hd, hn };
+      }
 
       for (let i = 0; i < numCycles; i++) {
         let hour = new Date(startDate.millis + 60000 * i).getHours();
         let day = new Date(startDate.millis + 60000 * i).getDay();
 
+        //jornada 6 dias
         if (sixDays) {
+          // domingos
           if (day === 0) {
-            // domingos
+            //horas extra
             if (i >= 490) {
-              //horas extra
-              if (hour >= 6 && hour < 21) {
-              }
-              if ((hour >= 0 && hour < 6) || (hour >= 21 && hour < 24)) {
-              }
-            } else {
-              //horas ordinarias
-              if (hour >= 6 && hour < 21) {
-              }
-              if ((hour >= 0 && hour < 6) || (hour >= 21 && hour < 24)) {
-              }
+              let value = addHourToSchedule(hour, hedd, hedn);
+              hedd = value.hd;
+              hedn = value.hn;
+            } //horas ordinarias
+            else {
+              let value = addHourToSchedule(hour, hodd, hodn);
+              hodd = value.hd;
+              hodn = value.hn;
             }
-          } else if (holyStart && day !== 0 && day === startDay) {
-            //
-          } else {
-            // dias normales
+          } //festivo
+          else if (
+            (holyStart && day !== 0 && day === startDay) ||
+            (holyEnd && day !== 0 && day > startDay)
+          ) {
+            //horas extra
             if (i >= 490) {
-              //horas extra
-              if (hour >= 6 && hour < 21) {
-              }
-              if ((hour >= 0 && hour < 6) || (hour >= 21 && hour < 24)) {
-              }
-            } else {
-              //horas ordinarias
-              if (hour >= 6 && hour < 21) {
-              }
-              if ((hour >= 0 && hour < 6) || (hour >= 21 && hour < 24)) {
-              }
+              let value = addHourToSchedule(hour, hefd, hefn);
+              hefd = value.hd;
+              hefn = value.hn;
+            } //horas ordinarias
+            else {
+              let value = addHourToSchedule(hour, hofd, hofn);
+              hofd = value.hd;
+              hofn = value.hn;
+            }
+          } //dias normales
+          else {
+            //horas extra
+            if (i >= 490) {
+              let value = addHourToSchedule(hour, hed, hen);
+              hed = value.hd;
+              hen = value.hn;
+            } //horas ordinarias
+            else {
+              let value = addHourToSchedule(hour, hod, hon);
+              hod = value.hd;
+              hon = value.hn;
             }
           }
         }
 
+        //jornada 5 dias
         if (fiveDays) {
-          if (i >= 580) {
-            // horas extra
-            if (hour >= 6 && hour < 21) {
+          // domingos
+          if (day === 0) {
+            //horas extra
+            if (i >= 490) {
+              let value = addHourToSchedule(hour, hedd, hedn);
+              hedd = value.hd;
+              hedn = value.hn;
+            } //horas ordinarias
+            else {
+              let value = addHourToSchedule(hour, hodd, hodn);
+              hodd = value.hd;
+              hodn = value.hn;
             }
-            if ((hour >= 0 && hour < 6) || (hour >= 21 && hour < 24)) {
+          } //sabados
+          else if (day === 6 && !holyStart && !holyEnd) {
+            let value = addHourToSchedule(hour, hed, hen);
+            hed = value.hd;
+            hen = value.hn;
+          } //festivo
+          else if (
+            (holyStart && day !== 0 && day === startDay) ||
+            (holyEnd && day !== 0 && day > startDay)
+          ) {
+            //horas extra
+            if (i >= 490) {
+              let value = addHourToSchedule(hour, hefd, hefn);
+              hefd = value.hd;
+              hefn = value.hn;
+            } //horas ordinarias
+            else {
+              let value = addHourToSchedule(hour, hofd, hofn);
+              hofd = value.hd;
+              hofn = value.hn;
             }
-          } else {
-            //horas ordinarias
-            if (hour >= 6 && hour < 21) {
-            }
-            if ((hour >= 0 && hour < 6) || (hour >= 21 && hour < 24)) {
+          } //dias normales
+          else {
+            //horas extra
+            if (i >= 580) {
+              let value = addHourToSchedule(hour, hed, hen);
+              hed = value.hd;
+              hen = value.hn;
+            } //horas ordinarias
+            else {
+              let value = addHourToSchedule(hour, hod, hon);
+              hod = value.hd;
+              hon = value.hn;
             }
           }
         }
 
         // if ((hour >= 0 && hour < 6) || (hour >= 21 && hour < 24)) {
         //   if (day === 0) {
-        //     dominicalNigthHours++;
+        //     hodn++;
         //   } else if (holyStart && day !== 0 && day === startDay) {
-        //     holyNigthHours++;
+        //     hofn++;
         //   } else if (holyEnd && day !== 0 && day > startDay) {
-        //     holyNigthHours++;
+        //     hofn++;
         //   } else if (sixDays && i >= 490) {
         //     hen++;
         //   } else if (fiveDays && i >= 580) {
         //     hen++;
         //   } else {
-        //     nigthHours++;
+        //     hon++;
         //   }
         // }
 
         // if (hour >= 6 && hour < 21) {
         //   if (day === 0) {
-        //     dominicalOrdinaryHours++;
+        //     hodd++;
         //   } else if (holyStart && day !== 0 && day === startDay) {
-        //     holyOrdinaryHours++;
+        //     hofd++;
         //   } else if (holyEnd && day !== 0 && day > startDay) {
-        //     holyOrdinaryHours++;
+        //     hofd++;
         //   } else if (sixDays && i >= 490) {
         //     hed++;
         //   } else if (fiveDays && i >= 580) {
         //     hed++;
         //   } else {
-        //     ordinaryHours++;
+        //     hod++;
         //   }
         // }
       }
 
       let values = {
-        HT: totalHours,
-        HO: (ordinaryHours / 60).toFixed(2),
+        HT: ht,
+        HOD: (hod / 60).toFixed(2),
+        HON: (hon / 60).toFixed(2),
         HED: (hed / 60).toFixed(2),
-        HN: (nigthHours / 60).toFixed(2),
         HEN: (hen / 60).toFixed(2),
-        RN: (nigthHours / 60).toFixed(2),
-        HDD: (dominicalOrdinaryHours / 60).toFixed(2),
-        HND: (dominicalNigthHours / 60).toFixed(2),
-        HDF: (holyOrdinaryHours / 60).toFixed(2),
-        HNF: (holyNigthHours / 60).toFixed(2),
+        HODD: (hodd / 60).toFixed(2),
+        HODN: (hodn / 60).toFixed(2),
+        HEDD: (hedd / 60).toFixed(2),
+        HEDN: (hedn / 60).toFixed(2),
+        HOFD: (hofd / 60).toFixed(2),
+        HOFN: (hofn / 60).toFixed(2),
+        HEFD: (hefd / 60).toFixed(2),
+        HEFN: (hefn / 60).toFixed(2),
       };
       setResults(values);
       console.log(values);
@@ -342,13 +408,23 @@ function ExtraHours() {
           <p>Resultados</p>
           <ul>
             <li>Horas totales: {results.HT}</li>
-            <li>Horas Ordinarias: {results.HO}</li>
-            <li>Extras Diurnas(125%): {results.HED} </li>
-            <li>Recargo Nocturno(35%): {results.RN}</li>
-            <li>Extras Nocturnas(175%): {results.HEN}</li>
-            <li>Extras Festivas(175%): {results.HDF + results.HNF}</li>
-            <li>Extras Dominical(175%): {results.HDD + results.HND}</li>
-            <li>Recargo Festivo(75%): {results.HNF + results.HND}</li>
+            {/* horas ordinarias */}
+            <li>Horas Ordinarias(100%): {results.HOD}</li>
+            <li>Horas Nocturno(135%): {results.HON}</li>
+            <li>Horas Extras Diurnas(125%): {results.HED} </li>
+            <li>Horas Extras Nocturnas(175%): {results.HEN}</li>
+            <li></li>
+            {/* horas dominicales */}
+            <li>Horas Dominical Diurna(175%):{results.HODD}</li>
+            <li>Horas Dominical Nocturna(210%): {results.HODN}</li>
+            <li>Horas Extra Dominical Diurna(200%):{results.HEDD}</li>
+            <li>Horas Extra Dominical Nocturna(250%):{results.HEDN}</li>
+            <li></li>
+            {/* horas festivas */}
+            <li>Horas Festivas Diurna(175%):{results.HOFD}</li>
+            <li>Horas Festivas Nocturna(210%): {results.HOFN}</li>
+            <li>Horas Extra Festivas Diurna(200%):{results.HEFD}</li>
+            <li>Horas Extra Festivas Nocturna(250%):{results.HEFN}</li>
           </ul>
         </article>
       </section>
