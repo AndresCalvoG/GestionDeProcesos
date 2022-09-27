@@ -211,38 +211,6 @@ function ExtraHours() {
             }
           }
         }
-
-        // if ((hour >= 0 && hour < 6) || (hour >= 21 && hour < 24)) {
-        //   if (day === 0) {
-        //     hodn++;
-        //   } else if (holyStart && day !== 0 && day === startDay) {
-        //     hofn++;
-        //   } else if (holyEnd && day !== 0 && day > startDay) {
-        //     hofn++;
-        //   } else if (sixDays && i >= 490) {
-        //     hen++;
-        //   } else if (fiveDays && i >= 580) {
-        //     hen++;
-        //   } else {
-        //     hon++;
-        //   }
-        // }
-
-        // if (hour >= 6 && hour < 21) {
-        //   if (day === 0) {
-        //     hodd++;
-        //   } else if (holyStart && day !== 0 && day === startDay) {
-        //     hofd++;
-        //   } else if (holyEnd && day !== 0 && day > startDay) {
-        //     hofd++;
-        //   } else if (sixDays && i >= 490) {
-        //     hed++;
-        //   } else if (fiveDays && i >= 580) {
-        //     hed++;
-        //   } else {
-        //     hod++;
-        //   }
-        // }
       }
 
       let values = {
