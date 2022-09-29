@@ -1,46 +1,65 @@
 import React, { useState } from "react";
 import Styled from "styled-components";
 
-import Input from "../../components/InputForm";
+import Input from "../../components/Input/Input";
+import Checkbox from "../../components/Checkbox/Checkbox.js";
+import DateTimeInput from "../../components/DateTimeInput/DateTimeInput";
 import Button from "../../components/Buttons/Button";
+
+import Add from "../../images/utils/plus.png";
 
 const Container = Styled.main`
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items:center;
+  font-size: 1.6rem;
 
-
-  section{
-    width:100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 2rem;
+  img{
+    width: 5rem;
+    height: 5rem;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 30;
   }
 `;
-
-const NewHour = Styled.article`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 2rem;
-
-  h2{
-    padding-bottom: 1rem;
-  }
-  input{
-    margin-bottom:1rem;
-  }
-  div{
+const Modal = Styled.section`
     width:100%;
-    display:flex;
-    justify-content: space-evenly;
-  }
+    height: 100%;
+    position: fixed;
+    top:0;
+    right: 0;
+    display: ${(props) => (props.visible ? "flex" : "none")};
+    justify-content: center;
+    align-items: center;
+    background: rgba(32, 35, 41, 0.95);
+    z-index: 20;
+
+    article{
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 1rem;
+      border-radius: 25px;
+      background: white;
+
+      h1,div{
+        margin-bottom: 1rem;
+      }
+      button{
+        margin-bottom: 2rem;
+      }
+    }
+    
 `;
 
 function ExtraHours() {
+  const ORDINARY_TIME1 = 490;
+  const ORDINARY_TIME2 = 580;
+  const REST_TIME = 40;
+  const MIN_SALARY = 1000000;
   const timeObj = {
     text: "",
     millis: 0,
@@ -51,28 +70,61 @@ function ExtraHours() {
     hour: 0,
     minute: 0,
     seconds: 0,
+    error: false,
+    message: "",
   };
+  const defaultState = { text: "", error: false, message: "" };
+  const boolState = { value: false, error: false };
 
-  const [salary, setSalary] = useState(1000000);
+  const [salary, setSalary] = useState(defaultState);
   const [startDate, setStartDate] = useState(timeObj);
   const [endDate, setEndDate] = useState(timeObj);
-  const [holyStart, setHolyStart] = useState(false);
-  const [fiveDays, setFiveDays] = useState(false);
-  const [sixDays, setSixDays] = useState(false);
-  const [holyEnd, setHolyEnd] = useState(false);
+  const [holyStart, setHolyStart] = useState(boolState);
+  const [fiveDays, setFiveDays] = useState(boolState);
+  const [sixDays, setSixDays] = useState(boolState);
+  const [holyEnd, setHolyEnd] = useState(boolState);
+  const [showModal, setShowModal] = useState(false);
   const [results, setResults] = useState({});
 
   function validation() {
-    if (salary === 0 || salary < 1000000) {
-      console.log("debe ingresaria mas de 1 millon cop");
+    if (salary.text < MIN_SALARY) {
+      setSalary({
+        ...salary,
+        error: true,
+        message: "Debe ingresar minimo 1 millon cop",
+      });
       return false;
-    } else if (!fiveDays && !sixDays) {
-      console.log("seleccione una jornada");
+    } else if (!fiveDays.value && !sixDays.value) {
+      setFiveDays({ ...fiveDays, error: true });
+      setSixDays({ ...sixDays, error: true });
       return false;
-    } else if (startDate.millis === 0 || endDate.millis === 0) {
-      console.log("complete all spaces");
+    } else if (fiveDays.value && sixDays.value) {
+      setFiveDays({ ...fiveDays, error: true });
+      setSixDays({ ...sixDays, error: true });
       return false;
-    } else {
+    } else if (startDate.millis === 0) {
+      setStartDate({
+        ...startDate,
+        error: true,
+        message: "Ingrese feche de inicio",
+      });
+      return false;
+    } else if (endDate.millis === 0) {
+      setEndDate({ ...endDate, error: true, message: "Ingrese fecha de fin" });
+      return false;
+    } else if (endDate.millis < startDate.millis) {
+      setEndDate({
+        ...endDate,
+        error: true,
+        message: "Fecha de fin debe ser mayor a la de inicio",
+      });
+      return false;
+    } else if (
+      (fiveDays.value && !sixDays.value) ||
+      (!fiveDays.value && sixDays.value)
+    ) {
+      setFiveDays({ ...fiveDays, error: false });
+      setSixDays({ ...sixDays, error: false });
       return true;
     }
   }
@@ -114,11 +166,11 @@ function ExtraHours() {
         let day = new Date(startDate.millis + 60000 * i).getDay();
 
         //jornada 6 dias
-        if (sixDays) {
+        if (sixDays.value) {
           // domingos
           if (day === 0) {
             //horas extra
-            if (i >= 490) {
+            if (i >= ORDINARY_TIME1) {
               let value = addHourToSchedule(hour, hedd, hedn);
               hedd = value.hd;
               hedn = value.hn;
@@ -130,11 +182,11 @@ function ExtraHours() {
             }
           } //festivo
           else if (
-            (holyStart && day !== 0 && day === startDay) ||
-            (holyEnd && day !== 0 && day > startDay)
+            (holyStart.value && day !== 0 && day === startDay) ||
+            (holyEnd.value && day !== 0 && day > startDay)
           ) {
             //horas extra
-            if (i >= 490) {
+            if (i >= ORDINARY_TIME1) {
               let value = addHourToSchedule(hour, hefd, hefn);
               hefd = value.hd;
               hefn = value.hn;
@@ -147,7 +199,7 @@ function ExtraHours() {
           } //dias normales
           else {
             //horas extra
-            if (i >= 490) {
+            if (i >= ORDINARY_TIME1) {
               let value = addHourToSchedule(hour, hed, hen);
               hed = value.hd;
               hen = value.hn;
@@ -161,11 +213,11 @@ function ExtraHours() {
         }
 
         //jornada 5 dias
-        if (fiveDays) {
+        if (fiveDays.value) {
           // domingos
           if (day === 0) {
             //horas extra
-            if (i >= 490) {
+            if (i >= ORDINARY_TIME1) {
               let value = addHourToSchedule(hour, hedd, hedn);
               hedd = value.hd;
               hedn = value.hn;
@@ -176,17 +228,17 @@ function ExtraHours() {
               hodn = value.hn;
             }
           } //sabados
-          else if (day === 6 && !holyStart && !holyEnd) {
+          else if (day === 6 && !holyStart.value && !holyEnd.value) {
             let value = addHourToSchedule(hour, hed, hen);
             hed = value.hd;
             hen = value.hn;
           } //festivo
           else if (
-            (holyStart && day !== 0 && day === startDay) ||
-            (holyEnd && day !== 0 && day > startDay)
+            (holyStart.value && day !== 0 && day === startDay) ||
+            (holyEnd.value && day !== 0 && day > startDay)
           ) {
             //horas extra
-            if (i >= 490) {
+            if (i >= ORDINARY_TIME1) {
               let value = addHourToSchedule(hour, hefd, hefn);
               hefd = value.hd;
               hefn = value.hn;
@@ -199,7 +251,7 @@ function ExtraHours() {
           } //dias normales
           else {
             //horas extra
-            if (i >= 580) {
+            if (i >= ORDINARY_TIME2) {
               let value = addHourToSchedule(hour, hed, hen);
               hed = value.hd;
               hen = value.hn;
@@ -214,20 +266,23 @@ function ExtraHours() {
       }
 
       //descuento 40 min dias normales
-      if ((sixDays && hod >= 490) || (fiveDays && hod >= 580)) {
-        hod = hod - 40;
+      if (
+        (sixDays.value && hod >= ORDINARY_TIME1) ||
+        (fiveDays.value && hod >= ORDINARY_TIME2)
+      ) {
+        hod = hod - REST_TIME;
       }
       //descuento 40 min estras diurnas
-      if (hed >= 490) {
-        hed = hed - 40;
+      if (hed >= ORDINARY_TIME1) {
+        hed = hed - REST_TIME;
       }
       //descuento 40 min domingos
-      if (hodd >= 490) {
-        hodd = hodd - 40;
+      if (hodd >= ORDINARY_TIME1) {
+        hodd = hodd - REST_TIME;
       }
       //descuento 40 min festivos
-      if (hofd >= 490) {
-        hofd = hofd - 40;
+      if (hofd >= ORDINARY_TIME1) {
+        hofd = hofd - REST_TIME;
       }
 
       let values = {
@@ -246,150 +301,81 @@ function ExtraHours() {
         HEFN: (hefn / 60).toFixed(2),
       };
       setResults(values);
-      console.log(values);
+      setShowModal(false);
+      setSalary(defaultState);
+      setStartDate(timeObj);
+      setEndDate(timeObj);
+      setHolyStart(boolState);
+      setFiveDays(boolState);
+      setSixDays(boolState);
+      setHolyEnd(boolState);
     } else {
       return;
     }
   }
 
-  function convertTime(updater, value) {
-    const days = ["DOM", "LUN", "MAR", "MIE", "JUE", "VIE", "SAB"];
-    const months = [
-      "ENE",
-      "FEB",
-      "MAR",
-      "ABR",
-      "MAY",
-      "JUN",
-      "JUL",
-      "AGO",
-      "SEP",
-      "OCT",
-      "NOV",
-      "DIC",
-    ];
-    let dateTime = value.split("T");
-    let arrayDate = dateTime[0].split("-");
-    let arrayTime = dateTime[1].split(":");
-    let d = new Date(
-      arrayDate[0],
-      arrayDate[1] - 1,
-      arrayDate[2],
-      arrayTime[0],
-      arrayTime[1]
-    ); // dia 86400000
-    // if (startDate.millis > Date.parse(d)) {
-    //   console.log("error end date minor to start date");
-    //   return;
-    // }
-    let dateObj = {
-      text: value,
-      millis: Date.parse(d),
-      dayNumber: d.getDate(),
-      dayName: days[d.getDay()],
-      day: d.getDay(),
-      month: months[d.getMonth()],
-      year: d.getFullYear(),
-      hour: d.getHours(),
-      minute: d.getMinutes(),
-      seconds: d.getSeconds(),
-    };
-    updater(dateObj);
-  }
-
   return (
     <Container>
-      <section>
-        <h1>Horas Extra</h1>
-        <label>
-          Salario:
-          <Input type="text" value={salary} action={setSalary} />
-        </label>
-        <NewHour>
-          <h2>Nueva horario extra</h2>
-          <div>
-            <p>jornada de 5 dias?</p>
-            <label>
-              Si
-              <input
-                type="checkbox"
-                checked={fiveDays}
-                onChange={(e) => {
-                  setFiveDays(e.target.checked);
-                  setSixDays(!e.target.checked);
-                }}
-              />
-            </label>
-          </div>
-          <div>
-            <p>jornada de 6 dias?</p>
-            <label>
-              Si
-              <input
-                type="checkbox"
-                checked={sixDays}
-                onChange={(e) => {
-                  setSixDays(e.target.checked);
-                  setFiveDays(!e.target.checked);
-                }}
-              />
-            </label>
-          </div>
-          <label>
-            Fecha y hora de iniciado:
-            <Input
-              type="datetime-local"
-              value={startDate.text}
-              action={setStartDate}
-              converter={convertTime}
-            />
-          </label>
-          <div>
-            <p>Es festivo?</p>
-            <label>
-              Si
-              <input
-                type="checkbox"
-                checked={holyStart}
-                onChange={(e) => {
-                  setHolyStart(e.target.checked);
-                }}
-              />
-            </label>
-          </div>
-          <label>
-            Fecha y hora de finalizado:
-            <Input
-              type="datetime-local"
-              value={endDate.text}
-              action={setEndDate}
-              converter={convertTime}
-            />
-          </label>
-          <div>
-            <p>Es festivo?</p>
-            <label>
-              Si
-              <input
-                type="checkbox"
-                checked={holyEnd}
-                onChange={(e) => {
-                  setHolyEnd(e.target.checked);
-                }}
-                disabled={endDate.day === startDate.day ? true : false}
-              />
-            </label>
-          </div>
+      <Modal visible={showModal}>
+        <article>
+          <h1>Nuevo Tiempo Extra</h1>
+          <Input
+            type="text"
+            text="Tu salario"
+            value={salary.text}
+            updater={setSalary}
+            error={salary.error}
+            message={salary.message}
+          />
+          <Checkbox
+            text="jornada de 5 dias?"
+            value={fiveDays.value}
+            updater={setFiveDays}
+            error={fiveDays.error}
+          />
+          <Checkbox
+            text="jornada de 6 dias?"
+            value={sixDays.value}
+            updater={setSixDays}
+            error={sixDays.error}
+          />
+          <DateTimeInput
+            text="Fecha y hora de inicio"
+            value={startDate.text}
+            updater={setStartDate}
+            error={startDate.error}
+            message={startDate.message}
+          />
+          <Checkbox
+            text="Es festivo?"
+            value={holyStart.value}
+            updater={setHolyStart}
+            error={holyStart.error}
+          />
+          <DateTimeInput
+            text="Fecha y hora de fin"
+            value={endDate.text}
+            updater={setEndDate}
+            error={endDate.error}
+            message={endDate.message}
+          />
+          <Checkbox
+            text="Es festivo?"
+            value={holyEnd.value}
+            updater={setHolyEnd}
+            error={holyEnd.error}
+          />
           <Button
             name="Calcular"
             type="basic"
             invertColor={true}
             action={calcExtraHour}
           />
-        </NewHour>
-      </section>
+        </article>
+      </Modal>
       <section>
         <article>
+          <h1>Horas Extra</h1>
           <p>Resultados</p>
           <ul>
             <li>Horas totales: {results.HT}</li>
@@ -413,6 +399,13 @@ function ExtraHours() {
           </ul>
         </article>
       </section>
+      <img
+        src={Add}
+        alt="add"
+        onClick={() => {
+          setShowModal(!showModal);
+        }}
+      />
     </Container>
   );
 }

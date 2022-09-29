@@ -2,15 +2,7 @@ import React from "react";
 import "./styles/inputForm.css";
 
 const InputForm = (props) => {
-  return props.type === "datetime-local" ? (
-    <input
-      type={props.type}
-      value={props.value}
-      onChange={(e) => {
-        props.converter(props.action, e.target.value);
-      }}
-    />
-  ) : props.type === "checkbox" ? (
+  return props.type === "checkbox" ? (
     <input
       type={props.type}
       checked={props.value}
