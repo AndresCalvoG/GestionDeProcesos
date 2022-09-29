@@ -54,6 +54,26 @@ const Modal = Styled.section`
     }
     
 `;
+const Output = Styled.section`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  
+  article{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0 0 2rem;
+
+    ul{
+      width: 100%;
+      list-style-type: none;
+      margin-top: 1rem;
+    }
+  }
+`;
 
 function ExtraHours() {
   const ORDINARY_TIME1 = 490;
@@ -65,6 +85,7 @@ function ExtraHours() {
     millis: 0,
     dayNumber: 0,
     dayName: "",
+    day: "",
     month: "",
     year: 0,
     hour: 0,
@@ -302,13 +323,6 @@ function ExtraHours() {
       };
       setResults(values);
       setShowModal(false);
-      setSalary(defaultState);
-      setStartDate(timeObj);
-      setEndDate(timeObj);
-      setHolyStart(boolState);
-      setFiveDays(boolState);
-      setSixDays(boolState);
-      setHolyEnd(boolState);
     } else {
       return;
     }
@@ -373,37 +387,79 @@ function ExtraHours() {
           />
         </article>
       </Modal>
-      <section>
+      <Output>
         <article>
-          <h1>Horas Extra</h1>
-          <p>Resultados</p>
+          <p>Dia Semana: {startDate.dayName}</p>
+          <p>
+            Fecha: {startDate.dayNumber}/{startDate.month}/{startDate.year}
+          </p>
+          <p>
+            Inicio: {startDate.hour}:{startDate.minute}
+          </p>
+          <p>
+            Fin: {endDate.hour}:{endDate.minute}
+          </p>
+        </article>
+        <article>
+          <h1>Resultados</h1>
           <ul>
-            <li>Horas totales: {results.HT}</li>
+            <li>H. totales: {results.HT}</li>
             {/* horas ordinarias */}
-            <li>Horas Ordinarias(100%): {results.HOD}</li>
-            <li>Horas Nocturno(135%): {results.HON}</li>
-            <li>Horas Extras Diurnas(125%): {results.HED} </li>
-            <li>Horas Extras Nocturnas(175%): {results.HEN}</li>
-            <li></li>
+            <li>H. Ordinarias(100%): {results.HOD}</li>
+            <li>H. Nocturnas(135%): {results.HON}</li>
+            <li>H. Ext. Diurnas(125%): {results.HED} </li>
+            <li>H. Ext. Nocturnas(175%): {results.HEN}</li>
+            <br />
             {/* horas dominicales */}
-            <li>Horas Dominical Diurna(175%):{results.HODD}</li>
-            <li>Horas Dominical Nocturna(210%): {results.HODN}</li>
-            <li>Horas Extra Dominical Diurna(200%):{results.HEDD}</li>
-            <li>Horas Extra Dominical Nocturna(250%):{results.HEDN}</li>
-            <li></li>
+            <li>H. Dom. Diurna(175%):{results.HODD}</li>
+            <li>H. Dom. Nocturna(210%): {results.HODN}</li>
+            <li>H. Ext. Dom. Diurna(200%):{results.HEDD}</li>
+            <li>H. Ext. Dom. Nocturna(250%):{results.HEDN}</li>
+            <br />
             {/* horas festivas */}
-            <li>Horas Festivas Diurna(175%):{results.HOFD}</li>
-            <li>Horas Festivas Nocturna(210%): {results.HOFN}</li>
-            <li>Horas Extra Festivas Diurna(200%):{results.HEFD}</li>
-            <li>Horas Extra Festivas Nocturna(250%):{results.HEFN}</li>
+            <li>H. Fest. Diurna(175%):{results.HOFD}</li>
+            <li>H. Fest. Nocturna(210%): {results.HOFN}</li>
+            <li>H. Ext. Fest. Diurna(200%):{results.HEFD}</li>
+            <li>H. Ext. Fest. Nocturna(250%):{results.HEFN}</li>
           </ul>
         </article>
-      </section>
+        <article>
+          <h1>Horas Extra</h1>
+          <ul>
+            <li>Salario: {salary.text}</li>
+            <li>Valor Dia: {(salary.text / 30).toFixed(1)}</li>
+            <li>Valor Hora: {(salary.text / 240).toFixed(1)}</li>
+            <br />
+            <li>
+              R.Nocturno: {((salary.text / 240) * results.HON).toFixed(1)}
+            </li>
+            <li>
+              Ext.Diurnas: {((salary.text / 240) * results.HED).toFixed(1)}
+            </li>
+            <li>
+              Ext.Nocturnas: {((salary.text / 240) * results.HEN).toFixed(1)}
+            </li>
+            <li>
+              Ext.Dominical:{((salary.text / 240) * results.HODD).toFixed(1)}
+            </li>
+            <li>
+              Ext.Festivas: {((salary.text / 240) * results.HOFD).toFixed(1)}
+            </li>
+          </ul>
+        </article>
+      </Output>
       <img
         src={Add}
         alt="add"
         onClick={() => {
           setShowModal(!showModal);
+          setSalary(defaultState);
+          setStartDate(timeObj);
+          setEndDate(timeObj);
+          setHolyStart(boolState);
+          setFiveDays(boolState);
+          setSixDays(boolState);
+          setHolyEnd(boolState);
         }}
       />
     </Container>
