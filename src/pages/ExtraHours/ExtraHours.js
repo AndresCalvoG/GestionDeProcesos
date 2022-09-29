@@ -213,6 +213,23 @@ function ExtraHours() {
         }
       }
 
+      //descuento 40 min dias normales
+      if ((sixDays && hod >= 490) || (fiveDays && hod >= 580)) {
+        hod = hod - 40;
+      }
+      //descuento 40 min estras diurnas
+      if (hed >= 490) {
+        hed = hed - 40;
+      }
+      //descuento 40 min domingos
+      if (hodd >= 490) {
+        hodd = hodd - 40;
+      }
+      //descuento 40 min festivos
+      if (hofd >= 490) {
+        hofd = hofd - 40;
+      }
+
       let values = {
         HT: ht,
         HOD: (hod / 60).toFixed(2),
