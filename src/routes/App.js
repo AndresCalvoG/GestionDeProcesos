@@ -23,6 +23,7 @@ import Machines from "../pages/Machines/Machines";
 import Passwords from "../pages/Passwords/Passwords";
 import Blog from "../pages/Blog/Blog";
 import Description from "../pages/Description/Description";
+import ExtraHours from "../pages/ExtraHours/ExtraHours";
 
 function App() {
   return (
@@ -123,6 +124,11 @@ function App() {
                     exact
                     path="/Description"
                     render={(props) => <Description {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/ExtraHours"
+                    render={(props) => <ExtraHours {...props} />}
                   />
                   <Route render={(props) => <NotRegisterUser {...props} />} />
                 </Switch>

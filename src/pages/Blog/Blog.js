@@ -3,6 +3,7 @@ import Styled from "styled-components";
 import { AppContext } from "../../context";
 import Auth from "../../utils/autenticacion";
 
+import NavLink from "../../components/NavLink/NavLink";
 import ScrollList from "../../components/ScrollList/ScrollList";
 
 const ContributionList = Styled.section`
@@ -12,6 +13,7 @@ const ContributionList = Styled.section`
   h1 {
     font-size: 3rem;
     text-align: center;
+    margin-bottom: 1rem;
   }
 `;
 const ContributionItem = Styled.article`
@@ -21,7 +23,7 @@ const ContributionItem = Styled.article`
   justify-content: flex-start;
   border-radius: 10px;
   background-color: var(--baseWhite);
-  margin-top: 1rem;
+  margin-bottom: 2rem;
   padding: 1rem;
   box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0, 0, 0, 0);
 
@@ -109,6 +111,8 @@ function Blog() {
             </figure>
           </div>
         </ContributionItem>
+
+        <NavLink to="/ExtraHours" text="Calcular Horas Extra ->" />
       </ContributionList>
     </>
   );
