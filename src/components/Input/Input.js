@@ -54,7 +54,7 @@ function Input({ type, text, value, updater, error, message }) {
         placeholder={text}
         value={value}
         onChange={(e) => {
-          updater({ text: e.target.value });
+          updater({ value: e.target.value });
         }}
       />
       <label>

@@ -62,11 +62,42 @@ const Output = Styled.section`
   align-items: center;
   
   article{
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
-    padding: 2rem 0 0 2rem;
+    padding: 2rem;
+    border: 1px solid black;
+    border-radius: 25px;
+    margin-top: 2rem;
+    background: var(--baseWhite);
 
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      tr,td{
+        text-align: center;
+        vertical-align: bottom;
+      }
+      .item{
+        width: 40%;
+        text-align:left;
+      }
+      .item2{
+        width: 80%;
+        text-align:left;
+      }
+      .item3{
+        width: 40%;
+        text-align:left;
+      }
+      .item4{
+        width: 100%;
+        text-align:left;
+      }
+      .right{
+        text-align:right;
+      }
+    }
     ul{
       width: 100%;
       list-style-type: none;
@@ -94,7 +125,7 @@ function ExtraHours() {
     error: false,
     message: "",
   };
-  const defaultState = { text: "", error: false, message: "" };
+  const defaultState = { value: "", error: false, message: "" };
   const boolState = { value: false, error: false };
 
   const [salary, setSalary] = useState(defaultState);
@@ -105,7 +136,24 @@ function ExtraHours() {
   const [sixDays, setSixDays] = useState(boolState);
   const [holyEnd, setHolyEnd] = useState(boolState);
   const [showModal, setShowModal] = useState(false);
-  const [results, setResults] = useState({});
+  const [results, setResults] = useState({
+    HT: 0,
+    HOD: 0,
+    HON: 0,
+    HED: 0,
+    HEN: 0,
+    HODD: 0,
+    HODN: 0,
+    HEDD: 0,
+    HEDN: 0,
+    HOFD: 0,
+    HOFN: 0,
+    HEFD: 0,
+    HEFN: 0,
+  });
+
+  let valueDay = (salary.value / 30).toFixed(1);
+  let valueHour = (valueDay / 8).toFixed(1);
 
   function validation() {
     if (salary.text < MIN_SALARY) {
@@ -327,6 +375,13 @@ function ExtraHours() {
       return;
     }
   }
+  function formatMoney(value) {
+    const newValue = new window.Intl.NumberFormat("es-ES", {
+      style: "currency",
+      currency: "COP",
+    }).format(value);
+    return newValue;
+  }
 
   return (
     <Container>
@@ -336,7 +391,7 @@ function ExtraHours() {
           <Input
             type="text"
             text="Tu salario"
-            value={salary.text}
+            value={salary.value}
             updater={setSalary}
             error={salary.error}
             message={salary.message}
@@ -389,63 +444,231 @@ function ExtraHours() {
       </Modal>
       <Output>
         <article>
-          <p>Dia Semana: {startDate.dayName}</p>
-          <p>
-            Fecha: {startDate.dayNumber}/{startDate.month}/{startDate.year}
-          </p>
-          <p>
-            Inicio: {startDate.hour}:{startDate.minute}
-          </p>
-          <p>
-            Fin: {endDate.hour}:{endDate.minute}
-          </p>
+          <h1>Jornada Laboral</h1>
+          <br />
+          <table>
+            <tbody>
+              <tr>
+                <td className="item">Dia Semana:</td>
+                <td>{startDate.dayName}</td>
+              </tr>
+              <tr>
+                <td className="item">Fecha inicio:</td>
+                <td>
+                  {startDate.dayNumber}/{startDate.month}/{startDate.year}
+                </td>
+              </tr>
+              <tr>
+                <td className="item">Hora inicio:</td>
+                <td>
+                  {startDate.hour}:{startDate.minute}
+                </td>
+              </tr>
+              <tr>
+                <td className="item">Fecha fin:</td>
+                <td>
+                  {endDate.dayNumber}/{endDate.month}/{endDate.year}
+                </td>
+              </tr>
+              <tr>
+                <td className="item">Hora fin:</td>
+                <td>
+                  {endDate.hour}:{endDate.minute}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </article>
         <article>
           <h1>Resultados</h1>
-          <ul>
-            <li>H. totales: {results.HT}</li>
-            {/* horas ordinarias */}
-            <li>H. Ordinarias(100%): {results.HOD}</li>
-            <li>H. Nocturnas(135%): {results.HON}</li>
-            <li>H. Ext. Diurnas(125%): {results.HED} </li>
-            <li>H. Ext. Nocturnas(175%): {results.HEN}</li>
-            <br />
-            {/* horas dominicales */}
-            <li>H. Dom. Diurna(175%):{results.HODD}</li>
-            <li>H. Dom. Nocturna(210%): {results.HODN}</li>
-            <li>H. Ext. Dom. Diurna(200%):{results.HEDD}</li>
-            <li>H. Ext. Dom. Nocturna(250%):{results.HEDN}</li>
-            <br />
-            {/* horas festivas */}
-            <li>H. Fest. Diurna(175%):{results.HOFD}</li>
-            <li>H. Fest. Nocturna(210%): {results.HOFN}</li>
-            <li>H. Ext. Fest. Diurna(200%):{results.HEFD}</li>
-            <li>H. Ext. Fest. Nocturna(250%):{results.HEFN}</li>
-          </ul>
+          <table>
+            <tbody>
+              <tr>
+                <td className="item2">H. totales:</td>
+                <td>{results.HT}</td>
+              </tr>
+              <tr>
+                <td className="item2">H. Ordinarias(100%):</td>
+                <td>{results.HOD}</td>
+              </tr>
+              <tr>
+                <td className="item2">H. Nocturnas(135%):</td>
+                <td>{results.HON}</td>
+              </tr>
+              <tr>
+                <td className="item2">H. Ext. Diurnas(125%):</td>
+                <td>{results.HED}</td>
+              </tr>
+              <tr>
+                <td className="item2">H. Ext. Nocturnas(175%):</td>
+                <td>{results.HEN}</td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <table>
+            <tbody>
+              <tr>
+                <td className="item2">H. Dom. Diurna(175%):</td>
+                <td>{results.HODD}</td>
+              </tr>
+              <tr>
+                <td className="item2">H. Dom. Nocturna(210%):</td>
+                <td>{results.HODN}</td>
+              </tr>
+              <tr>
+                <td className="item2">H. Ext. Dom. Diurna(200%):</td>
+                <td>{results.HEDD}</td>
+              </tr>
+              <tr>
+                <td className="item2">H. Ext. Dom. Nocturna(250%):</td>
+                <td>{results.HEDN}</td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <table>
+            <tbody>
+              <tr>
+                <td className="item2">H. Fest. Diurna(175%):</td>
+                <td>{results.HOFD}</td>
+              </tr>
+              <tr>
+                <td className="item2">H. Fest. Nocturna(210%):</td>
+                <td>{results.HOFN}</td>
+              </tr>
+              <tr>
+                <td className="item2">H. Ext. Fest. Diurna(200%):</td>
+                <td>{results.HEFD}</td>
+              </tr>
+              <tr>
+                <td className="item2">H. Ext. Fest. Nocturna(250%):</td>
+                <td>{results.HEFN}</td>
+              </tr>
+            </tbody>
+          </table>
         </article>
         <article>
           <h1>Horas Extra</h1>
-          <ul>
-            <li>Salario: {salary.text}</li>
-            <li>Valor Dia: {(salary.text / 30).toFixed(1)}</li>
-            <li>Valor Hora: {(salary.text / 240).toFixed(1)}</li>
-            <br />
-            <li>
-              R.Nocturno: {((salary.text / 240) * results.HON).toFixed(1)}
-            </li>
-            <li>
-              Ext.Diurnas: {((salary.text / 240) * results.HED).toFixed(1)}
-            </li>
-            <li>
-              Ext.Nocturnas: {((salary.text / 240) * results.HEN).toFixed(1)}
-            </li>
-            <li>
-              Ext.Dominical:{((salary.text / 240) * results.HODD).toFixed(1)}
-            </li>
-            <li>
-              Ext.Festivas: {((salary.text / 240) * results.HOFD).toFixed(1)}
-            </li>
-          </ul>
+          <table>
+            <tbody>
+              <tr>
+                <td className="item3">Salario:</td>
+                <td>{formatMoney(salary.value)}</td>
+              </tr>
+              <tr>
+                <td className="item3">Valor Dia:</td>
+                <td>{formatMoney(valueDay)}</td>
+              </tr>
+              <tr>
+                <td className="item3">Valor Hora:</td>
+                <td>{formatMoney(valueHour)}</td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <table>
+            <tbody>
+              <tr>
+                <td className="item4">H. Nocturnas(135%):</td>
+              </tr>
+              <tr>
+                <td className="right">
+                  {formatMoney((valueHour * results.HON * 1.35).toFixed(1))}
+                </td>
+              </tr>
+              <tr>
+                <td className="item4">H. Ext. Diurnas(125%):</td>
+              </tr>
+              <tr>
+                <td className="right">
+                  {formatMoney((valueHour * results.HED * 1.25).toFixed(1))}
+                </td>
+              </tr>
+              <tr>
+                <td className="item4">H. Ext. Nocturnas(175%):</td>
+              </tr>
+              <tr>
+                <td className="right">
+                  {formatMoney((valueHour * results.HEN * 1.75).toFixed(1))}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <table>
+            <tbody>
+              <tr>
+                <td className="item4">H. Dom. Diurna(175%):</td>
+              </tr>
+              <tr>
+                <td className="right">
+                  {formatMoney((valueHour * results.HODD * 1.75).toFixed(1))}
+                </td>
+              </tr>
+              <tr>
+                <td className="item4">H. Dom. Nocturna(210%):</td>
+              </tr>
+              <tr>
+                <td className="right">
+                  {formatMoney((valueHour * results.HODN * 2.1).toFixed(1))}
+                </td>
+              </tr>
+              <tr>
+                <td className="item4">H. Ext. Dom. Diurna(200%):</td>
+              </tr>
+              <tr>
+                <td className="right">
+                  {formatMoney((valueHour * results.HEDD * 2).toFixed(1))}
+                </td>
+              </tr>
+              <tr>
+                <td className="item4">H. Ext. Dom. Nocturna(250%):</td>
+              </tr>
+              <tr>
+                <td className="right">
+                  {formatMoney((valueHour * results.HEDN * 2.5).toFixed(1))}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <table>
+            <tbody>
+              <tr>
+                <td className="item4">H. Fest. Diurna(175%):</td>
+              </tr>
+              <tr>
+                <td className="right">
+                  {formatMoney((valueHour * results.HOFD * 1.75).toFixed(1))}
+                </td>
+              </tr>
+              <tr>
+                <td className="item4">H. Fest. Nocturna(210%):</td>
+              </tr>
+              <tr>
+                <td className="right">
+                  {formatMoney((valueHour * results.HOFN * 2.1).toFixed(1))}
+                </td>
+              </tr>
+              <tr>
+                <td className="item4">H. Ext. Fest. Diurna(200%):</td>
+              </tr>
+              <tr>
+                <td className="right">
+                  {formatMoney((valueHour * results.HEFD * 2).toFixed(1))}
+                </td>
+              </tr>
+              <tr>
+                <td className="item4"> H. Ext. Fest. Nocturna(250%):</td>
+              </tr>
+              <tr>
+                <td className="right">
+                  {formatMoney((valueHour * results.HEFN * 2.5).toFixed(1))}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </article>
       </Output>
       <img
