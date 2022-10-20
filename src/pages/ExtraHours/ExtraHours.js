@@ -85,6 +85,7 @@ const Output = Styled.section`
       .item2{
         width: 80%;
         text-align:left;
+        font-size: 1.4rem;
       }
       .item3{
         width: 40%;
@@ -93,6 +94,7 @@ const Output = Styled.section`
       .item4{
         width: 100%;
         text-align:left;
+        font-size: 1.4rem;
       }
       .right{
         text-align:right;
@@ -151,10 +153,33 @@ function ExtraHours() {
     HEFD: 0,
     HEFN: 0,
   });
+  const [money, setMoney] = useState({
+    HON: 0,
+    HED: 0,
+    HEN: 0,
+    HODD: 0,
+    HODN: 0,
+    HEDD: 0,
+    HEDN: 0,
+    HOFD: 0,
+    HOFN: 0,
+    HEFD: 0,
+    HEFN: 0,
+  });
 
   let valueDay = (salary.value / 30).toFixed(1);
   let valueHour = (valueDay / 8).toFixed(1);
 
+  function resetValues() {
+    setShowModal(!showModal);
+    setSalary(defaultState);
+    setStartDate(timeObj);
+    setEndDate(timeObj);
+    setHolyStart(boolState);
+    setFiveDays(boolState);
+    setSixDays(boolState);
+    setHolyEnd(boolState);
+  }
   function validation() {
     if (salary.text < MIN_SALARY) {
       setSalary({
@@ -196,6 +221,13 @@ function ExtraHours() {
       setSixDays({ ...sixDays, error: false });
       return true;
     }
+  }
+  function formatMoney(value) {
+    const newValue = new window.Intl.NumberFormat("es-ES", {
+      style: "currency",
+      currency: "COP",
+    }).format(value);
+    return newValue;
   }
   function calcExtraHour() {
     if (validation()) {
@@ -369,18 +401,25 @@ function ExtraHours() {
         HEFD: (hefd / 60).toFixed(2),
         HEFN: (hefn / 60).toFixed(2),
       };
+      let money = {
+        HON: formatMoney((valueHour * values.HON * 0.35).toFixed(1)),
+        HED: (hed / 60).toFixed(2),
+        HEN: (hen / 60).toFixed(2),
+        HODD: (hodd / 60).toFixed(2),
+        HODN: (hodn / 60).toFixed(2),
+        HEDD: (hedd / 60).toFixed(2),
+        HEDN: (hedn / 60).toFixed(2),
+        HOFD: (hofd / 60).toFixed(2),
+        HOFN: (hofn / 60).toFixed(2),
+        HEFD: (hefd / 60).toFixed(2),
+        HEFN: (hefn / 60).toFixed(2),
+      };
       setResults(values);
+      setMoney(money);
       setShowModal(false);
     } else {
       return;
     }
-  }
-  function formatMoney(value) {
-    const newValue = new window.Intl.NumberFormat("es-ES", {
-      style: "currency",
-      currency: "COP",
-    }).format(value);
-    return newValue;
   }
 
   return (
@@ -480,6 +519,24 @@ function ExtraHours() {
           </table>
         </article>
         <article>
+          <h1>Abreviaturas</h1>
+          <ul>
+            <li>HT: Horas Totales</li>
+            <li>HO(100%): Hora Ordinaria</li>
+            <li>HN(135%): Hora Nocturna</li>
+            <li>HED(125%): H. Extra Diurna</li>
+            <li>HEN(175%): H. Extra Nocturna</li>
+            <li>HDD(175%): H. Dominical Diurna</li>
+            <li>HDN(210%): H.Dom. Nocturna</li>
+            <li>HEDD(200%): H. Extra Dom. Diurna</li>
+            <li>HEDN(250%): H.Ext.Dom. Noctur</li>
+            <li>HFD(175%): H. festiva Diurna</li>
+            <li>HFN(210%): H.Fest. Nocturna</li>
+            <li>HEFD(200%): H.Ext.Fest. diurna</li>
+            <li>HEFN(250%): H.Ext.Fest. Noctur</li>
+          </ul>
+        </article>
+        <article>
           <h1>Resultados</h1>
           <table>
             <tbody>
@@ -549,7 +606,7 @@ function ExtraHours() {
           </table>
         </article>
         <article>
-          <h1>Horas Extra</h1>
+          <h1>Salario Basico</h1>
           <table>
             <tbody>
               <tr>
@@ -567,28 +624,21 @@ function ExtraHours() {
             </tbody>
           </table>
           <br />
+          <h1>Horas Extra</h1>
           <table>
             <tbody>
               <tr>
-                <td className="item4">H. Nocturnas(135%):</td>
+                <td className="item4">HN(135%):</td>
+                <td className="right">{money.HON}</td>
               </tr>
               <tr>
-                <td className="right">
-                  {formatMoney((valueHour * results.HON * 1.35).toFixed(1))}
-                </td>
-              </tr>
-              <tr>
-                <td className="item4">H. Ext. Diurnas(125%):</td>
-              </tr>
-              <tr>
+                <td className="item4">HED(125%):</td>
                 <td className="right">
                   {formatMoney((valueHour * results.HED * 1.25).toFixed(1))}
                 </td>
               </tr>
               <tr>
-                <td className="item4">H. Ext. Nocturnas(175%):</td>
-              </tr>
-              <tr>
+                <td className="item4">HEN(175%):</td>
                 <td className="right">
                   {formatMoney((valueHour * results.HEN * 1.75).toFixed(1))}
                 </td>
@@ -599,33 +649,25 @@ function ExtraHours() {
           <table>
             <tbody>
               <tr>
-                <td className="item4">H. Dom. Diurna(175%):</td>
-              </tr>
-              <tr>
+                <td className="item4">HDD(175%):</td>
                 <td className="right">
                   {formatMoney((valueHour * results.HODD * 1.75).toFixed(1))}
                 </td>
               </tr>
               <tr>
-                <td className="item4">H. Dom. Nocturna(210%):</td>
-              </tr>
-              <tr>
+                <td className="item4">HDN(210%):</td>
                 <td className="right">
                   {formatMoney((valueHour * results.HODN * 2.1).toFixed(1))}
                 </td>
               </tr>
               <tr>
-                <td className="item4">H. Ext. Dom. Diurna(200%):</td>
-              </tr>
-              <tr>
+                <td className="item4">HEDD(200%):</td>
                 <td className="right">
                   {formatMoney((valueHour * results.HEDD * 2).toFixed(1))}
                 </td>
               </tr>
               <tr>
-                <td className="item4">H. Ext. Dom. Nocturna(250%):</td>
-              </tr>
-              <tr>
+                <td className="item4">HEDN(250%):</td>
                 <td className="right">
                   {formatMoney((valueHour * results.HEDN * 2.5).toFixed(1))}
                 </td>
@@ -636,33 +678,25 @@ function ExtraHours() {
           <table>
             <tbody>
               <tr>
-                <td className="item4">H. Fest. Diurna(175%):</td>
-              </tr>
-              <tr>
+                <td className="item4">HFD(175%):</td>
                 <td className="right">
                   {formatMoney((valueHour * results.HOFD * 1.75).toFixed(1))}
                 </td>
               </tr>
               <tr>
-                <td className="item4">H. Fest. Nocturna(210%):</td>
-              </tr>
-              <tr>
+                <td className="item4">HFN(210%):</td>
                 <td className="right">
                   {formatMoney((valueHour * results.HOFN * 2.1).toFixed(1))}
                 </td>
               </tr>
               <tr>
-                <td className="item4">H. Ext. Fest. Diurna(200%):</td>
-              </tr>
-              <tr>
+                <td className="item4">HEFD(200%):</td>
                 <td className="right">
                   {formatMoney((valueHour * results.HEFD * 2).toFixed(1))}
                 </td>
               </tr>
               <tr>
-                <td className="item4"> H. Ext. Fest. Nocturna(250%):</td>
-              </tr>
-              <tr>
+                <td className="item4"> HEFN(250%):</td>
                 <td className="right">
                   {formatMoney((valueHour * results.HEFN * 2.5).toFixed(1))}
                 </td>
@@ -671,20 +705,7 @@ function ExtraHours() {
           </table>
         </article>
       </Output>
-      <img
-        src={Add}
-        alt="add"
-        onClick={() => {
-          setShowModal(!showModal);
-          setSalary(defaultState);
-          setStartDate(timeObj);
-          setEndDate(timeObj);
-          setHolyStart(boolState);
-          setFiveDays(boolState);
-          setSixDays(boolState);
-          setHolyEnd(boolState);
-        }}
-      />
+      <img src={Add} alt="add" onClick={resetValues} />
     </Container>
   );
 }
